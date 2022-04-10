@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private UnityEvent<string> OnGetDamage;
 
-    private Rigidbody2D rigitBody2d;
+    private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
     private Animator animator;
     private Animation animation_;
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool IsDig { get; set; } = false;
+    public bool IsDigging { get; set; } = false;
 
     public bool IsGrounded { get; private set; } = false;
 
@@ -51,9 +51,7 @@ public class Player : MonoBehaviour
 
     public float TouchingDistance { get => touchingDistance; }
 
-    public float HitForce { get => hitForce; }
-
-    public float YOffsetFromReferencePoint { get => yOffsetToGround; }
+    public float HitDamage { get => hitForce; }
 
     public int Health
     {
@@ -73,7 +71,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        rigitBody2d = GetComponent<Rigidbody2D>();
+        rigidBody2d = GetComponent<Rigidbody2D>();
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         animation_ = GetComponent<Animation>();
@@ -93,7 +91,7 @@ public class Player : MonoBehaviour
 
         CheckGrounded();
 
-        if (IsDig)
+        if (IsDigging)
             State = States.Dig;
         else if (IsGrounded)
             State = States.Idle;
@@ -116,7 +114,7 @@ public class Player : MonoBehaviour
         if (!selectedTile)
             return;
 
-        var damage = selectedTile.DiggingDifficulty < HitForce ? HitForce / selectedTile.DiggingDifficulty : HitForce;
+        var damage = selectedTile.DiggingDifficulty < HitDamage ? HitDamage / selectedTile.DiggingDifficulty : HitDamage;
         selectedTile.Health -= damage;
     }
 
@@ -139,14 +137,14 @@ public class Player : MonoBehaviour
             var colPos = collision.transform.position;
             var playerPos = transform.position;
 
-            rigitBody2d.AddForce(new Vector2(playerPos.x - colPos.x + (sprite.flipX ? 1 : -1), playerPos.y - colPos.y + yOffsetToGround + 1)
+            rigidBody2d.AddForce(new Vector2(playerPos.x - colPos.x + (sprite.flipX ? 1 : -1), playerPos.y - colPos.y + yOffsetToGround + 1)
                 * repulsion.Force, ForceMode2D.Impulse);
         }
     }
 
     private void Run()
     {
-        IsDig = false;
+        IsDigging = false;
         if (IsGrounded)
             State = States.Walk;
 
@@ -157,17 +155,17 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        IsDig = false;
-        rigitBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        IsDigging = false;
+        rigidBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
     private void CheckGrounded()
     {
         if (!IsGrounded)
         {
-            if (rigitBody2d.velocity.y > 0)
+            if (rigidBody2d.velocity.y > 0)
                 State = States.Jump;
-            else if (rigitBody2d.velocity.y < 0)
+            else if (rigidBody2d.velocity.y < 0)
                 State = States.Fall;
         }
 

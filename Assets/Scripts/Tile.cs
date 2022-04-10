@@ -24,12 +24,12 @@ public class Tile : MonoBehaviour
             health = value;
             if (health <= 0)
             {
-                player.IsDig = false;
+                player.IsDigging = false;
                 selection.SetActive(false);
                 Destroy(gameObject);
             }
             else
-                ChangeDestuctionDegree();
+                ChangeDestructionDegree();
         }
     }
 
@@ -56,7 +56,7 @@ public class Tile : MonoBehaviour
     private void OnMouseExit()
     {
         selection.SetActive(false);
-        player.IsDig = false;
+        player.IsDigging = false;
         player.RemoveSelectedTile();
     }
 
@@ -78,7 +78,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseUp()
     {
-        player.IsDig = false;
+        player.IsDigging = false;
     }
 
     private void CheckDistance()
@@ -91,12 +91,12 @@ public class Tile : MonoBehaviour
 
         if (distance < player.TouchingDistance)
         {
-            player.IsDig = true;
+            player.IsDigging = true;
             player.State = States.Dig;
         }
     }
 
-    private void ChangeDestuctionDegree()
+    private void ChangeDestructionDegree()
     {
         var destructionSpriteIndex = (int)Mathf.Floor((maxHealth - Health) * (destructionDegrees.Length / maxHealth));
         destructionSprite.sprite = destructionDegrees[destructionSpriteIndex];
