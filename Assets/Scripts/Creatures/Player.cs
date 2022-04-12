@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
             var colPos = collision.transform.position;
             var playerPos = transform.position;
 
-            rigidBody2d.AddForce(new Vector2(playerPos.x - colPos.x + (sprite.flipX ? 1 : -1), playerPos.y - colPos.y + yOffsetToGround + 1)
+            rigidBody2d.AddForce(new Vector2(playerPos.x - colPos.x, playerPos.y - colPos.y + yOffsetToGround + 1)
                 * repulsion.Force, ForceMode2D.Impulse);
         }
     }
