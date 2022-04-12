@@ -4,6 +4,8 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
+    public static Player instanse = null;
+    
     [SerializeField] private int health = 10;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
@@ -11,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpCheckRadius = 0.45f;
     [SerializeField] private float touchingDistance;
     [SerializeField] private float invulnerabilityTime = 1f;
+    [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private float yOffsetToGround = -0.5f;
 
     [SerializeField] private UnityEvent<string> OnGetDamage;
@@ -45,6 +48,8 @@ public class Player : MonoBehaviour
 
     public bool IsDigging { get; set; } = false;
 
+    public bool IsStunned { get; private set; } = false;
+
     public bool IsGrounded { get; private set; } = false;
 
     public bool IsMoving { get; private set; } = false;
@@ -61,7 +66,7 @@ public class Player : MonoBehaviour
             health = value;
             OnGetDamage?.Invoke(health.ToString());
             if (health <= 0)
-                Destroy();
+                Destroy(gameObject);
         }
     }
 
@@ -71,6 +76,11 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        if (instanse == null)
+            instanse = this;
+        else if (instanse == this)
+            Destroy(gameObject);
+
         rigidBody2d = GetComponent<Rigidbody2D>();
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -80,7 +90,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (IsGrounded && Input.GetButtonDown("Jump"))
+        if (IsGrounded && !IsStunned && Input.GetButtonDown("Jump"))
             Jump();
     }
 
@@ -96,7 +106,7 @@ public class Player : MonoBehaviour
         else if (IsGrounded)
             State = States.Idle;
 
-        if (Input.GetButton("Horizontal"))
+        if (!IsStunned && Input.GetButton("Horizontal"))
             Run();
     }
 
@@ -109,7 +119,7 @@ public class Player : MonoBehaviour
         GetDamage(collision);
     }
 
-    private void OnEndDigAnimation()
+    private void HitTile()
     {
         if (!selectedTile)
             return;
@@ -124,7 +134,11 @@ public class Player : MonoBehaviour
         if (danger)
         {
             Health -= danger.Damage;
+
             Invulnerability = true;
+            IsStunned = true;
+
+            StartCoroutine(DisableStun());
             StartCoroutine(DisableInvulnerability());
         }
     }
@@ -174,14 +188,15 @@ public class Player : MonoBehaviour
         IsGrounded = collaiders.Length > 0;
     }
 
-    private void Destroy()
-    {
-        Destroy(gameObject);
-    }
-
     private IEnumerator DisableInvulnerability()
     {
         yield return new WaitForSeconds(invulnerabilityTime);
         Invulnerability = false;
+    }
+
+    private IEnumerator DisableStun()
+    {
+        yield return new WaitForSeconds(stunTime);
+        IsStunned = false;
     }
 }
