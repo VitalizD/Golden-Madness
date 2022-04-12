@@ -4,5 +4,6 @@ public enum States
     Walk,
     Jump,
     Fall,
-    Dig
+    Dig,
+    Pain
 }

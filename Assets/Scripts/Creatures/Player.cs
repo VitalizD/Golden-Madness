@@ -21,34 +21,52 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
     private Animator animator;
-    private Animation animation_;
     private LayerMask groundMask;
 
     private Tile selectedTile;
     private Vector3 oldPos;
     private bool invulnerability;
+    private bool isStunned;
 
     public States State
     {
         get => (States)animator.GetInteger("State");
-        set => animator.SetInteger("State", (int)value);
-    }
-
-    private bool Invulnerability
-    {
-        get => animation_.IsPlaying("Flash");
         set
         {
-            if (value)
-                animation_.Play("Flash");
-            else
-                animation_.Stop("Flash");
+            if (isStunned)
+                return;
+            animator.SetInteger("State", (int)value);
         }
     }
 
+    //private bool Invulnerability
+    //{
+    //    get => animation_.IsPlaying("Flash");
+    //    set
+    //    {
+    //        if (value)
+    //            animation_.Play("Flash");
+    //        else
+    //            animation_.Stop("Flash");
+    //    }
+    //}
+
     public bool IsDigging { get; set; } = false;
 
-    public bool IsStunned { get; private set; } = false;
+    public bool IsStunned 
+    {
+        get => isStunned;
+        set
+        {
+            if (value)
+                State = States.Pain;
+
+            isStunned = value;
+
+            if (!value)
+                State = States.Idle;
+        }
+    }
 
     public bool IsGrounded { get; private set; } = false;
 
@@ -84,7 +102,7 @@ public class Player : MonoBehaviour
         rigidBody2d = GetComponent<Rigidbody2D>();
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        animation_ = GetComponent<Animation>();
+        //animation_ = GetComponent<Animation>();
         groundMask = LayerMask.GetMask("Ground");
     }
 
@@ -112,7 +130,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (Invulnerability)
+        if (invulnerability)
             return;
 
         Throw(collision);
@@ -134,10 +152,8 @@ public class Player : MonoBehaviour
         if (danger)
         {
             Health -= danger.Damage;
-
-            Invulnerability = true;
             IsStunned = true;
-
+            invulnerability = true;
             StartCoroutine(DisableStun());
             StartCoroutine(DisableInvulnerability());
         }
@@ -191,7 +207,7 @@ public class Player : MonoBehaviour
     private IEnumerator DisableInvulnerability()
     {
         yield return new WaitForSeconds(invulnerabilityTime);
-        Invulnerability = false;
+        invulnerability = false;
     }
 
     private IEnumerator DisableStun()
