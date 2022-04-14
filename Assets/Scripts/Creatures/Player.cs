@@ -7,13 +7,18 @@ public class Player : MonoBehaviour
     public static Player instanse = null;
     
     [SerializeField] private int health = 10;
+    [SerializeField] private int hitDamage;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float hitForce;
+    [SerializeField] private float repulsiveForce;
+    [SerializeField] private float jerkForce = 3f;
     [SerializeField] private float jumpCheckRadius = 0.45f;
     [SerializeField] private float touchingDistance;
+    [SerializeField] private float attackDistance;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
+    [SerializeField] private float attackTime = 0.3f;
+    [SerializeField] private float reloadAttackTime = 1f;
     [SerializeField] private float yOffsetToGround = -0.5f;
 
     [SerializeField] private UnityEvent<string> OnGetDamage;
@@ -21,12 +26,19 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
     private Animator animator;
-    private LayerMask groundMask;
-
     private Tile selectedTile;
     private Vector3 oldPos;
-    private bool invulnerability;
-    private bool isStunned;
+
+    private LayerMask groundMask;
+    private LayerMask enemiesMask;
+
+    private Coroutine reloadAttack;
+
+    private bool invulnerability = false;
+    private bool isMoving = false;
+    private bool isStunned = false;
+    private bool isAttacking = false;
+    private bool canAttack = true;
 
     public States State
     {
@@ -39,42 +51,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    //private bool Invulnerability
-    //{
-    //    get => animation_.IsPlaying("Flash");
-    //    set
-    //    {
-    //        if (value)
-    //            animation_.Play("Flash");
-    //        else
-    //            animation_.Stop("Flash");
-    //    }
-    //}
-
     public bool IsDigging { get; set; } = false;
-
-    public bool IsStunned 
-    {
-        get => isStunned;
-        set
-        {
-            if (value)
-                State = States.Pain;
-
-            isStunned = value;
-
-            if (!value)
-                State = States.Idle;
-        }
-    }
 
     public bool IsGrounded { get; private set; } = false;
 
-    public bool IsMoving { get; private set; } = false;
-
     public float TouchingDistance { get => touchingDistance; }
 
-    public float HitDamage { get => hitForce; }
+    public int HitDamage { get => hitDamage; }
 
     public int Health
     {
@@ -82,9 +65,20 @@ public class Player : MonoBehaviour
         set
         {
             health = value;
-            OnGetDamage?.Invoke(health.ToString());
+            //OnGetDamage?.Invoke(health.ToString());
             if (health <= 0)
                 Destroy(gameObject);
+        }
+    }
+
+    private bool IsStunned
+    {
+        get => isStunned;
+        set
+        {
+            if (value) State = States.Pain;
+            isStunned = value;
+            if (!value) State = States.Idle;
         }
     }
 
@@ -102,29 +96,31 @@ public class Player : MonoBehaviour
         rigidBody2d = GetComponent<Rigidbody2D>();
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        //animation_ = GetComponent<Animation>();
+
         groundMask = LayerMask.GetMask("Ground");
+        enemiesMask = LayerMask.GetMask("Enemies");
     }
 
     private void Update()
     {
         if (IsGrounded && !IsStunned && Input.GetButtonDown("Jump"))
             Jump();
+
+        if (canAttack && IsGrounded && !IsDigging && !IsStunned && Input.GetButtonDown("Fire1"))
+            Attack();
     }
 
     private void FixedUpdate()
     {
-        IsMoving = transform.position != oldPos;
+        isMoving = transform.position != oldPos;
         oldPos = transform.position;
 
         CheckGrounded();
 
-        if (IsDigging)
-            State = States.Dig;
-        else if (IsGrounded)
+        if (IsGrounded && !isAttacking && !IsStunned && !IsDigging)
             State = States.Idle;
 
-        if (!IsStunned && Input.GetButton("Horizontal"))
+        if (!IsStunned && !isAttacking && Input.GetButton("Horizontal"))
             Run();
     }
 
@@ -137,6 +133,31 @@ public class Player : MonoBehaviour
         GetDamage(collision);
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackDistance);
+    }
+
+    // Назначен на ключ в анимации "Attack"
+    private void OnAttack()
+    {
+        var attackPoint = new Vector2(transform.position.x + (sprite.flipX ? -attackDistance : attackDistance), transform.position.y);
+        var colliders = Physics2D.OverlapCircleAll(attackPoint, attackDistance, enemiesMask);
+
+        foreach (var collider in colliders)
+        {
+            var creature = collider.GetComponent<Creature>();
+            if (creature)
+            {
+                creature.Health -= hitDamage;
+                if (creature.Repulsiable)
+                    creature.Throw(transform.position, repulsiveForce);
+            }
+        }
+    }
+
+    // Назначен на ключ в анимации "Dig"
     private void HitTile()
     {
         if (!selectedTile)
@@ -144,6 +165,9 @@ public class Player : MonoBehaviour
 
         var damage = selectedTile.DiggingDifficulty < HitDamage ? HitDamage / selectedTile.DiggingDifficulty : HitDamage;
         selectedTile.Health -= damage;
+        canAttack = false;
+        if (reloadAttack != null) StopCoroutine(reloadAttack);
+        reloadAttack = StartCoroutine(ReloadAttack());
     }
 
     private void GetDamage(Collision2D collision)
@@ -167,8 +191,7 @@ public class Player : MonoBehaviour
             var colPos = collision.transform.position;
             var playerPos = transform.position;
 
-            rigidBody2d.AddForce(new Vector2(playerPos.x - colPos.x, playerPos.y - colPos.y + yOffsetToGround + 1)
-                * repulsion.Force, ForceMode2D.Impulse);
+            rigidBody2d.AddForce(new Vector2(playerPos.x - colPos.x, 1) * repulsion.Force, ForceMode2D.Impulse);
         }
     }
 
@@ -187,6 +210,17 @@ public class Player : MonoBehaviour
     {
         IsDigging = false;
         rigidBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    private void Attack()
+    {
+        State = States.Attack;
+        canAttack = false;
+        isAttacking = true;
+        rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
+
+        StartCoroutine(FinishAttack());
+        reloadAttack = StartCoroutine(ReloadAttack());
     }
 
     private void CheckGrounded()
@@ -214,5 +248,17 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(stunTime);
         IsStunned = false;
+    }
+
+    private IEnumerator FinishAttack()
+    {
+        yield return new WaitForSeconds(attackTime);
+        isAttacking = false;
+    }
+
+    private IEnumerator ReloadAttack()
+    {
+        yield return new WaitForSeconds(reloadAttackTime);
+        canAttack = true;
     }
 }

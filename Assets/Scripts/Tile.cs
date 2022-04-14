@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Tile : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class Tile : MonoBehaviour
     [SerializeField] private float diggingDifficulty = 1;
     [SerializeField] private bool isBedrock = false;
     [SerializeField] private Sprite[] destructionDegrees;
+
+    public UnityEvent OnCannotDig;
 
     private SpriteRenderer destructionSprite;
 
@@ -84,7 +87,10 @@ public class Tile : MonoBehaviour
     private void CheckDistance()
     {
         if (isBedrock || !player.IsGrounded || player.State != States.Idle)
+        {
+            OnCannotDig?.Invoke();
             return;
+        }
 
         var referencePoint = new Vector2(player.transform.position.x, player.transform.position.y);
         var distance = Vector2.Distance(transform.position, referencePoint);

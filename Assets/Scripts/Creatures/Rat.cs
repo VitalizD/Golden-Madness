@@ -48,11 +48,7 @@ public class Rat : MonoBehaviour
     {
         var player = collision.collider.GetComponent<Player>();
         if (player)
-        {
-            var collisionDirectionValue = transform.position.x > player.transform.position.x ? -1 : 1;
-            if (collisionDirectionValue != directionValue)
-                ChangeDirection();
-        }
+            ChangeDirectionTowards(player.transform.position);
     }
 
     private void Run()
@@ -94,9 +90,15 @@ public class Rat : MonoBehaviour
         }
     }
 
-    private void ChangeDirection()
+    public void ChangeDirection()
     {
         sprite.flipX = !sprite.flipX;
+        directionValue = sprite.flipX ? -1 : 1;
+    }
+
+    public void ChangeDirectionTowards(Vector2 position)
+    {
+        sprite.flipX = position.x > transform.position.x ? false : true;
         directionValue = sprite.flipX ? -1 : 1;
     }
 
