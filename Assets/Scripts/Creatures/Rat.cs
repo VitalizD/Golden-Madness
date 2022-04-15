@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -67,11 +68,15 @@ public class Rat : MonoBehaviour
     {
         while (true)
         {
-            var groundMask = LayerMask.GetMask("Ground");
+            var layer = 1 << 3 | 1 << 6; // 3 - Ground; 4 - Enemies
+            if (angry)
+                layer = 1 << 3; // Ground only
+
             var checkingPoint1 = new Vector2(transform.position.x + obstacleCheckOffsetX * directionValue, transform.position.y);
             var checkingPoint2 = new Vector2(checkingPoint1.x, checkingPoint1.y - obstacleCheckOffsetY);
-            if (Physics2D.OverlapCircleAll(checkingPoint1, obstacleCheckRadius, groundMask).Length > 0 ||
-                (Physics2D.OverlapCircleAll(checkingPoint2, obstacleCheckRadius, groundMask).Length == 0 && !angry))
+
+            if (Physics2D.OverlapCircleAll(checkingPoint1, obstacleCheckRadius, layer).Length > 0 ||
+                (Physics2D.OverlapCircleAll(checkingPoint2, obstacleCheckRadius, layer).Length == 0 && !angry && !creature.Attacked))
                 ChangeDirection();
             yield return new WaitForSeconds(obstacleCheckBetweenTime);
         }
@@ -92,23 +97,23 @@ public class Rat : MonoBehaviour
 
     public void ChangeDirection()
     {
-        sprite.flipX = !sprite.flipX;
+        creature.ChangeDirection();
         directionValue = sprite.flipX ? -1 : 1;
     }
 
     public void ChangeDirectionTowards(Vector2 position)
     {
-        sprite.flipX = position.x > transform.position.x ? false : true;
+        creature.ChangeDirectionTowards(position);
         directionValue = sprite.flipX ? -1 : 1;
     }
 
     private IEnumerator TemporarilyStop()
     {
-        yield return new WaitForSeconds(Random.Range(stayBetweenTimeMin, stayBetweenTimeMax));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(stayBetweenTimeMin, stayBetweenTimeMax));
         isMoving = false;
         Stop();
 
-        yield return new WaitForSeconds(Random.Range(stayTimeMin, stayTimeMax));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(stayTimeMin, stayTimeMax));
         isMoving = true;
         temporarilyStop = StartCoroutine(TemporarilyStop());
     }

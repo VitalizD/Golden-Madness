@@ -9,8 +9,6 @@ public class Tile : MonoBehaviour
     [SerializeField] private bool isBedrock = false;
     [SerializeField] private Sprite[] destructionDegrees;
 
-    public UnityEvent OnCannotDig;
-
     private SpriteRenderer destructionSprite;
 
     private GameObject selection;
@@ -87,10 +85,7 @@ public class Tile : MonoBehaviour
     private void CheckDistance()
     {
         if (isBedrock || !player.IsGrounded || player.State != States.Idle)
-        {
-            OnCannotDig?.Invoke();
             return;
-        }
 
         var referencePoint = new Vector2(player.transform.position.x, player.transform.position.y);
         var distance = Vector2.Distance(transform.position, referencePoint);
