@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    private Transform player;
     private Vector3 position;
 
-    private void Awake()
+    private void Start()
     {
         if (!player)
-            player = FindObjectOfType<Player>().transform;
+            player = Player.instanse.transform;
     }
 
     private void Update()

@@ -40,6 +40,14 @@ public class Player : MonoBehaviour
     private bool isAttacking = false;
     private bool canAttack = true;
 
+    public bool IsDigging { get; set; } = false;
+
+    public bool IsGrounded { get; private set; } = false;
+
+    public float TouchingDistance { get => touchingDistance; }
+
+    public int HitDamage { get => hitDamage; }
+
     public States State
     {
         get => (States)animator.GetInteger("State");
@@ -50,14 +58,6 @@ public class Player : MonoBehaviour
             animator.SetInteger("State", (int)value);
         }
     }
-
-    public bool IsDigging { get; set; } = false;
-
-    public bool IsGrounded { get; private set; } = false;
-
-    public float TouchingDistance { get => touchingDistance; }
-
-    public int HitDamage { get => hitDamage; }
 
     public int Health
     {

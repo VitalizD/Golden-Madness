@@ -20,6 +20,14 @@ public class Creature : MonoBehaviour
     private Rigidbody2D rigidbody2D_;
     private SpriteRenderer sprite;
 
+    public float Speed { get => speed; set => speed = value >= 0 ? value : speed; }
+
+    public bool Repulsiable { get => repulsiable; }
+
+    public bool Attacked { get => attacked; }
+
+    public int DirectionValue { get => directionValue; }
+
     public int Health
     {
         get => health;
@@ -37,14 +45,6 @@ public class Creature : MonoBehaviour
             }
         }
     }
-
-    public float Speed { get => speed; set => speed = value >= 0 ? value : speed; }
-
-    public bool Repulsiable { get => repulsiable; }
-
-    public bool Attacked { get => attacked; }
-
-    public int DirectionValue { get => directionValue; }
 
     public States State
     {
