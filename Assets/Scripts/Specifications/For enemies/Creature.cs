@@ -12,10 +12,9 @@ public class Creature : MonoBehaviour
     [SerializeField] private bool repulsiable;
     [SerializeField] private States[] states;
 
-    private UnityEvent OnGetDamage;
-
     private Color normalColor;
     private bool attacked = false;
+    private int directionValue = 1; // 1 - положительный X (право);   -1 - отрицательный X (лево)
 
     private Animator animator;
     private Rigidbody2D rigidbody2D_;
@@ -31,7 +30,6 @@ public class Creature : MonoBehaviour
                 Destroy(gameObject);
             else
             {
-                OnGetDamage?.Invoke();
                 attacked = true;
                 ChangeDirectionTowards(Player.instanse.transform.position);
                 sprite.color = damageColor;
@@ -45,6 +43,8 @@ public class Creature : MonoBehaviour
     public bool Repulsiable { get => repulsiable; }
 
     public bool Attacked { get => attacked; }
+
+    public int DirectionValue { get => directionValue; }
 
     public States State
     {
@@ -73,11 +73,13 @@ public class Creature : MonoBehaviour
     public void ChangeDirection()
     {
         sprite.flipX = !sprite.flipX;
+        directionValue = sprite.flipX ? -1 : 1;
     }
 
     public void ChangeDirectionTowards(Vector2 position)
     {
         sprite.flipX = position.x <= transform.position.x;
+        directionValue = sprite.flipX ? -1 : 1;
     }
 
     private IEnumerator SetNormalColor()

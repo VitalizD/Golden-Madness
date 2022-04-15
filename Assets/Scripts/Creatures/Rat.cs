@@ -20,7 +20,8 @@ public class Rat : MonoBehaviour
     private SpriteRenderer sprite;
     private Coroutine temporarilyStop;
 
-    private int directionValue = 1; // 1 - положительный X (право);   -1 - отрицательный X (лево)
+    private LayerMask playerMask;
+
     private float normalSpeed;
     private bool angry = false;
     private bool isMoving = true;
@@ -30,6 +31,7 @@ public class Rat : MonoBehaviour
         creature = GetComponent<Creature>();
         sprite = GetComponent<SpriteRenderer>();
         normalSpeed = creature.Speed;
+        playerMask = LayerMask.GetMask("Player");
     }
 
     private void Start()
@@ -49,13 +51,13 @@ public class Rat : MonoBehaviour
     {
         var player = collision.collider.GetComponent<Player>();
         if (player)
-            ChangeDirectionTowards(player.transform.position);
+            creature.ChangeDirectionTowards(player.transform.position);
     }
 
     private void Run()
     {
         creature.State = States.Walk;
-        var direction = transform.right * directionValue;
+        var direction = transform.right * creature.DirectionValue;
         transform.position = Vector2.MoveTowards(transform.position, transform.position + direction, creature.Speed * Time.deltaTime);
     }
 
@@ -72,12 +74,12 @@ public class Rat : MonoBehaviour
             if (angry)
                 layer = 1 << 3; // Ground only
 
-            var checkingPoint1 = new Vector2(transform.position.x + obstacleCheckOffsetX * directionValue, transform.position.y);
+            var checkingPoint1 = new Vector2(transform.position.x + obstacleCheckOffsetX * creature.DirectionValue, transform.position.y);
             var checkingPoint2 = new Vector2(checkingPoint1.x, checkingPoint1.y - obstacleCheckOffsetY);
 
             if (Physics2D.OverlapCircleAll(checkingPoint1, obstacleCheckRadius, layer).Length > 0 ||
                 (Physics2D.OverlapCircleAll(checkingPoint2, obstacleCheckRadius, layer).Length == 0 && !angry && !creature.Attacked))
-                ChangeDirection();
+                creature.ChangeDirection();
             yield return new WaitForSeconds(obstacleCheckBetweenTime);
         }
     }
@@ -87,24 +89,15 @@ public class Rat : MonoBehaviour
         while (!angry)
         {
             yield return new WaitForSeconds(playerCheckBetweenTime);
-            var startPoint = new Vector2(transform.position.x + obstacleCheckOffsetX * directionValue, transform.position.y);
-            var raycastObject = Physics2D.Raycast(startPoint, transform.right * directionValue).collider.gameObject;
-            var player = raycastObject.GetComponent<Player>();
-            if (player)
-                StartCoroutine(ActivateAggressiveMode());
+            var startPoint = new Vector2(transform.position.x + obstacleCheckOffsetX * creature.DirectionValue, transform.position.y);
+            var raycastHit = Physics2D.Raycast(startPoint, transform.right * creature.DirectionValue, Mathf.Infinity, playerMask);
+            if (raycastHit)
+            {
+                var player = raycastHit.collider.GetComponent<Player>();
+                if (player)
+                    StartCoroutine(ActivateAggressiveMode());
+            }
         }
-    }
-
-    public void ChangeDirection()
-    {
-        creature.ChangeDirection();
-        directionValue = sprite.flipX ? -1 : 1;
-    }
-
-    public void ChangeDirectionTowards(Vector2 position)
-    {
-        creature.ChangeDirectionTowards(position);
-        directionValue = sprite.flipX ? -1 : 1;
     }
 
     private IEnumerator TemporarilyStop()
