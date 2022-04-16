@@ -5,9 +5,6 @@ using UnityEngine;
 public class Rat : MonoBehaviour
 {
     [SerializeField] private float obstacleCheckBetweenTime = 0.2f;
-    [SerializeField] private float obstacleCheckRadius = 0.01f;
-    [SerializeField] private float obstacleCheckOffsetX = 0.4f;
-    [SerializeField] private float obstacleCheckOffsetY = 1;
     [SerializeField] private float stayBetweenTimeMin = 1;
     [SerializeField] private float stayBetweenTimeMax = 5;
     [SerializeField] private float stayTimeMin = 1;
@@ -18,10 +15,14 @@ public class Rat : MonoBehaviour
 
     private Creature creature;
     private SpriteRenderer sprite;
+
     private Coroutine temporarilyStop;
+    private Coroutine activateAggressiveMode;
 
     private LayerMask playerMask;
-
+    private float obstacleCheckRadius = 0.01f;
+    private float obstacleCheckOffsetX = 0.4f;
+    private float obstacleCheckOffsetY = 1;
     private float normalSpeed;
     private bool angry = false;
     private bool isMoving = true;
@@ -70,7 +71,7 @@ public class Rat : MonoBehaviour
     {
         while (true)
         {
-            var layer = 1 << 3 | 1 << 6; // 3 - Ground; 4 - Enemies
+            var layer = 1 << 3 | 1 << 6; // 3 - Ground; 6 - Enemies
             if (angry)
                 layer = 1 << 3; // Ground only
 
@@ -90,7 +91,8 @@ public class Rat : MonoBehaviour
         {
             yield return new WaitForSeconds(playerCheckBetweenTime);
             var startPoint = new Vector2(transform.position.x + obstacleCheckOffsetX * creature.DirectionValue, transform.position.y);
-            var raycastHit = Physics2D.Raycast(startPoint, transform.right * creature.DirectionValue, Mathf.Infinity, playerMask);
+            var layer = 1 << 3 | 1 << 7; // 3 - Ground; 7 - Player
+            var raycastHit = Physics2D.Raycast(startPoint, transform.right * creature.DirectionValue, Mathf.Infinity, layer);
             if (raycastHit)
             {
                 var player = raycastHit.collider.GetComponent<Player>();

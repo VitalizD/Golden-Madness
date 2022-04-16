@@ -136,18 +136,18 @@ public class Player : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(new Vector2(transform.position.x + attackDistance, transform.position.y), attackDistance);
+        Gizmos.DrawWireSphere(transform.position, attackDistance);
     }
 
     // Назначен на ключ в анимации "Attack"
     private void OnAttack()
     {
-        var attackPoint = new Vector2(transform.position.x + (sprite.flipX ? -attackDistance : attackDistance), transform.position.y);
-        var colliders = Physics2D.OverlapCircleAll(attackPoint, attackDistance, enemiesMask);
+        //var attackPoint = new Vector2(transform.position.x + (sprite.flipX ? -attackDistance : attackDistance), transform.position.y);
+        var raycastHits = Physics2D.RaycastAll(transform.position, transform.right * (sprite.flipX ? -1 : 1), attackDistance, enemiesMask);
 
-        foreach (var collider in colliders)
+        foreach (var raycastHit in raycastHits)
         {
-            var creature = collider.GetComponent<Creature>();
+            var creature = raycastHit.collider.GetComponent<Creature>();
             if (creature)
             {
                 creature.Health -= hitDamage;
