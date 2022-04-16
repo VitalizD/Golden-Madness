@@ -12,25 +12,25 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float repulsiveForce;
     [SerializeField] private float jerkForce = 3f;
-    [SerializeField] private float jumpCheckRadius = 0.45f;
     [SerializeField] private float touchingDistance;
     [SerializeField] private float attackDistance;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private float attackTime = 0.3f;
-    [SerializeField] private float reloadAttackTime = 1f;
-    [SerializeField] private float yOffsetToGround = -0.5f;
+    [SerializeField] private float reloadAttackTime = 0.5f;
 
     [SerializeField] private UnityEvent<string> OnGetDamage;
 
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
     private Animator animator;
+
     private Tile selectedTile;
     private Vector3 oldPos;
-
     private LayerMask groundMask;
     private LayerMask enemiesMask;
+    private float jumpCheckRadius = 0.01f;
+    private float yOffsetToGround = -0.5f;
 
     private Coroutine reloadAttack;
 
@@ -136,7 +136,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackDistance);
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x + attackDistance, transform.position.y), attackDistance);
     }
 
     // Назначен на ключ в анимации "Attack"
@@ -166,6 +166,7 @@ public class Player : MonoBehaviour
         var damage = selectedTile.DiggingDifficulty < HitDamage ? HitDamage / selectedTile.DiggingDifficulty : HitDamage;
         selectedTile.Health -= damage;
         canAttack = false;
+
         if (reloadAttack != null) StopCoroutine(reloadAttack);
         reloadAttack = StartCoroutine(ReloadAttack());
     }
@@ -214,6 +215,7 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
+        ChangeDirectionTowards(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
@@ -236,6 +238,11 @@ public class Player : MonoBehaviour
         var collaiders = Physics2D.OverlapCircleAll(
             new Vector2(transform.position.x, transform.position.y + yOffsetToGround), jumpCheckRadius, groundMask);
         IsGrounded = collaiders.Length > 0;
+    }
+
+    private void ChangeDirectionTowards(Vector2 position)
+    {
+        sprite.flipX = position.x <= transform.position.x;
     }
 
     private IEnumerator DisableInvulnerability()
