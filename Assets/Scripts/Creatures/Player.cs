@@ -120,7 +120,7 @@ public class Player : MonoBehaviour
         if (IsGrounded && !isAttacking && !IsStunned && !IsDigging)
             State = States.Idle;
 
-        if (!IsStunned && !isAttacking && Input.GetButton("Horizontal"))
+        if (!IsStunned && Input.GetButton("Horizontal"))
             Run();
     }
 
@@ -192,14 +192,14 @@ public class Player : MonoBehaviour
             var colPos = collision.transform.position;
             var playerPos = transform.position;
 
-            rigidBody2d.AddForce(new Vector2(playerPos.x - colPos.x, 1) * repulsion.Force, ForceMode2D.Impulse);
+            rigidBody2d.AddForce(new Vector2((playerPos.x - colPos.x) * repulsion.Force, repulsion.Force / 5), ForceMode2D.Impulse);
         }
     }
 
     private void Run()
     {
         IsDigging = false;
-        if (IsGrounded)
+        if (IsGrounded && !isAttacking)
             State = States.Walk;
 
         var dir = transform.right * Input.GetAxis("Horizontal");
@@ -215,11 +215,11 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        ChangeDirectionTowards(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        //ChangeDirectionTowards(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-        rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
+        //rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
 
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());
