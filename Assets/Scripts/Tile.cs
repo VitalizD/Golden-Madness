@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Tile : MonoBehaviour
 {
@@ -9,12 +10,12 @@ public class Tile : MonoBehaviour
     [SerializeField] private Sprite[] destructionDegrees;
 
     private SpriteRenderer destructionSprite;
+    private Selection selection;
 
-    private GameObject selection;
-    private float zPosSelection;
-    private float selectionMovingSpeed = 20;
     private float maxHealth;
     private Player player;
+
+    public float DiggingDifficulty { get => diggingDifficulty; }
 
     public float Health
     {
@@ -24,8 +25,8 @@ public class Tile : MonoBehaviour
             health = value;
             if (health <= 0)
             {
-                player.IsDigging = false;
-                selection.SetActive(false);
+                StopDigging();
+                selection.gameObject.SetActive(false);
                 Destroy(gameObject);
             }
             else
@@ -33,12 +34,9 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public float DiggingDifficulty { get => diggingDifficulty; }
-
     private void Awake()
     {
-        selection = GameObject.Find("Selection");
-        zPosSelection = selection.transform.position.z;
+        selection = GameObject.Find("Selection").GetComponent<Selection>();
         maxHealth = health;
         player = FindObjectOfType<Player>();
         destructionSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -49,14 +47,14 @@ public class Tile : MonoBehaviour
         if (isBedrock)
             return;
 
-        selection.SetActive(true);
+        selection.gameObject.SetActive(true);
         player.SetSelectedTile(this);
     }
 
     private void OnMouseExit()
     {
-        selection.SetActive(false);
-        player.IsDigging = false;
+        StopDigging();
+        selection.gameObject.SetActive(false);
         player.RemoveSelectedTile();
     }
 
@@ -67,18 +65,26 @@ public class Tile : MonoBehaviour
 
     private void OnMouseOver()
     {
-        selection.transform.position = Vector3.Lerp(
-            selection.transform.position,
-            new Vector3(transform.position.x, transform.position.y, zPosSelection),
-            selectionMovingSpeed * Time.deltaTime);
+        if (!isBedrock)
+            selection.Move(transform.position);
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetButton("Fire1"))
+        {
+            if (player.State != States.Dig)
+                selection.SetNormalColor();
             CheckDistance();
+        }
     }
 
     private void OnMouseUp()
     {
+        StopDigging();
+    }
+
+    private void StopDigging()
+    {
         player.IsDigging = false;
+        selection.SetNormalColor();
     }
 
     private void CheckDistance()
@@ -93,6 +99,7 @@ public class Tile : MonoBehaviour
         {
             player.IsDigging = true;
             player.State = States.Dig;
+            selection.SetActiveColor();
         }
     }
 
