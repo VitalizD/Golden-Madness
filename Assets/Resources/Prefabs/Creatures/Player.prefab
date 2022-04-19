@@ -89,16 +89,14 @@ MonoBehaviour:
   hitDamage: 1
   speed: 3
   jumpForce: 8
-  repulsiveForce: 3
+  repulsiveForce: 3.2
   jerkForce: 3
-  jumpCheckRadius: 0.01
   touchingDistance: 1.5
-  attackDistance: 0.75
+  attackDistance: 1.2
   invulnerabilityTime: 1
   stunTime: 0.5
   attackTime: 0.5
-  reloadAttackTime: 0.75
-  yOffsetToGround: -0.5
+  reloadAttackTime: 1
   OnGetDamage:
     m_PersistentCalls:
       m_Calls: []
