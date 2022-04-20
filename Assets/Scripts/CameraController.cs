@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private float yOffset = 1.6f;
+
     private Transform player;
-    private Vector3 position;
+    private Vector3 toPosition;
 
     private void Start()
     {
@@ -15,9 +17,10 @@ public class CameraController : MonoBehaviour
     {
         if (player != null)
         {
-            position = player.position;
-            position.z = -10;
-            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime);
+            toPosition = player.position;
+            toPosition.y = player.position.y - yOffset;
+            toPosition.z = -10;
+            transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime);
         }
     }
 }
