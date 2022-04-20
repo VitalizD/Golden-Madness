@@ -185,25 +185,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1897565298467509867, guid: dc28186f4e6422f4fbcc67251a7a1a48, type: 3}
   m_PrefabInstance: {fileID: 656726105}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &105753850 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7948947896978701508, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
-  m_PrefabInstance: {fileID: 575412456}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &105753853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105753850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4420c251a17af741896ba45e132261a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocityForDamage: 14
-  damageMultiplier: 3
 --- !u!4 &151637768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1897565298467509867, guid: dc28186f4e6422f4fbcc67251a7a1a48, type: 3}
@@ -425,22 +406,6 @@ PrefabInstance:
     - target: {fileID: 984370220786920460, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4898213955527495611, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.509
-      objectReference: {fileID: 0}
-    - target: {fileID: 6502240540297770001, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
-      propertyPath: m_Radius
-      value: 0.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 6502240540297770001, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7948947896978701508, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
-      propertyPath: m_Icon
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
