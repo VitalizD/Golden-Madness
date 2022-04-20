@@ -219,7 +219,7 @@ public class Player : MonoBehaviour
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-        //rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
+        rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
 
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());

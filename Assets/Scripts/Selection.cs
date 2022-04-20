@@ -6,7 +6,7 @@ public class Selection : MonoBehaviour
 {
     [SerializeField] private float movingSpeed = 20f;
     [SerializeField] private float colorChangeSpeed = 5f;
-    [SerializeField] private float flickerDuration = 0.5f;
+    [SerializeField] private float flickerDuration = 0.25f;
     [SerializeField] private Color activeColor;
     [SerializeField] private Color alternativeColor;
 
@@ -38,7 +38,7 @@ public class Selection : MonoBehaviour
             sprite.color = Color.Lerp(normalColor, activeColor, colorInterpolation);
         }
         else
-            sprite.color = Color.Lerp(normalColor, alternativeColor, Mathf.PingPong(Time.time, 0.25f));
+            sprite.color = Color.Lerp(normalColor, alternativeColor, Mathf.PingPong(Time.time, flickerDuration));
     }
 
     public void Move(Vector2 toPoint)
