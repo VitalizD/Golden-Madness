@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     private bool invulnerability = false;
     private bool isMoving = false;
     private bool isStunned = false;
+    private bool feelPain = false;
     private bool isAttacking = false;
     private bool canAttack = true;
 
@@ -53,9 +54,16 @@ public class Player : MonoBehaviour
         get => (States)animator.GetInteger("State");
         set
         {
-            if (isStunned)
+            if (feelPain)
                 return;
+
             animator.SetInteger("State", (int)value);
+
+            if (value == States.Pain)
+            {
+                feelPain = true;
+                StartCoroutine(DisablePainAnimation());
+            }
         }
     }
 
@@ -76,15 +84,22 @@ public class Player : MonoBehaviour
         get => isStunned;
         set
         {
-            if (value) State = States.Pain;
+            //if (value) State = States.Pain;
             isStunned = value;
-            if (!value) State = States.Idle;
+            //if (!value) State = States.Idle;
         }
     }
 
     public void SetSelectedTile(Tile value) => selectedTile = value;
 
     public void RemoveSelectedTile() => selectedTile = null;
+
+    public void SetStun()
+    {
+        State = States.Pain;
+        IsStunned = true;
+        StartCoroutine(DisableStun());
+    }
 
     private void Awake()
     {
@@ -177,9 +192,8 @@ public class Player : MonoBehaviour
         if (danger)
         {
             Health -= danger.Damage;
-            IsStunned = true;
             invulnerability = true;
-            StartCoroutine(DisableStun());
+            SetStun();
             StartCoroutine(DisableInvulnerability());
         }
     }
@@ -219,7 +233,7 @@ public class Player : MonoBehaviour
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-        //rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
+        rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
 
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());
@@ -255,6 +269,13 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(stunTime);
         IsStunned = false;
+        feelPain = false;
+    }
+
+    private IEnumerator DisablePainAnimation()
+    {
+        yield return new WaitForSeconds(stunTime);
+        feelPain = false;
     }
 
     private IEnumerator FinishAttack()
