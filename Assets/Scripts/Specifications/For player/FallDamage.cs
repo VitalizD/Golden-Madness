@@ -7,6 +7,7 @@ public class FallDamage : MonoBehaviour
     [SerializeField] private float repulsiveForceMultiplier = 1.3f;
 
     private Rigidbody2D rb;
+    private Player player;
 
     private LayerMask groundMask;
 
@@ -14,6 +15,7 @@ public class FallDamage : MonoBehaviour
     {
         rb = transform.parent.GetComponent<Rigidbody2D>();
         groundMask = LayerMask.NameToLayer(ServiceInfo.GroundLayerName);
+        player = transform.parent.GetComponent<Player>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,13 +23,8 @@ public class FallDamage : MonoBehaviour
         if (collision.gameObject.layer == groundMask && rb.velocity.y < -velocityForDamage)
         {
             var damage = -rb.velocity.y - velocityForDamage;
-            var player = transform.parent.GetComponent<Player>();
-            if (player)
-            {
-                rb.AddForce(transform.up * (-rb.velocity.y) * repulsiveForceMultiplier, ForceMode2D.Impulse);
-                //player.State = States.Pain;
-                player.Health -= (int)(damage * damageMultiplier);
-            }
+            rb.AddForce(-rb.velocity.y * repulsiveForceMultiplier * transform.up, ForceMode2D.Impulse);
+            player.Health -= (int)(damage * damageMultiplier);
         }
     }
 }
