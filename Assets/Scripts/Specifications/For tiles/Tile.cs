@@ -1,19 +1,21 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class Tile : MonoBehaviour
 {
     [SerializeField] private float health = 10;
     [SerializeField] private float diggingDifficulty = 1;
     [SerializeField] private bool isBedrock = false;
+    [SerializeField] private bool destroyAttachedTiles = true;
     [SerializeField] private Sprite[] destructionDegrees;
 
     private SpriteRenderer destructionSprite;
     private Selection selection;
+    private Player player;
 
     private float maxHealth;
-    private Player player;
+    private float checkingDistanceToDestroyAttachedTiles = 1f;
 
     public float DiggingDifficulty { get => diggingDifficulty; }
 
@@ -38,8 +40,12 @@ public class Tile : MonoBehaviour
     {
         selection = GameObject.Find("Selection").GetComponent<Selection>();
         maxHealth = health;
-        player = FindObjectOfType<Player>();
         destructionSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        player = Player.instanse;
     }
 
     private void OnMouseEnter()
@@ -81,6 +87,12 @@ public class Tile : MonoBehaviour
         StopDigging();
     }
 
+    private void OnDestroy()
+    {
+        if (destroyAttachedTiles)
+            DestroyAttachedTiles();
+    }
+
     private void StopDigging()
     {
         player.IsDigging = false;
@@ -107,5 +119,26 @@ public class Tile : MonoBehaviour
     {
         var destructionSpriteIndex = (int)Mathf.Floor((maxHealth - Health) * (destructionDegrees.Length / maxHealth));
         destructionSprite.sprite = destructionDegrees[destructionSpriteIndex];
+    }
+
+    private void DestroyAttachedTiles()
+    {
+        var colliders = new List<Collider2D>
+        {
+            Physics2D.OverlapPoint(new Vector2(transform.position.x + checkingDistanceToDestroyAttachedTiles, transform.position.y)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x - checkingDistanceToDestroyAttachedTiles, transform.position.y)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y + checkingDistanceToDestroyAttachedTiles)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y - checkingDistanceToDestroyAttachedTiles))
+        };
+
+        foreach (var collider in colliders)
+        {
+            if (collider == null)
+                continue;
+
+            var attachedComponent = collider.GetComponent<AttachedTile>();
+            if (attachedComponent)
+                Destroy(attachedComponent.gameObject);
+        }
     }
 }

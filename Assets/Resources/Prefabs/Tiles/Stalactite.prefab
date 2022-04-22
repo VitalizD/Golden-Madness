@@ -48,6 +48,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: destroyAttachedTiles
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: destructionDegrees.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -148,8 +152,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d0bbd71db7e4a243984493e01f6561b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeToActivate: 0.3
+  rangeToActivate: 0.2
   shakingRange: 0.05
   timeBeforeFalling: 0.75
   extraFallingDamage: 5
-  repulsiveForce: 10
+  repulsiveForce: 7
+--- !u!114 &6308935613159312026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3989162180557718488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c98e9d6affd0c4cbb34a1a53c2935c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
