@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     private LayerMask enemiesMask;
     private float jumpCheckRadius = 0.01f;
     private float yOffsetToGround = -0.5f;
+    private Vector2 checkpoint;
 
     private Coroutine reloadAttack;
 
@@ -40,10 +41,12 @@ public class Player : MonoBehaviour
     private bool feelPain = false;
     private bool isAttacking = false;
     private bool canAttack = true;
+    private bool isDigging = false;
+    private bool isGrounded = false;
 
-    public bool IsDigging { get; set; } = false;
+    public bool IsDigging { get => isDigging; set => isDigging = value; }
 
-    public bool IsGrounded { get; private set; } = false;
+    public bool IsGrounded { get => isGrounded; }
 
     public float TouchingDistance { get => touchingDistance; }
 
@@ -79,17 +82,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool IsStunned
-    {
-        get => isStunned;
-        set
-        {
-            //if (value) State = States.Pain;
-            isStunned = value;
-            //if (!value) State = States.Idle;
-        }
-    }
-
     public void SetSelectedTile(Tile value) => selectedTile = value;
 
     public void RemoveSelectedTile() => selectedTile = null;
@@ -97,7 +89,7 @@ public class Player : MonoBehaviour
     public void SetStun()
     {
         State = States.Pain;
-        IsStunned = true;
+        isStunned = true;
         StartCoroutine(DisableStun());
     }
 
@@ -112,16 +104,21 @@ public class Player : MonoBehaviour
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
 
-        groundMask = LayerMask.GetMask("Ground");
-        enemiesMask = LayerMask.GetMask("Enemies");
+        groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
+        enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
+    }
+
+    private void Start()
+    {
+        checkpoint = transform.position;
     }
 
     private void Update()
     {
-        if (IsGrounded && !IsStunned && Input.GetButtonDown("Jump"))
+        if (isGrounded && !isStunned && Input.GetButtonDown("Jump"))
             Jump();
 
-        if (canAttack && IsGrounded && !IsDigging && !IsStunned && Input.GetButtonDown("Fire1"))
+        if (canAttack && isGrounded && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
             Attack();
     }
 
@@ -132,10 +129,10 @@ public class Player : MonoBehaviour
 
         CheckGrounded();
 
-        if (IsGrounded && !isAttacking && !IsStunned && !IsDigging)
+        if (isGrounded && !isAttacking && !isStunned && !isDigging)
             State = States.Idle;
 
-        if (!IsStunned && Input.GetButton("Horizontal"))
+        if (!isStunned && Input.GetButton("Horizontal"))
             Run();
     }
 
@@ -212,8 +209,8 @@ public class Player : MonoBehaviour
 
     private void Run()
     {
-        IsDigging = false;
-        if (IsGrounded && !isAttacking)
+        isDigging = false;
+        if (isGrounded && !isAttacking)
             State = States.Walk;
 
         var dir = transform.right * Input.GetAxis("Horizontal");
@@ -223,7 +220,7 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        IsDigging = false;
+        isDigging = false;
         rigidBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
@@ -241,7 +238,7 @@ public class Player : MonoBehaviour
 
     private void CheckGrounded()
     {
-        if (!IsGrounded)
+        if (!isGrounded)
         {
             if (rigidBody2d.velocity.y > 0)
                 State = States.Jump;
@@ -251,7 +248,7 @@ public class Player : MonoBehaviour
 
         var collaiders = Physics2D.OverlapCircleAll(
             new Vector2(transform.position.x, transform.position.y + yOffsetToGround), jumpCheckRadius, groundMask);
-        IsGrounded = collaiders.Length > 0;
+        isGrounded = collaiders.Length > 0;
     }
 
     private void ChangeDirectionTowards(Vector2 position)
@@ -268,7 +265,7 @@ public class Player : MonoBehaviour
     private IEnumerator DisableStun()
     {
         yield return new WaitForSeconds(stunTime);
-        IsStunned = false;
+        isStunned = false;
         feelPain = false;
     }
 
