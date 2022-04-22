@@ -78,7 +78,10 @@ public class Player : MonoBehaviour
             health = value;
             //OnGetDamage?.Invoke(health.ToString());
             if (health <= 0)
-                Destroy(gameObject);
+            {
+                health = 100;
+                transform.position = checkpoint;
+            }
         }
     }
 
