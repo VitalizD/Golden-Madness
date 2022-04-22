@@ -75,6 +75,8 @@ public class Player : MonoBehaviour
         get => health;
         set
         {
+            if (value < health)
+                State = States.Pain;
             health = value;
             //OnGetDamage?.Invoke(health.ToString());
             if (health <= 0)
@@ -89,12 +91,7 @@ public class Player : MonoBehaviour
 
     public void RemoveSelectedTile() => selectedTile = null;
 
-    public void SetStun()
-    {
-        State = States.Pain;
-        isStunned = true;
-        StartCoroutine(DisableStun());
-    }
+    public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
 
     private void Awake()
     {
@@ -196,6 +193,13 @@ public class Player : MonoBehaviour
             SetStun();
             StartCoroutine(DisableInvulnerability());
         }
+    }
+
+    private void SetStun()
+    {
+        State = States.Pain;
+        isStunned = true;
+        StartCoroutine(DisableStun());
     }
 
     private void Throw(Collision2D collision)

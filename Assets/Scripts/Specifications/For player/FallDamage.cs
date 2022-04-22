@@ -25,7 +25,7 @@ public class FallDamage : MonoBehaviour
             if (player)
             {
                 rb.AddForce(transform.up * (-rb.velocity.y) * repulsiveForceMultiplier, ForceMode2D.Impulse);
-                player.State = States.Pain;
+                //player.State = States.Pain;
                 player.Health -= (int)(damage * damageMultiplier);
             }
         }
