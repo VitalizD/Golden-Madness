@@ -138,7 +138,13 @@ public class Tile : MonoBehaviour
 
             var attachedComponent = collider.GetComponent<AttachedTile>();
             if (attachedComponent)
-                Destroy(attachedComponent.gameObject);
+            {
+                var stalactite = attachedComponent.GetComponent<Stalactite>();
+                if (stalactite)
+                    stalactite.Active(0);
+                else
+                    Destroy(attachedComponent.gameObject);
+            }
         }
     }
 }

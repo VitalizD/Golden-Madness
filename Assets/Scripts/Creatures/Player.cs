@@ -76,7 +76,11 @@ public class Player : MonoBehaviour
         set
         {
             if (value < health)
+            {
                 State = States.Pain;
+                invulnerability = true;
+                StartCoroutine(DisableInvulnerability());
+            }
             health = value;
             //OnGetDamage?.Invoke(health.ToString());
             if (health <= 0)
@@ -189,9 +193,7 @@ public class Player : MonoBehaviour
         if (danger)
         {
             Health -= danger.Damage;
-            invulnerability = true;
             SetStun();
-            StartCoroutine(DisableInvulnerability());
         }
     }
 

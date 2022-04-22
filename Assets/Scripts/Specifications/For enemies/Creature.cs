@@ -82,6 +82,8 @@ public class Creature : MonoBehaviour
         directionValue = sprite.flipX ? -1 : 1;
     }
 
+    public void AddForce(Vector2 force) => rigidbody2D_.AddForce(force, ForceMode2D.Impulse);
+
     private IEnumerator SetNormalColor()
     {
         yield return new WaitForSeconds(damageColorTime);
