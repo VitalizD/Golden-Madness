@@ -1,19 +1,21 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class Tile : MonoBehaviour
 {
     [SerializeField] private float health = 10;
     [SerializeField] private float diggingDifficulty = 1;
     [SerializeField] private bool isBedrock = false;
+    [SerializeField] private bool destroyAttachedTiles = true;
     [SerializeField] private Sprite[] destructionDegrees;
 
     private SpriteRenderer destructionSprite;
     private Selection selection;
+    private Player player;
 
     private float maxHealth;
-    private Player player;
+    private float checkingDistanceToDestroyAttachedTiles = 1f;
 
     public float DiggingDifficulty { get => diggingDifficulty; }
 
@@ -24,11 +26,7 @@ public class Tile : MonoBehaviour
         {
             health = value;
             if (health <= 0)
-            {
-                StopDigging();
-                selection.gameObject.SetActive(false);
                 Destroy(gameObject);
-            }
             else
                 ChangeDestructionDegree();
         }
@@ -38,8 +36,12 @@ public class Tile : MonoBehaviour
     {
         selection = GameObject.Find("Selection").GetComponent<Selection>();
         maxHealth = health;
-        player = FindObjectOfType<Player>();
         destructionSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        player = Player.instanse;
     }
 
     private void OnMouseEnter()
@@ -81,10 +83,21 @@ public class Tile : MonoBehaviour
         StopDigging();
     }
 
+    private void OnDestroy()
+    {
+        if (destroyAttachedTiles)
+            DestroyAttachedTiles();
+
+        StopDigging();
+        if (selection)
+            selection.gameObject.SetActive(false);
+    }
+
     private void StopDigging()
     {
         player.IsDigging = false;
-        selection.SetNormalColor();
+        if (selection)
+            selection.SetNormalColor();
     }
 
     private void CheckDistance()
@@ -107,5 +120,32 @@ public class Tile : MonoBehaviour
     {
         var destructionSpriteIndex = (int)Mathf.Floor((maxHealth - Health) * (destructionDegrees.Length / maxHealth));
         destructionSprite.sprite = destructionDegrees[destructionSpriteIndex];
+    }
+
+    private void DestroyAttachedTiles()
+    {
+        var colliders = new List<Collider2D>
+        {
+            Physics2D.OverlapPoint(new Vector2(transform.position.x + checkingDistanceToDestroyAttachedTiles, transform.position.y)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x - checkingDistanceToDestroyAttachedTiles, transform.position.y)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y + checkingDistanceToDestroyAttachedTiles)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y - checkingDistanceToDestroyAttachedTiles))
+        };
+
+        foreach (var collider in colliders)
+        {
+            if (collider == null)
+                continue;
+
+            var attachedComponent = collider.GetComponent<AttachedTile>();
+            if (attachedComponent)
+            {
+                var stalactite = attachedComponent.GetComponent<Stalactite>();
+                if (stalactite)
+                    stalactite.Active(0);
+                else
+                    Destroy(attachedComponent.gameObject);
+            }
+        }
     }
 }
