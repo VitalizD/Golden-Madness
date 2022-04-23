@@ -26,11 +26,7 @@ public class Tile : MonoBehaviour
         {
             health = value;
             if (health <= 0)
-            {
-                StopDigging();
-                selection.gameObject.SetActive(false);
                 Destroy(gameObject);
-            }
             else
                 ChangeDestructionDegree();
         }
@@ -91,12 +87,17 @@ public class Tile : MonoBehaviour
     {
         if (destroyAttachedTiles)
             DestroyAttachedTiles();
+
+        StopDigging();
+        if (selection)
+            selection.gameObject.SetActive(false);
     }
 
     private void StopDigging()
     {
         player.IsDigging = false;
-        selection.SetNormalColor();
+        if (selection)
+            selection.SetNormalColor();
     }
 
     private void CheckDistance()
