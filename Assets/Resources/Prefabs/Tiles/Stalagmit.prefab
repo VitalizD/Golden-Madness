@@ -49,9 +49,9 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.03403472, y: 0.27251536}
+  - {x: -0.011065386, y: 0.3223445}
   - {x: -0.0018540416, y: 0.34404302}
-  - {x: 0.029838707, y: 0.2718765}
+  - {x: 0.007264954, y: 0.3229174}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -108,6 +108,10 @@ PrefabInstance:
       propertyPath: m_SpriteSortPoint
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4503583857430665579, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6138516677227342361, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_Size.x
       value: 0.13470986
@@ -143,6 +147,10 @@ PrefabInstance:
     - target: {fileID: 6208804222166184536, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_Name
       value: Stalagmit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: health
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7386847732881463872, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_RootOrder
@@ -204,8 +212,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6208804222166184536, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
   m_PrefabInstance: {fileID: 500106696254564714}
   m_PrefabAsset: {fileID: 0}
---- !u!68 &266801779506052157
-EdgeCollider2D:
+--- !u!60 &5750529819063249023
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -218,15 +226,20 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   m_Points:
-  - {x: -0.34183848, y: -0.49945396}
-  - {x: -0.0010381369, y: 0.33711237}
-  - {x: 0.33651802, y: -0.49867332}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+    m_Paths:
+    - - {x: 0.33895424, y: -0.49867705}
+      - {x: -0.0021143814, y: 0.33793545}
+      - {x: -0.3408372, y: -0.49828255}
 --- !u!4 &6950152103570486058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7386847732881463872, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
