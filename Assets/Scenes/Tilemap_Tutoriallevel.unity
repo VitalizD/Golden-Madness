@@ -3652,9 +3652,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4090567961278174854, guid: 5cc64f62fba9c674eb218529914402b4, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 4090567961278174854, guid: 5cc64f62fba9c674eb218529914402b4, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 4090567961278174854, guid: 5cc64f62fba9c674eb218529914402b4, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5764706
+      objectReference: {fileID: 0}
     - target: {fileID: 5826152586040122162, guid: 5cc64f62fba9c674eb218529914402b4, type: 3}
       propertyPath: m_Name
       value: Stalagmit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787383099950247448, guid: 5cc64f62fba9c674eb218529914402b4, type: 3}
+      propertyPath: destructionDegrees.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6950152103570486058, guid: 5cc64f62fba9c674eb218529914402b4, type: 3}
       propertyPath: m_RootOrder
@@ -3662,7 +3678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950152103570486058, guid: 5cc64f62fba9c674eb218529914402b4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: 31.5
       objectReference: {fileID: 0}
     - target: {fileID: 6950152103570486058, guid: 5cc64f62fba9c674eb218529914402b4, type: 3}
       propertyPath: m_LocalPosition.y
