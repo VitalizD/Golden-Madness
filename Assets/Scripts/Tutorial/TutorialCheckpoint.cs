@@ -36,13 +36,21 @@ public class TutorialCheckpoint : MonoBehaviour
         {
             case InformationWindowHidingConditions.Press1:
                 return new Func<bool>(() => { return Input.GetKey(KeyCode.Alpha1); });
+            case InformationWindowHidingConditions.PressI:
+                return new Func<bool>(() => { return Input.GetKey(KeyCode.I); });
+            case InformationWindowHidingConditions.Press2:
+                return new Func<bool>(() => { return Input.GetKey(KeyCode.Alpha2); });
+            case InformationWindowHidingConditions.Press3:
+                return new Func<bool>(() => { return Input.GetKey(KeyCode.Alpha3); });
+            case InformationWindowHidingConditions.Press4:
+                return new Func<bool>(() => { return Input.GetKey(KeyCode.Alpha4); });
             default: return null;
         }
     }
 
     private void Update()
     {
-        if (funcCondition != null && funcCondition())
+        if (wasTriggered && funcCondition != null && funcCondition())
         {
             onMakeCondition?.Invoke();
             Destroy(gameObject);

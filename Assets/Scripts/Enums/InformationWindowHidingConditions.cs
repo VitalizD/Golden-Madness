@@ -1,5 +1,9 @@
 ﻿public enum InformationWindowHidingConditions
 {
     None,
-    Press1
+    Press1,
+    PressI,
+    Press2,
+    Press3,
+    Press4
 }
