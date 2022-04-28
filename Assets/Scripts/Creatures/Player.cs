@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
 
     public bool IsDigging { get => isDigging; set => isDigging = value; }
 
+    public Vector2 Checkpoint { get => checkpoint; set => checkpoint = value; }
+
     public bool IsGrounded { get => isGrounded; }
 
     public float TouchingDistance { get => touchingDistance; }

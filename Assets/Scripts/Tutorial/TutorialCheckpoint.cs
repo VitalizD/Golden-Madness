@@ -9,6 +9,7 @@ public class TutorialCheckpoint : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         InformationWindow.instance?.Show(informationText, GetFuncCondition());
+        Player.instanse.Checkpoint = transform.position;
         Destroy(gameObject);
     }
 
