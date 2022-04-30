@@ -186,6 +186,9 @@ MonoBehaviour:
   playerCheckBetweenTime: 0.5
   aggressiveModeTime: 5
   aggressiveSpeed: 2
+  onDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1598536202226443170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,4 +214,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1fb31dae0427f42bb3790f2c56afe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 7
+  force: 6
