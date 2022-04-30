@@ -5,7 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/TutorialLevel.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/SaveZone.unity
+    guid: 8da891979dbcfb24591c9dd5ce1bcf75
+  - enabled: 1
+    path: Assets/Scenes/Test.unity
+    guid: 1b112acd8f40be649a009fdc3195a83d
+  - enabled: 1
+    path: Assets/Scenes/Tilemap_Tutoriallevel (copy).unity
+    guid: 4e70ddc3aba890943a76781ce99ed6f6
+  - enabled: 1
+    path: Assets/Scenes/Tilemap_Tutoriallevel.unity
+    guid: b42f1e01b01ec4442b26124fa8e6a1c7
+  - enabled: 1
+    path: Assets/Scenes/With SaveZone.unity
+    guid: 090ec77bd32de3044b7ecace9e7c152c
   m_configObjects: {}
