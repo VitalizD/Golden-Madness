@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private float attackTime = 0.3f;
     [SerializeField] private float reloadAttackTime = 0.5f;
+    [SerializeField] private VectorValue initialPosition;
 
     [SerializeField] private UnityEvent<string> OnGetDamage;
 
@@ -114,10 +115,10 @@ public class Player : MonoBehaviour
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
     }
 
-    public VectorValue pos;
     private void Start()
     {
-        transform.position = pos.initialValue;
+        if (initialPosition != null)
+            transform.position = initialPosition.initialValue;
         checkpoint = transform.position;
     }
 

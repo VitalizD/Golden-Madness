@@ -49,15 +49,19 @@ public class Tile : MonoBehaviour
         if (isBedrock)
             return;
 
-        selection.gameObject.SetActive(true);
-        player.SetSelectedTile(this);
+        if (selection)
+            selection.gameObject.SetActive(true);
+        if (player)
+            player.SetSelectedTile(this);
     }
 
     private void OnMouseExit()
     {
         StopDigging();
-        selection.gameObject.SetActive(false);
-        player.RemoveSelectedTile();
+        if (selection)
+            selection.gameObject.SetActive(false);
+        if (player)
+            player.RemoveSelectedTile();
     }
 
     private void OnMouseDown()
@@ -95,7 +99,8 @@ public class Tile : MonoBehaviour
 
     private void StopDigging()
     {
-        player.IsDigging = false;
+        if (player)
+            player.IsDigging = false;
         if (selection)
             selection.SetNormalColor();
     }
