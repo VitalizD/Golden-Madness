@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Rat : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Rat : MonoBehaviour
     [SerializeField] private float playerCheckBetweenTime = 0.5f;
     [SerializeField] private float aggressiveModeTime = 5f;
     [SerializeField] private float aggressiveSpeed = 1.5f;
+
+    [SerializeField] private UnityEvent onDestroy;
 
     private Creature creature;
     private SpriteRenderer sprite;
@@ -53,6 +56,11 @@ public class Rat : MonoBehaviour
         var player = collision.collider.GetComponent<Player>();
         if (player)
             creature.ChangeDirectionTowards(player.transform.position);
+    }
+
+    private void OnDestroy()
+    {
+        onDestroy?.Invoke();
     }
 
     private void Run()
