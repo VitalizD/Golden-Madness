@@ -139,7 +139,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8543eb46b467c3a48bd8477187eaad6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -212,6 +212,7 @@ MonoBehaviour:
   health: 10
   diggingDifficulty: 1
   isBedrock: 0
+  destroyAttachedTiles: 1
   destructionDegrees:
   - {fileID: 21300000, guid: 36911eda0c7cfa045b67decc32734af0, type: 3}
   - {fileID: 21300000, guid: 00b75578567bcd04eb8355a532f16192, type: 3}
