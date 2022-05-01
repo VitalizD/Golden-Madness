@@ -88,19 +88,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e2758d084578b4195ecffda210a82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPosition: {fileID: 11400000, guid: c497f5c7dab792641aa89097df969cd7, type: 2}
   health: 100
   hitDamage: 1
   speed: 4
   jumpForce: 8
+  touchingDistance: 1.5
   repulsiveForce: 3.2
   jerkForce: 0
-  touchingDistance: 1.5
   attackDistance: 1.2
-  invulnerabilityTime: 1
-  stunTime: 0.5
   attackTime: 0.5
   reloadAttackTime: 1
-  initialPosition: {fileID: 11400000, guid: c497f5c7dab792641aa89097df969cd7, type: 2}
+  invulnerabilityTime: 1
+  stunTime: 0.5
   OnGetDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 3791962589903257141}
   - component: {fileID: 1635360014515291880}
   - component: {fileID: 4750881196579373436}
+  - component: {fileID: 2537205635252364338}
   m_Layer: 7
   m_Name: Light
   m_TagString: Untagged
@@ -469,9 +470,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.9528302, g: 0.9036061, b: 0.75866854, a: 1}
-  m_Intensity: 2
-  m_Range: 30
+  m_Color: {r: 1, g: 0.8603327, b: 0.6264151, a: 1}
+  m_Intensity: 1.5
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -533,9 +534,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enable: 1
-  minIntensity: 2
-  maxIntensity: 2.5
-  noise: 0.22
+  minIntensity: 1.5
+  maxIntensity: 2
+  frequency: 0.22
+--- !u!114 &2537205635252364338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5606018953659525155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a59608610fc7b4690e80d7f001769f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableFuelDecrease: 1
+  fuelCount: 100
+  minLightRange: 8
+  maxLightRange: 25
+  fuelDecreaseValue: 0.5
+  timeFuelDecrease: 1
 --- !u!1 &5831702624987111799
 GameObject:
   m_ObjectHideFlags: 0
