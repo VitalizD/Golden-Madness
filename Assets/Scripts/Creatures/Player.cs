@@ -26,12 +26,12 @@ public class Player : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator animator;
 
+    private readonly float jumpCheckRadius = 0.01f;
+    private readonly float yOffsetToGround = -0.5f;
     private Tile selectedTile;
     private Vector3 oldPos;
     private LayerMask groundMask;
     private LayerMask enemiesMask;
-    private float jumpCheckRadius = 0.01f;
-    private float yOffsetToGround = -0.5f;
     private Vector2 checkpoint;
 
     private Coroutine reloadAttack;

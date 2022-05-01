@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 984370220786920454}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,7 +176,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8543eb46b467c3a48bd8477187eaad6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -435,6 +435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3791962589903257141}
   - component: {fileID: 1635360014515291880}
+  - component: {fileID: 4750881196579373436}
   m_Layer: 7
   m_Name: Light
   m_TagString: Untagged
@@ -468,9 +469,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Color: {r: 0.9528302, g: 0.9036061, b: 0.75866854, a: 1}
+  m_Intensity: 2
+  m_Range: 30
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -519,6 +520,22 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &4750881196579373436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5606018953659525155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779cc6d8dc254554ba7f8f70161ac664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enable: 1
+  minIntensity: 2
+  maxIntensity: 2.5
+  noise: 0.22
 --- !u!1 &5831702624987111799
 GameObject:
   m_ObjectHideFlags: 0
