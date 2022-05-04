@@ -4044,14 +4044,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: playerWords
-      value: "\u041A\u0430\u043A \u0432\u0441\u0435\u0433\u0434\u0430, \u0432 \u043F\u0435\u0449\u0435\u0440\u0435
-        \u043D\u0435 \u0431\u0435\u0437 \u0441\u0442\u0430\u043B\u0430\u043A\u0442\u0438\u0442\u043E\u0432"
+      value: "\u0421\u0442\u0430\u043B\u0430\u043A\u0442\u0438\u0442\u044B! \u041E\u043D\u0438
+        \u043C\u043E\u0433\u0443\u0442 \u043E\u0431\u0440\u0443\u0448\u0438\u0442\u044C\u0441\u044F
+        \u043D\u0430 \u043C\u0435\u043D\u044F"
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: informationText
-      value: "\u041D\u0435 \u043F\u043E\u0437\u0432\u043E\u043B\u044C\u0442\u0435
-        \u0441\u0442\u0430\u043B\u0430\u043A\u0442\u0438\u0442\u0430\u043C \u043E\u0431\u0440\u0443\u0448\u0438\u0442\u044C\u0441\u044F
-        \u043D\u0430 \u0432\u0430\u0441!"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: informationWindowHidingCondition
@@ -6757,6 +6756,10 @@ PrefabInstance:
     - target: {fileID: 342611987422518752, guid: 95ef3605bd4244a49a5e1065f5a919e8, type: 3}
       propertyPath: m_Name
       value: Hide Info Window
+      objectReference: {fileID: 0}
+    - target: {fileID: 342611987422518752, guid: 95ef3605bd4244a49a5e1065f5a919e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6962305637494429220, guid: 95ef3605bd4244a49a5e1065f5a919e8, type: 3}
       propertyPath: m_Size.x
@@ -17579,8 +17582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: informationText
-      value: "\u0414\u043E\u0431\u0443\u0434\u044C\u0442\u0435 \u0431\u043E\u043B\u044C\u0448\u0435
-        \u0437\u043E\u043B\u043E\u0442\u0430!"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: informationWindowHidingCondition
@@ -19175,7 +19177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 342611987422518752, guid: 95ef3605bd4244a49a5e1065f5a919e8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6962305637494429220, guid: 95ef3605bd4244a49a5e1065f5a919e8, type: 3}
       propertyPath: m_Size.x
@@ -27076,6 +27078,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hide Info Window
       objectReference: {fileID: 0}
+    - target: {fileID: 342611987422518752, guid: 95ef3605bd4244a49a5e1065f5a919e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6962305637494429220, guid: 95ef3605bd4244a49a5e1065f5a919e8, type: 3}
       propertyPath: m_Size.x
       value: 0.1807425
@@ -27301,8 +27307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: informationText
-      value: "\u041F\u0435\u0440\u0435\u043F\u0440\u044B\u0433\u043D\u0438\u0442\u0435
-        \u044F\u043C\u0443!"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: timeHidingDialogWindow
