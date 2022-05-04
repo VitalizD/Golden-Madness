@@ -9,6 +9,7 @@ public class TutorialCheckpoint : MonoBehaviour
     [SerializeField] private float timeHidingDialogWindow = 4f;
     [SerializeField] private InformationWindowHidingConditions condition = InformationWindowHidingConditions.None;
     [SerializeField] private UnityEvent onMakeCondition;
+    [SerializeField] private UnityEvent onTriggered;
 
     private Func<bool> funcCondition;
 
@@ -23,6 +24,8 @@ public class TutorialCheckpoint : MonoBehaviour
     {
         if (wasTriggered)
             return;
+
+        onTriggered?.Invoke();
 
         if (informationText != "")
             InformationWindow.instance?.Show(informationText, funcCondition);

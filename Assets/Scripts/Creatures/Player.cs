@@ -5,36 +5,40 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     public static Player instanse = null;
-    
-    [SerializeField] private int health = 10;
+
+    [SerializeField] private VectorValue initialPosition;
+
+    [Header("Base")]
+    [SerializeField] [Range(0, 100)] private int health = 100;
     [SerializeField] private int hitDamage;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float touchingDistance;
+
+    [Header("Fight")]
     [SerializeField] private float repulsiveForce;
     [SerializeField] private float jerkForce = 3f;
-    [SerializeField] private float touchingDistance;
     [SerializeField] private float attackDistance;
-    [SerializeField] private float invulnerabilityTime = 1f;
-    [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private float attackTime = 0.3f;
     [SerializeField] private float reloadAttackTime = 0.5f;
-    [SerializeField] private VectorValue initialPosition;
-
+    [SerializeField] private float invulnerabilityTime = 1f;
+    [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private UnityEvent<string> OnGetDamage;
 
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
     private Animator animator;
 
+    private readonly float jumpCheckRadius = 0.01f;
+    private readonly float yOffsetToGround = -0.5f;
     private Tile selectedTile;
     private Vector3 oldPos;
     private LayerMask groundMask;
     private LayerMask enemiesMask;
-    private float jumpCheckRadius = 0.01f;
-    private float yOffsetToGround = -0.5f;
     private Vector2 checkpoint;
 
     private Coroutine reloadAttack;
+    private Coroutine decreaseLampFuel;
 
     private bool invulnerability = false;
     private bool isMoving = false;
@@ -265,10 +269,10 @@ public class Player : MonoBehaviour
         isGrounded = collaiders.Length > 0;
     }
 
-    private void ChangeDirectionTowards(Vector2 position)
-    {
-        sprite.flipX = position.x <= transform.position.x;
-    }
+    //private void ChangeDirectionTowards(Vector2 position)
+    //{
+    //    sprite.flipX = position.x <= transform.position.x;
+    //}
 
     private IEnumerator DisableInvulnerability()
     {
