@@ -28,19 +28,19 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
     private Animator animator;
+    private SanityController sanity;
 
-    private readonly float jumpCheckRadius = 0.01f;
-    private readonly float yOffsetToGround = -0.5f;
     private Tile selectedTile;
-    private Vector3 oldPos;
     private LayerMask groundMask;
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
 
     private Coroutine reloadAttack;
 
+    private readonly float jumpCheckRadius = 0.01f;
+    private readonly float yOffsetToGround = -0.5f;
+
     private bool invulnerability = false;
-    private bool isMoving = false;
     private bool isStunned = false;
     private bool feelPain = false;
     private bool isAttacking = false;
@@ -113,6 +113,7 @@ public class Player : MonoBehaviour
         rigidBody2d = GetComponent<Rigidbody2D>();
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        sanity = GetComponent<SanityController>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
@@ -136,9 +137,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isMoving = transform.position != oldPos;
-        oldPos = transform.position;
-
         CheckGrounded();
 
         if (isGrounded && !isAttacking && !isStunned && !isDigging)
@@ -155,15 +153,6 @@ public class Player : MonoBehaviour
 
         Throw(collision.collider);
         GetDamage(collision.collider);
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (invulnerability)
-            return;
-
-        Throw(collision);
-        GetDamage(collision);
     }
 
     private void OnDrawGizmosSelected()
@@ -205,11 +194,15 @@ public class Player : MonoBehaviour
 
     private void GetDamage(Collider2D collision)
     {
-        var danger = collision.gameObject.GetComponent<Danger>();
+        var danger = collision.GetComponent<Danger>();
         if (danger)
         {
             Health -= danger.Damage;
             SetStun();
+
+            var terrible = collision.GetComponent<Terrible>();
+            if (terrible)
+                sanity.Sanity -= terrible.DecreasingSanityAfterAttack;
         }
     }
 

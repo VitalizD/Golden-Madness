@@ -25328,26 +25328,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1897565298467509867, guid: dc28186f4e6422f4fbcc67251a7a1a48, type: 3}
   m_PrefabInstance: {fileID: 1769899706}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1770107492 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 984370220786920460, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+--- !u!114 &1770107498 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 99395948229621791, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
   m_PrefabInstance: {fileID: 2034142061}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1770107498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1770107492}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9effe401df66c43418c507bdba7ef8d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCount: 5
-  fuelTanksCount: 0
-  fuelTankRecovery: 50
 --- !u!1001 &1770269515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29988,10 +29979,6 @@ PrefabInstance:
       propertyPath: fuelCount
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2537205635252364338, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
-      propertyPath: enableFuelDecrease
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3389356901535063186, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_Camera
       value: 
@@ -31290,6 +31277,10 @@ PrefabInstance:
     - target: {fileID: 1598536202226443171, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
       propertyPath: onDestroy.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598536202226443175, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
+      propertyPath: health
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1598536202226443199, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
       propertyPath: m_Name

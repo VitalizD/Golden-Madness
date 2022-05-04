@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 984370220786920450}
   - component: {fileID: 984370220786920461}
   - component: {fileID: 984370220786920454}
+  - component: {fileID: 99395948229621791}
+  - component: {fileID: 5101184335126964010}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -124,6 +126,34 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &99395948229621791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984370220786920460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9effe401df66c43418c507bdba7ef8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCount: 5
+  fuelTanksCount: 0
+  fuelTankRecovery: 30
+--- !u!114 &5101184335126964010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984370220786920460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b31f354cef5dd449bce4bc43dc3236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sanity: 100
 --- !u!1 &984370221206082729
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,12 +579,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a59608610fc7b4690e80d7f001769f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableFuelDecrease: 1
-  fuelCount: 100
+  enableFuelDecrease: 0
+  fuelCount: 0
   minLightRange: 8
   maxLightRange: 25
-  fuelDecreaseValue: 0.5
-  timeFuelDecrease: 1
+  fuelDecreaseValue: 1
+  timeFuelDecrease: 5
 --- !u!1 &5831702624987111799
 GameObject:
   m_ObjectHideFlags: 0
