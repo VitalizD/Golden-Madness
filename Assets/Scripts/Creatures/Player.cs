@@ -10,12 +10,13 @@ public class Player : MonoBehaviour
 
     [Header("Base")]
     [SerializeField] [Range(0, 100)] private int health = 100;
-    [SerializeField] private int hitDamage;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float touchingDistance;
 
     [Header("Fight")]
+    [SerializeField] private int enemyDamage = 10;
+    [SerializeField] private int maxEnemyDamage = 10;
+    [SerializeField] private int minEnemyDamageInPercents = 60;
     [SerializeField] private float repulsiveForce;
     [SerializeField] private float jerkForce = 3f;
     [SerializeField] private float attackDistance;
@@ -24,6 +25,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private UnityEvent<string> OnGetDamage;
+
+    [Header("Pickaxe")]
+    [SerializeField] [Range(0, 100f)] private float pickaxeStrength = 100f;
+    [SerializeField] private float hitDamageToPickaxe = 1f;
+    [SerializeField] private float tileDamage = 1f;
+    [SerializeField] private float maxTileDamage = 1f;
+    [SerializeField] private float minTileDamageInPercents = 20;
+    [SerializeField] private float touchingDistance;
 
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
@@ -55,8 +64,6 @@ public class Player : MonoBehaviour
     public bool IsGrounded { get => isGrounded; }
 
     public float TouchingDistance { get => touchingDistance; }
-
-    public int HitDamage { get => hitDamage; }
 
     public States State
     {
@@ -97,6 +104,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    private float PickaxeStrength
+    {
+        get => pickaxeStrength;
+        set
+        {
+            if (value < 0) pickaxeStrength = 0;
+            else if (value > 100) pickaxeStrength = 100f;
+            else pickaxeStrength = value;
+
+            tileDamage = Mathf.Lerp(maxTileDamage * minTileDamageInPercents / 100, maxTileDamage, pickaxeStrength / 100);
+            enemyDamage = (int)Mathf.Ceil(Mathf.Lerp(maxEnemyDamage * minEnemyDamageInPercents / 100, maxEnemyDamage, pickaxeStrength / 100));
+        }
+    }
+
     public void SetSelectedTile(Tile value) => selectedTile = value;
 
     public void RemoveSelectedTile() => selectedTile = null;
@@ -124,6 +145,7 @@ public class Player : MonoBehaviour
         if (initialPosition != null)
             transform.position = initialPosition.initialValue;
         checkpoint = transform.position;
+        PickaxeStrength = pickaxeStrength;
     }
 
     private void Update()
@@ -159,6 +181,9 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackDistance);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, touchingDistance);
     }
 
     // Назначен на ключ в анимации "Attack"
@@ -171,7 +196,7 @@ public class Player : MonoBehaviour
             var creature = raycastHit.collider.GetComponent<Creature>();
             if (creature)
             {
-                creature.Health -= hitDamage;
+                creature.Health -= enemyDamage;
                 if (creature.Repulsiable)
                     creature.Throw(transform.position, repulsiveForce);
             }
@@ -184,8 +209,9 @@ public class Player : MonoBehaviour
         if (!selectedTile)
             return;
 
-        var damage = selectedTile.DiggingDifficulty < HitDamage ? HitDamage / selectedTile.DiggingDifficulty : HitDamage;
+        var damage = selectedTile.DiggingDifficulty < tileDamage ? tileDamage / selectedTile.DiggingDifficulty : tileDamage;
         selectedTile.Health -= damage;
+        PickaxeStrength -= hitDamageToPickaxe;
         canAttack = false;
 
         if (reloadAttack != null) StopCoroutine(reloadAttack);
@@ -208,7 +234,7 @@ public class Player : MonoBehaviour
 
     private void Throw(Collider2D collision)
     {
-        var repulsion = collision.gameObject.GetComponent<Repulsive>();
+        var repulsion = collision.GetComponent<Repulsive>();
         if (repulsion)
         {
             var colPosition = collision.transform.position;

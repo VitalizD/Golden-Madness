@@ -29967,6 +29967,10 @@ PrefabInstance:
       propertyPath: enableFuelDecrease
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 984370220786920461, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: hitDamageToPickaxe
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 984370221206082729, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -31277,10 +31281,6 @@ PrefabInstance:
     - target: {fileID: 1598536202226443171, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
       propertyPath: onDestroy.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1598536202226443175, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
-      propertyPath: health
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1598536202226443199, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
       propertyPath: m_Name
