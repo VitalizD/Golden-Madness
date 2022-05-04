@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
     private Vector2 checkpoint;
 
     private Coroutine reloadAttack;
-    private Coroutine decreaseLampFuel;
 
     private bool invulnerability = false;
     private bool isMoving = false;
@@ -154,6 +153,15 @@ public class Player : MonoBehaviour
         if (invulnerability)
             return;
 
+        Throw(collision.collider);
+        GetDamage(collision.collider);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (invulnerability)
+            return;
+
         Throw(collision);
         GetDamage(collision);
     }
@@ -167,7 +175,6 @@ public class Player : MonoBehaviour
     // Назначен на ключ в анимации "Attack"
     private void OnAttack()
     {
-        //var attackPoint = new Vector2(transform.position.x + (sprite.flipX ? -attackDistance : attackDistance), transform.position.y);
         var raycastHits = Physics2D.RaycastAll(transform.position, transform.right * (sprite.flipX ? -1 : 1), attackDistance, enemiesMask);
 
         foreach (var raycastHit in raycastHits)
@@ -196,7 +203,7 @@ public class Player : MonoBehaviour
         reloadAttack = StartCoroutine(ReloadAttack());
     }
 
-    private void GetDamage(Collision2D collision)
+    private void GetDamage(Collider2D collision)
     {
         var danger = collision.gameObject.GetComponent<Danger>();
         if (danger)
@@ -206,23 +213,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Throw(Collider2D collision)
+    {
+        var repulsion = collision.gameObject.GetComponent<Repulsive>();
+        if (repulsion)
+        {
+            var colPosition = collision.transform.position;
+            var playerPosition = transform.position;
+
+            rigidBody2d.AddForce(new Vector2((playerPosition.x - colPosition.x) * repulsion.ForceX, repulsion.ForceY), ForceMode2D.Impulse);
+        }
+    }
+
     private void SetStun()
     {
         State = States.Pain;
         isStunned = true;
         StartCoroutine(DisableStun());
-    }
-
-    private void Throw(Collision2D collision)
-    {
-        var repulsion = collision.gameObject.GetComponent<Repulsive>();
-        if (repulsion)
-        {
-            var colPos = collision.transform.position;
-            var playerPos = transform.position;
-
-            rigidBody2d.AddForce(new Vector2((playerPos.x - colPos.x) * repulsion.Force, repulsion.Force / 5), ForceMode2D.Impulse);
-        }
     }
 
     private void Run()

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4505556561243613704}
   - component: {fileID: 243134755146134137}
   - component: {fileID: 4612446439215513725}
+  - component: {fileID: 1665601769746203166}
   m_Layer: 3
   m_Name: Spike
   m_TagString: Untagged
@@ -49,10 +50,9 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.011065386, y: 0.3223445}
-  - {x: -0.0018540416, y: 0.34404302}
-  - {x: 0.007264954, y: 0.3229174}
-  m_AdjacentStartPoint: {x: 0, y: 0}
+  - {x: -0.19661483, y: 0.23026589}
+  - {x: 0.19413146, y: 0.23535219}
+  m_AdjacentStartPoint: {x: 0.24, y: 0.35}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
@@ -69,6 +69,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+--- !u!114 &1665601769746203166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8752801209065326094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1fb31dae0427f42bb3790f2c56afe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceX: 15
+  forceY: 9
 --- !u!1001 &500106696254564714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,6 +122,10 @@ PrefabInstance:
       propertyPath: m_SpriteSortPoint
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4482244365625360364, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8543eb46b467c3a48bd8477187eaad6e, type: 2}
     - target: {fileID: 4503583857430665579, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -153,6 +171,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: isBedrock
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: destroyAttachedTiles
       value: 0
       objectReference: {fileID: 0}
@@ -190,15 +212,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7386847732881463872, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7386847732881463872, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7386847732881463872, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7386847732881463872, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -220,8 +242,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6208804222166184536, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
   m_PrefabInstance: {fileID: 500106696254564714}
   m_PrefabAsset: {fileID: 0}
---- !u!60 &5750529819063249023
-PolygonCollider2D:
+--- !u!61 &3559854668170956969
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -233,7 +255,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.00058460236, y: -0.028288126}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -243,11 +265,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.33895424, y: -0.49867705}
-      - {x: -0.0021143814, y: 0.33793545}
-      - {x: -0.3408372, y: -0.49828255}
+  serializedVersion: 2
+  m_Size: {x: 0.57923317, y: 0.94342375}
+  m_EdgeRadius: 0
 --- !u!114 &7640042637519174819
 MonoBehaviour:
   m_ObjectHideFlags: 0
