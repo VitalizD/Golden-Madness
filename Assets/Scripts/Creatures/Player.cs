@@ -24,7 +24,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float reloadAttackTime = 0.5f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
-    [SerializeField] private UnityEvent<string> OnGetDamage;
+    [SerializeField] private DisplayFilter displayFilter;
+    [SerializeField] private UnityEvent<string> OnChangeHealth;
 
     [Header("Pickaxe")]
     [SerializeField] [Range(0, 100f)] private float pickaxeStrength = 100f;
@@ -93,14 +94,16 @@ public class Player : MonoBehaviour
                 State = States.Pain;
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
+                if (displayFilter) displayFilter.ChangeColor(health - value);
             }
             health = value;
-            //OnGetDamage?.Invoke(health.ToString());
             if (health <= 0)
             {
                 health = 100;
                 transform.position = checkpoint;
+                if (displayFilter) displayFilter.RemoveFilter();
             }
+            OnChangeHealth?.Invoke(health.ToString());
         }
     }
 
