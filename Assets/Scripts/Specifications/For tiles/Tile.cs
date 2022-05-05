@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private float diggingDifficulty = 1;
     [SerializeField] private bool isBedrock = false;
     [SerializeField] private bool destroyAttachedTiles = true;
+    [SerializeField] private ResourceTypes resourceType = ResourceTypes.None;
     [SerializeField] private Sprite[] destructionDegrees;
 
     private SpriteRenderer destructionSprite;
@@ -95,6 +96,9 @@ public class Tile : MonoBehaviour
         StopDigging();
         if (selection)
             selection.gameObject.SetActive(false);
+
+        if (resourceType != ResourceTypes.None)
+            player.GetComponent<Backpack>().Add(resourceType);
     }
 
     private void StopDigging()

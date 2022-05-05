@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 984370220786920454}
   - component: {fileID: 99395948229621791}
   - component: {fileID: 5101184335126964010}
+  - component: {fileID: 5772696817491646705}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -104,23 +105,12 @@ MonoBehaviour:
   reloadAttackTime: 1
   invulnerabilityTime: 1
   stunTime: 0.5
+  displayFilter: {fileID: 0}
   OnChangeHealth:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DisplayFilter, Assembly-CSharp
-        m_MethodName: ChangeColor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   pickaxeStrength: 100
-  hitDamageToPickaxe: 0.75
+  hitDamageToPickaxe: 1
   tileDamage: 1
   maxTileDamage: 1
   minTileDamageInPercents: 20
@@ -173,6 +163,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sanity: 100
+--- !u!114 &5772696817491646705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984370220786920460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd22748024ef58745979764546f2f71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCapacity: 2
+  currentCapacity: 0
+  fullInventoryPhrase: "\u041C\u043E\u0439 \u0440\u044E\u043A\u0437\u0430\u043A \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D!"
+  cannotTakePhrase: "\u041C\u043D\u0435 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435
+    \u0443\u043D\u0435\u0441\u0442\u0438!"
 --- !u!1 &984370221206082729
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,7 +508,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606018953659525155}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -670,9 +677,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041C\u043E\u044F \u043A\u0438\u0440\u043A\u0430 \u043D\u0435\u043C\u043D\u043E\u0433\u043E
-    \u0437\u0430\u0442\u0443\u043F\u0438\u043B\u0430\u0441\u044C, \u043D\u0443\u0436\u043D\u043E
-    \u0431\u044B \u0435\u0435 \u0437\u0430\u0442\u043E\u0447\u0438\u0442\u044C"
+  m_text: "\u041C\u043D\u0435 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0443\u043D\u0435\u0441\u0442\u0438!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -699,7 +704,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
+  m_fontSize: 0.4
   m_fontSizeBase: 0.4
   m_fontWeight: 400
   m_enableAutoSizing: 1
