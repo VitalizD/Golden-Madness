@@ -97,7 +97,7 @@ public class Tile : MonoBehaviour
         if (selection)
             selection.gameObject.SetActive(false);
 
-        if (resourceType != ResourceTypes.None)
+        if (resourceType != ResourceTypes.None && player)
             player.GetComponent<Backpack>().Add(resourceType);
     }
 

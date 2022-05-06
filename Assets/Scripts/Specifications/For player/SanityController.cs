@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SanityController : MonoBehaviour
 {
+    [SerializeField] private bool enableDecreasing = true;
     [SerializeField] [Range(0, 100)] private float sanity = 100f;
 
     private readonly float decreasingBetweenTime = 1f;
@@ -21,6 +22,8 @@ public class SanityController : MonoBehaviour
 
     public float DecreasingSanity { get; set; } = 0;
 
+    public bool DecreasingEnabled { get => enableDecreasing; set => enableDecreasing = value; }
+
     private void Start()
     {
         decreaseSanity = StartCoroutine(DecreaseSanity());
@@ -31,7 +34,8 @@ public class SanityController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(decreasingBetweenTime);
-            sanity -= DecreasingSanity;
+            if (enableDecreasing)
+                sanity -= DecreasingSanity;
         }
     }
 }

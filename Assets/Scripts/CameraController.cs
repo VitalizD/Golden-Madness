@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instanse = null;
+
+    [SerializeField] private bool enableMoving = true;
     [SerializeField] private float yOffset = 1.6f;
     [SerializeField] private float upLimit;
     [SerializeField] private float bottomLimit;
@@ -10,20 +13,36 @@ public class CameraController : MonoBehaviour
 
     private Transform player;
     private Vector3 toPosition;
+    private float zPosition;
+
+    public bool EnableMoving { get => enableMoving; set => enableMoving = value; }
+
+    private void Awake()
+    {
+        if (instanse == null)
+            instanse = this;
+        else if (instanse == this)
+            Destroy(gameObject);
+
+        zPosition = transform.position.z;
+    }
 
     private void Start()
-    {
+    {    
         if (!player)
             player = Player.instanse.transform;
     }
 
     private void Update()
     {
-        Move();
-        FixedCamera();
+        if (enableMoving)
+        {
+            Move();
+            FixedCamera();
+        }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(new Vector2(leftLimit, upLimit), new Vector2(rightLimit, upLimit));
@@ -38,7 +57,7 @@ public class CameraController : MonoBehaviour
         (
             Mathf.Clamp(transform.position.x, leftLimit, rightLimit),
             Mathf.Clamp(transform.position.y, bottomLimit, upLimit),
-            transform.position.z
+            zPosition
         );
     }
 
@@ -48,7 +67,7 @@ public class CameraController : MonoBehaviour
         {
             toPosition = player.position;
             toPosition.y = player.position.y - yOffset;
-            toPosition.z = -10;
+            toPosition.z = zPosition;
             transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime);
         }
     }

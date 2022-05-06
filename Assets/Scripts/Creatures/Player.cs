@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
 {
     public static Player instanse = null;
 
-    [SerializeField] private VectorValue initialPosition;
-
     [Header("Base")]
     [SerializeField] [Range(0, 100)] private int health = 100;
     [SerializeField] private float speed = 3f;
@@ -146,8 +144,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        if (initialPosition != null)
-            transform.position = initialPosition.initialValue;
         checkpoint = transform.position;
         PickaxeStrength = pickaxeStrength;
     }
