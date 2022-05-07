@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator animator;
     private SanityController sanity;
+    private Consumables consumables;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(DisableInvulnerability());
                 if (displayFilter) displayFilter.ChangeColor(health - value);
             }
-            health = value;
+            health = value > 100 ? 100 : value;
             if (health <= 0)
             {
                 health = 100;
@@ -139,6 +140,7 @@ public class Player : MonoBehaviour
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         sanity = GetComponent<SanityController>();
+        consumables = GetComponent<Consumables>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
@@ -159,6 +161,19 @@ public class Player : MonoBehaviour
 
         if (canAttack && isGrounded && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
             Attack();
+        //точильный камень
+        if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
+        {
+            PickaxeStrength += consumables.GrindstoneRecovery;
+            --consumables.GrindstonesCount;
+        }
+        //Нажатие хилки
+        if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
+        {
+            Health += consumables.HealthPacksRecovery;
+            --consumables.HealthPacksCount;
+        }
+
     }
 
     private void FixedUpdate()
