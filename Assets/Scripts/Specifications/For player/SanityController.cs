@@ -8,6 +8,7 @@ public class SanityController : MonoBehaviour
 
     private readonly float decreasingBetweenTime = 1f;
     private Coroutine decreaseSanity;
+    private Consumables consumables;
 
     public float Sanity 
     { 
@@ -24,11 +25,22 @@ public class SanityController : MonoBehaviour
 
     public bool DecreasingEnabled { get => enableDecreasing; set => enableDecreasing = value; }
 
+    private void Awake()
+    {
+        consumables = GetComponent<Consumables>();
+    }
     private void Start()
     {
         decreaseSanity = StartCoroutine(DecreaseSanity());
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha4) && consumables.SmokingPipesCount > 0)
+        {
+            Sanity += consumables.SmokingPipesRecovery;
+            --consumables.SmokingPipesCount;
+        }
+    }
     private IEnumerator DecreaseSanity()
     {
         while (true)
