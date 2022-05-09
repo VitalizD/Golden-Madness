@@ -31,8 +31,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float hitDamageToPickaxe = 1f;
     [SerializeField] private float tileDamage = 1f;
     [SerializeField] private float maxTileDamage = 1f;
-    [SerializeField] private float minTileDamageInPercents = 20;
+    [SerializeField] [Range(0, 100f)] private float minTileDamageInPercents = 20;
     [SerializeField] private float touchingDistance;
+
+    [Header("Sleeping Bag")]
+    [SerializeField] [Range(0, 100)] private int healthRecovery = 20;
+    [SerializeField] [Range(0, 100f)] private float sanityRecovery = 50f;
 
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
@@ -44,6 +48,7 @@ public class Player : MonoBehaviour
     private LayerMask groundMask;
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
+    private float fixedZPosition;
 
     private Coroutine reloadAttack;
 
@@ -127,6 +132,12 @@ public class Player : MonoBehaviour
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
 
+    public void Sleep()
+    {
+        Health += healthRecovery;
+        sanity.Sanity += sanityRecovery;
+    }
+
     private void Awake()
     {
         if (instanse == null)
@@ -142,6 +153,7 @@ public class Player : MonoBehaviour
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
+        fixedZPosition = transform.position.z;
     }
 
     private void Start()
@@ -174,6 +186,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        var position = transform.position;
+        transform.position = new Vector3(position.x, position.y, fixedZPosition);
+
         CheckGrounded();
 
         if (isGrounded && !isAttacking && !isStunned && !isDigging)

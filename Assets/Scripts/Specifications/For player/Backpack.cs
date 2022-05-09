@@ -12,11 +12,9 @@ public class Backpack : MonoBehaviour
 
     private Dictionary<ResourceTypes, int> resourcesCounts;
 
-    private readonly int childIndexOfDialogWindow = 2;
-
     private void Awake()
     {
-        dialogWindow = transform.GetChild(childIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
+        dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
         Clear();
     }
 
