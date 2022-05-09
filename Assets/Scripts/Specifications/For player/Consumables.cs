@@ -8,6 +8,20 @@ public class Consumables : MonoBehaviour
     [SerializeField] private int fuelTanksCount = 1;
     [SerializeField] [Range(0, 100)] private float fuelTankRecovery = 50f;
 
+    [Header("Grindstones")]
+    [SerializeField] private int grindstonesCount = 1;
+    [SerializeField] [Range(0, 100)] private float grindstoneRecovery = 50;
+
+    [Header("Health packs")]
+    [SerializeField] private int healthPacksCount = 1;
+    [SerializeField] [Range(0, 100)] private int healthPackRecovery = 50;
+    
+    [Header("Smoking pipes")]
+    [SerializeField] private int smokingPipesCount = 1;
+    [SerializeField] [Range(0, 100)] private float smokingPipeRecovery = 50f;
+
+    #region FuelTanks
+
     public int FuelTanksCount 
     { 
         get => fuelTanksCount;
@@ -20,4 +34,46 @@ public class Consumables : MonoBehaviour
     }
 
     public float FuelTankRecovery { get => fuelTankRecovery; }
+
+    #endregion
+
+    #region HealthPacks
+
+    public int HealthPacksCount { get => healthPacksCount;
+        set 
+        {
+            if (value < 0) healthPacksCount = 0;
+            else if (value > maxCount) healthPacksCount = maxCount;
+            else healthPacksCount = value;
+        } 
+    }
+    public int HealthPacksRecovery { get => healthPackRecovery;}
+
+    #endregion HealthPacks
+
+    #region Smoking Pipes
+    public int SmokingPipesCount { get => smokingPipesCount; 
+        set 
+        {
+            if (value < 0) smokingPipesCount = 0;
+            else if (value > maxCount) smokingPipesCount = maxCount;
+            else smokingPipesCount = value;
+        }
+    }
+    public float SmokingPipesRecovery { get => smokingPipeRecovery;}
+    #endregion
+
+    #region Grindstone
+    public int GrindstonesCount
+    {
+        get => grindstonesCount;
+        set
+        {
+            if (value < 0) grindstonesCount = 0;
+            else if (value > maxCount) grindstonesCount = maxCount;
+            else grindstonesCount = value;
+        }
+    }
+    public float GrindstoneRecovery { get => grindstoneRecovery; }
+    #endregion
 }
