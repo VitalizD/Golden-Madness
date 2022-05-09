@@ -4,10 +4,9 @@ public class DoorFromSaveZone : MonoBehaviour
 {
     [SerializeField] private Vector3 cameraPosition;
 
-    private readonly string playerLayer = "Player";
-
     private SanityController sanity;
     private Vector2 exitPosition;
+    private bool isTriggered = false;
 
     public Vector3 CameraPosition { get => cameraPosition; set => cameraPosition = value; }
 
@@ -18,11 +17,23 @@ public class DoorFromSaveZone : MonoBehaviour
         sanity = Player.instanse.GetComponent<SanityController>();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Input.GetKeyDown(KeyCode.E) && collision.CompareTag(playerLayer))
+        if (collision.CompareTag(ServiceInfo.PlayerTag))
+            isTriggered = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag(ServiceInfo.PlayerTag))
+            isTriggered = false;
+    }
+
+    private void Update()
+    {
+        if (isTriggered && Input.GetKeyDown(KeyCode.E))
         {
-            collision.transform.position = exitPosition;
+            Player.instanse.transform.position = exitPosition;
             CameraController.instanse.EnableMoving = true;
             CameraController.instanse.transform.position = exitPosition;
             sanity.DecreasingEnabled = true;
