@@ -1,12 +1,21 @@
 using UnityEngine;
+using System;
 
 public class DoorToSaveZone : MonoBehaviour
 {
     [SerializeField] private DoorFromSaveZone doorFromSaveZone;
+    [SerializeField] private float stunTime = 2f;
+
+    private Teleporter teleporter;
 
     private bool isTriggered = false;
 
     public void SetDoorFromSaveZone(DoorFromSaveZone value) => doorFromSaveZone = value;
+
+    private void Awake()
+    {
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,13 +31,18 @@ public class DoorToSaveZone : MonoBehaviour
 
     private void Update()
     {
-        if (isTriggered && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && isTriggered && teleporter.State == Teleporter.States.Stayed)
         {
-            Player.instanse.transform.position = doorFromSaveZone.transform.position;
+            void action()
+            {
+                CameraController.instanse.EnableMoving = false;
+                CameraController.instanse.transform.position = doorFromSaveZone.CameraPosition;
+                Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
+            }
+
+            Player.instanse.SetStun(stunTime);
             doorFromSaveZone.SetExitPosition(transform.position);
-            CameraController.instanse.EnableMoving = false;
-            CameraController.instanse.transform.position = doorFromSaveZone.CameraPosition;
-            Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
+            teleporter.Go(doorFromSaveZone.transform.position, action);
         }
     }
 }

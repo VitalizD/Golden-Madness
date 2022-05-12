@@ -3,18 +3,19 @@ using UnityEngine;
 public class DoorFromSaveZone : MonoBehaviour
 {
     [SerializeField] private Vector3 cameraPosition;
+    [SerializeField] private float stunTime = 2f;
 
-    private SanityController sanity;
     private Vector2 exitPosition;
+    private Teleporter teleporter;
     private bool isTriggered = false;
 
     public Vector3 CameraPosition { get => cameraPosition; set => cameraPosition = value; }
 
     public void SetExitPosition(Vector2 value) => exitPosition = value;
 
-    private void Start()
+    private void Awake()
     {
-        sanity = Player.instanse.GetComponent<SanityController>();
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,12 +32,17 @@ public class DoorFromSaveZone : MonoBehaviour
 
     private void Update()
     {
-        if (isTriggered && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && isTriggered && teleporter.State == Teleporter.States.Stayed)
         {
-            Player.instanse.transform.position = exitPosition;
-            CameraController.instanse.EnableMoving = true;
-            CameraController.instanse.transform.position = exitPosition;
-            sanity.DecreasingEnabled = true;
+            void action()
+            {
+                CameraController.instanse.EnableMoving = true;
+                CameraController.instanse.transform.position = exitPosition;
+                Player.instanse.GetComponent<SanityController>().DecreasingEnabled = true;
+            }
+
+            Player.instanse.SetStun(stunTime);
+            teleporter.Go(exitPosition, action);
         }
     }
 }
