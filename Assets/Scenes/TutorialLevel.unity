@@ -37336,10 +37336,63 @@ PrefabInstance:
       propertyPath: displayFilter
       value: 
       objectReference: {fileID: 5661314285498832241}
+    - target: {fileID: 2061743498411214084, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3389356901535063186, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1599833104}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_text
+      value: "\u041C\u043D\u0435 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435
+        \u0443\u043D\u0435\u0441\u0442\u0438!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 89340ddf5c5be3e4798ee72ff2c3b644, type: 2}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_lineSpacing
+      value: -36.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -302783918399807679, guid: 89340ddf5c5be3e4798ee72ff2c3b644, type: 2}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_verticalMapping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_horizontalMapping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
 --- !u!1001 &2038128451
@@ -39244,6 +39297,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5661314287477038094, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a3bae737e4f5b314f862377253c296fe, type: 2}
+    - target: {fileID: 5661314287477038094, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3011918488052775782, guid: a3bae737e4f5b314f862377253c296fe, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
 --- !u!114 &5661314285498832241 stripped
