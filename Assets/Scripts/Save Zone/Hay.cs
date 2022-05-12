@@ -1,11 +1,24 @@
 using UnityEngine;
+using System;
 
 public class Hay : MonoBehaviour
 {
-    private bool isTriggered = false;
+    [SerializeField] private bool canBeUsed = true;
+    [SerializeField] private float fadeSpeed = 0.7f;
+
     private PlayerDialogWindow dialogWindow;
+    private Teleporter teleporter;
+
+    private bool isTriggered = false;
+
+    public void SetCanBeUsedTrue() => canBeUsed = true;
 
     private void Awake()
+    {
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+    }
+
+    private void Start()
     {
         dialogWindow = Player.instanse.transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
     }
@@ -24,16 +37,19 @@ public class Hay : MonoBehaviour
 
     private void Update()
     {
-        if (isTriggered && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && isTriggered && canBeUsed)
         {
-            Player.instanse.Sleep();
+            void action()
+            {
+                Player.instanse.Sleep();
+                dialogWindow.gameObject.SetActive(true);
+                dialogWindow.Show("Tеперь я чувствую себя бодрым", 4);
+                canBeUsed = false;
 
-            dialogWindow.gameObject.SetActive(true);
-            dialogWindow.Show("Tеперь я чувствую себя бодрым", 4);
+                ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
+            }
 
-            ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
-
-            Destroy(gameObject);
+            teleporter.Go(Player.instanse.transform.position, action, fadeSpeed);
         }
     }
 }

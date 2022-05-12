@@ -11,10 +11,12 @@ public class Teleporter : MonoBehaviour
         Lightening
     }
 
-    [SerializeField] private float fadeSpeed;
+    [Tooltip("Чем выше, тем больше продлится обездвиживание персонажа")]
+    [SerializeField] private float maxStunPlayerTime = 3f;
 
-    private States state = States.Stayed;
+    private float fadeSpeed = 1.2f;
     private float alphaInterpolation = 0;
+    private States state = States.Stayed;
     private Vector2 toPosition;
     private Action actionAfterTransition;
 
@@ -22,10 +24,12 @@ public class Teleporter : MonoBehaviour
 
     public States State { get => state; }
 
-    public void Go(Vector2 to, Action actionAfterTransition)
+    public void Go(Vector2 to, Action actionAfterTransition, float fadeSpeed)
     {
+        this.fadeSpeed = fadeSpeed;
         this.actionAfterTransition = actionAfterTransition;
         toPosition = to;
+        Player.instanse.SetStun(maxStunPlayerTime - fadeSpeed);
         state = States.Darkening;
     }
 

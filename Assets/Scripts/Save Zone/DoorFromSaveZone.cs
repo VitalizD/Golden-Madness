@@ -3,7 +3,7 @@ using UnityEngine;
 public class DoorFromSaveZone : MonoBehaviour
 {
     [SerializeField] private Vector3 cameraPosition;
-    [SerializeField] private float stunTime = 2f;
+    [SerializeField] private float fadeSpeed = 1.2f;
 
     private Vector2 exitPosition;
     private Teleporter teleporter;
@@ -41,8 +41,7 @@ public class DoorFromSaveZone : MonoBehaviour
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = true;
             }
 
-            Player.instanse.SetStun(stunTime);
-            teleporter.Go(exitPosition, action);
+            teleporter.Go(exitPosition, action, fadeSpeed);
         }
     }
 }

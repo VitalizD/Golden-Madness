@@ -20048,7 +20048,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: onMakeCondition.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: onMakeCondition.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
@@ -20065,7 +20065,7 @@ PrefabInstance:
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: onMakeCondition.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1943637453204820109}
+      objectReference: {fileID: 1943637453204820110}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: onMakeCondition.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -20096,7 +20096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: onMakeCondition.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetActive
+      value: SetCanBeUsedTrue
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: onMakeCondition.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -20112,7 +20112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: onMakeCondition.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: Hay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6325227558874104925, guid: 7dd45c8893e59bf48a05be81d0f812f8, type: 3}
       propertyPath: onMakeCondition.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -21766,8 +21766,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door To Save Zone
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2995395739284370627, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
 --- !u!4 &1141989049 stripped
 Transform:
@@ -24670,7 +24669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c602f1499cef5a41bc7232dd87def38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 1.2
+  maxStunPlayerTime: 3
 --- !u!4 &1311217217
 Transform:
   m_ObjectHideFlags: 0
@@ -39620,13 +39619,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1640614595}
     m_Modifications:
+    - target: {fileID: 2590479615387731026, guid: dcce28f21b0fd164cada90a218180694, type: 3}
+      propertyPath: canBeUsed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4400574464652067481, guid: dcce28f21b0fd164cada90a218180694, type: 3}
       propertyPath: m_Name
       value: Hay
-      objectReference: {fileID: 0}
-    - target: {fileID: 4400574464652067481, guid: dcce28f21b0fd164cada90a218180694, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6445492106676045655, guid: dcce28f21b0fd164cada90a218180694, type: 3}
       propertyPath: m_RootOrder
@@ -39684,6 +39683,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4400574464652067481, guid: dcce28f21b0fd164cada90a218180694, type: 3}
   m_PrefabInstance: {fileID: 1943637453204820107}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1943637453204820110 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2590479615387731026, guid: dcce28f21b0fd164cada90a218180694, type: 3}
+  m_PrefabInstance: {fileID: 1943637453204820107}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943637453204820109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1abff9528a77d5c42b1133113df5595c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3019446029492852525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39801,8 +39811,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door From Save Zone
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8247423017700884561, guid: 62a33866276006142b5055a3802b29cd, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62a33866276006142b5055a3802b29cd, type: 3}
 --- !u!114 &4868247247240942130 stripped
 MonoBehaviour:

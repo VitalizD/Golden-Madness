@@ -4,7 +4,7 @@ using System;
 public class DoorToSaveZone : MonoBehaviour
 {
     [SerializeField] private DoorFromSaveZone doorFromSaveZone;
-    [SerializeField] private float stunTime = 2f;
+    [SerializeField] private float fadeSpeed = 1.2f;
 
     private Teleporter teleporter;
 
@@ -40,9 +40,8 @@ public class DoorToSaveZone : MonoBehaviour
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
             }
 
-            Player.instanse.SetStun(stunTime);
             doorFromSaveZone.SetExitPosition(transform.position);
-            teleporter.Go(doorFromSaveZone.transform.position, action);
+            teleporter.Go(doorFromSaveZone.transform.position, action, fadeSpeed);
         }
     }
 }
