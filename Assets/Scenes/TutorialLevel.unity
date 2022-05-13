@@ -37870,6 +37870,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2388622574239073422, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3389356901535063186, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_Camera
       value: 
@@ -37883,6 +37887,10 @@ PrefabInstance:
     - target: {fileID: 4807851871747866575, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_fontSize
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7494783934899537338, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
@@ -39922,18 +39930,6 @@ PrefabInstance:
     - target: {fileID: 5661314287269160150, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8463795960766373943, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8463795960766373943, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8463795960766373943, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
-      propertyPath: m_Color.r
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
