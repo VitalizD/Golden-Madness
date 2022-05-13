@@ -4,25 +4,18 @@ using UnityEngine;
 public class Backpack : MonoBehaviour
 {
     [SerializeField] private int maxCapacity = 100;
-    [SerializeField] private int currentCapacity = 0;
+    [SerializeField] private int currentFullness = 0;
     [SerializeField] private string fullInventoryPhrase = "Мой рюкзак заполнен!";
     [SerializeField] private string cannotTakePhrase = "Мне больше не унести!";
 
     private PlayerDialogWindow dialogWindow;
 
-    private readonly Dictionary<ResourceTypes, int> resourcesCounts = new Dictionary<ResourceTypes, int>
-    {
-        [ResourceTypes.Coal] = 0,
-        [ResourceTypes.GoldOre] = 0,
-        [ResourceTypes.IronOre] = 0,
-        [ResourceTypes.Quartz] = 0
-    };
-
-    private readonly int childIndexOfDialogWindow = 2;
+    private Dictionary<ResourceTypes, int> resourcesCounts;
 
     private void Awake()
     {
-        dialogWindow = transform.GetChild(childIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
+        dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
+        Clear();
     }
 
     public int GetOne(ResourceTypes resourse) => resourcesCounts[resourse];
@@ -31,7 +24,7 @@ public class Backpack : MonoBehaviour
 
     public void Add(ResourceTypes resource)
     {
-        if (currentCapacity >= maxCapacity)
+        if (currentFullness >= maxCapacity)
         {
             dialogWindow.gameObject.SetActive(true);
             dialogWindow.Show(cannotTakePhrase, 2f);
@@ -39,10 +32,10 @@ public class Backpack : MonoBehaviour
             return;
         }
 
-        ++currentCapacity;
+        ++currentFullness;
         ++resourcesCounts[resource];
 
-        if (currentCapacity == maxCapacity)
+        if (currentFullness == maxCapacity)
         {
             dialogWindow.gameObject.SetActive(true);
             dialogWindow.Show(fullInventoryPhrase, 4f);
@@ -62,15 +55,20 @@ public class Backpack : MonoBehaviour
 
     public void Clear()
     {
-        currentCapacity = 0;
-        foreach (var key in resourcesCounts.Keys)
-            resourcesCounts[key] = 0;
+        currentFullness = 0;
+        resourcesCounts = new Dictionary<ResourceTypes, int>
+        {
+            [ResourceTypes.Coal] = 0,
+            [ResourceTypes.GoldOre] = 0,
+            [ResourceTypes.IronOre] = 0,
+            [ResourceTypes.Quartz] = 0
+        };
     }
 
     private void RecalculateCapacity()
     {
-        currentCapacity = 0;
+        currentFullness = 0;
         foreach (var value in resourcesCounts.Values)
-            currentCapacity += value;
+            currentFullness += value;
     }
 }

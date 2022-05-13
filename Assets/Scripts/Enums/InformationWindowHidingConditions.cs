@@ -5,5 +5,7 @@
     PressI,
     Press2,
     Press3,
-    Press4
+    Press4,
+    PressENearMinecart,
+    PressENearHay
 }

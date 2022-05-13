@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayFilter : MonoBehaviour
+public class RedFilter : MonoBehaviour
 {
     [SerializeField] private float removingFilterSpeed;
     [SerializeField] private float alphaLimit = 0.5f;

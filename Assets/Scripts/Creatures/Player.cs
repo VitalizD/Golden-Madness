@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float reloadAttackTime = 0.5f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
-    [SerializeField] private DisplayFilter displayFilter;
+    [SerializeField] private RedFilter displayFilter;
     [SerializeField] private UnityEvent<string> OnChangeHealth;
 
     [Header("Pickaxe")]
@@ -31,8 +31,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float hitDamageToPickaxe = 1f;
     [SerializeField] private float tileDamage = 1f;
     [SerializeField] private float maxTileDamage = 1f;
-    [SerializeField] private float minTileDamageInPercents = 20;
+    [SerializeField] [Range(0, 100f)] private float minTileDamageInPercents = 20;
     [SerializeField] private float touchingDistance;
+
+    [Header("Sleeping Bag")]
+    [SerializeField] [Range(0, 100)] private int healthRecovery = 20;
+    [SerializeField] [Range(0, 100f)] private float sanityRecovery = 50f;
 
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
@@ -44,6 +48,7 @@ public class Player : MonoBehaviour
     private LayerMask groundMask;
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
+    private float fixedZPosition;
 
     private Coroutine reloadAttack;
 
@@ -127,6 +132,24 @@ public class Player : MonoBehaviour
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
 
+    public void Sleep()
+    {
+        Health += healthRecovery;
+        sanity.Sanity += sanityRecovery;
+    }
+
+    public void SetStun()
+    {
+        isStunned = true;
+        StartCoroutine(DisableStun(stunTime));
+    }
+
+    public void SetStun(float time)
+    {
+        isStunned = true;
+        StartCoroutine(DisableStun(time));
+    }
+
     private void Awake()
     {
         if (instanse == null)
@@ -142,6 +165,7 @@ public class Player : MonoBehaviour
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
+        fixedZPosition = transform.position.z;
     }
 
     private void Start()
@@ -174,6 +198,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        var position = transform.position;
+        transform.position = new Vector3(position.x, position.y, fixedZPosition);
+
         CheckGrounded();
 
         if (isGrounded && !isAttacking && !isStunned && !isDigging)
@@ -239,6 +266,7 @@ public class Player : MonoBehaviour
         if (danger)
         {
             Health -= danger.Damage;
+            State = States.Pain;
             SetStun();
 
             var terrible = collision.GetComponent<Terrible>();
@@ -257,13 +285,6 @@ public class Player : MonoBehaviour
 
             rigidBody2d.AddForce(new Vector2((playerPosition.x - colPosition.x) * repulsion.ForceX, repulsion.ForceY), ForceMode2D.Impulse);
         }
-    }
-
-    private void SetStun()
-    {
-        State = States.Pain;
-        isStunned = true;
-        StartCoroutine(DisableStun());
     }
 
     private void Run()
@@ -321,9 +342,9 @@ public class Player : MonoBehaviour
         invulnerability = false;
     }
 
-    private IEnumerator DisableStun()
+    private IEnumerator DisableStun(float afterTime)
     {
-        yield return new WaitForSeconds(stunTime);
+        yield return new WaitForSeconds(afterTime);
         isStunned = false;
         feelPain = false;
     }

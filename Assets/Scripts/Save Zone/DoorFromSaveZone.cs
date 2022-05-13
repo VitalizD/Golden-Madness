@@ -3,29 +3,45 @@ using UnityEngine;
 public class DoorFromSaveZone : MonoBehaviour
 {
     [SerializeField] private Vector3 cameraPosition;
+    [SerializeField] private float fadeSpeed = 1.2f;
 
-    private readonly string playerLayer = "Player";
-
-    private SanityController sanity;
     private Vector2 exitPosition;
+    private Teleporter teleporter;
+    private bool isTriggered = false;
 
     public Vector3 CameraPosition { get => cameraPosition; set => cameraPosition = value; }
 
     public void SetExitPosition(Vector2 value) => exitPosition = value;
 
-    private void Start()
+    private void Awake()
     {
-        sanity = Player.instanse.GetComponent<SanityController>();
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Input.GetKeyDown(KeyCode.E) && collision.CompareTag(playerLayer))
+        if (collision.CompareTag(ServiceInfo.PlayerTag))
+            isTriggered = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag(ServiceInfo.PlayerTag))
+            isTriggered = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && isTriggered && teleporter.State == Teleporter.States.Stayed)
         {
-            collision.transform.position = exitPosition;
-            CameraController.instanse.EnableMoving = true;
-            CameraController.instanse.transform.position = exitPosition;
-            sanity.DecreasingEnabled = true;
+            void action()
+            {
+                CameraController.instanse.EnableMoving = true;
+                CameraController.instanse.transform.position = exitPosition;
+                Player.instanse.GetComponent<SanityController>().DecreasingEnabled = true;
+            }
+
+            teleporter.Go(exitPosition, action, fadeSpeed);
         }
     }
 }

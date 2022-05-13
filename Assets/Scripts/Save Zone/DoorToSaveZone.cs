@@ -1,22 +1,47 @@
 using UnityEngine;
+using System;
 
 public class DoorToSaveZone : MonoBehaviour
 {
     [SerializeField] private DoorFromSaveZone doorFromSaveZone;
+    [SerializeField] private float fadeSpeed = 1.2f;
 
-    private readonly string playerLayer = "Player";
+    private Teleporter teleporter;
+
+    private bool isTriggered = false;
 
     public void SetDoorFromSaveZone(DoorFromSaveZone value) => doorFromSaveZone = value;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.E) && collision.CompareTag(playerLayer))
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag(ServiceInfo.PlayerTag))
+            isTriggered = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag(ServiceInfo.PlayerTag))
+            isTriggered = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && isTriggered && teleporter.State == Teleporter.States.Stayed)
         {
-            collision.transform.position = doorFromSaveZone.transform.position;
+            void action()
+            {
+                CameraController.instanse.EnableMoving = false;
+                CameraController.instanse.transform.position = doorFromSaveZone.CameraPosition;
+                Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
+            }
+
             doorFromSaveZone.SetExitPosition(transform.position);
-            CameraController.instanse.EnableMoving = false;
-            CameraController.instanse.transform.position = doorFromSaveZone.CameraPosition;
-            collision.GetComponent<SanityController>().DecreasingEnabled = false;
+            teleporter.Go(doorFromSaveZone.transform.position, action, fadeSpeed);
         }
     }
 }

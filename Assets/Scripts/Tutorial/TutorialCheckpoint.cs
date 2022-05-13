@@ -26,9 +26,10 @@ public class TutorialCheckpoint : MonoBehaviour
             return;
 
         onTriggered?.Invoke();
+        ServiceInfo.CheckpointConditionDone = false;
 
-        if (informationText != "")
-            InformationWindow.instance?.Show(informationText, funcCondition);
+        if (informationText != "" && InformationWindow.instance)
+            InformationWindow.instance.Show(informationText, funcCondition);
 
         Player.instanse.Checkpoint = transform.position;
 
@@ -64,6 +65,10 @@ public class TutorialCheckpoint : MonoBehaviour
                 return new Func<bool>(() => { return Input.GetKey(KeyCode.Alpha3); });
             case InformationWindowHidingConditions.Press4:
                 return new Func<bool>(() => { return Input.GetKey(KeyCode.Alpha4); });
+            case InformationWindowHidingConditions.PressENearMinecart:
+                return new Func<bool>(() => { return ServiceInfo.CheckpointConditionDone; });
+            case InformationWindowHidingConditions.PressENearHay:
+                return new Func<bool>(() => { return ServiceInfo.CheckpointConditionDone; });
             default: return null;
         }
     }
