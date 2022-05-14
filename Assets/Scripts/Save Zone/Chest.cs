@@ -72,7 +72,7 @@ public class Chest : MonoBehaviour
                 if (!anyAmountIncreased) 
                 {
                     Debug.Log("Unlucky random! (For each property 0 amount increased)");
-                    consumabelsList[(int)(UnityEngine.Random.value * 100) % 5].SetValue(consumables, (int)(UnityEngine.Random.value * 100) % 5);
+                    consumabelsList[(int)(UnityEngine.Random.value * 100) % 5].SetValue(consumables, consumableCount+1+((int)(UnityEngine.Random.value * 100) % 5));
                 }
                 //propertyInfo.SetValue(consumables, consumableCount + 99);
 
