@@ -184,13 +184,13 @@ public class Player : MonoBehaviour
         //точильный камень
         if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
         {
-            PickaxeStrength += consumables.GrindstoneRecovery;
+            PickaxeStrength += Consumables.GrindstoneRecovery;
             --consumables.GrindstonesCount;
         }
         //Нажатие хилки
         if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
         {
-            Health += consumables.HealthPacksRecovery;
+            Health += Consumables.HealthPacksRecovery;
             --consumables.HealthPacksCount;
         }
 

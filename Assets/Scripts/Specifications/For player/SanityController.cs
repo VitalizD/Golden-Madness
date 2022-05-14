@@ -37,7 +37,7 @@ public class SanityController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha4) && consumables.SmokingPipesCount > 0)
         {
-            Sanity += consumables.SmokingPipesRecovery;
+            Sanity += Consumables.SmokingPipesRecovery;
             --consumables.SmokingPipesCount;
         }
     }
