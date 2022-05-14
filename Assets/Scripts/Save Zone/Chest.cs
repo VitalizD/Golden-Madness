@@ -8,13 +8,14 @@ public class Chest : MonoBehaviour
     private bool inRange = false;
     private bool isTriggered = false;
     private Consumables consumables;
+    //{itemAmount, chance}
     private Dictionary<int, float> chancesForDropAmount = new Dictionary<int, float>
     {
-        { 1, 40 },
-        { 2, 25 },
-        { 3, 20 },
-        { 4, 10 },
-        { 5, 5 },
+        { 0, 40 },
+        { 1, 25 },
+        { 2, 20 },
+        { 3, 10 },
+        { 4, 5 },
     };
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,11 +39,12 @@ public class Chest : MonoBehaviour
     {
         if (!isTriggered && inRange && Input.GetKeyDown(KeyCode.E))
         {
+            //лист нестатическийх свойств
             var consumabelsList = consumables.GetType().GetProperties(
                 System.Reflection.BindingFlags.Public|
                 System.Reflection.BindingFlags.Instance|
                 System.Reflection.BindingFlags.DeclaredOnly);
-
+            var anyAmountIncreased = false;
             foreach (var propertyInfo in consumabelsList) {
                 var chance = UnityEngine.Random.value * 100;
                 var consumableObj = propertyInfo.GetValue(consumables);
@@ -55,15 +57,22 @@ public class Chest : MonoBehaviour
                 //почему то не хочет кастовать с одной переменной, поэтому создал другую
                 var consumableCount = (int) consumableObj;
                 Debug.Log("\nCurrent generated number " + chance);
-                for (int i = 1; i <= 5; i++) 
+                for (int i = 0; i <= 4; i++) 
                 {
                     if (chance <= chancesForDropAmount[i]) 
                     {
                         propertyInfo.SetValue(consumables, consumableCount + i);
+                        anyAmountIncreased = true;
                         Debug.Log("\nAdded " + i + " to " + propertyInfo.Name);
                         break;
                     }
                     chance -= chancesForDropAmount[i];
+                }
+                //если везде по нулям выпало добавь рандомнуму расходнику рандомное кол-во (можно потом поменять на что нибудь)
+                if (!anyAmountIncreased) 
+                {
+                    Debug.Log("Unlucky random! (For each property 0 amount increased)");
+                    consumabelsList[(int)(UnityEngine.Random.value * 100) % 5].SetValue(consumables, (int)(UnityEngine.Random.value * 100) % 5);
                 }
                 //propertyInfo.SetValue(consumables, consumableCount + 99);
 
