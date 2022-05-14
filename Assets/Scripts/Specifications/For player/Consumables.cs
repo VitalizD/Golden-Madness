@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Consumables : MonoBehaviour
 {
@@ -6,19 +7,19 @@ public class Consumables : MonoBehaviour
 
     [Header("Fuel tanks")]
     [SerializeField] private int fuelTanksCount = 1;
-    [SerializeField] [Range(0, 100)] private float fuelTankRecovery = 50f;
+    [SerializeField] [Range(0, 100)] private static float fuelTankRecovery = 50f;
 
     [Header("Grindstones")]
     [SerializeField] private int grindstonesCount = 1;
-    [SerializeField] [Range(0, 100)] private float grindstoneRecovery = 50;
+    [SerializeField] [Range(0, 100)] private static float grindstoneRecovery = 50;
 
     [Header("Health packs")]
     [SerializeField] private int healthPacksCount = 1;
-    [SerializeField] [Range(0, 100)] private int healthPackRecovery = 50;
+    [SerializeField] [Range(0, 100)] private static int healthPackRecovery = 50;
     
     [Header("Smoking pipes")]
     [SerializeField] private int smokingPipesCount = 1;
-    [SerializeField] [Range(0, 100)] private float smokingPipeRecovery = 50f;
+    [SerializeField] [Range(0, 100)] private static float smokingPipeRecovery = 50f;
 
     #region FuelTanks
 
@@ -33,7 +34,7 @@ public class Consumables : MonoBehaviour
         }
     }
 
-    public float FuelTankRecovery { get => fuelTankRecovery; }
+    public static float FuelTankRecovery { get => fuelTankRecovery; }
 
     #endregion
 
@@ -47,7 +48,7 @@ public class Consumables : MonoBehaviour
             else healthPacksCount = value;
         } 
     }
-    public int HealthPacksRecovery { get => healthPackRecovery;}
+    public static int HealthPacksRecovery { get => healthPackRecovery;}
 
     #endregion HealthPacks
 
@@ -60,7 +61,7 @@ public class Consumables : MonoBehaviour
             else smokingPipesCount = value;
         }
     }
-    public float SmokingPipesRecovery { get => smokingPipeRecovery;}
+    public static float SmokingPipesRecovery { get => smokingPipeRecovery;}
     #endregion
 
     #region Grindstone
@@ -74,6 +75,7 @@ public class Consumables : MonoBehaviour
             else grindstonesCount = value;
         }
     }
-    public float GrindstoneRecovery { get => grindstoneRecovery; }
+    public static float GrindstoneRecovery { get => grindstoneRecovery; }
     #endregion
+
 }

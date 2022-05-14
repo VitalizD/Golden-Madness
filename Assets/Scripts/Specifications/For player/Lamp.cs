@@ -62,7 +62,7 @@ public class Lamp : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && consumables.FuelTanksCount > 0)
         {
-            FuelCount += consumables.FuelTankRecovery;
+            FuelCount += Consumables.FuelTankRecovery;
             --consumables.FuelTanksCount;
         }
     }
