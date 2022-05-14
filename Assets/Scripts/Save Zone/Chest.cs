@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
+    [SerializeField] private bool canBeUsed = true;
 
     private bool inRange = false;
-    private bool isTriggered = false;
     private Consumables consumables;
     //{itemAmount, chance}
     private Dictionary<int, float> chancesForDropAmount = new Dictionary<int, float>
@@ -17,6 +17,8 @@ public class Chest : MonoBehaviour
         { 3, 10 },
         { 4, 5 },
     };
+
+    public void SetCanBeUsedTrue() => canBeUsed = true;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,14 +32,14 @@ public class Chest : MonoBehaviour
             inRange = false;
     }
 
-    void Start()
+    private void Start()
     {
         consumables = Player.instanse.GetComponent<Consumables>();
     }
 
     private void Update()
     {
-        if (!isTriggered && inRange && Input.GetKeyDown(KeyCode.E))
+        if (canBeUsed && inRange && Input.GetKeyDown(KeyCode.E))
         {
             //лист нестатическийх свойств
             var consumabelsList = consumables.GetType().GetProperties(
@@ -78,9 +80,8 @@ public class Chest : MonoBehaviour
 
             }
             //Debug.Log("Created list of consumabels with lenght: " + consumabelsList.Length);
-            // Для обучающего уровня
-            isTriggered = true;
-            ServiceInfo.CheckpointConditionDone = true;
+            canBeUsed = false;
+            ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
 
         }
     }

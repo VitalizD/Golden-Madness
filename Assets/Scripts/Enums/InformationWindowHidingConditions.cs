@@ -7,5 +7,6 @@
     Press3,
     Press4,
     PressENearMinecart,
-    PressENearHay
+    PressENearHay,
+    PressENearChest
 }
