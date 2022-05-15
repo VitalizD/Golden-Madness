@@ -18,7 +18,7 @@ public class Chest : MonoBehaviour
         { 4, 5 },
     };
 
-    public void SetCanBeUsedTrue() => canBeUsed = true;
+    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

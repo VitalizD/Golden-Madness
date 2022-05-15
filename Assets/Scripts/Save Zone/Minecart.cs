@@ -27,7 +27,7 @@ public class Minecart : MonoBehaviour
             // Для обучающего уровня
             ServiceInfo.CheckpointConditionDone = true;
 
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

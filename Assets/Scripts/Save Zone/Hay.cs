@@ -11,7 +11,7 @@ public class Hay : MonoBehaviour
 
     private bool isTriggered = false;
 
-    public void SetCanBeUsedTrue() => canBeUsed = true;
+    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
 
     private void Awake()
     {
