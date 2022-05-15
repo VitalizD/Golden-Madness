@@ -3,6 +3,7 @@ using System;
 
 public class DoorToSaveZone : MonoBehaviour
 {
+    [SerializeField] private bool canBeUsed = true;
     [SerializeField] private DoorFromSaveZone doorFromSaveZone;
     [SerializeField] private float fadeSpeed = 1.2f;
 
@@ -31,7 +32,7 @@ public class DoorToSaveZone : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isTriggered && teleporter.State == Teleporter.States.Stayed)
+        if (Input.GetKeyDown(KeyCode.E) && canBeUsed && isTriggered && teleporter.State == Teleporter.States.Stayed)
         {
             void action()
             {
@@ -40,7 +41,8 @@ public class DoorToSaveZone : MonoBehaviour
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
             }
 
-            doorFromSaveZone.SetExitPosition(transform.position);
+            canBeUsed = false;
+            doorFromSaveZone.Refresh(transform.position);
             teleporter.Go(doorFromSaveZone.transform.position, action, fadeSpeed);
         }
     }
