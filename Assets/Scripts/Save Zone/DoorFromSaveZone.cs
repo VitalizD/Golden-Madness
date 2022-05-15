@@ -3,7 +3,6 @@ using UnityEngine;
 public class DoorFromSaveZone : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
-    [SerializeField] private Vector3 cameraPosition;
     [SerializeField] private float fadeSpeed = 1.2f;
 
     private Teleporter teleporter;
@@ -11,6 +10,7 @@ public class DoorFromSaveZone : MonoBehaviour
     private Minecart minecart;
     private Chest chest;
 
+    private Vector3 cameraPosition;
     private Vector2 exitPosition;
     private bool isTriggered = false;
 
@@ -28,6 +28,9 @@ public class DoorFromSaveZone : MonoBehaviour
 
     private void Awake()
     {
+        var center = transform.parent.transform.position;
+        cameraPosition = new Vector3(center.x, center.y, -10);
+
         teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
         hay = GameObject.FindGameObjectWithTag(ServiceInfo.HayTag).GetComponent<Hay>();
         minecart = GameObject.FindGameObjectWithTag(ServiceInfo.MinecartTag).GetComponent<Minecart>();
