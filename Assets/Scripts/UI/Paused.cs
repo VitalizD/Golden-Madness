@@ -43,14 +43,12 @@ public class Paused : MonoBehaviour
 
     public void Menu()
     {
-        pause.SetActive(false);
         exitMenu.SetActive(true);
         Time.timeScale = 0;
     }
 
     public void Return()
     {
-        pause.SetActive(true);
         exitMenu.SetActive(false);
         Time.timeScale = 0;
     }
