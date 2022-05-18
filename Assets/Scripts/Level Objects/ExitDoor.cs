@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class ExitDoor : MonoBehaviour
 {
@@ -7,21 +8,23 @@ public class ExitDoor : MonoBehaviour
     private bool isTriggered = false;
 
     private Teleporter teleporter;
+    private SceneChanger sceneChanger;
 
     private void Awake()
     {
         teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+        sceneChanger = GetComponent<SceneChanger>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
+        if (collision.GetComponent<Player>() != null)
             isTriggered = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
+        if (collision.GetComponent<Player>() != null)
             isTriggered = false;
     }
 
@@ -31,7 +34,7 @@ public class ExitDoor : MonoBehaviour
         {
             void action()
             {
-                // Переход в поселение
+                sceneChanger.ChangeScene();
             }
 
             teleporter.Go(Player.instanse.transform.position, action, fadeSpeed);
