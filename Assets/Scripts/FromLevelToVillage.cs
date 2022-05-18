@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public static class FromLevelToVillage
 {
-    private static Dictionary<ResourceTypes, int> resources;
+    private static Dictionary<ResourceTypes, int> resources = new Dictionary<ResourceTypes, int>();
 
     public static Dictionary<ResourceTypes, int> Resources
     {

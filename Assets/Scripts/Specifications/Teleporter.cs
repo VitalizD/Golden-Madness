@@ -36,8 +36,6 @@ public class Teleporter : MonoBehaviour
     private void Awake()
     {
         blackFilterImage = GetComponent<Image>();
-
-        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
     private void Update()
