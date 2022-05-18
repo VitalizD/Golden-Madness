@@ -3,9 +3,12 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IRuntimeStorage
 {
     public static Player instanse = null;
+
+    [Header("Loading Parameters")]
+    [SerializeField] private bool loadFromStorage = true;
 
     [Header("Base")]
     [SerializeField] [Range(0, 100)] private int health = 100;
@@ -43,6 +46,7 @@ public class Player : MonoBehaviour
     private Animator animator;
     private SanityController sanity;
     private Consumables consumables;
+    private Backpack backpack;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -112,7 +116,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private float PickaxeStrength
+    public float PickaxeStrength
     {
         get => pickaxeStrength;
         set
@@ -124,6 +128,30 @@ public class Player : MonoBehaviour
             tileDamage = Mathf.Lerp(maxTileDamage * minTileDamageInPercents / 100, maxTileDamage, pickaxeStrength / 100);
             enemyDamage = (int)Mathf.Ceil(Mathf.Lerp(maxEnemyDamage * minEnemyDamageInPercents / 100, maxEnemyDamage, pickaxeStrength / 100));
         }
+    }
+
+    public void SaveToStorage()
+    {
+        backpack.SaveToStorage();
+        consumables.SaveToStorage();
+
+        DataStorage.HitDamageToPickaxe = hitDamageToPickaxe;
+        DataStorage.MaxEnemyDamage = maxEnemyDamage;
+        DataStorage.MaxTileDamage = maxTileDamage;
+        DataStorage.SleepingBagHealthRecovery = healthRecovery;
+        DataStorage.SleepingBagSanityRecovery = sanityRecovery;
+    }
+
+    public void LoadFromStorage()
+    {
+        backpack.LoadFromStorage();
+        consumables.LoadFromStorage();
+
+        hitDamageToPickaxe = DataStorage.HitDamageToPickaxe;
+        maxEnemyDamage = DataStorage.MaxEnemyDamage;
+        maxTileDamage = DataStorage.MaxTileDamage;
+        healthRecovery = DataStorage.SleepingBagHealthRecovery;
+        sanityRecovery = DataStorage.SleepingBagSanityRecovery;
     }
 
     public void SetSelectedTile(Tile value) => selectedTile = value;
@@ -162,6 +190,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         sanity = GetComponent<SanityController>();
         consumables = GetComponent<Consumables>();
+        backpack = GetComponent<Backpack>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
@@ -172,6 +201,9 @@ public class Player : MonoBehaviour
     {
         checkpoint = transform.position;
         PickaxeStrength = pickaxeStrength;
+
+        if (loadFromStorage)
+            LoadFromStorage();
     }
 
     private void Update()

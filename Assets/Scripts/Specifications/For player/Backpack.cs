@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backpack : MonoBehaviour
+public class Backpack : MonoBehaviour, IRuntimeStorage
 {
     [SerializeField] private int maxCapacity = 100;
     [SerializeField] private int currentFullness = 0;
@@ -11,6 +11,10 @@ public class Backpack : MonoBehaviour
     private PlayerDialogWindow dialogWindow;
 
     private Dictionary<ResourceTypes, int> resourcesCounts;
+
+    public int MaxCapacity { get => maxCapacity; }
+
+    public int CurrentFullness { get => currentFullness; }
 
     private void Awake()
     {
@@ -63,6 +67,16 @@ public class Backpack : MonoBehaviour
             [ResourceTypes.IronOre] = 0,
             [ResourceTypes.Quartz] = 0
         };
+    }
+
+    public void SaveToStorage()
+    {
+        DataStorage.BackpackCapacity = maxCapacity;
+    }
+
+    public void LoadFromStorage()
+    {
+        maxCapacity = DataStorage.BackpackCapacity;
     }
 
     private void RecalculateCapacity()

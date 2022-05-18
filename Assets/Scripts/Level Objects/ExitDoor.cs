@@ -37,6 +37,7 @@ public class ExitDoor : MonoBehaviour
                 sceneChanger.ChangeScene();
             }
 
+            Player.instanse.SaveToStorage();
             teleporter.Go(Player.instanse.transform.position, action, fadeSpeed);
         }
     }

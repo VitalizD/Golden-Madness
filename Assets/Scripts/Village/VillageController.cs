@@ -9,6 +9,6 @@ public class VillageController : MonoBehaviour
 
     private void Start()
     {
-        resources = FromLevelToVillage.Resources;
+        resources = DataStorage.Resources;
     }
 }

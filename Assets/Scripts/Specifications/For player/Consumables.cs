@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Consumables : MonoBehaviour
+public class Consumables : MonoBehaviour, IRuntimeStorage
 {
     [SerializeField] private int maxCount = 5;
 
@@ -78,4 +78,19 @@ public class Consumables : MonoBehaviour
     public static float GrindstoneRecovery { get => grindstoneRecovery; }
     #endregion
 
+    public void SaveToStorage()
+    {
+        DataStorage.FuelTanksCount = fuelTanksCount;
+        DataStorage.GrindstonesCount = grindstonesCount;
+        DataStorage.HealthPacksCount = healthPacksCount;
+        DataStorage.SmokingPipesCount = smokingPipesCount;
+    }
+
+    public void LoadFromStorage()
+    {
+        fuelTankRecovery = DataStorage.FuelTanksCount;
+        grindstoneRecovery = DataStorage.GrindstonesCount;
+        healthPackRecovery = DataStorage.HealthPacksCount;
+        smokingPipeRecovery = DataStorage.SmokingPipesCount;
+    }
 }
