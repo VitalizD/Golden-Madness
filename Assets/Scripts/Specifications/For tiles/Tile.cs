@@ -16,7 +16,7 @@ public class Tile : MonoBehaviour
     private Player player;
 
     private float maxHealth;
-    private float checkingDistanceToDestroyAttachedTiles = 1f;
+    private readonly float checkingDistanceToDestroyAttachedTiles = 1f;
 
     public float DiggingDifficulty { get => diggingDifficulty; }
 
@@ -28,7 +28,7 @@ public class Tile : MonoBehaviour
             health = value;
             if (health <= 0)
                 Destroy(gameObject);
-            else
+            else if (destructionDegrees.Length > 0)
                 ChangeDestructionDegree();
         }
     }
