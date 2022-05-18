@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1598536202226443171}
   - component: {fileID: 1598536202226443170}
   - component: {fileID: 1598536202226443169}
+  - component: {fileID: 4250843892383136689}
   m_Layer: 6
   m_Name: Rat
   m_TagString: Untagged
@@ -160,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7522ca1267bf546bb359cbdf04e57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 15
   speed: 1
   damageColorTime: 0.4
   damageColor: {r: 1, g: 0.73018867, b: 0.73018867, a: 1}
@@ -201,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e600a452decca5418c02fb4c59cda5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 5
 --- !u!114 &1598536202226443169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,5 +215,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1fb31dae0427f42bb3790f2c56afe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceX: 5
+  forceX: 12
   forceY: 2
+--- !u!114 &4250843892383136689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598536202226443199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a6879b4ae787340b5b8afa848c2f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radiusInfluence: 5
+  decreasingSanityInArea: 0.1
+  decreasingSanityAfterAttack: 1

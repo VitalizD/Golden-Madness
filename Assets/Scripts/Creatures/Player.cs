@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
     public static Player instanse = null;
 
-    [SerializeField] private VectorValue initialPosition;
-
     [Header("Base")]
     [SerializeField] [Range(0, 100)] private int health = 100;
-    [SerializeField] private int hitDamage;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float touchingDistance;
 
     [Header("Fight")]
+    [SerializeField] private int enemyDamage = 10;
+    [SerializeField] private int maxEnemyDamage = 10;
+    [SerializeField] private int minEnemyDamageInPercents = 60;
     [SerializeField] private float repulsiveForce;
     [SerializeField] private float jerkForce = 3f;
     [SerializeField] private float attackDistance;
@@ -23,24 +23,39 @@ public class Player : MonoBehaviour
     [SerializeField] private float reloadAttackTime = 0.5f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
-    [SerializeField] private UnityEvent<string> OnGetDamage;
+    [SerializeField] private RedFilter displayFilter;
+    [SerializeField] private UnityEvent<string> OnChangeHealth;
+
+    [Header("Pickaxe")]
+    [SerializeField] [Range(0, 100f)] private float pickaxeStrength = 100f;
+    [SerializeField] private float hitDamageToPickaxe = 1f;
+    [SerializeField] private float tileDamage = 1f;
+    [SerializeField] private float maxTileDamage = 1f;
+    [SerializeField] [Range(0, 100f)] private float minTileDamageInPercents = 20;
+    [SerializeField] private float touchingDistance;
+
+    [Header("Sleeping Bag")]
+    [SerializeField] [Range(0, 100)] private int healthRecovery = 20;
+    [SerializeField] [Range(0, 100f)] private float sanityRecovery = 50f;
 
     private Rigidbody2D rigidBody2d;
     private SpriteRenderer sprite;
     private Animator animator;
+    private SanityController sanity;
+    private Consumables consumables;
 
-    private readonly float jumpCheckRadius = 0.01f;
-    private readonly float yOffsetToGround = -0.5f;
     private Tile selectedTile;
-    private Vector3 oldPos;
     private LayerMask groundMask;
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
+    private float fixedZPosition;
 
     private Coroutine reloadAttack;
 
+    private readonly float jumpCheckRadius = 0.01f;
+    private readonly float yOffsetToGround = -0.5f;
+
     private bool invulnerability = false;
-    private bool isMoving = false;
     private bool isStunned = false;
     private bool feelPain = false;
     private bool isAttacking = false;
@@ -55,8 +70,6 @@ public class Player : MonoBehaviour
     public bool IsGrounded { get => isGrounded; }
 
     public float TouchingDistance { get => touchingDistance; }
-
-    public int HitDamage { get => hitDamage; }
 
     public States State
     {
@@ -86,14 +99,30 @@ public class Player : MonoBehaviour
                 State = States.Pain;
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
+                if (displayFilter) displayFilter.ChangeColor(health - value);
             }
-            health = value;
-            //OnGetDamage?.Invoke(health.ToString());
+            health = value > 100 ? 100 : value;
             if (health <= 0)
             {
                 health = 100;
                 transform.position = checkpoint;
+                if (displayFilter) displayFilter.RemoveFilter();
             }
+            OnChangeHealth?.Invoke(health.ToString());
+        }
+    }
+
+    private float PickaxeStrength
+    {
+        get => pickaxeStrength;
+        set
+        {
+            if (value < 0) pickaxeStrength = 0;
+            else if (value > 100) pickaxeStrength = 100f;
+            else pickaxeStrength = value;
+
+            tileDamage = Mathf.Lerp(maxTileDamage * minTileDamageInPercents / 100, maxTileDamage, pickaxeStrength / 100);
+            enemyDamage = (int)Mathf.Ceil(Mathf.Lerp(maxEnemyDamage * minEnemyDamageInPercents / 100, maxEnemyDamage, pickaxeStrength / 100));
         }
     }
 
@@ -102,6 +131,24 @@ public class Player : MonoBehaviour
     public void RemoveSelectedTile() => selectedTile = null;
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
+
+    public void Sleep()
+    {
+        Health += healthRecovery;
+        sanity.Sanity += sanityRecovery;
+    }
+
+    public void SetStun()
+    {
+        isStunned = true;
+        StartCoroutine(DisableStun(stunTime));
+    }
+
+    public void SetStun(float time)
+    {
+        isStunned = true;
+        StartCoroutine(DisableStun(time));
+    }
 
     private void Awake()
     {
@@ -113,16 +160,18 @@ public class Player : MonoBehaviour
         rigidBody2d = GetComponent<Rigidbody2D>();
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        sanity = GetComponent<SanityController>();
+        consumables = GetComponent<Consumables>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
+        fixedZPosition = transform.position.z;
     }
 
     private void Start()
     {
-        if (initialPosition != null)
-            transform.position = initialPosition.initialValue;
         checkpoint = transform.position;
+        PickaxeStrength = pickaxeStrength;
     }
 
     private void Update()
@@ -132,12 +181,25 @@ public class Player : MonoBehaviour
 
         if (canAttack && isGrounded && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
             Attack();
+        //точильный камень
+        if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
+        {
+            PickaxeStrength += Consumables.GrindstoneRecovery;
+            --consumables.GrindstonesCount;
+        }
+        //Нажатие хилки
+        if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
+        {
+            Health += Consumables.HealthPacksRecovery;
+            --consumables.HealthPacksCount;
+        }
+
     }
 
     private void FixedUpdate()
     {
-        isMoving = transform.position != oldPos;
-        oldPos = transform.position;
+        var position = transform.position;
+        transform.position = new Vector3(position.x, position.y, fixedZPosition);
 
         CheckGrounded();
 
@@ -157,19 +219,13 @@ public class Player : MonoBehaviour
         GetDamage(collision.collider);
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (invulnerability)
-            return;
-
-        Throw(collision);
-        GetDamage(collision);
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackDistance);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, touchingDistance);
     }
 
     // Назначен на ключ в анимации "Attack"
@@ -182,7 +238,7 @@ public class Player : MonoBehaviour
             var creature = raycastHit.collider.GetComponent<Creature>();
             if (creature)
             {
-                creature.Health -= hitDamage;
+                creature.Health -= enemyDamage;
                 if (creature.Repulsiable)
                     creature.Throw(transform.position, repulsiveForce);
             }
@@ -195,8 +251,9 @@ public class Player : MonoBehaviour
         if (!selectedTile)
             return;
 
-        var damage = selectedTile.DiggingDifficulty < HitDamage ? HitDamage / selectedTile.DiggingDifficulty : HitDamage;
+        var damage = selectedTile.DiggingDifficulty < tileDamage ? tileDamage / selectedTile.DiggingDifficulty : tileDamage;
         selectedTile.Health -= damage;
+        PickaxeStrength -= hitDamageToPickaxe;
         canAttack = false;
 
         if (reloadAttack != null) StopCoroutine(reloadAttack);
@@ -205,17 +262,22 @@ public class Player : MonoBehaviour
 
     private void GetDamage(Collider2D collision)
     {
-        var danger = collision.gameObject.GetComponent<Danger>();
+        var danger = collision.GetComponent<Danger>();
         if (danger)
         {
             Health -= danger.Damage;
+            State = States.Pain;
             SetStun();
+
+            var terrible = collision.GetComponent<Terrible>();
+            if (terrible)
+                sanity.Sanity -= terrible.DecreasingSanityAfterAttack;
         }
     }
 
     private void Throw(Collider2D collision)
     {
-        var repulsion = collision.gameObject.GetComponent<Repulsive>();
+        var repulsion = collision.GetComponent<Repulsive>();
         if (repulsion)
         {
             var colPosition = collision.transform.position;
@@ -223,13 +285,6 @@ public class Player : MonoBehaviour
 
             rigidBody2d.AddForce(new Vector2((playerPosition.x - colPosition.x) * repulsion.ForceX, repulsion.ForceY), ForceMode2D.Impulse);
         }
-    }
-
-    private void SetStun()
-    {
-        State = States.Pain;
-        isStunned = true;
-        StartCoroutine(DisableStun());
     }
 
     private void Run()
@@ -287,9 +342,9 @@ public class Player : MonoBehaviour
         invulnerability = false;
     }
 
-    private IEnumerator DisableStun()
+    private IEnumerator DisableStun(float afterTime)
     {
-        yield return new WaitForSeconds(stunTime);
+        yield return new WaitForSeconds(afterTime);
         isStunned = false;
         feelPain = false;
     }

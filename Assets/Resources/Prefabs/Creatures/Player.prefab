@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 984370220786920450}
   - component: {fileID: 984370220786920461}
   - component: {fileID: 984370220786920454}
+  - component: {fileID: 99395948229621791}
+  - component: {fileID: 5101184335126964010}
+  - component: {fileID: 5772696817491646705}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -88,12 +91,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e2758d084578b4195ecffda210a82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPosition: {fileID: 11400000, guid: c497f5c7dab792641aa89097df969cd7, type: 2}
   health: 100
-  hitDamage: 1
   speed: 4
   jumpForce: 8
-  touchingDistance: 1.5
+  enemyDamage: 10
+  maxEnemyDamage: 10
+  minEnemyDamageInPercents: 60
   repulsiveForce: 3.2
   jerkForce: 0
   attackDistance: 1.2
@@ -101,9 +104,18 @@ MonoBehaviour:
   reloadAttackTime: 1
   invulnerabilityTime: 1
   stunTime: 0.5
-  OnGetDamage:
+  displayFilter: {fileID: 0}
+  OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
+  pickaxeStrength: 100
+  hitDamageToPickaxe: 1
+  tileDamage: 1
+  maxTileDamage: 1
+  minTileDamageInPercents: 20
+  touchingDistance: 1.5
+  healthRecovery: 20
+  sanityRecovery: 50
 --- !u!95 &984370220786920454
 Animator:
   serializedVersion: 4
@@ -124,6 +136,54 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &99395948229621791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984370220786920460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9effe401df66c43418c507bdba7ef8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCount: 5
+  fuelTanksCount: 0
+  grindstonesCount: 1
+  healthPacksCount: 1
+  smokingPipesCount: 1
+--- !u!114 &5101184335126964010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984370220786920460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b31f354cef5dd449bce4bc43dc3236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableDecreasing: 1
+  sanity: 100
+--- !u!114 &5772696817491646705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984370220786920460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd22748024ef58745979764546f2f71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCapacity: 100
+  currentFullness: 0
+  fullInventoryPhrase: "\u041C\u043E\u0439 \u0440\u044E\u043A\u0437\u0430\u043A \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D!"
+  cannotTakePhrase: "\u041C\u043D\u0435 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435
+    \u0443\u043D\u0435\u0441\u0442\u0438!"
 --- !u!1 &984370221206082729
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,10 +262,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1051824476959026275
@@ -452,7 +512,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606018953659525155}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -549,12 +609,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a59608610fc7b4690e80d7f001769f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableFuelDecrease: 1
-  fuelCount: 100
+  enableFuelDecrease: 0
+  fuelCount: 0
   minLightRange: 8
   maxLightRange: 25
-  fuelDecreaseValue: 0.5
-  timeFuelDecrease: 1
+  fuelDecreaseValue: 1
+  timeFuelDecrease: 5
 --- !u!1 &5831702624987111799
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,12 +681,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041C\u043E\u044F \u043A\u0438\u0440\u043A\u0430 \u043D\u0435\u043C\u043D\u043E\u0433\u043E
-    \u0437\u0430\u0442\u0443\u043F\u0438\u043B\u0430\u0441\u044C, \u043D\u0443\u0436\u043D\u043E
-    \u0431\u044B \u0435\u0435 \u0437\u0430\u0442\u043E\u0447\u0438\u0442\u044C"
+  m_text: "\u042F \u0443\u0436\u0435 \u0432\u0430\u043B\u044E\u0441\u044C \u0441
+    \u043D\u043E\u0433, \u0432\u043E\u0442 \u0431\u044B \u043D\u0435\u043C\u043D\u043E\u0433\u043E
+    \u0432\u0437\u0434\u0440\u0435\u043C\u043D\u0443\u0442\u044C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 89340ddf5c5be3e4798ee72ff2c3b644, type: 2}
+  m_sharedMaterial: {fileID: -302783918399807679, guid: 89340ddf5c5be3e4798ee72ff2c3b644, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -650,7 +710,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
+  m_fontSize: 0.35
   m_fontSizeBase: 0.4
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -662,7 +722,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -20.01
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
