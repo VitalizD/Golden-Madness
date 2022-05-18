@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 3414088644169256658}
   - component: {fileID: 8849589040254361867}
   - component: {fileID: 8463795960766373943}
-  - component: {fileID: 3928763105252290456}
+  - component: {fileID: 889289305}
   m_Layer: 5
   m_Name: Black Filter
-  m_TagString: Untagged
+  m_TagString: Scene Controller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3928763105252290456
+--- !u!114 &889289305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,11 +86,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4015485700707034974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4680814385c0d8c41a2fa4faec362f74, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c602f1499cef5a41bc7232dd87def38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  removingFilterSpeed: 0.025
-  alphaLimit: 0.5
+  maxStunPlayerTime: 3
 --- !u!1 &5661314287269160150
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +143,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 1
+  m_PlaneDistance: 3
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -264,8 +263,8 @@ MonoBehaviour:
     <b><size=45>A</size></b> \u0438 <b><size=45>D</size></b> \u0434\u043B\u044F \u0445\u043E\u0434\u044C\u0431\u044B\n\u041D\u0430\u0436\u043C\u0438\u0442\u0435
     <b><size=45>SPACE</size></b> \u0434\u043B\u044F \u043F\u0440\u044B\u0436\u043A\u0430"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a3bae737e4f5b314f862377253c296fe, type: 2}
+  m_sharedMaterial: {fileID: 3011918488052775782, guid: a3bae737e4f5b314f862377253c296fe, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

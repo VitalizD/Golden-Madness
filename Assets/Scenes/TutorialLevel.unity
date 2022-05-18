@@ -13238,24 +13238,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc28186f4e6422f4fbcc67251a7a1a48, type: 3}
---- !u!1 &889289300 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4015485700707034974, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
-  m_PrefabInstance: {fileID: 5661314285498832239}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &889289305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 889289300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c602f1499cef5a41bc7232dd87def38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxStunPlayerTime: 3
 --- !u!4 &900580656 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1897565298467509867, guid: dc28186f4e6422f4fbcc67251a7a1a48, type: 3}
@@ -33531,10 +33513,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4015485700707034974, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
-      propertyPath: m_TagString
-      value: Scene Controller
-      objectReference: {fileID: 0}
     - target: {fileID: 5661314287269160146, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -33623,24 +33601,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1599833104}
-    - target: {fileID: 5661314287269160147, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
-      propertyPath: m_PlaneDistance
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5661314287269160150, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5661314287477038094, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: a3bae737e4f5b314f862377253c296fe, type: 2}
-    - target: {fileID: 5661314287477038094, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 3011918488052775782, guid: a3bae737e4f5b314f862377253c296fe, type: 2}
-    m_RemovedComponents:
-    - {fileID: 3928763105252290456, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
 --- !u!114 &5661314285498832241 stripped
 MonoBehaviour:
