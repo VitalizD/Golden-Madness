@@ -47,6 +47,7 @@ public class Player : MonoBehaviour, IRuntimeStorage
     private SanityController sanity;
     private Consumables consumables;
     private Backpack backpack;
+    private PlayerDialogWindow dialogWindow;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -160,6 +161,12 @@ public class Player : MonoBehaviour, IRuntimeStorage
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
 
+    public void AddMaxEnemyDamage(int valueInPercents) => maxEnemyDamage += (int)(maxEnemyDamage * (valueInPercents / 100f));
+
+    public void AddMaxTileDamage(float valueInPercents) => maxTileDamage += maxTileDamage * (valueInPercents / 100f);
+
+    public void AddHitDamageToPickaxe(float valueInPercents) => hitDamageToPickaxe += hitDamageToPickaxe * (valueInPercents / 100f);
+
     public void Sleep()
     {
         Health += healthRecovery;
@@ -178,6 +185,12 @@ public class Player : MonoBehaviour, IRuntimeStorage
         StartCoroutine(DisableStun(time));
     }
 
+    public void Say(string text, float sayingTime)
+    {
+        dialogWindow.gameObject.SetActive(true);
+        dialogWindow.Show(text, sayingTime);
+    }
+
     private void Awake()
     {
         if (instanse == null)
@@ -191,6 +204,7 @@ public class Player : MonoBehaviour, IRuntimeStorage
         sanity = GetComponent<SanityController>();
         consumables = GetComponent<Consumables>();
         backpack = GetComponent<Backpack>();
+        dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
