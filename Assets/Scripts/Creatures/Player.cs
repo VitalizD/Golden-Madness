@@ -161,9 +161,17 @@ public class Player : MonoBehaviour, IRuntimeStorage
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
 
-    public void AddMaxEnemyDamage(int valueInPercents) => maxEnemyDamage += (int)(maxEnemyDamage * (valueInPercents / 100f));
+    public void AddMaxEnemyDamage(int valueInPercents)
+    {
+        maxEnemyDamage += (int)(maxEnemyDamage * (valueInPercents / 100f));
+        enemyDamage = maxEnemyDamage;
+    }
 
-    public void AddMaxTileDamage(float valueInPercents) => maxTileDamage += maxTileDamage * (valueInPercents / 100f);
+    public void AddMaxTileDamage(float valueInPercents)
+    {
+        maxTileDamage += maxTileDamage * (valueInPercents / 100f);
+        tileDamage = maxTileDamage;
+    }
 
     public void AddHitDamageToPickaxe(float valueInPercents) => hitDamageToPickaxe += hitDamageToPickaxe * (valueInPercents / 100f);
 

@@ -88,9 +88,9 @@ public class Consumables : MonoBehaviour, IRuntimeStorage
 
     public void LoadFromStorage()
     {
-        fuelTankRecovery = DataStorage.FuelTanksCount;
-        grindstoneRecovery = DataStorage.GrindstonesCount;
-        healthPackRecovery = DataStorage.HealthPacksCount;
-        smokingPipeRecovery = DataStorage.SmokingPipesCount;
+        fuelTanksCount = DataStorage.FuelTanksCount;
+        grindstonesCount = DataStorage.GrindstonesCount;
+        healthPacksCount = DataStorage.HealthPacksCount;
+        smokingPipesCount = DataStorage.SmokingPipesCount;
     }
 }
