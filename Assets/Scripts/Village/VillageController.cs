@@ -6,6 +6,7 @@ public class VillageController : MonoBehaviour
     public static VillageController instanse = null;
 
     [SerializeField] private bool loadFromStorage = true;
+    [SerializeField] private GameObject triggers;
 
     [Header("Resources Sprites")]
     [SerializeField] private Sprite goldIcon;
@@ -60,5 +61,8 @@ public class VillageController : MonoBehaviour
     {
         if (loadFromStorage)
             resourcesCounts = DataStorage.Resources;
+
+        if (!ServiceInfo.TutorialDone)
+            triggers.SetActive(true);
     }
 }

@@ -71,6 +71,10 @@ public class TutorialCheckpoint : MonoBehaviour
                 return new Func<bool>(() => { return ServiceInfo.CheckpointConditionDone; });
             case InformationWindowHidingConditions.PressENearChest:
                 return new Func<bool>(() => { return ServiceInfo.CheckpointConditionDone; });
+            case InformationWindowHidingConditions.PressENearForge:
+                return new Func<bool>(() => { return ServiceInfo.CheckpointConditionDone; });
+            case InformationWindowHidingConditions.PressENearCave:
+                return new Func<bool>(() => { return ServiceInfo.CheckpointConditionDone; });
             default: return null;
         }
     }

@@ -31917,11 +31917,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.35
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.42
+      value: -5.38
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.z
@@ -33477,24 +33477,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87bbda74e8429e04ea72b8a8a0a09166, type: 3}
---- !u!1 &4416862668204211949 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2358043821391573200, guid: 87bbda74e8429e04ea72b8a8a0a09166, type: 3}
-  m_PrefabInstance: {fileID: 4416862668204211948}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4416862668204211950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416862668204211949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d7bf99fb1a26974cb16c5cc109bd575, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: Village
 --- !u!114 &4868247247240942130 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4812864316853844943, guid: 6329a3f4cb770f5439241d2ba2df545d, type: 3}

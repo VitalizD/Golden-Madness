@@ -3,6 +3,7 @@ using System;
 
 public class Building : MonoBehaviour
 {
+    [SerializeField] private bool canBeUsed = true;
     [SerializeField] private BuildingType buildingType;
     [SerializeField] private Sprite constructedBuildingSprite;
 
@@ -15,6 +16,8 @@ public class Building : MonoBehaviour
     private int requiredCount = 0;
     private ResourceTypes requiredResource = ResourceTypes.None;
     private Action actionAfterUpgrading = null;
+
+    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
 
     private void Awake()
     {
@@ -30,7 +33,7 @@ public class Building : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Player>() != null)
+        if (collision.GetComponent<Player>() != null && canBeUsed)
         {
             isTriggered = true;
             if (!maxLevel)
@@ -40,7 +43,7 @@ public class Building : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<Player>() != null)
+        if (collision.GetComponent<Player>() != null && canBeUsed)
         {
             isTriggered = false;
             if (!maxLevel)
@@ -77,6 +80,7 @@ public class Building : MonoBehaviour
                         upgradeWindow.SetDescription("Улучшает кирку");
                         upgradeWindow.SetAction("- Построить");
                         SetRequiredResource(ResourceTypes.GoldOre, 3);
+                        actionAfterUpgrading = () => { ServiceInfo.CheckpointConditionDone = true; }; // Для обучения
                         break;
                     case 1:
                         upgradeWindow.SetDescription("Увеличивает скорость добычи, урон и прочность кирки на 20%");
@@ -84,6 +88,8 @@ public class Building : MonoBehaviour
                         SetRequiredResource(ResourceTypes.GoldOre, 3);
                         actionAfterUpgrading = () =>
                         {
+                            ServiceInfo.CheckpointConditionDone = true; // Для обучения
+
                             Player.instanse.AddHitDamageToPickaxe(-20);
                             Player.instanse.AddMaxEnemyDamage(20);
                             Player.instanse.AddMaxTileDamage(20);
