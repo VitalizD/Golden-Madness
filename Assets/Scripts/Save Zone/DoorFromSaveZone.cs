@@ -9,10 +9,10 @@ public class DoorFromSaveZone : MonoBehaviour
     private Hay hay;
     private Minecart minecart;
     private Chest chest;
+    private TriggerZone trigger;
 
     private Vector3 cameraPosition;
     private Vector2 exitPosition;
-    private bool isTriggered = false;
 
     public Vector3 CameraPosition { get => cameraPosition; set => cameraPosition = value; }
 
@@ -35,23 +35,12 @@ public class DoorFromSaveZone : MonoBehaviour
         hay = GameObject.FindGameObjectWithTag(ServiceInfo.HayTag).GetComponent<Hay>();
         minecart = GameObject.FindGameObjectWithTag(ServiceInfo.MinecartTag).GetComponent<Minecart>();
         chest = GameObject.FindGameObjectWithTag(ServiceInfo.ChestTag).GetComponent<Chest>();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = false;
+        trigger = GetComponent<TriggerZone>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canBeUsed && isTriggered && teleporter.State == Teleporter.States.Stayed)
+        if (Input.GetKeyDown(KeyCode.E) && canBeUsed && trigger.IsTriggered && teleporter.State == Teleporter.States.Stayed)
         {
             void action()
             {

@@ -6,7 +6,7 @@ public class Chest : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
 
-    private bool inRange = false;
+    private TriggerZone trigger;
     private Consumables consumables;
     //{itemAmount, chance}
     private Dictionary<int, float> chancesForDropAmount = new Dictionary<int, float>
@@ -20,16 +20,9 @@ public class Chest : MonoBehaviour
 
     public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Awake()
     {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            inRange = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            inRange = false;
+        trigger = GetComponent<TriggerZone>();
     }
 
     private void Start()
@@ -39,7 +32,7 @@ public class Chest : MonoBehaviour
 
     private void Update()
     {
-        if (canBeUsed && inRange && Input.GetKeyDown(KeyCode.E))
+        if (canBeUsed && trigger.IsTriggered && Input.GetKeyDown(KeyCode.E))
         {
             //лист нестатическийх свойств
             var consumabelsList = consumables.GetType().GetProperties(

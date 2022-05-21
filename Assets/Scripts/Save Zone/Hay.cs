@@ -8,14 +8,14 @@ public class Hay : MonoBehaviour
 
     private PlayerDialogWindow dialogWindow;
     private Teleporter teleporter;
-
-    private bool isTriggered = false;
+    private TriggerZone trigger;
 
     public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
 
     private void Awake()
     {
         teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+        trigger = GetComponent<TriggerZone>();
     }
 
     private void Start()
@@ -23,21 +23,9 @@ public class Hay : MonoBehaviour
         dialogWindow = Player.instanse.transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = false;
-    }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isTriggered && canBeUsed)
+        if (Input.GetKeyDown(KeyCode.E) && trigger.IsTriggered && canBeUsed)
         {
             void action()
             {

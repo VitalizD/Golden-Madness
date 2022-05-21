@@ -2408,6 +2408,7 @@ GameObject:
   - component: {fileID: 1723276612}
   - component: {fileID: 1723276614}
   - component: {fileID: 1723276613}
+  - component: {fileID: 1723276615}
   m_Layer: 0
   m_Name: Cave
   m_TagString: Untagged
@@ -2535,6 +2536,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeUsed: 1
   fadeSpeed: 0.7
+--- !u!114 &1723276615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723276609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d1b4054379dae418c10c2255b46705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1770107501 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 99395948229621791, guid: 89925e7ae6200784fa95d757f84225da, type: 3}

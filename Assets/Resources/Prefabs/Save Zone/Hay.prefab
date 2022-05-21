@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8032424393113258257}
   - component: {fileID: 4821641923613222653}
   - component: {fileID: 2590479615387731026}
+  - component: {fileID: 258367788728675163}
   m_Layer: 0
   m_Name: Hay
   m_TagString: Untagged
@@ -126,3 +127,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeUsed: 1
   fadeSpeed: 0.7
+--- !u!114 &258367788728675163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4400574464652067481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d1b4054379dae418c10c2255b46705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

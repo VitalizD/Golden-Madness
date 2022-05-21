@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 963331014330341359}
   - component: {fileID: 370122700683976708}
   - component: {fileID: 4416862668204211950}
+  - component: {fileID: 2972431328789732385}
   m_Layer: 0
   m_Name: Exit Door
   m_TagString: Untagged
@@ -130,3 +131,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Village
+--- !u!114 &2972431328789732385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358043821391573200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d1b4054379dae418c10c2255b46705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3307617025073805699}
   - component: {fileID: 1141989051}
   - component: {fileID: 985500380637888073}
+  - component: {fileID: 8759701055401968652}
   m_Layer: 0
   m_Name: Door To Save Zone
   m_TagString: Untagged
@@ -114,5 +115,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b1bfc5e42010b419ab87aab6e65754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeUsed: 1
   doorFromSaveZone: {fileID: 0}
-  stunTime: 1.5
+  fadeSpeed: 1.2
+--- !u!114 &8759701055401968652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3307617025073805700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d1b4054379dae418c10c2255b46705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
