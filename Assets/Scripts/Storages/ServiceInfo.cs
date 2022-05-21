@@ -17,6 +17,7 @@ public static class ServiceInfo
     public static string TutorialLevel { get; } = "TutorialLevel";
 
     public static int ChildIndexOfDialogWindow { get; } = 2;
+    public static int ChildIndexOfLamp { get; } = 3;
 
     public static bool CheckpointConditionDone { get; set; } = false;
     public static bool TutorialDone { get; set; } = false;

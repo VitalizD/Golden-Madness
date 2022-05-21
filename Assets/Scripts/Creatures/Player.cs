@@ -68,6 +68,7 @@ public class Player : MonoBehaviour, IStorage
     private SanityController sanity;
     private Consumables consumables;
     private Backpack backpack;
+    private Lamp lamp;
     private PlayerDialogWindow dialogWindow;
     //private DefaultValues defaultValues;
 
@@ -157,6 +158,7 @@ public class Player : MonoBehaviour, IStorage
     {
         backpack.Save();
         consumables.Save();
+        lamp.Save();
 
         PlayerPrefs.SetFloat(PlayerPrefsKeys.HitDamageToPickaxe, hitDamageToPickaxe);
         PlayerPrefs.SetInt(PlayerPrefsKeys.MaxEnemyDamage, maxEnemyDamage);
@@ -173,6 +175,7 @@ public class Player : MonoBehaviour, IStorage
 
         backpack.Load();
         consumables.Load();
+        lamp.Load();
 
         hitDamageToPickaxe = PlayerPrefs.GetFloat(PlayerPrefsKeys.HitDamageToPickaxe, hitDamageToPickaxe);
         maxEnemyDamage = PlayerPrefs.GetInt(PlayerPrefsKeys.MaxEnemyDamage, enemyDamage);
@@ -245,6 +248,7 @@ public class Player : MonoBehaviour, IStorage
         sanity = GetComponent<SanityController>();
         consumables = GetComponent<Consumables>();
         backpack = GetComponent<Backpack>();
+        lamp = transform.GetChild(ServiceInfo.ChildIndexOfLamp).GetComponent<Lamp>();
         dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);

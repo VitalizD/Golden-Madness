@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class Lamp : MonoBehaviour
+public class Lamp : MonoBehaviour, IStorage
 {
     [SerializeField] private bool enableFuelDecrease = false;
     [SerializeField] [Range(0, 100)] private float fuelCount = 100f;
     [SerializeField] private float minLightRange = 8f;
     [SerializeField] private float maxLightRange = 25f;
-    [SerializeField] private float fuelDecreaseValue = 0.5f;
-    [SerializeField] private float timeFuelDecrease = 1f;
+    [SerializeField] private float fuelDecreaseValue = 1f;
+    [SerializeField] private float timeFuelDecrease = 5f;
 
     private readonly float checkFuelCountBetweenTime = 2f;
 
@@ -42,6 +42,18 @@ public class Lamp : MonoBehaviour
                 fuelCount = value;
             light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
         }
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.FuelCount, fuelCount);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.FuelDecreaseValue, fuelDecreaseValue);
+    }
+
+    public void Load()
+    {
+        FuelCount = PlayerPrefs.GetFloat(PlayerPrefsKeys.FuelCount, fuelCount);
+        fuelDecreaseValue = PlayerPrefs.GetFloat(PlayerPrefsKeys.FuelDecreaseValue, fuelDecreaseValue);
     }
 
     private void Awake()
