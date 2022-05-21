@@ -9,6 +9,17 @@ public class DoorToSaveZone : MonoBehaviour
 
     private Teleporter teleporter;
     private TriggerZone trigger;
+    private PressActionKey pressActionKey;
+
+    public bool CanBeUsed
+    {
+        get => canBeUsed;
+        set
+        {
+            canBeUsed = value;
+            pressActionKey.SetActive(value);
+        }
+    }
 
     public void SetDoorFromSaveZone(DoorFromSaveZone value) => doorFromSaveZone = value;
 
@@ -16,6 +27,7 @@ public class DoorToSaveZone : MonoBehaviour
     {
         teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
         trigger = GetComponent<TriggerZone>();
+        pressActionKey = GetComponent<PressActionKey>();
     }
 
     private void Update()
@@ -29,7 +41,7 @@ public class DoorToSaveZone : MonoBehaviour
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
             }
 
-            canBeUsed = false;
+            CanBeUsed = false;
             doorFromSaveZone.Refresh(transform.position);
             teleporter.Go(doorFromSaveZone.transform.position, action, fadeSpeed);
         }

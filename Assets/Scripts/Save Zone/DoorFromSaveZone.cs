@@ -10,13 +10,22 @@ public class DoorFromSaveZone : MonoBehaviour
     private Minecart minecart;
     private Chest chest;
     private TriggerZone trigger;
+    private PressActionKey pressActionKey;
 
     private Vector3 cameraPosition;
     private Vector2 exitPosition;
 
     public Vector3 CameraPosition { get => cameraPosition; set => cameraPosition = value; }
 
-    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
+    public bool CanBeUsed
+    {
+        get => canBeUsed;
+        set
+        {
+            canBeUsed = value;
+            pressActionKey.SetActive(value);
+        }
+    }
 
     public void Refresh(Vector2 exitPosition)
     {
@@ -36,6 +45,7 @@ public class DoorFromSaveZone : MonoBehaviour
         minecart = GameObject.FindGameObjectWithTag(ServiceInfo.MinecartTag).GetComponent<Minecart>();
         chest = GameObject.FindGameObjectWithTag(ServiceInfo.ChestTag).GetComponent<Chest>();
         trigger = GetComponent<TriggerZone>();
+        pressActionKey = GetComponent<PressActionKey>();
     }
 
     private void Update()
@@ -49,6 +59,7 @@ public class DoorFromSaveZone : MonoBehaviour
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = true;
             }
 
+            CanBeUsed = false;
             teleporter.Go(exitPosition, action, fadeSpeed);
         }
     }

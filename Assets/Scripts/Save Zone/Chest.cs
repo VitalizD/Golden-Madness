@@ -8,6 +8,7 @@ public class Chest : MonoBehaviour
 
     private TriggerZone trigger;
     private Consumables consumables;
+    private PressActionKey pressActionKey;
     //{itemAmount, chance}
     private Dictionary<int, float> chancesForDropAmount = new Dictionary<int, float>
     {
@@ -18,11 +19,20 @@ public class Chest : MonoBehaviour
         { 4, 5 },
     };
 
-    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
+    public bool CanBeUsed
+    {
+        get => canBeUsed;
+        set
+        {
+            canBeUsed = value;
+            pressActionKey.SetActive(value);
+        }
+    }
 
     private void Awake()
     {
         trigger = GetComponent<TriggerZone>();
+        pressActionKey = GetComponent<PressActionKey>();
     }
 
     private void Start()
@@ -73,7 +83,7 @@ public class Chest : MonoBehaviour
 
             }
             //Debug.Log("Created list of consumabels with lenght: " + consumabelsList.Length);
-            canBeUsed = false;
+            CanBeUsed = false;
             ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
 
         }

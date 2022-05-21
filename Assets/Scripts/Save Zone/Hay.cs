@@ -9,13 +9,23 @@ public class Hay : MonoBehaviour
     private PlayerDialogWindow dialogWindow;
     private Teleporter teleporter;
     private TriggerZone trigger;
+    private PressActionKey pressActionKey;
 
-    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
+    public bool CanBeUsed 
+    { 
+        get => canBeUsed; 
+        set
+        {
+            canBeUsed = value;
+            pressActionKey.SetActive(value);
+        }
+    }
 
     private void Awake()
     {
         teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
         trigger = GetComponent<TriggerZone>();
+        pressActionKey = GetComponent<PressActionKey>();
     }
 
     private void Start()
@@ -32,11 +42,11 @@ public class Hay : MonoBehaviour
                 Player.instanse.Sleep();
                 dialogWindow.gameObject.SetActive(true);
                 dialogWindow.Show("Tеперь я чувствую себя бодрым", 4);
-                canBeUsed = false;
 
                 ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
             }
 
+            CanBeUsed = false;
             teleporter.Go(Player.instanse.transform.position, action, fadeSpeed);
         }
     }

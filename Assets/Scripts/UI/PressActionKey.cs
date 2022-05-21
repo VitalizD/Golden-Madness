@@ -2,5 +2,33 @@ using UnityEngine;
 
 public class PressActionKey : MonoBehaviour
 {
-    private bool isTriggered = false;
+    [SerializeField] private bool isActive = true;
+    [SerializeField] private int childIndexE = 0;
+
+    private GameObject e;
+
+    public void SetActive(bool value)
+    {
+        isActive = value;
+        if (!value)
+            e.SetActive(false);
+    }
+
+    private void Awake()
+    {
+        e = transform.GetChild(childIndexE).gameObject;
+        e.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isActive && collision.GetComponent<Player>() != null)
+            e.SetActive(true);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Player>() != null)
+            e.SetActive(false);
+    }
 }
