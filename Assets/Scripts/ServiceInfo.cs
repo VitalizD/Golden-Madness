@@ -16,4 +16,5 @@ public static class ServiceInfo
     public static int ChildIndexOfDialogWindow { get; } = 2;
 
     public static bool CheckpointConditionDone { get; set; } = false;
+    public static bool TutorialDone { get; set; } = false;
 }

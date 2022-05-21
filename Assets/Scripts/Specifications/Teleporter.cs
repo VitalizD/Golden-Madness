@@ -35,10 +35,7 @@ public class Teleporter : MonoBehaviour
 
     private void Awake()
     {
-        blackFilterImage = GameObject
-            .Find(ServiceInfo.MainCanvasName).transform
-            .Find(ServiceInfo.BlackFilterName)
-            .GetComponent<Image>();
+        blackFilterImage = GetComponent<Image>();
     }
 
     private void Update()

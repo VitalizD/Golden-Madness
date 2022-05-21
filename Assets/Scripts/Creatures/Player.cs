@@ -3,9 +3,12 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IRuntimeStorage
 {
     public static Player instanse = null;
+
+    [Header("Loading Parameters")]
+    [SerializeField] private bool loadFromStorage = true;
 
     [Header("Base")]
     [SerializeField] [Range(0, 100)] private int health = 100;
@@ -43,6 +46,8 @@ public class Player : MonoBehaviour
     private Animator animator;
     private SanityController sanity;
     private Consumables consumables;
+    private Backpack backpack;
+    private PlayerDialogWindow dialogWindow;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -112,7 +117,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private float PickaxeStrength
+    public float PickaxeStrength
     {
         get => pickaxeStrength;
         set
@@ -126,11 +131,49 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SaveToStorage()
+    {
+        backpack.SaveToStorage();
+        consumables.SaveToStorage();
+
+        DataStorage.HitDamageToPickaxe = hitDamageToPickaxe;
+        DataStorage.MaxEnemyDamage = maxEnemyDamage;
+        DataStorage.MaxTileDamage = maxTileDamage;
+        DataStorage.SleepingBagHealthRecovery = healthRecovery;
+        DataStorage.SleepingBagSanityRecovery = sanityRecovery;
+    }
+
+    public void LoadFromStorage()
+    {
+        backpack.LoadFromStorage();
+        consumables.LoadFromStorage();
+
+        hitDamageToPickaxe = DataStorage.HitDamageToPickaxe;
+        maxEnemyDamage = DataStorage.MaxEnemyDamage;
+        maxTileDamage = DataStorage.MaxTileDamage;
+        healthRecovery = DataStorage.SleepingBagHealthRecovery;
+        sanityRecovery = DataStorage.SleepingBagSanityRecovery;
+    }
+
     public void SetSelectedTile(Tile value) => selectedTile = value;
 
     public void RemoveSelectedTile() => selectedTile = null;
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
+
+    public void AddMaxEnemyDamage(int valueInPercents)
+    {
+        maxEnemyDamage += (int)(maxEnemyDamage * (valueInPercents / 100f));
+        enemyDamage = maxEnemyDamage;
+    }
+
+    public void AddMaxTileDamage(float valueInPercents)
+    {
+        maxTileDamage += maxTileDamage * (valueInPercents / 100f);
+        tileDamage = maxTileDamage;
+    }
+
+    public void AddHitDamageToPickaxe(float valueInPercents) => hitDamageToPickaxe += hitDamageToPickaxe * (valueInPercents / 100f);
 
     public void Sleep()
     {
@@ -150,6 +193,12 @@ public class Player : MonoBehaviour
         StartCoroutine(DisableStun(time));
     }
 
+    public void Say(string text, float sayingTime)
+    {
+        dialogWindow.gameObject.SetActive(true);
+        dialogWindow.Show(text, sayingTime);
+    }
+
     private void Awake()
     {
         if (instanse == null)
@@ -162,6 +211,8 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         sanity = GetComponent<SanityController>();
         consumables = GetComponent<Consumables>();
+        backpack = GetComponent<Backpack>();
+        dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
@@ -172,6 +223,9 @@ public class Player : MonoBehaviour
     {
         checkpoint = transform.position;
         PickaxeStrength = pickaxeStrength;
+
+        if (loadFromStorage)
+            LoadFromStorage();
     }
 
     private void Update()
