@@ -13,6 +13,9 @@ public static class ServiceInfo
     public static string MainCanvasName { get; } = "Canvas";
     public static string BlackFilterName { get; } = "Black Filter";
 
+    public static string VillageScene { get; } = "Village";
+    public static string TutorialLevel { get; } = "TutorialLevel";
+
     public static int ChildIndexOfDialogWindow { get; } = 2;
 
     public static bool CheckpointConditionDone { get; set; } = false;

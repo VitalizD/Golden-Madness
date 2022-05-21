@@ -41,6 +41,12 @@ public class VillageController : MonoBehaviour
             resourcesCounts[type] = 0;
     }
 
+    public void FinishTutorial()
+    {
+        ServiceInfo.TutorialDone = true;
+        PlayerPrefs.SetString(PlayerPrefsKeys.TutorialDone, true.ToString());
+    }
+
     private void Awake()
     {
         if (instanse == null)
