@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e2758d084578b4195ecffda210a82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadParameters: 0
   health: 100
   speed: 4
   jumpForce: 8
@@ -109,7 +110,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   pickaxeStrength: 100
-  hitDamageToPickaxe: 1
+  hitDamageToPickaxe: 0.5
   tileDamage: 1
   maxTileDamage: 1
   minTileDamageInPercents: 20

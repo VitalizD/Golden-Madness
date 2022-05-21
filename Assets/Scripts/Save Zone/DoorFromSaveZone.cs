@@ -9,14 +9,23 @@ public class DoorFromSaveZone : MonoBehaviour
     private Hay hay;
     private Minecart minecart;
     private Chest chest;
+    private TriggerZone trigger;
+    private PressActionKey pressActionKey;
 
     private Vector3 cameraPosition;
     private Vector2 exitPosition;
-    private bool isTriggered = false;
 
     public Vector3 CameraPosition { get => cameraPosition; set => cameraPosition = value; }
 
-    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
+    public bool CanBeUsed
+    {
+        get => canBeUsed;
+        set
+        {
+            canBeUsed = value;
+            pressActionKey.SetActive(value);
+        }
+    }
 
     public void Refresh(Vector2 exitPosition)
     {
@@ -35,23 +44,13 @@ public class DoorFromSaveZone : MonoBehaviour
         hay = GameObject.FindGameObjectWithTag(ServiceInfo.HayTag).GetComponent<Hay>();
         minecart = GameObject.FindGameObjectWithTag(ServiceInfo.MinecartTag).GetComponent<Minecart>();
         chest = GameObject.FindGameObjectWithTag(ServiceInfo.ChestTag).GetComponent<Chest>();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = false;
+        trigger = GetComponent<TriggerZone>();
+        pressActionKey = GetComponent<PressActionKey>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && canBeUsed && isTriggered && teleporter.State == Teleporter.States.Stayed)
+        if (Input.GetKeyDown(KeyCode.E) && canBeUsed && trigger.IsTriggered && teleporter.State == Teleporter.States.Stayed)
         {
             void action()
             {
@@ -60,6 +59,7 @@ public class DoorFromSaveZone : MonoBehaviour
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = true;
             }
 
+            CanBeUsed = false;
             teleporter.Go(exitPosition, action, fadeSpeed);
         }
     }

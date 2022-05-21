@@ -15,6 +15,21 @@ public class SceneChanger : MonoBehaviour
 		SceneManager.LoadScene(sceneName);
 	}
 
+	public void GoToTutorialLevelOrVillage()
+    {
+		var playButton = GetComponent<PlayButton>();
+		var tutorialDone = bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone, "false"));
+		ServiceInfo.TutorialDone = tutorialDone;
+
+		if (tutorialDone || !(playButton != null && playButton.ForcedTutorial))
+			SceneManager.LoadScene(ServiceInfo.VillageScene);
+		else
+        {
+			PlayerPrefs.DeleteAll();
+			SceneManager.LoadScene(ServiceInfo.TutorialLevel);
+		}
+    }
+
 	public void Exit()
 	{
 		Application.Quit();

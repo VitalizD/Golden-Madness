@@ -2,26 +2,19 @@ using UnityEngine;
 
 public class Minecart : MonoBehaviour
 {
-    private bool isTriggered = false;
+    private TriggerZone trigger;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Awake()
     {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = false;
+        trigger = GetComponent<TriggerZone>();
     }
 
     private void Update()
     {
-        if (isTriggered && Input.GetKeyDown(KeyCode.E))
+        if (trigger.IsTriggered && Input.GetKeyDown(KeyCode.E))
         {
             var backpack = Player.instanse.GetComponent<Backpack>();
-            DataStorage.Resources = backpack.GetAll();
+            ResourcesSaver.Save(backpack.GetAll());
             backpack.Clear();
 
             // Для обучающего уровня

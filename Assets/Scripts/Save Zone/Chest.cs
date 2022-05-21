@@ -6,8 +6,9 @@ public class Chest : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
 
-    private bool inRange = false;
+    private TriggerZone trigger;
     private Consumables consumables;
+    private PressActionKey pressActionKey;
     //{itemAmount, chance}
     private Dictionary<int, float> chancesForDropAmount = new Dictionary<int, float>
     {
@@ -18,18 +19,20 @@ public class Chest : MonoBehaviour
         { 4, 5 },
     };
 
-    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public bool CanBeUsed
     {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            inRange = true;
+        get => canBeUsed;
+        set
+        {
+            canBeUsed = value;
+            pressActionKey.SetActive(value);
+        }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void Awake()
     {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            inRange = false;
+        trigger = GetComponent<TriggerZone>();
+        pressActionKey = GetComponent<PressActionKey>();
     }
 
     private void Start()
@@ -39,7 +42,7 @@ public class Chest : MonoBehaviour
 
     private void Update()
     {
-        if (canBeUsed && inRange && Input.GetKeyDown(KeyCode.E))
+        if (canBeUsed && trigger.IsTriggered && Input.GetKeyDown(KeyCode.E))
         {
             //лист нестатическийх свойств
             var consumabelsList = consumables.GetType().GetProperties(
@@ -80,7 +83,7 @@ public class Chest : MonoBehaviour
 
             }
             //Debug.Log("Created list of consumabels with lenght: " + consumabelsList.Length);
-            canBeUsed = false;
+            CanBeUsed = false;
             ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
 
         }

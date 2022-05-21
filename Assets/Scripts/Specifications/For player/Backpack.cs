@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backpack : MonoBehaviour, IRuntimeStorage
+public class Backpack : MonoBehaviour, IStorage
 {
     [SerializeField] private int maxCapacity = 100;
     [SerializeField] private int currentFullness = 0;
@@ -11,6 +11,7 @@ public class Backpack : MonoBehaviour, IRuntimeStorage
     private PlayerDialogWindow dialogWindow;
 
     private Dictionary<ResourceTypes, int> resourcesCounts;
+    //private int defaultMaxCapacity;
 
     public int MaxCapacity { get => maxCapacity; }
 
@@ -19,6 +20,7 @@ public class Backpack : MonoBehaviour, IRuntimeStorage
     private void Awake()
     {
         dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
+        //defaultMaxCapacity = maxCapacity;
         Clear();
     }
 
@@ -69,14 +71,14 @@ public class Backpack : MonoBehaviour, IRuntimeStorage
         };
     }
 
-    public void SaveToStorage()
+    public void Save()
     {
-        DataStorage.BackpackCapacity = maxCapacity;
+        PlayerPrefs.SetInt(PlayerPrefsKeys.BackpackCapacity, maxCapacity);
     }
 
-    public void LoadFromStorage()
+    public void Load()
     {
-        maxCapacity = DataStorage.BackpackCapacity;
+        maxCapacity = PlayerPrefs.GetInt(PlayerPrefsKeys.BackpackCapacity, maxCapacity);
     }
 
     private void RecalculateCapacity()
