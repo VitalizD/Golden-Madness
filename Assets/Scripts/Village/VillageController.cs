@@ -90,9 +90,11 @@ public class VillageController : MonoBehaviour, IStorage
 
     private void SetPlayerParameters()
     {
-        Player.instanse.Load();
-        Player.instanse.Health = 100;
-        Player.instanse.PickaxeStrength = 100f;
-        Player.instanse.GetComponent<SanityController>().Sanity = 100;
+        var player = Player.instanse;
+        player.Load();
+        player.Health = 100;
+        player.PickaxeStrength = 100f;
+        player.GetComponent<SanityController>().Sanity = 100f;
+        player.transform.GetChild(ServiceInfo.ChildIndexOfLamp).GetComponent<Lamp>().FuelCount = 100f;
     }
 }

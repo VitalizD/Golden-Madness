@@ -20,6 +20,7 @@ public class SceneChanger : MonoBehaviour
 		var playButton = GetComponent<PlayButton>();
 		if (playButton != null && playButton.ForcedTutorial)
         {
+			ServiceInfo.TutorialDone = false;
 			LoadTutorial();
 			return;
 		}

@@ -29,7 +29,7 @@ public class Lamp : MonoBehaviour, IStorage
     private Coroutine decreaseFuel;
     private Coroutine checkFuelCount;
 
-    private float FuelCount
+    public float FuelCount
     {
         get => fuelCount;
         set
@@ -40,7 +40,9 @@ public class Lamp : MonoBehaviour, IStorage
                 fuelCount = 100;
             else
                 fuelCount = value;
-            light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
+
+            if (light_ != null)
+                light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
         }
     }
 
