@@ -3,12 +3,33 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Player : MonoBehaviour, IRuntimeStorage
+public class Player : MonoBehaviour, IStorage
 {
+    //private readonly struct DefaultValues
+    //{
+    //    public readonly float hitDamageToPickaxe;
+    //    public readonly float tileDamage;
+    //    public readonly int enemyDamage;
+    //    public readonly float sleepingBagSanityRecovery;
+    //    public readonly int sleepingBagHealthRecovery;
+    //    public readonly float pickaxeStrength;
+
+    //    public DefaultValues(float hitDamageToPickaxe, float tileDamage, int enemyDamage,
+    //        float sleepingBagSanityRecovery, int sleepingBagHealthRecovery, float pickaxeStrength)
+    //    {
+    //        this.hitDamageToPickaxe = hitDamageToPickaxe;
+    //        this.tileDamage = tileDamage;
+    //        this.enemyDamage = enemyDamage;
+    //        this.sleepingBagHealthRecovery = sleepingBagHealthRecovery;
+    //        this.sleepingBagSanityRecovery = sleepingBagSanityRecovery;
+    //        this.pickaxeStrength = pickaxeStrength;
+    //    }
+    //}
+
     public static Player instanse = null;
 
     [Header("Loading Parameters")]
-    [SerializeField] private bool loadFromStorage = true;
+    [SerializeField] private bool loadParameters = true;
 
     [Header("Base")]
     [SerializeField] [Range(0, 100)] private int health = 100;
@@ -48,6 +69,7 @@ public class Player : MonoBehaviour, IRuntimeStorage
     private Consumables consumables;
     private Backpack backpack;
     private PlayerDialogWindow dialogWindow;
+    //private DefaultValues defaultValues;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -131,28 +153,33 @@ public class Player : MonoBehaviour, IRuntimeStorage
         }
     }
 
-    public void SaveToStorage()
+    public void Save()
     {
-        backpack.SaveToStorage();
-        consumables.SaveToStorage();
+        backpack.Save();
+        consumables.Save();
 
-        DataStorage.HitDamageToPickaxe = hitDamageToPickaxe;
-        DataStorage.MaxEnemyDamage = maxEnemyDamage;
-        DataStorage.MaxTileDamage = maxTileDamage;
-        DataStorage.SleepingBagHealthRecovery = healthRecovery;
-        DataStorage.SleepingBagSanityRecovery = sanityRecovery;
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.HitDamageToPickaxe, hitDamageToPickaxe);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.MaxEnemyDamage, maxEnemyDamage);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.MaxTileDamage, maxTileDamage);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.SleepingBagHealthRecovery, healthRecovery);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.SleepingBagSanityRecovery, sanityRecovery);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.PickaxeStrength, pickaxeStrength);
     }
 
-    public void LoadFromStorage()
+    public void Load()
     {
-        backpack.LoadFromStorage();
-        consumables.LoadFromStorage();
+        if (!loadParameters)
+            return;
 
-        hitDamageToPickaxe = DataStorage.HitDamageToPickaxe;
-        maxEnemyDamage = DataStorage.MaxEnemyDamage;
-        maxTileDamage = DataStorage.MaxTileDamage;
-        healthRecovery = DataStorage.SleepingBagHealthRecovery;
-        sanityRecovery = DataStorage.SleepingBagSanityRecovery;
+        backpack.Load();
+        consumables.Load();
+
+        hitDamageToPickaxe = PlayerPrefs.GetFloat(PlayerPrefsKeys.HitDamageToPickaxe, hitDamageToPickaxe);
+        maxEnemyDamage = PlayerPrefs.GetInt(PlayerPrefsKeys.MaxEnemyDamage, enemyDamage);
+        maxTileDamage = PlayerPrefs.GetFloat(PlayerPrefsKeys.MaxTileDamage, tileDamage);
+        healthRecovery = PlayerPrefs.GetInt(PlayerPrefsKeys.SleepingBagHealthRecovery, healthRecovery);
+        sanityRecovery = PlayerPrefs.GetFloat(PlayerPrefsKeys.SleepingBagSanityRecovery, sanityRecovery);
+        PickaxeStrength = PlayerPrefs.GetFloat(PlayerPrefsKeys.PickaxeStrength, pickaxeStrength);
     }
 
     public void SetSelectedTile(Tile value) => selectedTile = value;
@@ -165,15 +192,21 @@ public class Player : MonoBehaviour, IRuntimeStorage
     {
         maxEnemyDamage += (int)(maxEnemyDamage * (valueInPercents / 100f));
         enemyDamage = maxEnemyDamage;
+        Save();
     }
 
     public void AddMaxTileDamage(float valueInPercents)
     {
         maxTileDamage += maxTileDamage * (valueInPercents / 100f);
         tileDamage = maxTileDamage;
+        Save();
     }
 
-    public void AddHitDamageToPickaxe(float valueInPercents) => hitDamageToPickaxe += hitDamageToPickaxe * (valueInPercents / 100f);
+    public void AddHitDamageToPickaxe(float valueInPercents)
+    {
+        hitDamageToPickaxe += hitDamageToPickaxe * (valueInPercents / 100f);
+        Save();
+    }
 
     public void Sleep()
     {
@@ -224,8 +257,11 @@ public class Player : MonoBehaviour, IRuntimeStorage
         checkpoint = transform.position;
         PickaxeStrength = pickaxeStrength;
 
-        if (loadFromStorage)
-            LoadFromStorage();
+        //defaultValues = new DefaultValues(hitDamageToPickaxe, tileDamage, enemyDamage, sanityRecovery, 
+        //    healthRecovery, pickaxeStrength);
+
+        if (loadParameters)
+            Load();
     }
 
     private void Update()

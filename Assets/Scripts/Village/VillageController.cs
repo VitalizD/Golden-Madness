@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class VillageController : MonoBehaviour
+public class VillageController : MonoBehaviour, IStorage
 {
     public static VillageController instanse = null;
 
-    [SerializeField] private bool loadFromStorage = true;
+    [SerializeField] private bool loadResources = true;
     [SerializeField] private GameObject triggers;
 
     [Header("Resources Sprites")]
@@ -14,10 +14,7 @@ public class VillageController : MonoBehaviour
     [SerializeField] private Sprite quartzIcon;
     [SerializeField] private Sprite ironIcon;
 
-    private Dictionary<ResourceTypes, int> resourcesCounts = new Dictionary<ResourceTypes, int>
-    {
-        [ResourceTypes.GoldOre] = 6
-    };
+    private Dictionary<ResourceTypes, int> resourcesCounts = new Dictionary<ResourceTypes, int>();
     private Dictionary<ResourceTypes, Sprite> resourcesSprites = new Dictionary<ResourceTypes, Sprite>();
 
     public int GetResourcesCount(ResourceTypes type)
@@ -47,6 +44,23 @@ public class VillageController : MonoBehaviour
         PlayerPrefs.SetString(PlayerPrefsKeys.TutorialDone, true.ToString());
     }
 
+    public void Save()
+    {
+        ResourcesSaver.Save(resourcesCounts);
+    }
+
+    public void Load()
+    {
+        var defaultValue = 0;
+        resourcesCounts = new Dictionary<ResourceTypes, int>
+        {
+            [ResourceTypes.Coal] = PlayerPrefs.GetInt(PlayerPrefsKeys.CoalCount, defaultValue),
+            [ResourceTypes.GoldOre] = PlayerPrefs.GetInt(PlayerPrefsKeys.GoldCount, defaultValue),
+            [ResourceTypes.IronOre] = PlayerPrefs.GetInt(PlayerPrefsKeys.IronCount, defaultValue),
+            [ResourceTypes.Quartz] = PlayerPrefs.GetInt(PlayerPrefsKeys.QuartzCount, defaultValue)
+        };
+    }
+
     private void Awake()
     {
         if (instanse == null)
@@ -65,10 +79,20 @@ public class VillageController : MonoBehaviour
 
     private void Start()
     {
-        if (loadFromStorage)
-            resourcesCounts = DataStorage.Resources;
+        if (loadResources)
+            Load();
+
+        SetPlayerParameters();
 
         if (!ServiceInfo.TutorialDone)
             triggers.SetActive(true);
+    }
+
+    private void SetPlayerParameters()
+    {
+        Player.instanse.Load();
+        Player.instanse.Health = 100;
+        Player.instanse.PickaxeStrength = 100f;
+        Player.instanse.GetComponent<SanityController>().Sanity = 100;
     }
 }

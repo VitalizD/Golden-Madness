@@ -7,7 +7,10 @@ public class SanityController : MonoBehaviour
     [SerializeField] [Range(0, 100)] private float sanity = 100f;
 
     private readonly float decreasingBetweenTime = 1f;
+    //private float defaultSanity;
+
     private Coroutine decreaseSanity;
+
     private Consumables consumables;
 
     public float Sanity 
@@ -25,6 +28,16 @@ public class SanityController : MonoBehaviour
 
     public bool DecreasingEnabled { get => enableDecreasing; set => enableDecreasing = value; }
 
+    public void Save()
+    {
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.Sanity, sanity);
+    }
+
+    public void Load()
+    {
+        sanity = PlayerPrefs.GetFloat(PlayerPrefsKeys.Sanity, sanity);
+    }
+
     private void Awake()
     {
         consumables = GetComponent<Consumables>();
@@ -32,6 +45,7 @@ public class SanityController : MonoBehaviour
     private void Start()
     {
         decreaseSanity = StartCoroutine(DecreaseSanity());
+        //defaultSanity = sanity;
     }
     private void Update()
     {

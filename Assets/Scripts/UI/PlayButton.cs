@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TutorialParameters : MonoBehaviour
+public class PlayButton : MonoBehaviour
 {
     [SerializeField] private bool forcedTutorial = false;
 

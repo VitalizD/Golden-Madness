@@ -1,8 +1,25 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Consumables : MonoBehaviour, IRuntimeStorage
+public class Consumables : MonoBehaviour, IStorage
 {
+    //private readonly struct DefaultValues
+    //{
+    //    public readonly int fuelTanksCount;
+    //    public readonly int grindstonesCount;
+    //    public readonly int healthPacksCount;
+    //    public readonly int smokingPipesCount;
+
+    //    public DefaultValues(int fuelTanksCount, int grindstonesCount,
+    //        int healthPacksCount, int smokingPipesCount)
+    //    {
+    //        this.fuelTanksCount = fuelTanksCount;
+    //        this.grindstonesCount = grindstonesCount;
+    //        this.healthPacksCount = healthPacksCount;
+    //        this.smokingPipesCount = smokingPipesCount;
+    //    }
+    //}
+
     [SerializeField] private int maxCount = 5;
 
     [Header("Fuel tanks")]
@@ -20,6 +37,8 @@ public class Consumables : MonoBehaviour, IRuntimeStorage
     [Header("Smoking pipes")]
     [SerializeField] private int smokingPipesCount = 1;
     [SerializeField] [Range(0, 100)] private static float smokingPipeRecovery = 50f;
+
+    //private DefaultValues defaultValues;
 
     #region FuelTanks
 
@@ -78,19 +97,24 @@ public class Consumables : MonoBehaviour, IRuntimeStorage
     public static float GrindstoneRecovery { get => grindstoneRecovery; }
     #endregion
 
-    public void SaveToStorage()
+    public void Save()
     {
-        DataStorage.FuelTanksCount = fuelTanksCount;
-        DataStorage.GrindstonesCount = grindstonesCount;
-        DataStorage.HealthPacksCount = healthPacksCount;
-        DataStorage.SmokingPipesCount = smokingPipesCount;
+        PlayerPrefs.SetInt(PlayerPrefsKeys.FuelTanksCount, fuelTanksCount);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
     }
 
-    public void LoadFromStorage()
+    public void Load()
     {
-        fuelTanksCount = DataStorage.FuelTanksCount;
-        grindstonesCount = DataStorage.GrindstonesCount;
-        healthPacksCount = DataStorage.HealthPacksCount;
-        smokingPipesCount = DataStorage.SmokingPipesCount;
+        fuelTanksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.FuelTanksCount, fuelTanksCount);
+        grindstonesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
+        healthPacksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
+        smokingPipesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
+    }
+
+    private void Start()
+    {
+        //defaultValues = new DefaultValues(fuelTanksCount, grindstonesCount, healthPacksCount, smokingPipesCount);
     }
 }
