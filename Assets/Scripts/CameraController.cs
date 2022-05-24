@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour
     public static CameraController instanse = null;
 
     [SerializeField] private bool enableMoving = true;
+    [SerializeField] private float speed = 1f;
     [SerializeField] private float yOffset = 1.6f;
     [SerializeField] private float upLimit;
     [SerializeField] private float bottomLimit;
@@ -68,7 +69,7 @@ public class CameraController : MonoBehaviour
             toPosition = player.position;
             toPosition.y = player.position.y - yOffset;
             toPosition.z = zPosition;
-            transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
         }
     }
 }

@@ -99,11 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableMoving: 1
+  speed: 3
   yOffset: 1.7
-  upLimit: 0
-  bottomLimit: 0
-  leftLimit: 0
-  rightLimit: 0
+  upLimit: 9
+  bottomLimit: 3
+  leftLimit: 4.9
+  rightLimit: 16.1
 --- !u!114 &1539418448757856049
 MonoBehaviour:
   m_ObjectHideFlags: 0
