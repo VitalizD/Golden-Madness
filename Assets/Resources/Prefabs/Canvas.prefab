@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd593c9a7fc99e45b55d7bc264683a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeTeleport: 5
-  fadeSpeed: 0.7
+  timeBeforeTeleport: 1
+  fadeSpeed: 0.3
 --- !u!114 &397109714844690669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,7 +647,7 @@ GameObject:
   - component: {fileID: 5661314285498832241}
   m_Layer: 5
   m_Name: Red Filter
-  m_TagString: Untagged
+  m_TagString: Red Filter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
