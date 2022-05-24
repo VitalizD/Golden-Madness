@@ -5,7 +5,7 @@ public static class ServiceInfo
     public static string PlayerLayerName { get; } = "Player";
 
     public static string PlayerTag { get; } = "Player";
-    public static string SceneControllerTag { get; } = "Scene Controller";
+    public static string BlackFilterTag { get; } = "Black Filter";
     public static string HayTag { get; } = "Hay";
     public static string MinecartTag { get; } = "Minecart";
     public static string ChestTag { get; } = "Chest";

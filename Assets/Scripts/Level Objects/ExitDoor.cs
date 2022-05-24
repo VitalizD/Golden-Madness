@@ -23,7 +23,7 @@ public class ExitDoor : MonoBehaviour
 
     private void Awake()
     {
-        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.BlackFilterTag).GetComponent<Teleporter>();
         sceneChanger = GetComponent<SceneChanger>();
         trigger = GetComponent<TriggerZone>();
         pressActionKey = GetComponent<PressActionKey>();

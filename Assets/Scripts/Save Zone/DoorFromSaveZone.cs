@@ -40,7 +40,7 @@ public class DoorFromSaveZone : MonoBehaviour
         var center = transform.parent.transform.position;
         cameraPosition = new Vector3(center.x, center.y, -10);
 
-        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.BlackFilterTag).GetComponent<Teleporter>();
         hay = GameObject.FindGameObjectWithTag(ServiceInfo.HayTag).GetComponent<Hay>();
         minecart = GameObject.FindGameObjectWithTag(ServiceInfo.MinecartTag).GetComponent<Minecart>();
         chest = GameObject.FindGameObjectWithTag(ServiceInfo.ChestTag).GetComponent<Chest>();

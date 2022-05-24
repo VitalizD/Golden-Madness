@@ -23,7 +23,7 @@ public class Hay : MonoBehaviour
 
     private void Awake()
     {
-        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.BlackFilterTag).GetComponent<Teleporter>();
         trigger = GetComponent<TriggerZone>();
         pressActionKey = GetComponent<PressActionKey>();
     }

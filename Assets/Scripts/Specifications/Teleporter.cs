@@ -64,7 +64,8 @@ public class Teleporter : MonoBehaviour
                     state = States.Stayed;
             }
 
-            blackFilterImage.color = new Color(blackFilterImage.color.r, blackFilterImage.color.g, blackFilterImage.color.b, alphaInterpolation);
+            if (blackFilterImage != null)
+                blackFilterImage.color = new Color(blackFilterImage.color.r, blackFilterImage.color.g, blackFilterImage.color.b, alphaInterpolation);
         }
     }
 
