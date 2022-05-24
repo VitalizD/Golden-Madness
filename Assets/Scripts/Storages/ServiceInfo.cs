@@ -10,6 +10,7 @@ public static class ServiceInfo
     public static string MinecartTag { get; } = "Minecart";
     public static string ChestTag { get; } = "Chest";
     public static string GameOverTag { get; } = "Game Over";
+    public static string RedFilterTag { get; } = "Red Filter";
 
     public static string VillageScene { get; } = "Village";
     public static string TutorialLevel { get; } = "TutorialLevel";

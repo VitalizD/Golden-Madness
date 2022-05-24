@@ -26,7 +26,6 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private float reloadAttackTime = 0.5f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
-    [SerializeField] private RedFilter displayFilter;
     [SerializeField] private UnityEvent<string> OnChangeHealth;
 
     [Header("Pickaxe")]
@@ -50,6 +49,7 @@ public class Player : MonoBehaviour, IStorage
     private Lamp lamp;
     private PlayerDialogWindow dialogWindow;
     private GameOver gameOver;
+    private RedFilter displayFilter;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -263,6 +263,7 @@ public class Player : MonoBehaviour, IStorage
         lamp = transform.GetChild(ServiceInfo.ChildIndexOfLamp).GetComponent<Lamp>();
         dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
         gameOver = GameObject.FindGameObjectWithTag(ServiceInfo.GameOverTag).GetComponent<GameOver>();
+        displayFilter = GameObject.FindGameObjectWithTag(ServiceInfo.RedFilterTag).GetComponent<RedFilter>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
