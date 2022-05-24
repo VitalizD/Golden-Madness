@@ -46,6 +46,8 @@ public class Lamp : MonoBehaviour, IStorage
         }
     }
 
+    public float FuelDecreaseValue { get => fuelDecreaseValue; set => fuelDecreaseValue = value; }
+
     public void Save()
     {
         PlayerPrefs.SetFloat(PlayerPrefsKeys.FuelCount, fuelCount);

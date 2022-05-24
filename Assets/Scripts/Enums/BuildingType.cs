@@ -1,4 +1,7 @@
 ﻿public enum BuildingType
 {
-    Forge
+    Forge,
+    Workshow,
+    SleepingBagShop,
+    SewingWorkshop
 }

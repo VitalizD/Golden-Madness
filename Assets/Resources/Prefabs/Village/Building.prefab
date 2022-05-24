@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeUsed: 1
+  loadLevel: 1
   buildingType: 0
   constructedBuildingSprite: {fileID: 0}
 --- !u!1001 &7653370427871190017
@@ -138,6 +139,14 @@ PrefabInstance:
     - target: {fileID: 914255072525159463, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
       propertyPath: m_Camera
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 940161638696302301, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
+      propertyPath: m_text
+      value: "\u0428\u0432\u0435\u0439\u043D\u0430\u044F \u043C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F"
+      objectReference: {fileID: 0}
+    - target: {fileID: 940161638696302301, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
+      propertyPath: m_lineSpacing
+      value: -24.84
       objectReference: {fileID: 0}
     - target: {fileID: 1625179680391974908, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
       propertyPath: m_fontSize
@@ -154,6 +163,14 @@ PrefabInstance:
     - target: {fileID: 1625179680391974908, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821459548770838133, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2.1858
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821459548770838133, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 4868594507102140596, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
       propertyPath: m_text

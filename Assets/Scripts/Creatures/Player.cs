@@ -211,6 +211,30 @@ public class Player : MonoBehaviour, IStorage
         Save();
     }
 
+    public void AddFuelDecreaseValue(float valueInPercents)
+    {
+        lamp.FuelDecreaseValue += lamp.FuelDecreaseValue * (valueInPercents / 100f);
+        Save();
+    }
+
+    public void AddSleepingBagHealthRecovery(int valueInPercents)
+    {
+        healthRecovery += (int)(healthRecovery * (valueInPercents / 100f));
+        Save();
+    }
+
+    public void AddSleepingBagSanityRecovery(float valueInPercents)
+    {
+        sanityRecovery += (int)(sanityRecovery * (valueInPercents / 100f));
+        Save();
+    }
+
+    public void AddBackpackCapacity(int value)
+    {
+        backpack.MaxCapacity += value;
+        Save();
+    }
+
     public void Sleep()
     {
         Health += healthRecovery;

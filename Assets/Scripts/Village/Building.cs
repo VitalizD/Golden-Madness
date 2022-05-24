@@ -136,10 +136,138 @@ public class Building : MonoBehaviour, IStorage
                                 Player.instanse.AddHitDamageToPickaxe(-20);
                                 Player.instanse.AddMaxEnemyDamage(20);
                                 Player.instanse.AddMaxTileDamage(20);
-                                upgradeWindow.Hide();
                             };
                             break;
                         case 2:
+                            upgradeWindow.SetDescription("Увеличивает скорость добычи, урон и прочность кирки на 20%");
+                            SetRequiredResource(ResourceTypes.GoldOre, 16);
+                            actionAfterUpgrading = () =>
+                            {
+                                Player.instanse.AddHitDamageToPickaxe(-20);
+                                Player.instanse.AddMaxEnemyDamage(20);
+                                Player.instanse.AddMaxTileDamage(20);
+                            };
+                            break;
+                        case 3:
+                            upgradeWindow.SetDescription("Увеличивает скорость добычи, урон и прочность кирки на 20%");
+                            SetRequiredResource(ResourceTypes.GoldOre, 35);
+                            actionAfterUpgrading = () =>
+                            {
+                                Player.instanse.AddHitDamageToPickaxe(-20);
+                                Player.instanse.AddMaxEnemyDamage(20);
+                                Player.instanse.AddMaxTileDamage(20);
+                                upgradeWindow.Hide();
+                            };
+                            break;
+                        case 4:
+                            maxLevel = true;
+                            break;
+                    }
+                    break;
+
+                case BuildingType.Workshow:
+                    upgradeWindow.SetTitle("Мастерская");
+                    switch (currentLevel)
+                    {
+                        case 0:
+                            upgradeWindow.SetDescription("Улучшает лампу");
+                            SetRequiredResource(ResourceTypes.Coal, 4);
+                            break;
+                        case 1:
+                            upgradeWindow.SetDescription("Лампа светит на 40% дольше");
+                            SetRequiredResource(ResourceTypes.Coal, 6);
+                            actionAfterUpgrading = () => Player.instanse.AddFuelDecreaseValue(40);
+                            break;
+                        case 2:
+                            upgradeWindow.SetDescription("Лампа светит на 40% дольше");
+                            SetRequiredResource(ResourceTypes.Coal, 15);
+                            actionAfterUpgrading = () => Player.instanse.AddFuelDecreaseValue(40);
+                            break;
+                        case 3:
+                            upgradeWindow.SetDescription("Лампа светит на 40% дольше");
+                            SetRequiredResource(ResourceTypes.Coal, 30);
+                            actionAfterUpgrading = () =>
+                            {
+                                Player.instanse.AddFuelDecreaseValue(40);
+                                upgradeWindow.Hide();
+                            };
+                            break;
+                        case 4:
+                            maxLevel = true;
+                            break;
+                    }
+                    break;
+
+                case BuildingType.SleepingBagShop:
+                    upgradeWindow.SetTitle("Лавка спальников");
+                    switch (currentLevel)
+                    {
+                        case 0:
+                            upgradeWindow.SetDescription("Улучшает спальник");
+                            SetRequiredResource(ResourceTypes.Quartz, 7);
+                            break;
+                        case 1:
+                            upgradeWindow.SetDescription("Сон восстанавливает на 30% здоровья и 60% рассудка больше");
+                            SetRequiredResource(ResourceTypes.Quartz, 5);
+                            actionAfterUpgrading = () =>
+                            {
+                                Player.instanse.AddSleepingBagHealthRecovery(30);
+                                Player.instanse.AddSleepingBagSanityRecovery(60);
+                            };
+                            break;
+                        case 2:
+                            upgradeWindow.SetDescription("Сон восстанавливает на 30% здоровья и 60% рассудка больше");
+                            SetRequiredResource(ResourceTypes.Quartz, 22);
+                            actionAfterUpgrading = () =>
+                            {
+                                Player.instanse.AddSleepingBagHealthRecovery(30);
+                                Player.instanse.AddSleepingBagSanityRecovery(60);
+                            };
+                            break;
+                        case 3:
+                            upgradeWindow.SetDescription("Сон восстанавливает на 30% здоровья и 60% рассудка больше");
+                            SetRequiredResource(ResourceTypes.Quartz, 38);
+                            actionAfterUpgrading = () =>
+                            {
+                                Player.instanse.AddSleepingBagHealthRecovery(30);
+                                Player.instanse.AddSleepingBagSanityRecovery(60);
+                                upgradeWindow.Hide();
+                            };
+                            break;
+                        case 4:
+                            maxLevel = true;
+                            break;
+                    }
+                    break;
+
+                case BuildingType.SewingWorkshop:
+                    upgradeWindow.SetTitle("Швейная мастерская");
+                    switch (currentLevel)
+                    {
+                        case 0:
+                            upgradeWindow.SetDescription("Улучшает рюкзак");
+                            SetRequiredResource(ResourceTypes.IronOre, 6);
+                            break;
+                        case 1:
+                            upgradeWindow.SetDescription("Увеличивает переносимый вес на 10 едениц");
+                            SetRequiredResource(ResourceTypes.IronOre, 5);
+                            actionAfterUpgrading = () => Player.instanse.AddBackpackCapacity(10);
+                            break;
+                        case 2:
+                            upgradeWindow.SetDescription("Увеличивает переносимый вес на 10 едениц");
+                            SetRequiredResource(ResourceTypes.IronOre, 17);
+                            actionAfterUpgrading = () => Player.instanse.AddBackpackCapacity(10);
+                            break;
+                        case 3:
+                            upgradeWindow.SetDescription("Увеличивает переносимый вес на 10 едениц");
+                            SetRequiredResource(ResourceTypes.IronOre, 29);
+                            actionAfterUpgrading = () =>
+                            {
+                                Player.instanse.AddBackpackCapacity(10);
+                                upgradeWindow.Hide();
+                            };
+                            break;
+                        case 4:
                             maxLevel = true;
                             break;
                     }
