@@ -59,7 +59,7 @@ public class Player : MonoBehaviour, IStorage
 
     private Coroutine reloadAttack;
 
-    private readonly float jumpCheckRadius = 0.01f;
+    private readonly float jumpCheckRadius = 0.07f;
     private readonly float yOffsetToGround = -0.5f;
 
     private bool invulnerability = false;
