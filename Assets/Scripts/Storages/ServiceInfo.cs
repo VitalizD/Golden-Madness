@@ -9,9 +9,7 @@ public static class ServiceInfo
     public static string HayTag { get; } = "Hay";
     public static string MinecartTag { get; } = "Minecart";
     public static string ChestTag { get; } = "Chest";
-
-    public static string MainCanvasName { get; } = "Canvas";
-    public static string BlackFilterName { get; } = "Black Filter";
+    public static string GameOverTag { get; } = "Game Over";
 
     public static string VillageScene { get; } = "Village";
     public static string TutorialLevel { get; } = "TutorialLevel";

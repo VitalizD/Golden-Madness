@@ -5,27 +5,6 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour, IStorage
 {
-    //private readonly struct DefaultValues
-    //{
-    //    public readonly float hitDamageToPickaxe;
-    //    public readonly float tileDamage;
-    //    public readonly int enemyDamage;
-    //    public readonly float sleepingBagSanityRecovery;
-    //    public readonly int sleepingBagHealthRecovery;
-    //    public readonly float pickaxeStrength;
-
-    //    public DefaultValues(float hitDamageToPickaxe, float tileDamage, int enemyDamage,
-    //        float sleepingBagSanityRecovery, int sleepingBagHealthRecovery, float pickaxeStrength)
-    //    {
-    //        this.hitDamageToPickaxe = hitDamageToPickaxe;
-    //        this.tileDamage = tileDamage;
-    //        this.enemyDamage = enemyDamage;
-    //        this.sleepingBagHealthRecovery = sleepingBagHealthRecovery;
-    //        this.sleepingBagSanityRecovery = sleepingBagSanityRecovery;
-    //        this.pickaxeStrength = pickaxeStrength;
-    //    }
-    //}
-
     public static Player instanse = null;
 
     [Header("Loading Parameters")]
@@ -70,7 +49,7 @@ public class Player : MonoBehaviour, IStorage
     private Backpack backpack;
     private Lamp lamp;
     private PlayerDialogWindow dialogWindow;
-    //private DefaultValues defaultValues;
+    private GameOver gameOver;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -132,8 +111,20 @@ public class Player : MonoBehaviour, IStorage
             health = value > 100 ? 100 : value;
             if (health <= 0)
             {
-                health = 100;
-                transform.position = checkpoint;
+                if (bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone)))
+                {
+                    StopAllCoroutines();
+                    gameObject.SetActive(false);
+                    //sprite.enabled = false;
+                    //isStunned = true;
+                    //rigidBody2d.bodyType = RigidbodyType2D.Static;
+                    gameOver.ShowAndReturnToVillage();
+                }
+                else
+                {
+                    health = 100;
+                    transform.position = checkpoint;
+                }
                 if (displayFilter) displayFilter.RemoveFilter();
             }
             OnChangeHealth?.Invoke(health.ToString());
@@ -241,16 +232,13 @@ public class Player : MonoBehaviour, IStorage
         sanity.Sanity += sanityRecovery;
     }
 
-    public void SetStun()
-    {
-        isStunned = true;
-        StartCoroutine(DisableStun(stunTime));
-    }
+    public void SetStun() => SetStun(stunTime);
 
     public void SetStun(float time)
     {
         isStunned = true;
-        StartCoroutine(DisableStun(time));
+        if (gameObject.activeSelf)
+            StartCoroutine(DisableStun(time));
     }
 
     public void Say(string text, float sayingTime)
@@ -274,6 +262,7 @@ public class Player : MonoBehaviour, IStorage
         backpack = GetComponent<Backpack>();
         lamp = transform.GetChild(ServiceInfo.ChildIndexOfLamp).GetComponent<Lamp>();
         dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
+        gameOver = GameObject.FindGameObjectWithTag(ServiceInfo.GameOverTag).GetComponent<GameOver>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
@@ -284,9 +273,6 @@ public class Player : MonoBehaviour, IStorage
     {
         checkpoint = transform.position;
         PickaxeStrength = pickaxeStrength;
-
-        //defaultValues = new DefaultValues(hitDamageToPickaxe, tileDamage, enemyDamage, sanityRecovery, 
-        //    healthRecovery, pickaxeStrength);
 
         if (loadParameters)
             Load();
@@ -383,9 +369,9 @@ public class Player : MonoBehaviour, IStorage
         var danger = collision.GetComponent<Danger>();
         if (danger)
         {
-            Health -= danger.Damage;
             State = States.Pain;
             SetStun();
+            Health -= danger.Damage;
 
             var terrible = collision.GetComponent<Terrible>();
             if (terrible)
