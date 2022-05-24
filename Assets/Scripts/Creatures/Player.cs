@@ -111,7 +111,7 @@ public class Player : MonoBehaviour, IStorage
             health = value > 100 ? 100 : value;
             if (health <= 0)
             {
-                if (bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone)))
+                if (PlayerPrefs.HasKey(PlayerPrefsKeys.TutorialDone) && bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone)))
                 {
                     StopAllCoroutines();
                     gameObject.SetActive(false);
