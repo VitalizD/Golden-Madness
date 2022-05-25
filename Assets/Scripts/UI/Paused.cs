@@ -7,11 +7,15 @@ public class Paused : MonoBehaviour
 {
     [SerializeField] GameObject pause;
     [SerializeField] GameObject exitMenu;
+    [SerializeField] GameObject settings;
+    [SerializeField] GameObject control;
 
     void Start()
     {
         pause.SetActive(false);
         exitMenu.SetActive(false);
+        settings.SetActive(false);
+        control.SetActive(false);
     }
 
     void Update()
@@ -31,25 +35,31 @@ public class Paused : MonoBehaviour
 
     public void Settings()
     {
-        SceneManager.LoadScene(5);
-        Time.timeScale = 1;
+        pause.SetActive(false);
+        settings.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void Control()
     {
-        SceneManager.LoadScene(4);
-        Time.timeScale = 1;
+        pause.SetActive(false);
+        control.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void Menu()
     {
+        pause.SetActive(false);
         exitMenu.SetActive(true);
         Time.timeScale = 0;
     }
 
     public void Return()
     {
+        pause.SetActive(true);
         exitMenu.SetActive(false);
+        settings.SetActive(false);
+        control.SetActive(false);
         Time.timeScale = 0;
     }
 

@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private RedFilter displayFilter;
     [SerializeField] private UnityEvent<string> OnChangeHealth;
+    public HealthBar healthBar;
 
     [Header("Pickaxe")]
     [SerializeField] [Range(0, 100f)] private float pickaxeStrength = 100f;
@@ -102,9 +103,11 @@ public class Player : MonoBehaviour
                 if (displayFilter) displayFilter.ChangeColor(health - value);
             }
             health = value > 100 ? 100 : value;
+            healthBar.SetHealth(health);
             if (health <= 0)
             {
                 health = 100;
+                healthBar.SetHealth(health);
                 transform.position = checkpoint;
                 if (displayFilter) displayFilter.RemoveFilter();
             }
