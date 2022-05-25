@@ -8,19 +8,14 @@ public class Backpack : MonoBehaviour, IStorage
     [SerializeField] private string fullInventoryPhrase = "Мой рюкзак заполнен!";
     [SerializeField] private string cannotTakePhrase = "Мне больше не унести!";
 
-    private PlayerDialogWindow dialogWindow;
-
     private Dictionary<ResourceTypes, int> resourcesCounts;
-    //private int defaultMaxCapacity;
 
     public int MaxCapacity { get => maxCapacity; set => maxCapacity = value; }
 
     public int CurrentFullness { get => currentFullness; }
 
-    private void Awake()
+    private void Start()
     {
-        dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
-        //defaultMaxCapacity = maxCapacity;
         Clear();
     }
 
@@ -32,9 +27,7 @@ public class Backpack : MonoBehaviour, IStorage
     {
         if (currentFullness >= maxCapacity)
         {
-            dialogWindow.gameObject.SetActive(true);
-            dialogWindow.Show(cannotTakePhrase, 2f);
-
+            Player.instanse.Say(cannotTakePhrase, 2f);
             return;
         }
 
@@ -42,10 +35,12 @@ public class Backpack : MonoBehaviour, IStorage
         ++resourcesCounts[resource];
 
         if (currentFullness == maxCapacity)
-        {
-            dialogWindow.gameObject.SetActive(true);
-            dialogWindow.Show(fullInventoryPhrase, 4f);
-        }
+            Player.instanse.Say(fullInventoryPhrase, 4f);
+
+        if (currentFullness <= maxCapacity)
+            ResourcesController.instanse.ShowOneResource(resource);
+
+        UpdateTextFullness();
     }
 
     public void Remove(ResourceTypes resource, int count)
@@ -55,8 +50,9 @@ public class Backpack : MonoBehaviour, IStorage
         if (resourcesCounts[resource] < 0)
         {
             resourcesCounts[resource] = 0;
-            RecalculateCapacity();
-        }    
+            RecalculateFullness();
+        }
+        UpdateTextFullness();
     }
 
     public void Clear()
@@ -69,22 +65,40 @@ public class Backpack : MonoBehaviour, IStorage
             [ResourceTypes.IronOre] = 0,
             [ResourceTypes.Quartz] = 0
         };
+        UpdateTextFullness();
     }
 
     public void Save()
     {
         PlayerPrefs.SetInt(PlayerPrefsKeys.BackpackCapacity, maxCapacity);
+        ResourcesSaver.SaveInBackpack(resourcesCounts);
     }
 
     public void Load()
     {
         maxCapacity = PlayerPrefs.GetInt(PlayerPrefsKeys.BackpackCapacity, maxCapacity);
+        var newResourcesCounts = new Dictionary<ResourceTypes, int>();
+        foreach (var type in resourcesCounts.Keys)
+        {
+            var key = type.ToString() + PlayerPrefsKeys.ResourcesCountInBackpackPrefix;
+            newResourcesCounts[type] = PlayerPrefs.GetInt(key, 0);
+            PlayerPrefs.DeleteKey(key);
+        }
+        resourcesCounts = newResourcesCounts;
+        RecalculateFullness();
     }
 
-    private void RecalculateCapacity()
+    private void RecalculateFullness()
     {
         currentFullness = 0;
         foreach (var value in resourcesCounts.Values)
             currentFullness += value;
+        UpdateTextFullness();
+    }
+
+    private void UpdateTextFullness()
+    {
+        if (ResourcesController.instanse != null)
+            ResourcesController.instanse.SetCapacity(currentFullness, maxCapacity);
     }
 }

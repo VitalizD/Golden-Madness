@@ -3,11 +3,15 @@ using UnityEngine;
 
 public static class ResourcesSaver
 {
-    public static void Save(Dictionary<ResourceTypes, int> resources)
+    public static void SaveInVillage(Dictionary<ResourceTypes, int> resources)
     {
-        PlayerPrefs.SetInt(PlayerPrefsKeys.GoldCount, resources[ResourceTypes.GoldOre]);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.CoalCount, resources[ResourceTypes.Coal]);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.QuartzCount, resources[ResourceTypes.Quartz]);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.IronCount, resources[ResourceTypes.IronOre]);
+        foreach (var type in resources.Keys)
+            PlayerPrefs.SetInt(type.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, resources[type]);
+    }
+
+    public static void SaveInBackpack(Dictionary<ResourceTypes, int> resources)
+    {
+        foreach (var type in resources.Keys)
+            PlayerPrefs.SetInt(type.ToString() + PlayerPrefsKeys.ResourcesCountInBackpackPrefix, resources[type]);
     }
 }

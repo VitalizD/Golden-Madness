@@ -8,12 +8,6 @@ public class VillageController : MonoBehaviour, IStorage
     [SerializeField] private bool loadResources = true;
     [SerializeField] private GameObject triggers;
 
-    [Header("Resources Sprites")]
-    [SerializeField] private Sprite goldIcon;
-    [SerializeField] private Sprite coalIcon;
-    [SerializeField] private Sprite quartzIcon;
-    [SerializeField] private Sprite ironIcon;
-
     private Dictionary<ResourceTypes, int> resourcesCounts = new Dictionary<ResourceTypes, int>();
     private Dictionary<ResourceTypes, Sprite> resourcesSprites = new Dictionary<ResourceTypes, Sprite>();
 
@@ -46,7 +40,7 @@ public class VillageController : MonoBehaviour, IStorage
 
     public void Save()
     {
-        ResourcesSaver.Save(resourcesCounts);
+        ResourcesSaver.SaveInVillage(resourcesCounts);
     }
 
     public void Load()
@@ -54,10 +48,10 @@ public class VillageController : MonoBehaviour, IStorage
         var defaultValue = 0;
         resourcesCounts = new Dictionary<ResourceTypes, int>
         {
-            [ResourceTypes.Coal] = PlayerPrefs.GetInt(PlayerPrefsKeys.CoalCount, defaultValue),
-            [ResourceTypes.GoldOre] = PlayerPrefs.GetInt(PlayerPrefsKeys.GoldCount, defaultValue),
-            [ResourceTypes.IronOre] = PlayerPrefs.GetInt(PlayerPrefsKeys.IronCount, defaultValue),
-            [ResourceTypes.Quartz] = PlayerPrefs.GetInt(PlayerPrefsKeys.QuartzCount, defaultValue)
+            [ResourceTypes.Coal] = PlayerPrefs.GetInt(ResourceTypes.Coal.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
+            [ResourceTypes.GoldOre] = PlayerPrefs.GetInt(ResourceTypes.GoldOre.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
+            [ResourceTypes.IronOre] = PlayerPrefs.GetInt(ResourceTypes.IronOre.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
+            [ResourceTypes.Quartz] = PlayerPrefs.GetInt(ResourceTypes.Quartz.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue)
         };
     }
 
@@ -68,12 +62,13 @@ public class VillageController : MonoBehaviour, IStorage
         else if (instanse == this)
             Destroy(gameObject);
 
+        var icons = SpritesStorage.instanse;
         resourcesSprites = new Dictionary<ResourceTypes, Sprite>
         {
-            [ResourceTypes.GoldOre] = goldIcon,
-            [ResourceTypes.Coal] = coalIcon,
-            [ResourceTypes.IronOre] = ironIcon,
-            [ResourceTypes.Quartz] = quartzIcon
+            [ResourceTypes.GoldOre] = icons.GoldIcon,
+            [ResourceTypes.Coal] = icons.CoalIcon,
+            [ResourceTypes.IronOre] = icons.IronIcon,
+            [ResourceTypes.Quartz] = icons.QuartzIcon
         };
     }
 

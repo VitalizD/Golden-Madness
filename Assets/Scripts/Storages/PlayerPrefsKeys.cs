@@ -15,9 +15,7 @@ public static class PlayerPrefsKeys
     public static string Sanity { get; } = "Sanity";
     public static string FuelCount { get; } = "FuelCount";
     public static string FuelDecreaseValue { get; } = "FuelDecreaseValue";
-    public static string GoldCount { get; } = "GoldCount";
-    public static string CoalCount { get; } = "CoalCount";
-    public static string QuartzCount { get; } = "QuartzCount";
-    public static string IronCount { get; } = "IronCount";
+    public static string ResourcesCountPrefix { get; } = "Count";
+    public static string ResourcesCountInBackpackPrefix { get; } = "CountInBackpack";
     public static string CurrentLevelOfBuildingPostfix { get; } = "CurrentLevel";
 }
