@@ -9,6 +9,7 @@ public class Lamp : MonoBehaviour
     [SerializeField] private float maxLightRange = 25f;
     [SerializeField] private float fuelDecreaseValue = 0.5f;
     [SerializeField] private float timeFuelDecrease = 1f;
+    public LampBar lampBar;
 
     private readonly float checkFuelCountBetweenTime = 2f;
 
@@ -35,11 +36,20 @@ public class Lamp : MonoBehaviour
         set
         {
             if (value < 0)
+            {
                 fuelCount = 0;
+                lampBar.SetLamp(0);
+            }
             else if (value > 100)
+            {
                 fuelCount = 100;
+                lampBar.SetLamp(100);
+            }
             else
+            { 
                 fuelCount = value;
+                lampBar.SetLamp(value);
+            }
             light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
         }
     }
@@ -63,6 +73,7 @@ public class Lamp : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && consumables.FuelTanksCount > 0)
         {
             FuelCount += Consumables.FuelTankRecovery;
+            lampBar.SetLamp(FuelCount);
             --consumables.FuelTanksCount;
         }
     }
@@ -79,7 +90,10 @@ public class Lamp : MonoBehaviour
         {
             yield return new WaitForSeconds(timeFuelDecrease);
             if (enableFuelDecrease)
+            {
                 FuelCount -= fuelDecreaseValue;
+                lampBar.SetLamp(FuelCount);
+            }
         }
     }
 

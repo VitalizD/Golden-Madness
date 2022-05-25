@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] [Range(0, 100)] private int health = 100;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
+    public HealthBar healthBar;
+    public SanityBar sanityBar;
 
     [Header("Fight")]
     [SerializeField] private int enemyDamage = 10;
@@ -25,7 +27,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private RedFilter displayFilter;
     [SerializeField] private UnityEvent<string> OnChangeHealth;
-    public HealthBar healthBar;
 
     [Header("Pickaxe")]
     [SerializeField] [Range(0, 100f)] private float pickaxeStrength = 100f;
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxTileDamage = 1f;
     [SerializeField] [Range(0, 100f)] private float minTileDamageInPercents = 20;
     [SerializeField] private float touchingDistance;
+    public PickaxeStrengthBar pickaxeStrengthBar;
 
     [Header("Sleeping Bag")]
     [SerializeField] [Range(0, 100)] private int healthRecovery = 20;
@@ -120,9 +122,21 @@ public class Player : MonoBehaviour
         get => pickaxeStrength;
         set
         {
-            if (value < 0) pickaxeStrength = 0;
-            else if (value > 100) pickaxeStrength = 100f;
-            else pickaxeStrength = value;
+            if (value < 0)
+            {
+                pickaxeStrength = 0;
+                pickaxeStrengthBar.SetStrength(0);
+            }
+            else if (value > 100)
+            {
+                pickaxeStrength = 100f;
+                pickaxeStrengthBar.SetStrength(100f);
+            }
+            else
+            { 
+                pickaxeStrength = value;
+                pickaxeStrengthBar.SetStrength(value);
+            }
 
             tileDamage = Mathf.Lerp(maxTileDamage * minTileDamageInPercents / 100, maxTileDamage, pickaxeStrength / 100);
             enemyDamage = (int)Mathf.Ceil(Mathf.Lerp(maxEnemyDamage * minEnemyDamageInPercents / 100, maxEnemyDamage, pickaxeStrength / 100));
@@ -138,7 +152,9 @@ public class Player : MonoBehaviour
     public void Sleep()
     {
         Health += healthRecovery;
+        healthBar.SetHealth(Health);
         sanity.Sanity += sanityRecovery;
+        sanityBar.SetSanity(sanity.Sanity);
     }
 
     public void SetStun()
@@ -188,12 +204,14 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
         {
             PickaxeStrength += Consumables.GrindstoneRecovery;
+            pickaxeStrengthBar.SetStrength(PickaxeStrength);
             --consumables.GrindstonesCount;
         }
         //Нажатие хилки
         if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
         {
             Health += Consumables.HealthPacksRecovery;
+            healthBar.SetHealth(Health);
             --consumables.HealthPacksCount;
         }
 
@@ -257,6 +275,7 @@ public class Player : MonoBehaviour
         var damage = selectedTile.DiggingDifficulty < tileDamage ? tileDamage / selectedTile.DiggingDifficulty : tileDamage;
         selectedTile.Health -= damage;
         PickaxeStrength -= hitDamageToPickaxe;
+        pickaxeStrengthBar.SetStrength(PickaxeStrength);
         canAttack = false;
 
         if (reloadAttack != null) StopCoroutine(reloadAttack);
@@ -269,12 +288,17 @@ public class Player : MonoBehaviour
         if (danger)
         {
             Health -= danger.Damage;
+            healthBar.SetHealth(Health);
             State = States.Pain;
             SetStun();
 
             var terrible = collision.GetComponent<Terrible>();
             if (terrible)
+            { 
                 sanity.Sanity -= terrible.DecreasingSanityAfterAttack;
+                sanityBar.SetSanity(sanity.Sanity);
+            }
+                
         }
     }
 

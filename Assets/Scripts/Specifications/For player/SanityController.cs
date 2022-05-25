@@ -10,14 +10,28 @@ public class SanityController : MonoBehaviour
     private Coroutine decreaseSanity;
     private Consumables consumables;
 
+    public SanityBar sanityBar;
+
     public float Sanity 
     { 
         get => sanity; 
         set
         {
-            if (value < 0) sanity = 0;
-            else if (value > 100) sanity = 100f;
-            else sanity = value;
+            if (value < 0)
+            {
+                sanity = 0;
+                sanityBar.SetSanity(0);
+            }
+            else if (value > 100)
+            {
+                sanity = 100f;
+                sanityBar.SetSanity(100f);
+            }
+            else
+            { 
+                sanity = value;
+                sanityBar.SetSanity(value);
+            }
         }
     }
 
@@ -38,6 +52,7 @@ public class SanityController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4) && consumables.SmokingPipesCount > 0)
         {
             Sanity += Consumables.SmokingPipesRecovery;
+            sanityBar.SetSanity(Sanity);
             --consumables.SmokingPipesCount;
         }
     }
@@ -47,7 +62,10 @@ public class SanityController : MonoBehaviour
         {
             yield return new WaitForSeconds(decreasingBetweenTime);
             if (enableDecreasing)
+            {
                 sanity -= DecreasingSanity;
+                sanityBar.SetSanity(sanity);
+            }
         }
     }
 }
