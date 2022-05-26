@@ -20722,6 +20722,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door To Save Zone
       objectReference: {fileID: 0}
+    - target: {fileID: 3418994514344606206, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
 --- !u!4 &1141989049 stripped
@@ -35808,11 +35812,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.9
+      value: 5.6
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.z
@@ -37464,7 +37468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2358043821391573204, guid: 87bbda74e8429e04ea72b8a8a0a09166, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.5
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 2358043821391573204, guid: 87bbda74e8429e04ea72b8a8a0a09166, type: 3}
       propertyPath: m_LocalPosition.z
