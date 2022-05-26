@@ -27,7 +27,12 @@ public class Tile : MonoBehaviour
         {
             health = value;
             if (health <= 0)
+            {
+                if (resourceType != ResourceTypes.None && player)
+                    player.GetComponent<Backpack>().Add(resourceType);
+
                 Destroy(gameObject);
+            }
             else if (destructionDegrees.Length > 0)
                 ChangeDestructionDegree();
         }
@@ -96,9 +101,6 @@ public class Tile : MonoBehaviour
         StopDigging();
         if (selection)
             selection.gameObject.SetActive(false);
-
-        if (resourceType != ResourceTypes.None && player)
-            player.GetComponent<Backpack>().Add(resourceType);
     }
 
     private void StopDigging()
