@@ -18,6 +18,8 @@ public class VillageController : MonoBehaviour, IStorage
         return 0;
     }
 
+    public Dictionary<ResourceTypes, int> GetAllRecources() => resourcesCounts;
+
     public Sprite GetResourceSprite(ResourceTypes type)
     {
         if (resourcesSprites.ContainsKey(type))

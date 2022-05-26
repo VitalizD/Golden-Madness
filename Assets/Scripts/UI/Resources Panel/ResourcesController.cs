@@ -22,6 +22,7 @@ public class ResourcesController : MonoBehaviour
         }
     }
 
+    [SerializeField] private bool inVillage = false;
     [SerializeField] private float timeBeforeHidingOneResourcePanel = 2f;
 
     [Space]
@@ -140,6 +141,10 @@ public class ResourcesController : MonoBehaviour
     private void UpdateResourcesCounts()
     {
         var resources = backpack.GetAll();
+
+        if (inVillage)
+            resources = VillageController.instanse.GetAllRecources();
+
         foreach (var type in resourcesInfo.Keys)
             resourcesInfo[type].count.text = resources[type].ToString();
     }

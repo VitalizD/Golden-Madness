@@ -105,7 +105,6 @@ MonoBehaviour:
   reloadAttackTime: 1
   invulnerabilityTime: 1
   stunTime: 0.5
-  displayFilter: {fileID: 0}
   OnChangeHealth:
     m_PersistentCalls:
       m_Calls: []
@@ -180,11 +179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd22748024ef58745979764546f2f71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCapacity: 100
+  maxCapacity: 20
   currentFullness: 0
   fullInventoryPhrase: "\u041C\u043E\u0439 \u0440\u044E\u043A\u0437\u0430\u043A \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D!"
-  cannotTakePhrase: "\u041C\u043D\u0435 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435
-    \u0443\u043D\u0435\u0441\u0442\u0438!"
+  cannotTakePhrase: "\u042F \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0443\u043D\u0435\u0441\u0443!"
 --- !u!1 &984370221206082729
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,15 @@ public class Backpack : MonoBehaviour, IStorage
 
     private Dictionary<ResourceTypes, int> resourcesCounts;
 
-    public int MaxCapacity { get => maxCapacity; set => maxCapacity = value; }
+    public int MaxCapacity 
+    { 
+        get => maxCapacity; 
+        set
+        {
+            maxCapacity = value;
+            UpdateTextFullness();
+        }
+    }
 
     public int CurrentFullness { get => currentFullness; }
 
