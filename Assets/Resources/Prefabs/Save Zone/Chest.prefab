@@ -106,7 +106,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.24, y: 10.24}
+    oldSize: {x: 1.024, y: 1.024}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeUsed: 1
+  openChestSprite: {fileID: 21300000, guid: 838a839690ac5fa4581017b71bc7791a, type: 3}
 --- !u!114 &603503096480437440
 MonoBehaviour:
   m_ObjectHideFlags: 0

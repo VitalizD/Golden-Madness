@@ -38,6 +38,7 @@ public class DoorToSaveZone : MonoBehaviour
             {
                 CameraController.instanse.EnableMoving = false;
                 CameraController.instanse.transform.position = doorFromSaveZone.CameraPosition;
+                CameraController.instanse.Size = doorFromSaveZone.CameraSizeInSaveZone;
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
             }
 

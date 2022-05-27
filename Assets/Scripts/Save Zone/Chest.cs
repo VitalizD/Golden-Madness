@@ -5,7 +5,9 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
+    [SerializeField] private Sprite openChestSprite;
 
+    private SpriteRenderer sprite;
     private TriggerZone trigger;
     private Consumables consumables;
     private PressActionKey pressActionKey;
@@ -31,6 +33,7 @@ public class Chest : MonoBehaviour
 
     private void Awake()
     {
+        sprite = GetComponent<SpriteRenderer>();
         trigger = GetComponent<TriggerZone>();
         pressActionKey = GetComponent<PressActionKey>();
     }
@@ -85,7 +88,7 @@ public class Chest : MonoBehaviour
             //Debug.Log("Created list of consumabels with lenght: " + consumabelsList.Length);
             CanBeUsed = false;
             ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
-
+            sprite.sprite = openChestSprite;
         }
     }
 }
