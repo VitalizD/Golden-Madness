@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SanityController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class SanityController : MonoBehaviour
     private Consumables consumables;
 
     public SanityBar sanityBar;
+
+    public Text smockingPipes;
 
     public float Sanity 
     { 
@@ -54,6 +57,7 @@ public class SanityController : MonoBehaviour
             Sanity += Consumables.SmokingPipesRecovery;
             sanityBar.SetSanity(Sanity);
             --consumables.SmokingPipesCount;
+            smockingPipes.text = "" + consumables.SmokingPipesCount;
         }
     }
     private IEnumerator DecreaseSanity()

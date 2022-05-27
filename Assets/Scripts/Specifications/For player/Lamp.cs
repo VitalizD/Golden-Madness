@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Lamp : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class Lamp : MonoBehaviour
 
     private Coroutine decreaseFuel;
     private Coroutine checkFuelCount;
+
+    public Text fuelTanks;
 
     private float FuelCount
     {
@@ -75,6 +78,7 @@ public class Lamp : MonoBehaviour
             FuelCount += Consumables.FuelTankRecovery;
             lampBar.SetLamp(FuelCount);
             --consumables.FuelTanksCount;
+            fuelTanks.text = "" + consumables.FuelTanksCount;
         }
     }
 

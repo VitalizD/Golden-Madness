@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;
     public HealthBar healthBar;
     public SanityBar sanityBar;
+    public Text healthPacks;
 
     [Header("Fight")]
     [SerializeField] private int enemyDamage = 10;
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
     [SerializeField] [Range(0, 100f)] private float minTileDamageInPercents = 20;
     [SerializeField] private float touchingDistance;
     public PickaxeStrengthBar pickaxeStrengthBar;
+    public Text grindstones;
 
     [Header("Sleeping Bag")]
     [SerializeField] [Range(0, 100)] private int healthRecovery = 20;
@@ -206,6 +209,7 @@ public class Player : MonoBehaviour
             PickaxeStrength += Consumables.GrindstoneRecovery;
             pickaxeStrengthBar.SetStrength(PickaxeStrength);
             --consumables.GrindstonesCount;
+            grindstones.text = "" + consumables.GrindstonesCount;
         }
         //Нажатие хилки
         if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
@@ -213,6 +217,7 @@ public class Player : MonoBehaviour
             Health += Consumables.HealthPacksRecovery;
             healthBar.SetHealth(Health);
             --consumables.HealthPacksCount;
+            healthPacks.text = "" + consumables.HealthPacksCount;
         }
 
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class Consumables : MonoBehaviour
@@ -8,18 +9,22 @@ public class Consumables : MonoBehaviour
     [Header("Fuel tanks")]
     [SerializeField] private int fuelTanksCount = 1;
     [SerializeField] [Range(0, 100)] private static float fuelTankRecovery = 50f;
+    public Text fuelTanks;
 
     [Header("Grindstones")]
     [SerializeField] private int grindstonesCount = 1;
     [SerializeField] [Range(0, 100)] private static float grindstoneRecovery = 50;
+    public Text grindstones;
 
     [Header("Health packs")]
     [SerializeField] private int healthPacksCount = 1;
     [SerializeField] [Range(0, 100)] private static int healthPackRecovery = 50;
-    
+    public Text healthPacks;
+
     [Header("Smoking pipes")]
     [SerializeField] private int smokingPipesCount = 1;
     [SerializeField] [Range(0, 100)] private static float smokingPipeRecovery = 50f;
+    public Text smokingPipes;
 
     #region FuelTanks
 
@@ -28,9 +33,21 @@ public class Consumables : MonoBehaviour
         get => fuelTanksCount;
         set
         {
-            if (value < 0) fuelTanksCount = 0;
-            else if (value > maxCount) fuelTanksCount = maxCount;
-            else fuelTanksCount = value;
+            if (value < 0)
+            {
+                fuelTanksCount = 0;
+                fuelTanks.text = "" + 0;
+            }
+            else if (value > maxCount)
+            {
+                fuelTanksCount = maxCount;
+                fuelTanks.text = "" + maxCount;
+            }
+            else 
+            { 
+                fuelTanksCount = value;
+                fuelTanks.text = "" + value;
+            }
         }
     }
 
@@ -43,9 +60,20 @@ public class Consumables : MonoBehaviour
     public int HealthPacksCount { get => healthPacksCount;
         set 
         {
-            if (value < 0) healthPacksCount = 0;
-            else if (value > maxCount) healthPacksCount = maxCount;
-            else healthPacksCount = value;
+            if (value < 0)
+            {
+                healthPacksCount = 0;
+                healthPacks.text = "" + 0;
+            }
+            else if (value > maxCount)
+            {
+                healthPacksCount = maxCount;
+                healthPacks.text = "" + maxCount;
+            }
+            else { 
+                healthPacksCount = value;
+                healthPacks.text = "" + value;
+            }
         } 
     }
     public static int HealthPacksRecovery { get => healthPackRecovery;}
@@ -56,9 +84,20 @@ public class Consumables : MonoBehaviour
     public int SmokingPipesCount { get => smokingPipesCount; 
         set 
         {
-            if (value < 0) smokingPipesCount = 0;
-            else if (value > maxCount) smokingPipesCount = maxCount;
-            else smokingPipesCount = value;
+            if (value < 0)
+            {
+                smokingPipesCount = 0;
+                smokingPipes.text = "" + 0;
+            }
+            else if (value > maxCount)
+            {
+                smokingPipesCount = maxCount;
+                smokingPipes.text = "" + maxCount;
+            }
+            else { 
+                smokingPipesCount = value;
+                smokingPipes.text = "" + value;
+            }
         }
     }
     public static float SmokingPipesRecovery { get => smokingPipeRecovery;}
@@ -70,9 +109,20 @@ public class Consumables : MonoBehaviour
         get => grindstonesCount;
         set
         {
-            if (value < 0) grindstonesCount = 0;
-            else if (value > maxCount) grindstonesCount = maxCount;
-            else grindstonesCount = value;
+            if (value < 0)
+            {
+                grindstonesCount = 0;
+                grindstones.text = "" + 0;
+            }
+            else if (value > maxCount)
+            {
+                grindstonesCount = maxCount;
+                grindstones.text = "" + maxCount;
+            }
+            else { 
+                grindstonesCount = value;
+                grindstones.text = "" + value;
+            }
         }
     }
     public static float GrindstoneRecovery { get => grindstoneRecovery; }
