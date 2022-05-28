@@ -8,9 +8,9 @@ public class Lamp : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100)] private float fuelCount = 100f;
     [SerializeField] private float minLightRange = 8f;
     [SerializeField] private float maxLightRange = 25f;
-    public LampBar lampBar;
     [SerializeField] private float fuelDecreaseValue = 1f;
     [SerializeField] private float timeFuelDecrease = 5f;
+    [SerializeField] private LampBar lampBar;
 
     private readonly float checkFuelCountBetweenTime = 2f;
 
@@ -33,7 +33,7 @@ public class Lamp : MonoBehaviour, IStorage
 
     public Text fuelTanks;
 
-    private float FuelCount
+    public float FuelCount
     {
         get => fuelCount;
         set
@@ -49,13 +49,12 @@ public class Lamp : MonoBehaviour, IStorage
                 lampBar.SetLamp(100);
             }
             else
-            { 
+            {
                 fuelCount = value;
-                lampBar.SetLamp(value);
-            }
 
-            if (light_ != null)
-                light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
+                if (light_ != null)
+                    light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
+            }
         }
     }
 
