@@ -5,17 +5,22 @@ public class CameraController : MonoBehaviour
     public static CameraController instanse = null;
 
     [SerializeField] private bool enableMoving = true;
+    [SerializeField] private float speed = 1f;
     [SerializeField] private float yOffset = 1.6f;
     [SerializeField] private float upLimit;
     [SerializeField] private float bottomLimit;
     [SerializeField] private float leftLimit;
     [SerializeField] private float rightLimit;
 
+    private Camera camera_;
+
     private Transform player;
     private Vector3 toPosition;
     private float zPosition;
 
     public bool EnableMoving { get => enableMoving; set => enableMoving = value; }
+
+    public float Size { get => camera_.orthographicSize; set => camera_.orthographicSize = value; }
 
     private void Awake()
     {
@@ -25,6 +30,8 @@ public class CameraController : MonoBehaviour
             Destroy(gameObject);
 
         zPosition = transform.position.z;
+
+        camera_ = GetComponent<Camera>();
     }
 
     private void Start()
@@ -68,7 +75,7 @@ public class CameraController : MonoBehaviour
             toPosition = player.position;
             toPosition.y = player.position.y - yOffset;
             toPosition.z = zPosition;
-            transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
         }
     }
 }

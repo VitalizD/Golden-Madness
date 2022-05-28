@@ -26,19 +26,29 @@ public class Teleporter : MonoBehaviour
 
     public void Go(Vector2 to, Action actionAfterTransition, float fadeSpeed)
     {
+        toPosition = to;
+        Go(actionAfterTransition, fadeSpeed);
+    }
+
+    public void Go(Action actionAfterTransition, float fadeSpeed)
+    {
+        blackFilterImage.enabled = true;
         this.fadeSpeed = fadeSpeed;
         this.actionAfterTransition = actionAfterTransition;
-        toPosition = to;
-        Player.instanse.SetStun(maxStunPlayerTime - fadeSpeed);
         state = States.Darkening;
+
+        if (Player.instanse != null)
+            Player.instanse.SetStun(maxStunPlayerTime - fadeSpeed);
     }
 
     private void Awake()
     {
-        blackFilterImage = GameObject
-            .Find(ServiceInfo.MainCanvasName).transform
-            .Find(ServiceInfo.BlackFilterName)
-            .GetComponent<Image>();
+        blackFilterImage = GetComponent<Image>();
+    }
+
+    private void Start()
+    {
+        blackFilterImage.enabled = false;
     }
 
     private void Update()
@@ -64,18 +74,25 @@ public class Teleporter : MonoBehaviour
                 alphaInterpolation -= delta;
 
                 if (alphaInterpolation <= 0)
+                {
                     state = States.Stayed;
+                    blackFilterImage.enabled = false;
+                }
             }
 
-            blackFilterImage.color = new Color(blackFilterImage.color.r, blackFilterImage.color.g, blackFilterImage.color.b, alphaInterpolation);
+            if (blackFilterImage != null)
+                blackFilterImage.color = new Color(blackFilterImage.color.r, blackFilterImage.color.g, blackFilterImage.color.b, alphaInterpolation);
         }
     }
 
     private void Teleport()
     {
-        Player.instanse.transform.position = toPosition;
+        if (toPosition != Vector2.zero && Player.instanse != null)
+            Player.instanse.transform.position = toPosition;
+
         actionAfterTransition?.Invoke();
         actionAfterTransition = null;
         state = States.Lightening;
+        toPosition = Vector2.zero;
     }
 }

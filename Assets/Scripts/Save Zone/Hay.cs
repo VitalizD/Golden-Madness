@@ -8,14 +8,24 @@ public class Hay : MonoBehaviour
 
     private PlayerDialogWindow dialogWindow;
     private Teleporter teleporter;
+    private TriggerZone trigger;
+    private PressActionKey pressActionKey;
 
-    private bool isTriggered = false;
-
-    public bool CanBeUsed { get => canBeUsed; set => canBeUsed = value; }
+    public bool CanBeUsed 
+    { 
+        get => canBeUsed; 
+        set
+        {
+            canBeUsed = value;
+            pressActionKey.SetActive(value);
+        }
+    }
 
     private void Awake()
     {
-        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.SceneControllerTag).GetComponent<Teleporter>();
+        teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.BlackFilterTag).GetComponent<Teleporter>();
+        trigger = GetComponent<TriggerZone>();
+        pressActionKey = GetComponent<PressActionKey>();
     }
 
     private void Start()
@@ -23,32 +33,20 @@ public class Hay : MonoBehaviour
         dialogWindow = Player.instanse.transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = false;
-    }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isTriggered && canBeUsed)
+        if (Input.GetKeyDown(KeyCode.E) && trigger.IsTriggered && canBeUsed)
         {
             void action()
             {
                 Player.instanse.Sleep();
                 dialogWindow.gameObject.SetActive(true);
                 dialogWindow.Show("Tеперь я чувствую себя бодрым", 4);
-                canBeUsed = false;
 
                 ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
             }
 
+            CanBeUsed = false;
             teleporter.Go(Player.instanse.transform.position, action, fadeSpeed);
         }
     }

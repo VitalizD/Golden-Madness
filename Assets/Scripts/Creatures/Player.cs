@@ -4,9 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IStorage
 {
     public static Player instanse = null;
+
+    [Header("Loading Parameters")]
+    [SerializeField] private bool loadParameters = true;
 
     [Header("Base")]
     [SerializeField] [Range(0, 100)] private int health = 100;
@@ -27,7 +30,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float reloadAttackTime = 0.5f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
-    [SerializeField] private RedFilter displayFilter;
     [SerializeField] private UnityEvent<string> OnChangeHealth;
 
     [Header("Pickaxe")]
@@ -49,6 +51,11 @@ public class Player : MonoBehaviour
     private Animator animator;
     private SanityController sanity;
     private Consumables consumables;
+    private Backpack backpack;
+    private Lamp lamp;
+    private PlayerDialogWindow dialogWindow;
+    private GameOver gameOver;
+    private RedFilter displayFilter;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -58,7 +65,7 @@ public class Player : MonoBehaviour
 
     private Coroutine reloadAttack;
 
-    private readonly float jumpCheckRadius = 0.01f;
+    private readonly float jumpCheckRadius = 0.07f;
     private readonly float yOffsetToGround = -0.5f;
 
     private bool invulnerability = false;
@@ -111,16 +118,27 @@ public class Player : MonoBehaviour
             healthBar.SetHealth(health);
             if (health <= 0)
             {
-                health = 100;
-                healthBar.SetHealth(health);
-                transform.position = checkpoint;
+                if (PlayerPrefs.HasKey(PlayerPrefsKeys.TutorialDone) && bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone)))
+                {
+                    StopAllCoroutines();
+                    gameObject.SetActive(false);
+                    //sprite.enabled = false;
+                    //isStunned = true;
+                    //rigidBody2d.bodyType = RigidbodyType2D.Static;
+                    gameOver.ShowAndReturnToVillage();
+                }
+                else
+                {
+                    health = 100;
+                    transform.position = checkpoint;
+                }
                 if (displayFilter) displayFilter.RemoveFilter();
             }
             OnChangeHealth?.Invoke(health.ToString());
         }
     }
 
-    private float PickaxeStrength
+    public float PickaxeStrength
     {
         get => pickaxeStrength;
         set
@@ -146,11 +164,86 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Save()
+    {
+        backpack.Save();
+        consumables.Save();
+        lamp.Save();
+
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.HitDamageToPickaxe, hitDamageToPickaxe);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.MaxEnemyDamage, maxEnemyDamage);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.MaxTileDamage, maxTileDamage);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.SleepingBagHealthRecovery, healthRecovery);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.SleepingBagSanityRecovery, sanityRecovery);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.PickaxeStrength, pickaxeStrength);
+    }
+
+    public void Load()
+    {
+        if (!loadParameters)
+            return;
+
+        backpack.Load();
+        consumables.Load();
+        lamp.Load();
+
+        hitDamageToPickaxe = PlayerPrefs.GetFloat(PlayerPrefsKeys.HitDamageToPickaxe, hitDamageToPickaxe);
+        maxEnemyDamage = PlayerPrefs.GetInt(PlayerPrefsKeys.MaxEnemyDamage, enemyDamage);
+        maxTileDamage = PlayerPrefs.GetFloat(PlayerPrefsKeys.MaxTileDamage, tileDamage);
+        healthRecovery = PlayerPrefs.GetInt(PlayerPrefsKeys.SleepingBagHealthRecovery, healthRecovery);
+        sanityRecovery = PlayerPrefs.GetFloat(PlayerPrefsKeys.SleepingBagSanityRecovery, sanityRecovery);
+        PickaxeStrength = PlayerPrefs.GetFloat(PlayerPrefsKeys.PickaxeStrength, pickaxeStrength);
+    }
+
     public void SetSelectedTile(Tile value) => selectedTile = value;
 
     public void RemoveSelectedTile() => selectedTile = null;
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
+
+    public void AddMaxEnemyDamage(int valueInPercents)
+    {
+        maxEnemyDamage += (int)(maxEnemyDamage * (valueInPercents / 100f));
+        enemyDamage = maxEnemyDamage;
+        Save();
+    }
+
+    public void AddMaxTileDamage(float valueInPercents)
+    {
+        maxTileDamage += maxTileDamage * (valueInPercents / 100f);
+        tileDamage = maxTileDamage;
+        Save();
+    }
+
+    public void AddHitDamageToPickaxe(float valueInPercents)
+    {
+        hitDamageToPickaxe += hitDamageToPickaxe * (valueInPercents / 100f);
+        Save();
+    }
+
+    public void AddFuelDecreaseValue(float valueInPercents)
+    {
+        lamp.FuelDecreaseValue += lamp.FuelDecreaseValue * (valueInPercents / 100f);
+        Save();
+    }
+
+    public void AddSleepingBagHealthRecovery(int valueInPercents)
+    {
+        healthRecovery += (int)(healthRecovery * (valueInPercents / 100f));
+        Save();
+    }
+
+    public void AddSleepingBagSanityRecovery(float valueInPercents)
+    {
+        sanityRecovery += (int)(sanityRecovery * (valueInPercents / 100f));
+        Save();
+    }
+
+    public void AddBackpackCapacity(int value)
+    {
+        backpack.MaxCapacity += value;
+        Save();
+    }
 
     public void Sleep()
     {
@@ -160,16 +253,19 @@ public class Player : MonoBehaviour
         sanityBar.SetSanity(sanity.Sanity);
     }
 
-    public void SetStun()
-    {
-        isStunned = true;
-        StartCoroutine(DisableStun(stunTime));
-    }
+    public void SetStun() => SetStun(stunTime);
 
     public void SetStun(float time)
     {
         isStunned = true;
-        StartCoroutine(DisableStun(time));
+        if (gameObject.activeSelf)
+            StartCoroutine(DisableStun(time));
+    }
+
+    public void Say(string text, float sayingTime)
+    {
+        dialogWindow.gameObject.SetActive(true);
+        dialogWindow.Show(text, sayingTime);
     }
 
     private void Awake()
@@ -184,6 +280,11 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         sanity = GetComponent<SanityController>();
         consumables = GetComponent<Consumables>();
+        backpack = GetComponent<Backpack>();
+        lamp = transform.GetChild(ServiceInfo.ChildIndexOfLamp).GetComponent<Lamp>();
+        dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
+        gameOver = GameObject.FindGameObjectWithTag(ServiceInfo.GameOverTag).GetComponent<GameOver>();
+        displayFilter = GameObject.FindGameObjectWithTag(ServiceInfo.RedFilterTag).GetComponent<RedFilter>();
 
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
@@ -194,6 +295,9 @@ public class Player : MonoBehaviour
     {
         checkpoint = transform.position;
         PickaxeStrength = pickaxeStrength;
+
+        if (loadParameters)
+            Load();
     }
 
     private void Update()
@@ -203,7 +307,7 @@ public class Player : MonoBehaviour
 
         if (canAttack && isGrounded && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
             Attack();
-        //точильный камень
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
         {
             PickaxeStrength += Consumables.GrindstoneRecovery;
@@ -211,7 +315,7 @@ public class Player : MonoBehaviour
             --consumables.GrindstonesCount;
             grindstones.text = "" + consumables.GrindstonesCount;
         }
-        //Нажатие хилки
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
         {
             Health += Consumables.HealthPacksRecovery;
@@ -254,7 +358,7 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, touchingDistance);
     }
 
-    // Назначен на ключ в анимации "Attack"
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "Attack"
     private void OnAttack()
     {
         var raycastHits = Physics2D.RaycastAll(transform.position, transform.right * (sprite.flipX ? -1 : 1), attackDistance, enemiesMask);
@@ -271,7 +375,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Назначен на ключ в анимации "Dig"
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "Dig"
     private void HitTile()
     {
         if (!selectedTile)

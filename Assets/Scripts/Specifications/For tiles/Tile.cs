@@ -16,9 +16,11 @@ public class Tile : MonoBehaviour
     private Player player;
 
     private float maxHealth;
-    private float checkingDistanceToDestroyAttachedTiles = 1f;
+    private readonly float checkingDistanceToDestroyAttachedTiles = 0.50f;
 
     public float DiggingDifficulty { get => diggingDifficulty; }
+
+    public ResourceTypes ResourceType { get => resourceType; }
 
     public float Health
     {
@@ -27,8 +29,11 @@ public class Tile : MonoBehaviour
         {
             health = value;
             if (health <= 0)
+            {
+                AddResourceToBackpack(resourceType);
                 Destroy(gameObject);
-            else
+            }
+            else if (destructionDegrees.Length > 0)
                 ChangeDestructionDegree();
         }
     }
@@ -50,18 +55,18 @@ public class Tile : MonoBehaviour
         if (isBedrock)
             return;
 
-        if (selection)
+        if (selection != null)
             selection.gameObject.SetActive(true);
-        if (player)
+        if (player != null)
             player.SetSelectedTile(this);
     }
 
     private void OnMouseExit()
     {
         StopDigging();
-        if (selection)
+        if (selection != null)
             selection.gameObject.SetActive(false);
-        if (player)
+        if (player != null)
             player.RemoveSelectedTile();
     }
 
@@ -94,18 +99,15 @@ public class Tile : MonoBehaviour
             DestroyAttachedTiles();
 
         StopDigging();
-        if (selection)
+        if (selection != null)
             selection.gameObject.SetActive(false);
-
-        if (resourceType != ResourceTypes.None && player)
-            player.GetComponent<Backpack>().Add(resourceType);
     }
 
     private void StopDigging()
     {
-        if (player)
+        if (player != null)
             player.IsDigging = false;
-        if (selection)
+        if (selection != null)
             selection.SetNormalColor();
     }
 
@@ -147,14 +149,26 @@ public class Tile : MonoBehaviour
                 continue;
 
             var attachedComponent = collider.GetComponent<AttachedTile>();
-            if (attachedComponent)
+            if (attachedComponent != null)
             {
                 var stalactite = attachedComponent.GetComponent<Stalactite>();
-                if (stalactite)
+                var tile = attachedComponent.GetComponent<Tile>();
+
+                if (tile != null)
+                    AddResourceToBackpack(tile.ResourceType);
+
+                if (stalactite != null)
                     stalactite.Active(0);
                 else
                     Destroy(attachedComponent.gameObject);
+
             }
         }
+    }
+
+    private void AddResourceToBackpack(ResourceTypes resourceType)
+    {
+        if (resourceType != ResourceTypes.None && player)
+            player.GetComponent<Backpack>().Add(resourceType);
     }
 }

@@ -8,5 +8,7 @@
     Press4,
     PressENearMinecart,
     PressENearHay,
-    PressENearChest
+    PressENearChest,
+    PressENearForge,
+    PressENearCave
 }

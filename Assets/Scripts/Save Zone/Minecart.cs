@@ -2,32 +2,35 @@ using UnityEngine;
 
 public class Minecart : MonoBehaviour
 {
-    private bool isTriggered = false;
+    [SerializeField] private bool canBeUsed = true;
+    [SerializeField] private GameObject minecart;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = true;
-    }
+    private TriggerZone trigger;
+    private PressActionKey pressActionKey;
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void ActiveMinecart() => minecart.SetActive(true);
+
+    private void Awake()
     {
-        if (collision.CompareTag(ServiceInfo.PlayerTag))
-            isTriggered = false;
+        trigger = GetComponent<TriggerZone>();
+        pressActionKey = GetComponent<PressActionKey>();
     }
 
     private void Update()
     {
-        if (isTriggered && Input.GetKeyDown(KeyCode.E))
+        if (trigger.IsTriggered && Input.GetKeyDown(KeyCode.E) && canBeUsed)
         {
             var backpack = Player.instanse.GetComponent<Backpack>();
-            // Отправление ресурсов из рюкзака в поселение
+            ResourcesSaver.SaveInVillage(backpack.GetAll());
             backpack.Clear();
 
             // Для обучающего уровня
             ServiceInfo.CheckpointConditionDone = true;
 
-            gameObject.SetActive(false);
+            if (minecart != null)
+                minecart.SetActive(false);
+            canBeUsed = false;
+            pressActionKey.SetActive(false);
         }
     }
 }
