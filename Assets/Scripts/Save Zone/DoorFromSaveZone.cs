@@ -3,6 +3,7 @@ using UnityEngine;
 public class DoorFromSaveZone : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
+    [SerializeField] private float cameraSize = 4.1f;
     [SerializeField] private float fadeSpeed = 1.2f;
 
     private Teleporter teleporter;
@@ -14,8 +15,11 @@ public class DoorFromSaveZone : MonoBehaviour
 
     private Vector3 cameraPosition;
     private Vector2 exitPosition;
+    private float normalCameraSize;
 
     public Vector3 CameraPosition { get => cameraPosition; set => cameraPosition = value; }
+
+    public float CameraSizeInSaveZone { get => cameraSize; }
 
     public bool CanBeUsed
     {
@@ -31,7 +35,7 @@ public class DoorFromSaveZone : MonoBehaviour
     {
         this.exitPosition = exitPosition;
         hay.CanBeUsed = true;
-        minecart.gameObject.SetActive(true);
+        minecart.ActiveMinecart();
         chest.CanBeUsed = true;
     }
 
@@ -48,6 +52,11 @@ public class DoorFromSaveZone : MonoBehaviour
         pressActionKey = GetComponent<PressActionKey>();
     }
 
+    private void Start()
+    {
+        normalCameraSize = CameraController.instanse.Size;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canBeUsed && trigger.IsTriggered && teleporter.State == Teleporter.States.Stayed)
@@ -56,6 +65,7 @@ public class DoorFromSaveZone : MonoBehaviour
             {
                 CameraController.instanse.EnableMoving = true;
                 CameraController.instanse.transform.position = exitPosition;
+                CameraController.instanse.Size = normalCameraSize;
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = true;
             }
 
