@@ -58,7 +58,7 @@ public class TutorialCheckpoint : MonoBehaviour
             case InformationWindowHidingConditions.Press1:
                 return new Func<bool>(() => { return Input.GetKey(KeyCode.Alpha1); });
             case InformationWindowHidingConditions.PressI:
-                return new Func<bool>(() => { return Input.GetKey(KeyCode.I); });
+                return new Func<bool>(() => { return Input.GetKey(KeyCode.Tab); });
             case InformationWindowHidingConditions.Press2:
                 return new Func<bool>(() => { return Input.GetKey(KeyCode.Alpha2); });
             case InformationWindowHidingConditions.Press3:

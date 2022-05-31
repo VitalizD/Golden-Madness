@@ -114,13 +114,13 @@ public class ResourcesController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.I) && !allResourcesShowed)
+        if (Input.GetKey(KeyCode.Tab) && !allResourcesShowed)
         {
             allResourcesShowed = true;
             ShowAllResources();
         }
 
-        if (Input.GetKeyUp(KeyCode.I))
+        if (Input.GetKeyUp(KeyCode.Tab))
         {
             allResourcesShowed = false;
             HideAllResources();
