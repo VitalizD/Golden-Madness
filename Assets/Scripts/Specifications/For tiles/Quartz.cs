@@ -24,24 +24,34 @@ public class Quartz : MonoBehaviour
             Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y - distance))
         }
         .Where(collaider => collaider && collaider.gameObject.layer == LayerMask.NameToLayer(ServiceInfo.GroundLayerName) &&
-                !(collaider.gameObject.GetComponent<AttachedTile>()) )
+                !(collaider.gameObject.GetComponent<AttachedTile>()) &&
+                collaider.gameObject.GetComponent<Tile>().ResourceType == ResourceTypes.None)
         .ToList();
-        var random = new System.Random();
-        /*for (int i = colliders.Count - 1; i >= 1; i--)
-        {
-            int j = random.Next(i + 1);
-            var temp = colliders[j];
-            colliders[j] = colliders[i];
-            colliders[i] = temp;
-        }*/
-        /*foreach (var collaider in colliders) {
-            Debug.Log(collaider);
-        }*/
 
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            colliders[random.Next(colliders.Count)].transform.position,
-            distanceToMove);
+        //если рядом нет блоков, то удали кварц
+        if (colliders.Count == 0)
+        {
+            Destroy(gameObject);
+        }
+
+        else {
+            var random = new System.Random();
+            /*for (int i = colliders.Count - 1; i >= 1; i--)
+            {
+                int j = random.Next(i + 1);
+                var temp = colliders[j];
+                colliders[j] = colliders[i];
+                colliders[i] = temp;
+            }*/
+            /*foreach (var collaider in colliders) {
+                Debug.Log(collaider);
+            }*/
+
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                colliders[random.Next(colliders.Count)].transform.position,
+                distanceToMove);
+        }
     }
 
     // Update is called once per frame
