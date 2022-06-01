@@ -15,6 +15,7 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100)] private int health = 100;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private CheckingForJump jumpCheckingPoint;
     public HealthBar healthBar;
     public SanityBar sanityBar;
     public Text healthPacks;
@@ -65,8 +66,8 @@ public class Player : MonoBehaviour, IStorage
 
     private Coroutine reloadAttack;
 
-    private readonly float jumpCheckRadius = 0.07f;
-    private readonly float yOffsetToGround = -0.5f;
+    //private readonly float jumpCheckRadius = 0.07f;
+    //private readonly float yOffsetToGround = -0.5f;
 
     private bool invulnerability = false;
     private bool isStunned = false;
@@ -74,13 +75,13 @@ public class Player : MonoBehaviour, IStorage
     private bool isAttacking = false;
     private bool canAttack = true;
     private bool isDigging = false;
-    private bool isGrounded = false;
+    //private bool isGrounded = false;
 
     public bool IsDigging { get => isDigging; set => isDigging = value; }
 
     public Vector2 Checkpoint { get => checkpoint; set => checkpoint = value; }
 
-    public bool IsGrounded { get => isGrounded; }
+    public bool CanJump { get => jumpCheckingPoint.CanJump; }
 
     public float TouchingDistance { get => touchingDistance; }
 
@@ -302,10 +303,10 @@ public class Player : MonoBehaviour, IStorage
 
     private void Update()
     {
-        if (isGrounded && !isStunned && Input.GetButtonDown("Jump"))
+        if (jumpCheckingPoint.CanJump && !isStunned && Input.GetButtonDown("Jump"))
             Jump();
 
-        if (canAttack && isGrounded && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
+        if (canAttack && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
             Attack();
         //��������� ������
         if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
@@ -331,9 +332,9 @@ public class Player : MonoBehaviour, IStorage
         var position = transform.position;
         transform.position = new Vector3(position.x, position.y, fixedZPosition);
 
-        CheckGrounded();
+        //CheckGrounded();
 
-        if (isGrounded && !isAttacking && !isStunned && !isDigging)
+        if (jumpCheckingPoint.CanJump && !isAttacking && !isStunned && !isDigging)
             State = States.Idle;
 
         if (!isStunned && Input.GetButton("Horizontal"))
@@ -426,7 +427,7 @@ public class Player : MonoBehaviour, IStorage
     private void Run()
     {
         isDigging = false;
-        if (isGrounded && !isAttacking)
+        if (jumpCheckingPoint.CanJump && !isAttacking)
             State = States.Walk;
 
         var dir = transform.right * Input.GetAxis("Horizontal");
@@ -452,20 +453,20 @@ public class Player : MonoBehaviour, IStorage
         reloadAttack = StartCoroutine(ReloadAttack());
     }
 
-    private void CheckGrounded()
-    {
-        if (!isGrounded)
-        {
-            if (rigidBody2d.velocity.y > 0)
-                State = States.Jump;
-            else if (rigidBody2d.velocity.y < 0)
-                State = States.Fall;
-        }
+    //private void CheckGrounded()
+    //{
+    //    if (!jumpCheckingPoint.CanJump)
+    //    {
+    //        if (rigidBody2d.velocity.y > 0)
+    //            State = States.Jump;
+    //        else if (rigidBody2d.velocity.y < 0)
+    //            State = States.Fall;
+    //    }
 
-        var collaiders = Physics2D.OverlapCircleAll(
-            new Vector2(transform.position.x, transform.position.y + yOffsetToGround), jumpCheckRadius, groundMask);
-        isGrounded = collaiders.Length > 0;
-    }
+    //    var collaiders = Physics2D.OverlapCircleAll(
+    //        new Vector2(transform.position.x, transform.position.y + yOffsetToGround), jumpCheckRadius, groundMask);
+    //    isGrounded = collaiders.Length > 0;
+    //}
 
     //private void ChangeDirectionTowards(Vector2 position)
     //{

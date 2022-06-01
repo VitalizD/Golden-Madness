@@ -3,7 +3,7 @@ using UnityEngine;
 public class DoorFromSaveZone : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
-    [SerializeField] private float cameraSize = 4.1f;
+    [SerializeField] private float cameraSize = 4.67f;
     [SerializeField] private float fadeSpeed = 1.2f;
 
     private Teleporter teleporter;
@@ -35,7 +35,7 @@ public class DoorFromSaveZone : MonoBehaviour
     {
         this.exitPosition = exitPosition;
         hay.CanBeUsed = true;
-        minecart.ActiveMinecart();
+        minecart.CanBeUsed = true;
         chest.CanBeUsed = true;
     }
 

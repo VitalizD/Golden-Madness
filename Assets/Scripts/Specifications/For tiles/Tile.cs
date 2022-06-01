@@ -113,7 +113,7 @@ public class Tile : MonoBehaviour
 
     private void CheckDistance()
     {
-        if (isBedrock || !player.IsGrounded || player.State != States.Idle)
+        if (isBedrock || player.State != States.Idle)
             return;
 
         var referencePoint = new Vector2(player.transform.position.x, player.transform.position.y);

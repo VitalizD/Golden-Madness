@@ -8,7 +8,16 @@ public class Minecart : MonoBehaviour
     private TriggerZone trigger;
     private PressActionKey pressActionKey;
 
-    public void ActiveMinecart() => minecart.SetActive(true);
+    public bool CanBeUsed
+    {
+        get => canBeUsed;
+        set
+        {
+            canBeUsed = value;
+            pressActionKey.SetActive(value);
+            minecart.SetActive(value);
+        }
+    }
 
     private void Awake()
     {
