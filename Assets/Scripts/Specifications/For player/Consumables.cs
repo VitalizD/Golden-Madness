@@ -4,23 +4,6 @@ using System.Collections.Generic;
 
 public class Consumables : MonoBehaviour, IStorage
 {
-    //private readonly struct DefaultValues
-    //{
-    //    public readonly int fuelTanksCount;
-    //    public readonly int grindstonesCount;
-    //    public readonly int healthPacksCount;
-    //    public readonly int smokingPipesCount;
-
-    //    public DefaultValues(int fuelTanksCount, int grindstonesCount,
-    //        int healthPacksCount, int smokingPipesCount)
-    //    {
-    //        this.fuelTanksCount = fuelTanksCount;
-    //        this.grindstonesCount = grindstonesCount;
-    //        this.healthPacksCount = healthPacksCount;
-    //        this.smokingPipesCount = smokingPipesCount;
-    //    }
-    //}
-
     [SerializeField] private int maxCount = 5;
 
     [Header("Fuel tanks")]
@@ -157,14 +140,17 @@ public class Consumables : MonoBehaviour, IStorage
 
     public void Load()
     {
-        fuelTanksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.FuelTanksCount, fuelTanksCount);
-        grindstonesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
-        healthPacksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
-        smokingPipesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
+        FuelTanksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.FuelTanksCount, fuelTanksCount);
+        GrindstonesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
+        HealthPacksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
+        SmokingPipesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
     }
 
-    private void Start()
+    public void SetDefaultValues()
     {
-        //defaultValues = new DefaultValues(fuelTanksCount, grindstonesCount, healthPacksCount, smokingPipesCount);
+        FuelTanksCount = 1;
+        HealthPacksCount = 1;
+        SmokingPipesCount = 1;
+        GrindstonesCount = 1;
     }
 }

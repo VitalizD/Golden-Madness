@@ -93,5 +93,6 @@ public class VillageController : MonoBehaviour, IStorage
         player.PickaxeStrength = 100f;
         player.GetComponent<SanityController>().Sanity = 100f;
         player.transform.GetChild(ServiceInfo.ChildIndexOfLamp).GetComponent<Lamp>().FuelCount = 100f;
+        player.GetComponent<Consumables>().SetDefaultValues();
     }
 }
