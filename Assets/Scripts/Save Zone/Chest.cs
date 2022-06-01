@@ -11,6 +11,8 @@ public class Chest : MonoBehaviour
     private TriggerZone trigger;
     private Consumables consumables;
     private PressActionKey pressActionKey;
+
+    private Sprite normalSprite;
     //{itemAmount, chance}
     private Dictionary<int, float> chancesForDropAmount = new Dictionary<int, float>
     {
@@ -28,6 +30,7 @@ public class Chest : MonoBehaviour
         {
             canBeUsed = value;
             pressActionKey.SetActive(value);
+            sprite.sprite = normalSprite;
         }
     }
 
@@ -36,6 +39,8 @@ public class Chest : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         trigger = GetComponent<TriggerZone>();
         pressActionKey = GetComponent<PressActionKey>();
+
+        normalSprite = sprite.sprite;
     }
 
     private void Start()

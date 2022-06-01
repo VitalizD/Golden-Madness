@@ -111,14 +111,14 @@ public class Building : MonoBehaviour, IStorage
         if (!maxLevel)
         {
             if (currentLevel == 0)
-                upgradeWindow.SetAction("- Построить");
-            else
-                upgradeWindow.SetAction("- Улучшить");
+                upgradeWindow.SetAction("Построить");
 
             switch (buildingType)
             {
                 case BuildingType.Forge:
                     upgradeWindow.SetTitle("Кузница");
+                    if (currentLevel > 0)
+                        upgradeWindow.SetAction("Улучшить кирку");
                     switch (currentLevel)
                     {
                         case 0:
@@ -167,6 +167,8 @@ public class Building : MonoBehaviour, IStorage
 
                 case BuildingType.Workshow:
                     upgradeWindow.SetTitle("Мастерская");
+                    if (currentLevel > 0)
+                        upgradeWindow.SetAction("Улучшить лампу");
                     switch (currentLevel)
                     {
                         case 0:

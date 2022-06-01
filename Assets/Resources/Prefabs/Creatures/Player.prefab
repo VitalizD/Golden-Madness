@@ -359,8 +359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.002, y: 0.2681}
-  m_SizeDelta: {x: 3.5085, y: 0.9493}
+  m_AnchoredPosition: {x: -0.0127, y: 0.2362}
+  m_SizeDelta: {x: 2.5932, y: 1.368}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3389356901535063186
 Canvas:
@@ -450,7 +450,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061743498411214084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.48, y: 1.02, z: -1}
+  m_LocalPosition: {x: 0, y: 1.126, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -499,12 +499,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6212e4e3637b49541a92ce3fa060f3f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5a801a35254e494baff677650391ca8, type: 3}
   m_Color: {r: 0.7075472, g: 0.64733285, b: 0.5299929, a: 0.6666667}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.71, y: 2.56}
+  m_Size: {x: 9.2, y: 5.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -720,8 +720,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000000022352}
-  m_SizeDelta: {x: 3.5, y: 0.9493}
+  m_AnchoredPosition: {x: 0.0213, y: 0.02}
+  m_SizeDelta: {x: 2.3362, y: 1.368}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1880985240827714161
 CanvasRenderer:
@@ -785,14 +785,14 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0.25
-  m_fontSizeMax: 0.4
+  m_fontSizeMax: 0.35
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: -20.01
+  m_lineSpacing: -37.2
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
