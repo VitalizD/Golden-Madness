@@ -33,6 +33,7 @@ public class DoorFromSaveZone : MonoBehaviour
 
     public void Refresh(Vector2 exitPosition)
     {
+        CanBeUsed = true;
         this.exitPosition = exitPosition;
         hay.CanBeUsed = true;
         minecart.CanBeUsed = true;

@@ -42,7 +42,7 @@ public class DoorToSaveZone : MonoBehaviour
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
             }
 
-            //CanBeUsed = false;
+            CanBeUsed = false;
             doorFromSaveZone.Refresh(transform.position);
             teleporter.Go(doorFromSaveZone.transform.position, action, fadeSpeed);
         }
