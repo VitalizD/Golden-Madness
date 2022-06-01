@@ -38,6 +38,8 @@ public class Tile : MonoBehaviour
         }
     }
 
+    public bool IsBedrock { get => isBedrock; set => isBedrock = value; }
+
     private void Awake()
     {
         selection = GameObject.Find("Selection").GetComponent<Selection>();
@@ -50,16 +52,16 @@ public class Tile : MonoBehaviour
         player = Player.instanse;
     }
 
-    private void OnMouseEnter()
+    /*private void OnMouseEnter()
     {
-        if (isBedrock)
-            return;
+        *//*if (isBedrock)
+            return;*/
 
-        if (selection != null)
+        /*if (selection != null)
             selection.gameObject.SetActive(true);
         if (player != null)
-            player.SetSelectedTile(this);
-    }
+            player.SetSelectedTile(this);*//*
+    }*/
 
     private void OnMouseExit()
     {
@@ -77,8 +79,19 @@ public class Tile : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (!isBedrock)
+        if (selection.Equals(null) || player.Equals(null))
+            return;
+        /*Debug.Log(isSelectionInTouchingDistance());*/
+        if (!isBedrock && isSelectionInTouchingDistance())
+        {
             selection.Move(transform.position);
+            selection.gameObject.SetActive(true);
+            player.SetSelectedTile(this);
+        }
+        else {
+            selection.gameObject.SetActive(false);
+            player.RemoveSelectedTile();
+        }
 
         if (Input.GetButton("Fire1"))
         {
@@ -109,6 +122,13 @@ public class Tile : MonoBehaviour
             player.IsDigging = false;
         if (selection != null)
             selection.SetNormalColor();
+    }
+
+    private bool isSelectionInTouchingDistance() {
+        if (isBedrock) { return false; }
+        var referencePoint = new Vector2(player.transform.position.x, player.transform.position.y);
+        var distance = Vector2.Distance(transform.position, referencePoint);
+        return distance < player.TouchingDistance;
     }
 
     private void CheckDistance()

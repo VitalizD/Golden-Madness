@@ -43,10 +43,16 @@ public class Selection : MonoBehaviour
 
     public void Move(Vector2 toPoint)
     {
-        transform.position = Vector3.Lerp(
+        //for animation of selection
+
+        /*transform.position = Vector3.Lerp(
             transform.position,
             new Vector3(toPoint.x, toPoint.y, zPosition),
-            movingSpeed * Time.deltaTime);
+            movingSpeed * Time.deltaTime);*/
+
+        //insta changing position
+
+        transform.position = new Vector3(toPoint.x, toPoint.y, zPosition);
     }
 
     public void SetActiveColor() => enableActiveColor = true;
