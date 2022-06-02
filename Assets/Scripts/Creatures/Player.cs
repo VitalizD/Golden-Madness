@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Player : MonoBehaviour, IStorage
 {
@@ -26,12 +27,11 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private int minEnemyDamageInPercents = 60;
     [SerializeField] private float repulsiveForce;
     [SerializeField] private float jerkForce = 3f;
-    [SerializeField] private float attackDistance;
     [SerializeField] private float attackTime = 0.3f;
     [SerializeField] private float reloadAttackTime = 0.5f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
-    [SerializeField] private UnityEvent<string> OnChangeHealth;
+    [SerializeField] private Transform attackPoint;
 
     [Header("Pickaxe")]
     [SerializeField] [Range(0, 100f)] private float pickaxeStrength = 100f;
@@ -63,11 +63,11 @@ public class Player : MonoBehaviour, IStorage
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
     private float fixedZPosition;
+    private float xAttackPoint;
+
+    private Vector2 attackDistanse;
 
     private Coroutine reloadAttack;
-
-    //private readonly float jumpCheckRadius = 0.07f;
-    //private readonly float yOffsetToGround = -0.5f;
 
     private bool invulnerability = false;
     private bool isStunned = false;
@@ -75,7 +75,6 @@ public class Player : MonoBehaviour, IStorage
     private bool isAttacking = false;
     private bool canAttack = true;
     private bool isDigging = false;
-    //private bool isGrounded = false;
 
     public bool IsDigging { get => isDigging; set => isDigging = value; }
 
@@ -123,9 +122,6 @@ public class Player : MonoBehaviour, IStorage
                 {
                     StopAllCoroutines();
                     gameObject.SetActive(false);
-                    //sprite.enabled = false;
-                    //isStunned = true;
-                    //rigidBody2d.bodyType = RigidbodyType2D.Static;
                     gameOver.ShowAndReturnToVillage();
                 }
                 else
@@ -135,7 +131,6 @@ public class Player : MonoBehaviour, IStorage
                 }
                 if (displayFilter) displayFilter.RemoveFilter();
             }
-            OnChangeHealth?.Invoke(health.ToString());
         }
     }
 
@@ -290,6 +285,9 @@ public class Player : MonoBehaviour, IStorage
         groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
         fixedZPosition = transform.position.z;
+        xAttackPoint = attackPoint.localPosition.x;
+
+        attackDistanse = attackPoint.GetComponent<CapsuleCollider2D>().size;
     }
 
     private void Start()
@@ -352,22 +350,24 @@ public class Player : MonoBehaviour, IStorage
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackDistance);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(attackPoint.position, attackDistanceX);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, touchingDistance);
+
     }
 
     // �������� �� ���� � �������� "Attack"
     private void OnAttack()
     {
-        var raycastHits = Physics2D.RaycastAll(transform.position, transform.right * (sprite.flipX ? -1 : 1), attackDistance, enemiesMask);
+        //var raycastHits = Physics2D.RaycastAll(transform.position, transform.right * (sprite.flipX ? -1 : 1), attackDistance, enemiesMask);
+        var hits = Physics2D.OverlapCapsuleAll(attackPoint.position, attackDistanse, CapsuleDirection2D.Vertical, 0, enemiesMask);
 
-        foreach (var raycastHit in raycastHits)
+        foreach (var raycastHit in hits)
         {
-            var creature = raycastHit.collider.GetComponent<Creature>();
-            if (creature)
+            var creature = raycastHit.GetComponent<Creature>();
+            if (creature != null)
             {
                 creature.Health -= enemyDamage;
                 if (creature.Repulsiable)
@@ -433,6 +433,7 @@ public class Player : MonoBehaviour, IStorage
         var dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
         sprite.flipX = dir.x < 0;
+        attackPoint.localPosition = sprite.flipX ? new Vector3(-xAttackPoint, attackPoint.localPosition.y, 5) : new Vector3(xAttackPoint, attackPoint.localPosition.y, 5);
     }
 
     private void Jump()
