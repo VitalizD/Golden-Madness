@@ -58,18 +58,24 @@ public class Chest : MonoBehaviour
                 System.Reflection.BindingFlags.Instance|
                 System.Reflection.BindingFlags.DeclaredOnly);
             var anyAmountIncreased = false;
-            foreach (var propertyInfo in consumabelsList) {
+
+            foreach (var propertyInfo in consumabelsList)
+            {
                 var chance = UnityEngine.Random.value * 100;
                 var consumableObj = propertyInfo.GetValue(consumables);
+
                 //Debug.Log("\n[+] Name: " + propertyInfo.Name + "\n[+] Value: " + consumableObj);
+
                 //проверка на тип свойства
                 if (!consumableObj.GetType().Equals(1.GetType())) {
                     Debug.Log("Property type is not int!");
                     continue;
                 }
+
                 //почему то не хочет кастовать с одной переменной, поэтому создал другую
                 var consumableCount = (int) consumableObj;
                 Debug.Log("\nCurrent generated number " + chance);
+
                 for (int i = 0; i <= 4; i++) 
                 {
                     if (chance <= chancesForDropAmount[i]) 
@@ -81,16 +87,20 @@ public class Chest : MonoBehaviour
                     }
                     chance -= chancesForDropAmount[i];
                 }
+
                 //если везде по нулям выпало добавь рандомнуму расходнику рандомное кол-во (можно потом поменять на что нибудь)
                 if (!anyAmountIncreased) 
                 {
                     Debug.Log("Unlucky random! (For each property 0 amount increased)");
                     consumabelsList[(int)(UnityEngine.Random.value * 100) % 5].SetValue(consumables, consumableCount+1+((int)(UnityEngine.Random.value * 100) % 5));
                 }
+
                 //propertyInfo.SetValue(consumables, consumableCount + 99);
 
             }
+
             //Debug.Log("Created list of consumabels with lenght: " + consumabelsList.Length);
+
             CanBeUsed = false;
             ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
             sprite.sprite = openChestSprite;

@@ -35,6 +35,9 @@ public class Consumables : MonoBehaviour, IStorage
         get => fuelTanksCount;
         set
         {
+            if (value - fuelTanksCount > 0)
+                TakingConsumables.instanse.AddConsumable("Топливо", value - fuelTanksCount, SpritesStorage.instanse.FuelTank);
+
             if (value < 0)
             {
                 fuelTanksCount = 0;
@@ -62,6 +65,9 @@ public class Consumables : MonoBehaviour, IStorage
     public int HealthPacksCount { get => healthPacksCount;
         set 
         {
+            if (value - healthPacksCount > 0)
+                TakingConsumables.instanse.AddConsumable("Еда", value - healthPacksCount, SpritesStorage.instanse.HealthPack);
+
             if (value < 0)
             {
                 healthPacksCount = 0;
@@ -86,6 +92,9 @@ public class Consumables : MonoBehaviour, IStorage
     public int SmokingPipesCount { get => smokingPipesCount; 
         set 
         {
+            if (value - smokingPipesCount > 0)
+                TakingConsumables.instanse.AddConsumable("Трубка", value - smokingPipesCount, SpritesStorage.instanse.SmokingPipe);
+
             if (value < 0)
             {
                 smokingPipesCount = 0;
@@ -111,6 +120,9 @@ public class Consumables : MonoBehaviour, IStorage
         get => grindstonesCount;
         set
         {
+            if (value - grindstonesCount > 0)
+                TakingConsumables.instanse.AddConsumable("Точильный камень", value - grindstonesCount, SpritesStorage.instanse.Grindstone);
+
             if (value < 0)
             {
                 grindstonesCount = 0;
