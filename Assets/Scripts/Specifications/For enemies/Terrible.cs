@@ -13,6 +13,16 @@ public class Terrible : MonoBehaviour
 
     public float DecreasingSanityAfterAttack { get => decreasingSanityAfterAttack; }
 
+    public void Cancel()
+    {
+        if (playerInArea)
+        {
+            if (Player.instanse != null)
+                Player.instanse.GetComponent<SanityController>().DecreasingSanity -= decreasingSanityInArea;
+            playerInArea = false;
+        }
+    }
+
     private void Awake()
     {
         playerMask = LayerMask.GetMask(ServiceInfo.PlayerLayerName);
