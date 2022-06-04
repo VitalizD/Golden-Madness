@@ -303,7 +303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &147848817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,6 +693,10 @@ PrefabInstance:
     - target: {fileID: 5442839802289078295, guid: b4b728892c9b1ec498b12da7b8f578ed, type: 3}
       propertyPath: m_RenderMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5442839802289078295, guid: b4b728892c9b1ec498b12da7b8f578ed, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5442839802289078295, guid: b4b728892c9b1ec498b12da7b8f578ed, type: 3}
       propertyPath: m_PlaneDistance
@@ -1222,10 +1226,10 @@ Canvas:
   m_GameObject: {fileID: 1806401708}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 42452407}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0

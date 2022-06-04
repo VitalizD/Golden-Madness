@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,17 +5,11 @@ public class Paused : MonoBehaviour
 {
     public static bool gameIsPause = false;
     public static bool gameIsControl = false;
+    public static bool gameIsExitMenu = false;
 
-    [SerializeField] GameObject PauseMenu;
+    [SerializeField] GameObject pause;
     [SerializeField] GameObject control;
-    //[SerializeField] GameObject exitMenu;
-
-    //void Start()
-    //{
-    //    pause.SetActive(false);
-    //    exitMenu.SetActive(false);
-    //    control.SetActive(false);
-    //}
+    [SerializeField] GameObject exitMenu;
 
     void Update()
     {
@@ -32,22 +24,22 @@ public class Paused : MonoBehaviour
                 Pause();
             }
         }
-        while (gameIsControl)
+        if (gameIsControl || gameIsExitMenu)
         {
-            Time.timeScale = 0f;
+            Pause();
         }
     }
 
     public void Resume()
     {
-        PauseMenu.SetActive(false);
+        pause.SetActive(false);
         Time.timeScale = 1f;
         gameIsPause = false;
     }
 
     void Pause()
     {
-        PauseMenu.SetActive(true);
+        pause.SetActive(true);
         Time.timeScale = 0f;
         gameIsPause = true;
     }
@@ -58,24 +50,33 @@ public class Paused : MonoBehaviour
         gameIsControl = true;
     }
 
-    //public void Menu()
-    //{
-    //    pause.SetActive(false);
-    //    exitMenu.SetActive(true);
-    //    Time.timeScale = 0;
-    //}
+    public void ControlResume()
+    {
+        control.SetActive(false);
+        gameIsControl = false;
+    }
 
-    //public void Return()
-    //{
-    //    pause.SetActive(true);
-    //    exitMenu.SetActive(false);
-    //    control.SetActive(false);
-    //    Time.timeScale = 0;
-    //}
+    public void ExitMenu()
+    {
+        exitMenu.SetActive(true);
+        gameIsExitMenu = true;
+    }
 
-    //public void Exit()
-    //{
-    //    SceneManager.LoadScene(1);
-    //    Time.timeScale = 1;
-    //}
+    public void ExitMenuResume()
+    {
+        exitMenu.SetActive(false);
+        gameIsExitMenu = false;
+    }
+
+    public void Exit()
+    {
+        SceneManager.LoadScene("MainScreen");
+        Time.timeScale = 1f;
+    }
+
+    public void ToVillage()
+    {
+        SceneManager.LoadScene("Village");
+        Time.timeScale = 1f;
+    }
 }
