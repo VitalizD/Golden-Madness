@@ -69,7 +69,7 @@ public class Chest : MonoBehaviour
                 }
                 //почему то не хочет кастовать с одной переменной, поэтому создал другую
                 var consumableCount = (int) consumableObj;
-                Debug.Log("\nCurrent generated number " + chance);
+                /*Debug.Log("\nCurrent generated number " + chance);*/
                 for (int i = 0; i <= 4; i++) 
                 {
                     if (chance <= chancesForDropAmount[i]) 

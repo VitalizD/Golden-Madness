@@ -7,7 +7,6 @@ public class floorDoorToSZ : MonoBehaviour
 {
     void Awake()
     {
-        Debug.Log("AWAKE");
         var colliders = new List<Collider2D>
         {
             Physics2D.OverlapPoint(new Vector2(transform.position.x - 1 , transform.position.y - 1)),
@@ -19,7 +18,6 @@ public class floorDoorToSZ : MonoBehaviour
         .ToList();
         foreach (var collider in colliders) 
         {
-            Debug.Log(collider);
             var tile = collider.gameObject.GetComponent<Tile>();
             tile.IsBedrock = true;
         }
