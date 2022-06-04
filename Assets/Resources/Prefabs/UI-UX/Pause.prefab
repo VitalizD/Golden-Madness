@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 2985061994491651605}
   - component: {fileID: 8208403854784732963}
   - component: {fileID: 2330723325989515156}
+  - component: {fileID: 3397383268794072710}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -214,6 +215,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3397383268794072710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646128416503368443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee96fcdb40816645aed23a1bd17a05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Highlighted: {r: 0.81960785, g: 0.45882353, b: 0.34509805, a: 1}
 --- !u!1 &5345001258994164173
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +240,7 @@ GameObject:
   - component: {fileID: 6389091046787730469}
   - component: {fileID: 5855290360906059106}
   - component: {fileID: 1069156826376639971}
+  - component: {fileID: 918455820869038870}
   m_Layer: 5
   m_Name: Control
   m_TagString: Untagged
@@ -348,6 +363,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &918455820869038870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345001258994164173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee96fcdb40816645aed23a1bd17a05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Highlighted: {r: 0.81960785, g: 0.45882353, b: 0.34509805, a: 1}
 --- !u!1 &5549377659515024715
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +468,7 @@ GameObject:
   - component: {fileID: 1030776354054320099}
   - component: {fileID: 2855148783680379940}
   - component: {fileID: 8571893277753272847}
+  - component: {fileID: 8427845664922662571}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -562,6 +591,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8427845664922662571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6239653166977115717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee96fcdb40816645aed23a1bd17a05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Highlighted: {r: 0.81960785, g: 0.45882353, b: 0.34509805, a: 1}
 --- !u!1 &7271638625224022448
 GameObject:
   m_ObjectHideFlags: 0
