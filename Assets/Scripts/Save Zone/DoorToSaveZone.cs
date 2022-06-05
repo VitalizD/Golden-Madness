@@ -4,12 +4,14 @@ using System;
 public class DoorToSaveZone : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
-    [SerializeField] private DoorFromSaveZone doorFromSaveZone;
     [SerializeField] private float fadeSpeed = 1.2f;
+    [SerializeField] private DoorFromSaveZone doorFromSaveZone;
+    [SerializeField] private Sprite blockedDoorSprite;
 
     private Teleporter teleporter;
     private TriggerZone trigger;
     private PressActionKey pressActionKey;
+    private SpriteRenderer sprite;
 
     public bool CanBeUsed
     {
@@ -28,6 +30,7 @@ public class DoorToSaveZone : MonoBehaviour
         teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.BlackFilterTag).GetComponent<Teleporter>();
         trigger = GetComponent<TriggerZone>();
         pressActionKey = GetComponent<PressActionKey>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -40,6 +43,7 @@ public class DoorToSaveZone : MonoBehaviour
                 CameraController.instanse.transform.position = doorFromSaveZone.CameraPosition;
                 CameraController.instanse.Size = doorFromSaveZone.CameraSizeInSaveZone;
                 Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
+                sprite.sprite = blockedDoorSprite;
             }
 
             CanBeUsed = false;
