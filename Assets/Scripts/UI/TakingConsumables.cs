@@ -11,6 +11,7 @@ public class TakingConsumables : MonoBehaviour
     private const string textAnimationName = "Show";
     private const string iconAnimationName = "Show";
 
+    [SerializeField] private bool inVillage = false;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Image icon;
 
@@ -22,11 +23,14 @@ public class TakingConsumables : MonoBehaviour
 
     public void AddConsumable(string name, int count, Sprite icon)
     {
+        if (inVillage)
+            return;
+
         consumablesQueue.Enqueue((name, count, icon));
         Play();
     }
 
-    public void Play()
+    private void Play()
     {
         if (isPlaying)
             return;
