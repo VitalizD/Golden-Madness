@@ -72,13 +72,13 @@ public class Paused : MonoBehaviour
 
     public void Exit()
     {
-        SceneManager.LoadScene("MainScreen");
         Time.timeScale = 1f;
+        SceneManager.LoadScene("MainScreen");
     }
 
     public void ToVillage()
     {
-        SceneManager.LoadScene("Village");
         Time.timeScale = 1f;
+        SceneManager.LoadScene("Village");
     }
 }

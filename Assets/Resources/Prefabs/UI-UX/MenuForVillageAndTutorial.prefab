@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4463851501383186196}
-  - component: {fileID: 4463851501383186199}
+  - component: {fileID: 9179271400261290422}
   m_Layer: 0
   m_Name: MenuForVillageAndTutorial
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4463851501383186199
+--- !u!114 &9179271400261290422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,7 +60,7 @@ PrefabInstance:
     - target: {fileID: 1069156826376639971, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4463851501383186199}
+      objectReference: {fileID: 9179271400261290422}
     - target: {fileID: 1069156826376639971, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Control
@@ -68,7 +68,7 @@ PrefabInstance:
     - target: {fileID: 2330723325989515156, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4463851501383186199}
+      objectReference: {fileID: 9179271400261290422}
     - target: {fileID: 2330723325989515156, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ExitMenu
@@ -216,7 +216,7 @@ PrefabInstance:
     - target: {fileID: 8571893277753272847, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4463851501383186199}
+      objectReference: {fileID: 9179271400261290422}
     - target: {fileID: 8571893277753272847, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Resume
@@ -339,7 +339,11 @@ PrefabInstance:
     - target: {fileID: 5642271799016006717, guid: c9163766788f5ee4aa423ad811076c47, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4463851501383186199}
+      objectReference: {fileID: 9179271400261290422}
+    - target: {fileID: 5642271799016006717, guid: c9163766788f5ee4aa423ad811076c47, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ControlResume
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9163766788f5ee4aa423ad811076c47, type: 3}
 --- !u!1 &8340570872645744753 stripped
@@ -362,7 +366,11 @@ PrefabInstance:
     - target: {fileID: 3924685731840567553, guid: 4583a776fffbf0641802984b57abf89d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4463851501383186199}
+      objectReference: {fileID: 9179271400261290422}
+    - target: {fileID: 3924685731840567553, guid: 4583a776fffbf0641802984b57abf89d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitMenuResume
+      objectReference: {fileID: 0}
     - target: {fileID: 3924685731840567555, guid: 4583a776fffbf0641802984b57abf89d, type: 3}
       propertyPath: m_Name
       value: Resume
@@ -470,7 +478,11 @@ PrefabInstance:
     - target: {fileID: 3924685732805066261, guid: 4583a776fffbf0641802984b57abf89d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4463851501383186199}
+      objectReference: {fileID: 9179271400261290422}
+    - target: {fileID: 3924685732805066261, guid: 4583a776fffbf0641802984b57abf89d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4583a776fffbf0641802984b57abf89d, type: 3}
 --- !u!1 &830212279005466344 stripped
