@@ -6,8 +6,8 @@ public class PlayButton : MonoBehaviour
 
     public bool ForcedTutorial { get => forcedTutorial; }
 
-    private void Start()
-    {
-        Time.timeScale = 1f;
-    }
+    //private void Start()
+    //{
+    //    Time.timeScale = 1f;
+    //}
 }
