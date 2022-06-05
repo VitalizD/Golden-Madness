@@ -52,22 +52,27 @@ public class Chest : MonoBehaviour
     {
         if (canBeUsed && trigger.IsTriggered && Input.GetKeyDown(KeyCode.E))
         {
-            //лист нестатическийх свойств
+            //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             var consumabelsList = consumables.GetType().GetProperties(
                 System.Reflection.BindingFlags.Public|
                 System.Reflection.BindingFlags.Instance|
                 System.Reflection.BindingFlags.DeclaredOnly);
             var anyAmountIncreased = false;
-            foreach (var propertyInfo in consumabelsList) {
+
+            foreach (var propertyInfo in consumabelsList)
+            {
                 var chance = UnityEngine.Random.value * 100;
                 var consumableObj = propertyInfo.GetValue(consumables);
+
                 //Debug.Log("\n[+] Name: " + propertyInfo.Name + "\n[+] Value: " + consumableObj);
-                //проверка на тип свойства
+
+                //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 if (!consumableObj.GetType().Equals(1.GetType())) {
                     Debug.Log("Property type is not int!");
                     continue;
                 }
-                //почему то не хочет кастовать с одной переменной, поэтому создал другую
+
+                //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                 var consumableCount = (int) consumableObj;
                 /*Debug.Log("\nCurrent generated number " + chance);*/
                 for (int i = 0; i <= 4; i++) 
@@ -81,18 +86,22 @@ public class Chest : MonoBehaviour
                     }
                     chance -= chancesForDropAmount[i];
                 }
-                //если везде по нулям выпало добавь рандомнуму расходнику рандомное кол-во (можно потом поменять на что нибудь)
+
+                //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
                 if (!anyAmountIncreased) 
                 {
                     Debug.Log("Unlucky random! (For each property 0 amount increased)");
                     consumabelsList[(int)(UnityEngine.Random.value * 100) % 5].SetValue(consumables, consumableCount+1+((int)(UnityEngine.Random.value * 100) % 5));
                 }
+
                 //propertyInfo.SetValue(consumables, consumableCount + 99);
 
             }
+
             //Debug.Log("Created list of consumabels with lenght: " + consumabelsList.Length);
+
             CanBeUsed = false;
-            ServiceInfo.CheckpointConditionDone = true; // Для обучающего уровня
+            ServiceInfo.CheckpointConditionDone = true; // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             sprite.sprite = openChestSprite;
         }
     }

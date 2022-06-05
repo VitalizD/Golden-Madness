@@ -26,8 +26,6 @@ public class Consumables : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100)] private static float smokingPipeRecovery = 50f;
     public Text smokingPipes;
 
-    //private DefaultValues defaultValues;
-
     #region FuelTanks
 
     public int FuelTanksCount 
@@ -35,6 +33,8 @@ public class Consumables : MonoBehaviour, IStorage
         get => fuelTanksCount;
         set
         {
+            var initialValue = fuelTanksCount;
+
             if (value < 0)
             {
                 fuelTanksCount = 0;
@@ -50,6 +50,9 @@ public class Consumables : MonoBehaviour, IStorage
                 fuelTanksCount = value;
                 fuelTanks.text = "" + value;
             }
+
+            if (fuelTanksCount - initialValue > 0)
+                TakingConsumables.instanse.AddConsumable("Топливо", fuelTanksCount - initialValue, SpritesStorage.instanse.FuelTank);
         }
     }
 
@@ -62,6 +65,8 @@ public class Consumables : MonoBehaviour, IStorage
     public int HealthPacksCount { get => healthPacksCount;
         set 
         {
+            var initialValue = healthPacksCount;
+
             if (value < 0)
             {
                 healthPacksCount = 0;
@@ -76,6 +81,9 @@ public class Consumables : MonoBehaviour, IStorage
                 healthPacksCount = value;
                 healthPacks.text = "" + value;
             }
+
+            if (healthPacksCount - initialValue > 0)
+                TakingConsumables.instanse.AddConsumable("Еда", healthPacksCount - initialValue, SpritesStorage.instanse.HealthPack);
         } 
     }
     public static int HealthPacksRecovery { get => healthPackRecovery;}
@@ -86,6 +94,8 @@ public class Consumables : MonoBehaviour, IStorage
     public int SmokingPipesCount { get => smokingPipesCount; 
         set 
         {
+            var initialValue = smokingPipesCount;
+
             if (value < 0)
             {
                 smokingPipesCount = 0;
@@ -100,6 +110,9 @@ public class Consumables : MonoBehaviour, IStorage
                 smokingPipesCount = value;
                 smokingPipes.text = "" + value;
             }
+
+            if (smokingPipesCount - initialValue > 0)
+                TakingConsumables.instanse.AddConsumable("Трубка", smokingPipesCount - initialValue, SpritesStorage.instanse.SmokingPipe);
         }
     }
     public static float SmokingPipesRecovery { get => smokingPipeRecovery;}
@@ -111,6 +124,8 @@ public class Consumables : MonoBehaviour, IStorage
         get => grindstonesCount;
         set
         {
+            var initialValue = grindstonesCount;
+
             if (value < 0)
             {
                 grindstonesCount = 0;
@@ -125,6 +140,9 @@ public class Consumables : MonoBehaviour, IStorage
                 grindstonesCount = value;
                 grindstones.text = "" + value;
             }
+
+            if (grindstonesCount - initialValue > 0)
+                TakingConsumables.instanse.AddConsumable("Точильный камень", grindstonesCount - initialValue, SpritesStorage.instanse.Grindstone);
         }
     }
     public static float GrindstoneRecovery { get => grindstoneRecovery; }

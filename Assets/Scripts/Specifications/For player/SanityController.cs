@@ -6,17 +6,15 @@ public class SanityController : MonoBehaviour
 {
     [SerializeField] private bool enableDecreasing = true;
     [SerializeField] [Range(0, 100)] private float sanity = 100f;
+    [SerializeField] private SanityBar sanityBar;
+    [SerializeField] private Text smockingPipes;
 
     private readonly float decreasingBetweenTime = 1f;
-    //private float defaultSanity;
 
     private Coroutine decreaseSanity;
 
     private Consumables consumables;
 
-    public SanityBar sanityBar;
-
-    public Text smockingPipes;
 
     public float Sanity 
     { 
@@ -59,11 +57,13 @@ public class SanityController : MonoBehaviour
     {
         consumables = GetComponent<Consumables>();
     }
+
     private void Start()
     {
         decreaseSanity = StartCoroutine(DecreaseSanity());
-        //defaultSanity = sanity;
+        sanityBar.SetSanity(sanity);
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha4) && consumables.SmokingPipesCount > 0)
@@ -74,6 +74,7 @@ public class SanityController : MonoBehaviour
             smockingPipes.text = "" + consumables.SmokingPipesCount;
         }
     }
+
     private IEnumerator DecreaseSanity()
     {
         while (true)

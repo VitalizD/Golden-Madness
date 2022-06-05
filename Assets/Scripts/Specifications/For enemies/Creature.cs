@@ -64,6 +64,13 @@ public class Creature : MonoBehaviour
         normalColor = sprite.color;
     }
 
+    private void OnDestroy()
+    {
+        var terrible = GetComponent<Terrible>();
+        if (terrible != null)
+            terrible.Cancel();
+    }
+
     public void Throw(Vector2 startPoint, float force)
     {
         var position = transform.position;

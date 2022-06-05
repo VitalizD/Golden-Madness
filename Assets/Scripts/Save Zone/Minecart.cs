@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class Minecart : MonoBehaviour
 {
+    private const string leaveAnimationName = "Leave";
+
     [SerializeField] private bool canBeUsed = true;
     [SerializeField] private GameObject minecart;
 
+    private Animation minecartAnimation;
     private TriggerZone trigger;
     private PressActionKey pressActionKey;
 
@@ -15,12 +18,15 @@ public class Minecart : MonoBehaviour
         {
             canBeUsed = value;
             pressActionKey.SetActive(value);
-            minecart.SetActive(value);
+
+            if (!value)
+                minecartAnimation.Play(leaveAnimationName);
         }
     }
 
     private void Awake()
     {
+        minecartAnimation = minecart.GetComponent<Animation>();
         trigger = GetComponent<TriggerZone>();
         pressActionKey = GetComponent<PressActionKey>();
     }
@@ -36,10 +42,7 @@ public class Minecart : MonoBehaviour
             // Для обучающего уровня
             ServiceInfo.CheckpointConditionDone = true;
 
-            if (minecart != null)
-                minecart.SetActive(false);
-            canBeUsed = false;
-            pressActionKey.SetActive(false);
+            CanBeUsed = false;
         }
     }
 }

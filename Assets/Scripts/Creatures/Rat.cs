@@ -23,8 +23,8 @@ public class Rat : MonoBehaviour
     private Coroutine activateAggressiveMode;
 
     private LayerMask playerMask;
-    private float obstacleCheckRadius = 0.01f;
-    private float obstacleCheckOffsetX = 0.4f;
+    private float obstacleCheckRadius = 0.1f;
+    private float obstacleCheckOffsetX = 0.5f;
     private float obstacleCheckOffsetY = 1;
     private float normalSpeed;
     private bool angry = false;
@@ -104,7 +104,7 @@ public class Rat : MonoBehaviour
             if (raycastHit)
             {
                 var player = raycastHit.collider.GetComponent<Player>();
-                if (player)
+                if (player != null)
                     StartCoroutine(ActivateAggressiveMode());
             }
         }
