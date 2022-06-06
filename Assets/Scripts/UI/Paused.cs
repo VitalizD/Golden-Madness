@@ -1,19 +1,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class Paused : MonoBehaviour
 {
-    public static bool gameIsPause = false;
-    public static bool gameIsControl = false;
-    public static bool gameIsExitMenu = false;
+    private static bool gameIsPause = false;
+    private static bool gameIsControl = false;
+    private static bool gameIsExitMenu = false;
 
-    [SerializeField] GameObject pause;
-    [SerializeField] GameObject control;
-    [SerializeField] GameObject exitMenu;
+    [SerializeField] private GameObject pause;
+    [SerializeField] private GameObject control;
+    [SerializeField] private GameObject exitMenu;
+    [SerializeField] private float fadeSpeed = 0.7f;
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -39,7 +39,7 @@ public class Paused : MonoBehaviour
         gameIsPause = false;
     }
 
-    void Pause()
+    private void Pause()
     {
         pause.SetActive(true);
         Time.timeScale = 0f;
@@ -50,6 +50,7 @@ public class Paused : MonoBehaviour
     {
         control.SetActive(true);
         gameIsControl = true;
+        Teleporter.instanse.Stop();
     }
 
     public void ControlResume()
@@ -74,14 +75,17 @@ public class Paused : MonoBehaviour
     { 
         gameIsExitMenu = false;
         gameIsPause = false;
+        pause.SetActive(false);
+        exitMenu.SetActive(false);
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainScreen");
+        Teleporter.instanse.Go(() => SceneManager.LoadScene("MainScreen"), fadeSpeed);
     }
 
     public void ToVillage()
     {
         gameIsPause = false;
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Village");
+        pause.SetActive(false);
+        Teleporter.instanse.Go(() => SceneManager.LoadScene("Village"), fadeSpeed);
     }
 }

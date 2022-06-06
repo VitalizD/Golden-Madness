@@ -11,6 +11,8 @@ public class Teleporter : MonoBehaviour
         Lightening
     }
 
+    public static Teleporter instanse = null;
+
     [Tooltip("Чем выше, тем больше продлится обездвиживание персонажа")]
     [SerializeField] private float maxStunPlayerTime = 3f;
 
@@ -41,8 +43,21 @@ public class Teleporter : MonoBehaviour
             Player.instanse.SetStun(maxStunPlayerTime - fadeSpeed);
     }
 
+    public void Stop()
+    {
+        state = States.Stayed;
+        blackFilterImage.enabled = false;
+        alphaInterpolation = 0;
+        blackFilterImage.color = new Color(blackFilterImage.color.r, blackFilterImage.color.g, blackFilterImage.color.b, 0);
+    }
+
     private void Awake()
     {
+        if (instanse == null)
+            instanse = this;
+        else if (instanse == this)
+            Destroy(gameObject);
+
         blackFilterImage = GetComponent<Image>();
     }
 
