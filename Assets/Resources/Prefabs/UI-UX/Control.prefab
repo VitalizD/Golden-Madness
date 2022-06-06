@@ -206,7 +206,7 @@ Canvas:
   m_GameObject: {fileID: 5642271798879253518}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -216,7 +216,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &5642271798879253516
 MonoBehaviour:
@@ -382,7 +382,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Paused, Assembly-CSharp
-        m_MethodName: Return
+        m_MethodName: ControlResume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,61 +1,91 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Paused : MonoBehaviour
 {
-    [SerializeField] GameObject pause;
-    [SerializeField] GameObject exitMenu;
-    [SerializeField] GameObject control;
+    private static bool gameIsPause = false;
+    private static bool gameIsControl = false;
+    private static bool gameIsExitMenu = false;
 
-    void Start()
-    {
-        pause.SetActive(false);
-        exitMenu.SetActive(false);
-        control.SetActive(false);
-    }
+    [SerializeField] private GameObject pause;
+    [SerializeField] private GameObject control;
+    [SerializeField] private GameObject exitMenu;
+    [SerializeField] private float fadeSpeed = 0.7f;
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pause.SetActive(true);
-            Time.timeScale = 0;
+            if (gameIsPause)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+        if (gameIsControl || gameIsExitMenu)
+        {
+            Pause();
         }
     }
 
-    public void PauseOff()
+    public void Resume()
     {
         pause.SetActive(false);
-        Time.timeScale = 1;
+        Time.timeScale = 1f;
+        gameIsPause = false;
+    }
+
+    private void Pause()
+    {
+        pause.SetActive(true);
+        Time.timeScale = 0f;
+        gameIsPause = true;
     }
 
     public void Control()
     {
-        pause.SetActive(false);
         control.SetActive(true);
-        Time.timeScale = 0;
+        gameIsControl = true;
+        Teleporter.instanse.Stop();
     }
 
-    public void Menu()
+    public void ControlResume()
     {
-        pause.SetActive(false);
-        exitMenu.SetActive(true);
-        Time.timeScale = 0;
-    }
-
-    public void Return()
-    {
-        pause.SetActive(true);
-        exitMenu.SetActive(false);
         control.SetActive(false);
-        Time.timeScale = 0;
+        gameIsControl = false;
+    }
+
+    public void ExitMenu()
+    {
+        exitMenu.SetActive(true);
+        gameIsExitMenu = true;
+    }
+
+    public void ExitMenuResume()
+    {
+        exitMenu.SetActive(false);
+        gameIsExitMenu = false;
     }
 
     public void Exit()
+    { 
+        gameIsExitMenu = false;
+        gameIsPause = false;
+        pause.SetActive(false);
+        exitMenu.SetActive(false);
+        Time.timeScale = 1f;
+        Teleporter.instanse.Go(() => SceneManager.LoadScene("MainScreen"), fadeSpeed);
+    }
+
+    public void ToVillage()
     {
-        SceneManager.LoadScene(1);
-        Time.timeScale = 1;
+        gameIsPause = false;
+        Time.timeScale = 1f;
+        pause.SetActive(false);
+        Teleporter.instanse.Go(() => SceneManager.LoadScene("Village"), fadeSpeed);
     }
 }
