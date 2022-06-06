@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
+	[SerializeField] private GameObject control;
+	[SerializeField] private GameObject exitMenu;
 	[SerializeField] private string sceneName = "";
 
 	private Teleporter teleporter;
@@ -52,5 +54,25 @@ public class SceneChanger : MonoBehaviour
     {
 		PlayerPrefs.DeleteAll();
 		teleporter.Go(() => SceneManager.LoadScene(ServiceInfo.TutorialLevel), 0.7f);
+	}
+
+	public void Control()
+    {
+		control.SetActive(true);
+    }
+
+	public void ExitMenu()
+    {
+		exitMenu.SetActive(true);
+    }
+
+	public void ControlButton()
+	{
+		control.SetActive(false);
+	}
+
+	public void ExitMenuReturn()
+	{
+		exitMenu.SetActive(false);
 	}
 }
