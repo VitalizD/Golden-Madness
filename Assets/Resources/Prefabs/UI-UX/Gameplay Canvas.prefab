@@ -648,6 +648,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7bf99fb1a26974cb16c5cc109bd575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  control: {fileID: 0}
+  exitMenu: {fileID: 0}
   sceneName: Village
 --- !u!1 &5661314287269160150
 GameObject:
@@ -1464,6 +1466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c24fe84f53e62745afc11e1191aa124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inVillage: 0
   text: {fileID: 4006840725492768289}
   icon: {fileID: 4874851202081068437}
 --- !u!1 &9095643743530786291
