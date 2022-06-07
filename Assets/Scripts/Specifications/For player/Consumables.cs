@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Consumables : MonoBehaviour, IStorage
 {
-    [SerializeField] private int maxCount = 5;
+    [SerializeField] private static int maxCount = 5;
 
     [Header("Fuel tanks")]
     [SerializeField] private int fuelTanksCount = 1;
@@ -25,6 +25,8 @@ public class Consumables : MonoBehaviour, IStorage
     [SerializeField] private int smokingPipesCount = 1;
     [SerializeField] [Range(0, 100)] private static float smokingPipeRecovery = 50f;
     public Text smokingPipes;
+
+    public static int MaxCount { get => maxCount; set => maxCount = value; }
 
     #region FuelTanks
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Chest : MonoBehaviour
@@ -53,13 +54,44 @@ public class Chest : MonoBehaviour
         if (canBeUsed && trigger.IsTriggered && Input.GetKeyDown(KeyCode.E))
         {
             //���� �������������� �������
+            System.Random rng = new System.Random();
             var consumabelsList = consumables.GetType().GetProperties(
                 System.Reflection.BindingFlags.Public|
                 System.Reflection.BindingFlags.Instance|
                 System.Reflection.BindingFlags.DeclaredOnly);
+            
             var anyAmountIncreased = false;
-
-            foreach (var propertyInfo in consumabelsList)
+            var amountGenerated = rng.Next(1,5);
+            /*Debug.Log("Consumabels in chest generated: "+ amountGenerated);*/
+            foreach (var propertyInfo in consumabelsList.OrderBy(x => rng.Next()).ToList())
+            {
+                if (amountGenerated == 0) break;
+                /*Debug.Log("||||||||||||||||||||||||||||||||||||||||||||||||");
+                Debug.Log(propertyInfo.Name);
+                Debug.Log("[+] Current Remainer: " + amountGenerated);*/
+                var consumableObj = propertyInfo.GetValue(consumables);
+                if (!consumableObj.GetType().Equals(1.GetType()))
+                {
+                    Debug.Log("Property type is not int!");
+                    continue;
+                }
+                var currentCount = (int)consumableObj;
+                var randomAmount = rng.Next(1,amountGenerated);
+                /*Debug.Log("[+] Current count: " + currentCount);
+                Debug.Log("[+] Random amount: " + randomAmount);*/
+                propertyInfo.SetValue(consumables, currentCount + randomAmount);
+                if (((int)propertyInfo.GetValue(consumables) - currentCount) > 0) anyAmountIncreased = true;
+                amountGenerated -= (int)propertyInfo.GetValue(consumables) - currentCount;
+            }
+            if (amountGenerated>0) {
+                /*Debug.Log("unlucky");*/
+                var notFullConsumabelsList = consumabelsList
+                    .Where(x => (int)x.GetValue(consumables) < Consumables.MaxCount)
+                    .ToList();
+                var randomConsumable = notFullConsumabelsList[rng.Next(notFullConsumabelsList.Count())];
+                randomConsumable.SetValue(consumables, (int)randomConsumable.GetValue(consumables) + amountGenerated);
+            }
+            /*foreach (var propertyInfo in consumabelsList)
             {
                 var chance = UnityEngine.Random.value * 100;
                 var consumableObj = propertyInfo.GetValue(consumables);
@@ -74,7 +106,7 @@ public class Chest : MonoBehaviour
 
                 //������ �� �� ����� ��������� � ����� ����������, ������� ������ ������
                 var consumableCount = (int) consumableObj;
-                /*Debug.Log("\nCurrent generated number " + chance);*/
+                *//*Debug.Log("\nCurrent generated number " + chance);*//*
                 for (int i = 0; i <= 4; i++) 
                 {
                     if (chance <= chancesForDropAmount[i]) 
@@ -96,7 +128,7 @@ public class Chest : MonoBehaviour
 
                 //propertyInfo.SetValue(consumables, consumableCount + 99);
 
-            }
+            }*/
 
             //Debug.Log("Created list of consumabels with lenght: " + consumabelsList.Length);
 
