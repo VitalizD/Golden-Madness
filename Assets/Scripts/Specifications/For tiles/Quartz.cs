@@ -9,6 +9,13 @@ public class Quartz : MonoBehaviour
     private readonly float distance = 1f;
     private readonly float distanceToMove = 0.25f;
     private readonly Vector3 scale = new Vector3(0.5f, 0.5f, 0.5f);
+    private static readonly Dictionary<Vector3, float> anglesToRotate = new Dictionary<Vector3, float>() 
+    {
+        {new Vector3(0,-1), 0},
+        {new Vector3(1,0),90},
+        {new Vector3(0, 1), 180},
+        {new Vector3(-1,0), 270}
+    };
 
     public Vector3 InitialPosition { get => initialPosition; set => initialPosition = value; }
 
@@ -46,10 +53,12 @@ public class Quartz : MonoBehaviour
             /*foreach (var collaider in colliders) {
                 Debug.Log(collaider);
             }*/
-
+            var tileToAttach = colliders[random.Next(colliders.Count)];
+            var rotationVector = tileToAttach.transform.position - transform.position;
+            transform.Rotate(0, 0, anglesToRotate[rotationVector]);
             transform.position = Vector3.MoveTowards(
                 transform.position,
-                colliders[random.Next(colliders.Count)].transform.position,
+                tileToAttach.transform.position,
                 distanceToMove);
         }
     }
