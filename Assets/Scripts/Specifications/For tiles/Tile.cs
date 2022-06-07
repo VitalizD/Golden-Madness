@@ -10,7 +10,9 @@ public class Tile : MonoBehaviour
     [SerializeField] private bool destroyAttachedTiles = true;
     [SerializeField] private ResourceTypes resourceType = ResourceTypes.None;
     [SerializeField] private Sprite[] destructionDegrees;
+    [SerializeField] private Sprite[] variants;
 
+    private SpriteRenderer tileSprite;
     private SpriteRenderer destructionSprite;
     private Selection selection;
     private Player player;
@@ -45,6 +47,10 @@ public class Tile : MonoBehaviour
         selection = GameObject.Find("Selection").GetComponent<Selection>();
         maxHealth = health;
         destructionSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        tileSprite = GetComponent<SpriteRenderer>();
+
+        if (variants.Length > 0)
+            tileSprite.sprite = variants[Random.Range(0, variants.Length)];
     }
 
     private void Start()
