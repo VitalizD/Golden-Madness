@@ -19,6 +19,7 @@ public class Creature : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigidbody2D_;
     private SpriteRenderer sprite;
+    private ICreature child;
 
     public float Speed { get => speed; set => speed = value >= 0 ? value : speed; }
 
@@ -41,6 +42,7 @@ public class Creature : MonoBehaviour
                 attacked = true;
                 ChangeDirectionTowards(Player.instanse.transform.position);
                 sprite.color = damageColor;
+                child?.ReactToAttack();
                 StartCoroutine(SetNormalColor());
             }
         }
@@ -55,6 +57,8 @@ public class Creature : MonoBehaviour
                 animator.SetInteger("State", (int)value);
         }
     }
+
+    public void SetChild(ICreature value) => child = value;
 
     private void Awake()
     {

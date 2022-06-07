@@ -3,8 +3,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Rat : MonoBehaviour
+public class Rat : MonoBehaviour, ICreature
 {
+    private const float obstacleCheckRadius = 0.1f;
+    private const float obstacleCheckOffsetX = 0.5f;
+    private const float obstacleCheckOffsetY = 1;
+
     [SerializeField] private float obstacleCheckBetweenTime = 0.2f;
     [SerializeField] private float stayBetweenTimeMin = 1;
     [SerializeField] private float stayBetweenTimeMax = 5;
@@ -22,20 +26,21 @@ public class Rat : MonoBehaviour
     private Coroutine temporarilyStop;
     private Coroutine activateAggressiveMode;
 
-    private LayerMask playerMask;
-    private float obstacleCheckRadius = 0.1f;
-    private float obstacleCheckOffsetX = 0.5f;
-    private float obstacleCheckOffsetY = 1;
     private float normalSpeed;
     private bool angry = false;
     private bool isMoving = true;
 
+    public void ReactToAttack()
+    {
+        activateAggressiveMode = StartCoroutine(ActivateAggressiveMode());
+    }
+
     private void Awake()
     {
         creature = GetComponent<Creature>();
+        creature.SetChild(this);
         sprite = GetComponent<SpriteRenderer>();
         normalSpeed = creature.Speed;
-        playerMask = LayerMask.GetMask("Player");
     }
 
     private void Start()
@@ -79,16 +84,17 @@ public class Rat : MonoBehaviour
     {
         while (true)
         {
-            var layer = 1 << 3 | 1 << 6; // 3 - Ground; 6 - Enemies
-            if (angry)
-                layer = 1 << 3; // Ground only
+            if (isMoving)
+            {
+                var layer = 1 << 3 | 1 << 6; // 3 - Ground; 6 - Enemies
 
-            var checkingPoint1 = new Vector2(transform.position.x + obstacleCheckOffsetX * creature.DirectionValue, transform.position.y);
-            var checkingPoint2 = new Vector2(checkingPoint1.x, checkingPoint1.y - obstacleCheckOffsetY);
+                var checkingPoint1 = new Vector2(transform.position.x + obstacleCheckOffsetX * creature.DirectionValue, transform.position.y - 0.1f);
+                var checkingPoint2 = new Vector2(checkingPoint1.x, checkingPoint1.y - obstacleCheckOffsetY);
 
-            if (Physics2D.OverlapCircleAll(checkingPoint1, obstacleCheckRadius, layer).Length > 0 ||
-                (Physics2D.OverlapCircleAll(checkingPoint2, obstacleCheckRadius, layer).Length == 0 && !angry && !creature.Attacked))
-                creature.ChangeDirection();
+                if (Physics2D.OverlapCircleAll(checkingPoint1, obstacleCheckRadius, layer).Length > 0 ||
+                    (Physics2D.OverlapCircleAll(checkingPoint2, obstacleCheckRadius, layer).Length == 0 && !angry && !creature.Attacked))
+                    creature.ChangeDirection();
+            }
             yield return new WaitForSeconds(obstacleCheckBetweenTime);
         }
     }
@@ -105,7 +111,7 @@ public class Rat : MonoBehaviour
             {
                 var player = raycastHit.collider.GetComponent<Player>();
                 if (player != null)
-                    StartCoroutine(ActivateAggressiveMode());
+                    activateAggressiveMode = StartCoroutine(ActivateAggressiveMode());
             }
         }
     }
