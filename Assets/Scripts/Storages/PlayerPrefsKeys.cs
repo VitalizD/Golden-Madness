@@ -13,6 +13,7 @@ public static class PlayerPrefsKeys
     public static string SleepingBagHealthRecovery { get; } = "SleepingBagHealthRecovery";
     public static string SleepingBagSanityRecovery { get; } = "SleepingBagSanityRecovery";
     public static string Sanity { get; } = "Sanity";
+    public static string Health { get; } = "Health";
     public static string FuelCount { get; } = "FuelCount";
     public static string FuelDecreaseValue { get; } = "FuelDecreaseValue";
     public static string ResourcesCountPrefix { get; } = "Count";

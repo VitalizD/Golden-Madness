@@ -107,7 +107,7 @@ public class Player : MonoBehaviour, IStorage
         get => health;
         set
         {
-            if (value < health)
+            if (value < health && !loadParameters)
             {
                 State = States.Pain;
                 invulnerability = true;
@@ -165,6 +165,7 @@ public class Player : MonoBehaviour, IStorage
         backpack.Save();
         consumables.Save();
         lamp.Save();
+        sanity.Save();
 
         PlayerPrefs.SetFloat(PlayerPrefsKeys.HitDamageToPickaxe, hitDamageToPickaxe);
         PlayerPrefs.SetInt(PlayerPrefsKeys.MaxEnemyDamage, maxEnemyDamage);
@@ -172,6 +173,7 @@ public class Player : MonoBehaviour, IStorage
         PlayerPrefs.SetInt(PlayerPrefsKeys.SleepingBagHealthRecovery, healthRecovery);
         PlayerPrefs.SetFloat(PlayerPrefsKeys.SleepingBagSanityRecovery, sanityRecovery);
         PlayerPrefs.SetFloat(PlayerPrefsKeys.PickaxeStrength, pickaxeStrength);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.Health, Health);
     }
 
     public void Load()
@@ -182,6 +184,7 @@ public class Player : MonoBehaviour, IStorage
         backpack.Load();
         consumables.Load();
         lamp.Load();
+        sanity.Load();
 
         hitDamageToPickaxe = PlayerPrefs.GetFloat(PlayerPrefsKeys.HitDamageToPickaxe, hitDamageToPickaxe);
         maxEnemyDamage = PlayerPrefs.GetInt(PlayerPrefsKeys.MaxEnemyDamage, enemyDamage);
@@ -189,6 +192,9 @@ public class Player : MonoBehaviour, IStorage
         healthRecovery = PlayerPrefs.GetInt(PlayerPrefsKeys.SleepingBagHealthRecovery, healthRecovery);
         sanityRecovery = PlayerPrefs.GetFloat(PlayerPrefsKeys.SleepingBagSanityRecovery, sanityRecovery);
         PickaxeStrength = PlayerPrefs.GetFloat(PlayerPrefsKeys.PickaxeStrength, pickaxeStrength);
+        Health = PlayerPrefs.GetInt(PlayerPrefsKeys.Health, Health);
+
+        loadParameters = false;
     }
 
     public void SetSelectedTile(Tile value) => selectedTile = value;

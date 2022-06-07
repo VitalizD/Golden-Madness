@@ -39,22 +39,16 @@ public class Lamp : MonoBehaviour, IStorage
         set
         {
             if (value < 0)
-            {
                 fuelCount = 0;
-                lampBar.SetLamp(0);
-            }
             else if (value > 100)
-            {
                 fuelCount = 100;
-                lampBar.SetLamp(100);
-            }
             else
-            {
                 fuelCount = value;
 
-                if (light_ != null)
-                    light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
-            }
+            if (light_ != null)
+                light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
+
+            lampBar.SetFuelValue(fuelCount);
         }
     }
 
@@ -91,7 +85,7 @@ public class Lamp : MonoBehaviour, IStorage
         if (Input.GetKeyDown(KeyCode.Alpha1) && consumables.FuelTanksCount > 0)
         {
             FuelCount += Consumables.FuelTankRecovery;
-            lampBar.SetLamp(FuelCount);
+            lampBar.SetFuelValue(FuelCount);
             --consumables.FuelTanksCount;
             fuelTanks.text = "" + consumables.FuelTanksCount;
         }
@@ -109,10 +103,7 @@ public class Lamp : MonoBehaviour, IStorage
         {
             yield return new WaitForSeconds(timeFuelDecrease);
             if (enableFuelDecrease)
-            {
                 FuelCount -= fuelDecreaseValue;
-                lampBar.SetLamp(FuelCount);
-            }
         }
     }
 

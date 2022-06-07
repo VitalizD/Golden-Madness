@@ -35,21 +35,11 @@ public class Consumables : MonoBehaviour, IStorage
         {
             var initialValue = fuelTanksCount;
 
-            if (value < 0)
-            {
-                fuelTanksCount = 0;
-                fuelTanks.text = "" + 0;
-            }
-            else if (value > maxCount)
-            {
-                fuelTanksCount = maxCount;
-                fuelTanks.text = "" + maxCount;
-            }
-            else 
-            { 
-                fuelTanksCount = value;
-                fuelTanks.text = "" + value;
-            }
+            if (value < 0) fuelTanksCount = 0;
+            else if (value > maxCount) fuelTanksCount = maxCount;
+            else fuelTanksCount = value;
+
+            fuelTanks.text = fuelTanksCount.ToString();
 
             if (fuelTanksCount - initialValue > 0)
                 TakingConsumables.instanse.AddConsumable("Топливо", fuelTanksCount - initialValue, SpritesStorage.instanse.FuelTank);

@@ -7,13 +7,13 @@ public class LampBar : MonoBehaviour
 {
     public Slider slider;
 
-    public void Start()
+    //public void Start()
+    //{
+    //    slider.maxValue = 100f;
+    //    slider.value = 100f;
+    //}
+    public void SetFuelValue(float value)
     {
-        slider.maxValue = 100f;
-        slider.value = 100f;
-    }
-    public void SetLamp(float lamp)
-    {
-        slider.value = lamp;
+        slider.value = value / 100f;
     }
 }
