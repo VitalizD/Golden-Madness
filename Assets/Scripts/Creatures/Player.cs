@@ -336,6 +336,8 @@ public class Player : MonoBehaviour, IStorage
         var position = transform.position;
         transform.position = new Vector3(position.x, position.y, fixedZPosition);
 
+        speed = backpack.isFull() ? 3f*0.85f : 3f;
+
         //CheckGrounded();
 
         if (jumpCheckingPoint.CanJump && !isAttacking && !isStunned && !isDigging)

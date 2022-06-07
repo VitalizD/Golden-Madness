@@ -20,6 +20,10 @@ public class Backpack : MonoBehaviour, IStorage
         }
     }
 
+    public bool isFull() {
+        return currentFullness == maxCapacity;
+    }
+
     public int CurrentFullness { get => currentFullness; }
 
     private void Start()
