@@ -84,6 +84,7 @@ public class Building : MonoBehaviour, IStorage
     private void Upgrade()
     {
         ++currentLevel;
+        upgradeWindow.SetLevel(currentLevel);
         actionAfterUpgrading?.Invoke();
         UpdateInfo();
 
@@ -103,62 +104,82 @@ public class Building : MonoBehaviour, IStorage
         return VillageController.instanse.GetResourcesCount(requiredResource) >= requiredCount;
     }
 
+    private void UpdateUpgradeWindow(string description, ResourceTypes requiredResource, int count, Action actionAfterUpgrading)
+    {
+        upgradeWindow.SetDescription(description);
+        SetRequiredResource(requiredResource, count);
+        this.actionAfterUpgrading = actionAfterUpgrading;
+    }
+
     private void UpdateInfo()
     {
-        if (currentLevel >= 1 && constructedBuildingSprite != null)
-            sprite.sprite = constructedBuildingSprite;
+        if (currentLevel >= 1)
+        {
+            upgradeWindow.SetDescriptionAlignFlush();
+            if (constructedBuildingSprite != null)
+                sprite.sprite = constructedBuildingSprite;
+        }
+        else
+            upgradeWindow.SetDescriptionAlignLeft();
+
+        upgradeWindow.SetUpgradeActive(currentLevel >= 1);
 
         if (!maxLevel)
         {
             if (currentLevel == 0)
                 upgradeWindow.SetAction("Построить");
 
+            var color = "green";
             switch (buildingType)
             {
                 case BuildingType.Forge:
                     upgradeWindow.SetTitle("Кузница");
+                    upgradeWindow.SetToolIcon(SpritesStorage.instanse.Pickaxe);
                     if (currentLevel > 0)
                         upgradeWindow.SetAction("Улучшить кирку");
                     switch (currentLevel)
                     {
                         case 0:
-                            upgradeWindow.SetDescription("Улучшает кирку");
-                            SetRequiredResource(ResourceTypes.GoldOre, 3);
-                            actionAfterUpgrading = () => { ServiceInfo.CheckpointConditionDone = true; }; // Для обучения
+                            UpdateUpgradeWindow("Позволяет улучшать кирку", ResourceTypes.GoldOre, 3, () => ServiceInfo.CheckpointConditionDone = true);
                             break;
                         case 1:
-                            upgradeWindow.SetDescription("Увеличивает скорость добычи, урон и прочность кирки на 20%");
-                            SetRequiredResource(ResourceTypes.GoldOre, 3);
-                            actionAfterUpgrading = () =>
                             {
-                                ServiceInfo.CheckpointConditionDone = true; // Для обучения
-
-                                Player.instanse.AddHitDamageToPickaxe(-20);
-                                Player.instanse.AddMaxEnemyDamage(20);
-                                Player.instanse.AddMaxTileDamage(20);
-                            };
-                            break;
+                                void action()
+                                {
+                                    ServiceInfo.CheckpointConditionDone = true; // Для обучения
+                                    Player.instanse.AddHitDamageToPickaxe(-20);
+                                    Player.instanse.AddMaxEnemyDamage(20);
+                                    Player.instanse.AddMaxTileDamage(20);
+                                }
+                                var value = $"<b><color={color}>+20%</color></b>";
+                                UpdateUpgradeWindow($"Прочность {value}\nСкорость {value}\nУрон {value}", ResourceTypes.GoldOre, 3, action);
+                                break;
+                            }
                         case 2:
-                            upgradeWindow.SetDescription("Увеличивает скорость добычи, урон и прочность кирки на 20%");
-                            SetRequiredResource(ResourceTypes.GoldOre, 16);
-                            actionAfterUpgrading = () =>
                             {
-                                Player.instanse.AddHitDamageToPickaxe(-20);
-                                Player.instanse.AddMaxEnemyDamage(20);
-                                Player.instanse.AddMaxTileDamage(20);
-                            };
-                            break;
+                                void action()
+                                {
+                                    Player.instanse.AddHitDamageToPickaxe(-20);
+                                    Player.instanse.AddMaxEnemyDamage(20);
+                                    Player.instanse.AddMaxTileDamage(20);
+                                }
+                                var value = $"<b><color={color}>+20%</color></b>";
+                                UpdateUpgradeWindow($"Прочность {value}\nСкорость {value}\nУрон {value}", ResourceTypes.GoldOre, 16, action);
+                                break;
+                            }
                         case 3:
-                            upgradeWindow.SetDescription("Увеличивает скорость добычи, урон и прочность кирки на 20%");
-                            SetRequiredResource(ResourceTypes.GoldOre, 35);
-                            actionAfterUpgrading = () =>
                             {
-                                Player.instanse.AddHitDamageToPickaxe(-20);
-                                Player.instanse.AddMaxEnemyDamage(20);
-                                Player.instanse.AddMaxTileDamage(20);
-                                upgradeWindow.Hide();
-                            };
-                            break;
+                                void action()
+                                {
+                                    Player.instanse.AddHitDamageToPickaxe(-20);
+                                    Player.instanse.AddMaxEnemyDamage(20);
+                                    Player.instanse.AddMaxTileDamage(20);
+                                    upgradeWindow.Hide();
+                                }
+                                var value = $"<b><color={color}>+20%</color></b>";
+                                UpdateUpgradeWindow($"Прочность {value}\nСкорость {value}\nУрон {value}", ResourceTypes.GoldOre, 35, action);
+                                break;
+                            }
                         case 4:
                             maxLevel = true;
                             break;
@@ -167,32 +188,27 @@ public class Building : MonoBehaviour, IStorage
 
                 case BuildingType.Workshow:
                     upgradeWindow.SetTitle("Мастерская");
+                    upgradeWindow.SetToolIcon(SpritesStorage.instanse.Lamp);
                     if (currentLevel > 0)
                         upgradeWindow.SetAction("Улучшить лампу");
                     switch (currentLevel)
                     {
                         case 0:
-                            upgradeWindow.SetDescription("Улучшает лампу");
-                            SetRequiredResource(ResourceTypes.Coal, 4);
+                            UpdateUpgradeWindow("Позволяет улучшать лампу", ResourceTypes.Coal, 4, null);
                             break;
                         case 1:
-                            upgradeWindow.SetDescription("Лампа светит на 40% дольше");
-                            SetRequiredResource(ResourceTypes.Coal, 6);
-                            actionAfterUpgrading = () => Player.instanse.AddFuelDecreaseValue(40);
+                            UpdateUpgradeWindow($"Время \nгорения <b><color={color}>+40%</color></b>", ResourceTypes.Coal, 6, () => Player.instanse.AddFuelDecreaseValue(40));
                             break;
                         case 2:
-                            upgradeWindow.SetDescription("Лампа светит на 40% дольше");
-                            SetRequiredResource(ResourceTypes.Coal, 15);
-                            actionAfterUpgrading = () => Player.instanse.AddFuelDecreaseValue(40);
+                            UpdateUpgradeWindow($"Время \nгорения <b><color={color}>+40%</color></b>", ResourceTypes.Coal, 15, () => Player.instanse.AddFuelDecreaseValue(40));
                             break;
                         case 3:
-                            upgradeWindow.SetDescription("Лампа светит на 40% дольше");
-                            SetRequiredResource(ResourceTypes.Coal, 30);
-                            actionAfterUpgrading = () =>
+                            void action()
                             {
                                 Player.instanse.AddFuelDecreaseValue(40);
                                 upgradeWindow.Hide();
-                            };
+                            }
+                            UpdateUpgradeWindow($"Время \nгорения <b><color={color}>+40%</color></b>", ResourceTypes.Coal, 30, action);
                             break;
                         case 4:
                             maxLevel = true;
