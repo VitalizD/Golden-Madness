@@ -18,7 +18,7 @@ public class Tile : MonoBehaviour
     private Player player;
 
     private float maxHealth;
-    private readonly float checkingDistanceToDestroyAttachedTiles = 0.50f;
+    private readonly float checkingDistanceToDestroyAttachedTiles = 0.505f;
 
     public float DiggingDifficulty { get => diggingDifficulty; }
 

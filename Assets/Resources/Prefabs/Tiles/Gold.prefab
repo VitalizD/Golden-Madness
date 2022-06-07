@@ -13,11 +13,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 83cb11bd1bc7948448f09919bcddd7f6, type: 3}
     - target: {fileID: 4482244365625360364, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4482244365625360364, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_Color.g
-      value: 0.84931326
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4482244365625360364, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_Color.r
@@ -35,6 +35,34 @@ PrefabInstance:
       propertyPath: resourceType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: variants.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: variants.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 83cb11bd1bc7948448f09919bcddd7f6, type: 3}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: variants.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1048ff12b2bb003498cf68641e8f6e93, type: 3}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: variants.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3d9ebce94bdf925469eb9daac524088d, type: 3}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: variants.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 81de3fe43a103624985c988e79b4f933, type: 3}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: variants.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: acce9e7e12ebcbe44bfe1782e30be622, type: 3}
+    - target: {fileID: 6395424368344303474, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: variants.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 13cb9ab3c5b45e94ebab1c2897fb1790, type: 3}
     - target: {fileID: 7386847732881463872, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_RootOrder
       value: 0
