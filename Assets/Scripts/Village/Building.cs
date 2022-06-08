@@ -72,10 +72,7 @@ public class Building : MonoBehaviour, IStorage
         {
             if (CanUpgrade())
             {
-                VillageController.instanse.AddResource(requiredResource, -requiredCount);
-                VillageController.instanse.Save();
                 Upgrade();
-                Save();
             }
             else
                 Player.instanse.Say("Не хватает ресурсов", 3f);
@@ -88,10 +85,14 @@ public class Building : MonoBehaviour, IStorage
         {
             ++currentLevel;
             actionAfterUpgrading?.Invoke();
-            UpdateInfo();
 
             if (!maxLevel)
                 upgradeWindow.Show();
+
+            VillageController.instanse.AddResource(requiredResource, -requiredCount);
+            VillageController.instanse.Save();
+            Save();
+            UpdateInfo();
         }
 
         if (currentLevel == 0)
@@ -142,7 +143,8 @@ public class Building : MonoBehaviour, IStorage
             if (currentLevel == 0)
                 upgradeWindow.SetAction("Построить");
 
-            var color = "green";
+            var prefix = $"<b><color=green>";
+            var postfix = "</color></b>";
             switch (buildingType)
             {
                 case BuildingType.Forge:
@@ -160,40 +162,32 @@ public class Building : MonoBehaviour, IStorage
                                 void action()
                                 {
                                     ServiceInfo.CheckpointConditionDone = true; // Для обучения
-                                    Player.instanse.AddHitDamageToPickaxe(-20);
-                                    Player.instanse.AddMaxEnemyDamage(20);
-                                    Player.instanse.AddMaxTileDamage(20);
+                                    Player.instanse.AddMaxTileDamage(10);
                                 }
-                                var value = $"<b><color={color}>+20%</color></b>";
-                                UpdateUpgradeWindow($"Прочность {value}\nСкорость {value}\nУрон {value}", ResourceTypes.GoldOre, 3, action);
+                                UpdateUpgradeWindow($"Скорость {prefix}+10%{postfix}", ResourceTypes.GoldOre, 3, action);
                                 break;
                             }
-                        case 2:
+                        case 2: UpdateUpgradeWindow($"Урон {prefix}+10%{postfix}", ResourceTypes.IronOre, 10, () => Player.instanse.AddMaxEnemyDamage(10)); break;
+                        case 3: UpdateUpgradeWindow($"Прочность {prefix}+10%{postfix}", ResourceTypes.GoldOre, 15, () => Player.instanse.AddHitDamageToPickaxe(-10)); break;
+                        case 4: UpdateUpgradeWindow($"Скорость {prefix}+20%{postfix}", ResourceTypes.IronOre, 20, () => Player.instanse.AddMaxTileDamage(20)); break;
+                        case 5: UpdateUpgradeWindow($"Урон {prefix}+20%{postfix}", ResourceTypes.GoldOre, 25, () => Player.instanse.AddMaxEnemyDamage(20)); break;
+                        case 6: UpdateUpgradeWindow($"Прочность {prefix}+20%{postfix}", ResourceTypes.IronOre, 30, () => Player.instanse.AddHitDamageToPickaxe(-20)); break;
+                        case 7: UpdateUpgradeWindow($"Скорость {prefix}+30%{postfix}", ResourceTypes.GoldOre, 35, () => Player.instanse.AddMaxTileDamage(30)); break;
+                        case 8: UpdateUpgradeWindow($"Урон {prefix}+30%{postfix}", ResourceTypes.IronOre, 40, () => Player.instanse.AddMaxEnemyDamage(30)); break;
+                        case 9: UpdateUpgradeWindow($"Прочность {prefix}+30%{postfix}", ResourceTypes.IronOre, 45, () => Player.instanse.AddHitDamageToPickaxe(-30)); break;
+                        case 10:
                             {
                                 void action()
                                 {
-                                    Player.instanse.AddHitDamageToPickaxe(-20);
-                                    Player.instanse.AddMaxEnemyDamage(20);
-                                    Player.instanse.AddMaxTileDamage(20);
+                                    Player.instanse.AddMaxTileDamage(50);
+                                    Player.instanse.AddHitDamageToPickaxe(-50);
+                                    Player.instanse.AddMaxEnemyDamage(50);
                                 }
-                                var value = $"<b><color={color}>+20%</color></b>";
-                                UpdateUpgradeWindow($"Прочность {value}\nСкорость {value}\nУрон {value}", ResourceTypes.GoldOre, 16, action);
+                                UpdateUpgradeWindow($"Прочность {prefix}+50%{postfix}\nСкорость {prefix}+50%{postfix}\nУрон {prefix}+50%{postfix}", ResourceTypes.IronOre, 50, action);
                                 break;
                             }
-                        case 3:
-                            {
-                                void action()
-                                {
-                                    Player.instanse.AddHitDamageToPickaxe(-20);
-                                    Player.instanse.AddMaxEnemyDamage(20);
-                                    Player.instanse.AddMaxTileDamage(20);
-                                    upgradeWindow.Hide();
-                                }
-                                var value = $"<b><color={color}>+20%</color></b>";
-                                UpdateUpgradeWindow($"Прочность {value}\nСкорость {value}\nУрон {value}", ResourceTypes.GoldOre, 35, action);
-                                break;
-                            }
-                        case 4:
+                        case 11:
+                            upgradeWindow.Hide();
                             maxLevel = true;
                             break;
                     }
@@ -202,28 +196,28 @@ public class Building : MonoBehaviour, IStorage
                 case BuildingType.Workshow:
                     upgradeWindow.SetTitle("Мастерская");
                     upgradeWindow.SetToolIcon(SpritesStorage.instanse.Lamp);
+                    upgradeWindow.SetDescriptionAlignLeft();
                     if (currentLevel > 0)
                         upgradeWindow.SetAction("Улучшить лампу");
+
+                    var workshowDescription = $"Время горения\n{prefix}+50 секунд{postfix}";
+                    void WorkshopUpgradeEffect() => Player.instanse.AddTimeDecreaseValue(0.5f);
+
                     switch (currentLevel)
                     {
-                        case 0:
-                            UpdateUpgradeWindow("Позволяет улучшать лампу", ResourceTypes.Coal, 4, null);
-                            break;
-                        case 1:
-                            UpdateUpgradeWindow($"Время \nгорения <b><color={color}>+40%</color></b>", ResourceTypes.Coal, 6, () => Player.instanse.AddFuelDecreaseValue(40));
-                            break;
-                        case 2:
-                            UpdateUpgradeWindow($"Время \nгорения <b><color={color}>+40%</color></b>", ResourceTypes.Coal, 15, () => Player.instanse.AddFuelDecreaseValue(40));
-                            break;
-                        case 3:
-                            void action()
-                            {
-                                Player.instanse.AddFuelDecreaseValue(40);
-                                upgradeWindow.Hide();
-                            }
-                            UpdateUpgradeWindow($"Время \nгорения <b><color={color}>+40%</color></b>", ResourceTypes.Coal, 30, action);
-                            break;
-                        case 4:
+                        case 0: UpdateUpgradeWindow("Позволяет улучшать лампу", ResourceTypes.Coal, 10, null); break;
+                        case 1: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 15, WorkshopUpgradeEffect); break;
+                        case 2: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 20, WorkshopUpgradeEffect); break;
+                        case 3: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 25, WorkshopUpgradeEffect); break;
+                        case 4: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 30, WorkshopUpgradeEffect); break;
+                        case 5: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 35, WorkshopUpgradeEffect); break;
+                        case 6: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 40, WorkshopUpgradeEffect); break;
+                        case 7:UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 45, WorkshopUpgradeEffect);break;
+                        case 8: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 50, WorkshopUpgradeEffect); break;
+                        case 9: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 55, WorkshopUpgradeEffect); break;
+                        case 10: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 60, WorkshopUpgradeEffect); break;
+                        case 11:
+                            upgradeWindow.Hide();
                             maxLevel = true;
                             break;
                     }

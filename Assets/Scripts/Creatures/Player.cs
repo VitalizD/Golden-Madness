@@ -223,9 +223,9 @@ public class Player : MonoBehaviour, IStorage
         Save();
     }
 
-    public void AddFuelDecreaseValue(float valueInPercents)
+    public void AddTimeDecreaseValue(float value)
     {
-        lamp.FuelDecreaseValue += lamp.FuelDecreaseValue * (valueInPercents / 100f);
+        lamp.TimeFuelDecrease += value;
         Save();
     }
 
