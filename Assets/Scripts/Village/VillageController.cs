@@ -42,7 +42,7 @@ public class VillageController : MonoBehaviour, IStorage
 
     public void Save()
     {
-        ResourcesSaver.SaveInVillage(resourcesCounts);
+        ResourcesSaver.ReplaceInVillage(resourcesCounts);
     }
 
     public void Load()
@@ -77,12 +77,16 @@ public class VillageController : MonoBehaviour, IStorage
     private void Start()
     {
         if (loadResources)
+        {
             Load();
+            if (!ServiceInfo.TutorialDone)
+            {
+                resourcesCounts[ResourceTypes.GoldOre] = 6;
+                triggers.SetActive(true);
+            }
+        }
 
         SetPlayerParameters();
-
-        if (!ServiceInfo.TutorialDone)
-            triggers.SetActive(true);
     }
 
     private void SetPlayerParameters()

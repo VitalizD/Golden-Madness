@@ -15,7 +15,7 @@ public class Paused : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && Teleporter.instanse.State == Teleporter.States.Stayed)
         {
             if (gameIsPause)
             {
@@ -50,7 +50,6 @@ public class Paused : MonoBehaviour
     {
         control.SetActive(true);
         gameIsControl = true;
-        Teleporter.instanse.Stop();
     }
 
     public void ControlResume()

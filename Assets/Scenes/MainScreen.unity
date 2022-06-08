@@ -1652,6 +1652,14 @@ PrefabInstance:
       propertyPath: m_ReferenceResolution.y
       value: 1080
       objectReference: {fileID: 0}
+    - target: {fileID: 5642271798879253517, guid: c9163766788f5ee4aa423ad811076c47, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 42452407}
+    - target: {fileID: 5642271798879253517, guid: c9163766788f5ee4aa423ad811076c47, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5642271798879253518, guid: c9163766788f5ee4aa423ad811076c47, type: 3}
       propertyPath: m_Name
       value: Control
@@ -2183,7 +2191,7 @@ Canvas:
   m_GameObject: {fileID: 1806401708}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 42452407}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -2541,8 +2549,8 @@ Canvas:
   m_GameObject: {fileID: 2005849578}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 42452407}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

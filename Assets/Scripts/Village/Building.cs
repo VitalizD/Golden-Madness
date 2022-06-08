@@ -5,6 +5,7 @@ public class Building : MonoBehaviour, IStorage
 {
     [SerializeField] private bool canBeUsed = true;
     [SerializeField] private bool loadLevel = true;
+    [SerializeField] private float buildingFadeSpeed = 1f;
     [SerializeField] private BuildingType buildingType;
     [SerializeField] private Sprite constructedBuildingSprite;
 
@@ -67,7 +68,7 @@ public class Building : MonoBehaviour, IStorage
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isTriggered && !maxLevel)
+        if (Input.GetKeyDown(KeyCode.E) && isTriggered && !maxLevel && canBeUsed)
         {
             if (CanUpgrade())
             {
@@ -83,13 +84,24 @@ public class Building : MonoBehaviour, IStorage
 
     private void Upgrade()
     {
-        ++currentLevel;
-        upgradeWindow.SetLevel(currentLevel);
-        actionAfterUpgrading?.Invoke();
-        UpdateInfo();
+        void action()
+        {
+            ++currentLevel;
+            actionAfterUpgrading?.Invoke();
+            UpdateInfo();
 
-        if (!maxLevel)
-            upgradeWindow.Show();
+            if (!maxLevel)
+                upgradeWindow.Show();
+        }
+
+        if (currentLevel == 0)
+        {
+            CanBeUsed = false;
+            upgradeWindow.Hide();
+            Teleporter.instanse.Go(Player.instanse.transform.position, action, buildingFadeSpeed, () => CanBeUsed = true);
+        }
+        else
+            action();
     }
 
     private void SetRequiredResource(ResourceTypes type, int count)
@@ -116,6 +128,7 @@ public class Building : MonoBehaviour, IStorage
         if (currentLevel >= 1)
         {
             upgradeWindow.SetDescriptionAlignFlush();
+            upgradeWindow.SetLevel(currentLevel);
             if (constructedBuildingSprite != null)
                 sprite.sprite = constructedBuildingSprite;
         }
