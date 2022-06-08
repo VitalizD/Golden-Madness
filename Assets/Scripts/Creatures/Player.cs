@@ -84,6 +84,12 @@ public class Player : MonoBehaviour, IStorage
 
     public float TouchingDistance { get => touchingDistance; }
 
+    public void ViewedAd()
+    {
+        gameObject.SetActive(true);
+        health = 100;
+    }
+
     public States State
     {
         get => (States)animator.GetInteger("State");
@@ -122,7 +128,7 @@ public class Player : MonoBehaviour, IStorage
                 {
                     StopAllCoroutines();
                     gameObject.SetActive(false);
-                    gameOver.ShowAndReturnToVillage();
+                    gameOver.ShowGameOverAd();
                 }
                 else
                 {

@@ -186,7 +186,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3991792241417022638}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1528822100974656759}
+        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+        m_MethodName: ShowAndReturnToVillage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2784929308430060371
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +531,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 725688914162802152}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1528822100974656759}
+        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+        m_MethodName: Ad
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3266938601408938896
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,6 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd593c9a7fc99e45b55d7bc264683a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameOverAd: {fileID: 6483319924406760659}
   timeBeforeTeleport: 1
   fadeSpeed: 0.3
 --- !u!114 &397109714844690669
