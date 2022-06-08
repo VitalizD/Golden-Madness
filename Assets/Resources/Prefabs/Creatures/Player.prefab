@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e2758d084578b4195ecffda210a82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameOverAd: {fileID: 4281374580125159859, guid: e5d879943a840194883b3846042e211c, type: 3}
   loadParameters: 1
   health: 100
   speed: 4
@@ -156,7 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9effe401df66c43418c507bdba7ef8d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCount: 5
   fuelTanksCount: 0
   fuelTanks: {fileID: 0}
   grindstonesCount: 0
