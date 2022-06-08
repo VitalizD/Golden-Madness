@@ -1,5 +1,5 @@
 using UnityEngine;
-using System;
+using Agava.YandexGames;
 
 public class DoorToSaveZone : MonoBehaviour
 {
@@ -49,6 +49,8 @@ public class DoorToSaveZone : MonoBehaviour
             CanBeUsed = false;
             doorFromSaveZone.Refresh(transform.position);
             teleporter.Go(doorFromSaveZone.transform.position, action, fadeSpeed);
+
+            InterestialAd.Show();
         }
     }
 }
