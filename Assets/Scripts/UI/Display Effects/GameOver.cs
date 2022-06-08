@@ -13,7 +13,6 @@ public class GameOver : MonoBehaviour
     private Teleporter teleporter;
     private SceneChanger sceneChanger;
     private TextMeshProUGUI text;
-    private Player player;
 
     private readonly string showAnimationName = "Show";
 
@@ -26,12 +25,12 @@ public class GameOver : MonoBehaviour
     {
         VideoAd.Show();
         GameOverAd.SetActive(false);
-        player.ViewedAd();
+        Player.instanse.ViewedAd();
     }
 
     public void ShowAndReturnToVillage()
     {
-        player.NonViewedAd();
+        Player.instanse.NonViewedAd();
         GameOverAd.SetActive(false);
         text.enabled = true;
         animation_.Play(showAnimationName);

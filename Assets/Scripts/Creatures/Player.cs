@@ -86,8 +86,16 @@ public class Player : MonoBehaviour, IStorage
 
     public void ViewedAd()
     {
+        transform.position = checkpoint;
         gameObject.SetActive(true);
-        health = 100;
+        Health = 100;
+        sanity.Sanity = 100;
+        invulnerability = false;
+        isStunned = false;
+        feelPain = false;
+        isAttacking = false;
+        canAttack = true;
+        isDigging = false;
     }
 
     public void NonViewedAd()
