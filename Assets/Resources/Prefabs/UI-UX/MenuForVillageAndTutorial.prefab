@@ -50,6 +50,7 @@ MonoBehaviour:
   pause: {fileID: 6420098455225960860}
   control: {fileID: 8340570872645744753}
   exitMenu: {fileID: 830212279005466344}
+  fadeSpeed: 0.7
 --- !u!1001 &4463851500908302380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -188,6 +189,10 @@ PrefabInstance:
     - target: {fileID: 7271638625224022453, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
       propertyPath: m_PlaneDistance
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271638625224022453, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8571893277753272847, guid: 1dcb8312b3c2a1d49bb3d6d34d8dca0d, type: 3}
       propertyPath: m_Colors.m_NormalColor.b

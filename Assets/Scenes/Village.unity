@@ -1133,6 +1133,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5661314287556610742, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -960.0005
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661314287556610742, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 59.204956
+      objectReference: {fileID: 0}
     - target: {fileID: 5730481857620532839, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -2099,6 +2107,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1529438411073486972, guid: d31dd13b8e280e64784be456ca12dad6, type: 3}
+      propertyPath: leftLimit
+      value: 2.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529438411073486972, guid: d31dd13b8e280e64784be456ca12dad6, type: 3}
       propertyPath: rightLimit
       value: 7.64
       objectReference: {fileID: 0}
@@ -2468,6 +2480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7bf99fb1a26974cb16c5cc109bd575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  control: {fileID: 0}
+  exitMenu: {fileID: 0}
   sceneName: MainLevel
 --- !u!114 &1723276614
 MonoBehaviour:
