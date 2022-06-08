@@ -31,6 +31,7 @@ public class GameOver : MonoBehaviour
 
     public void ShowAndReturnToVillage()
     {
+        player.NonViewedAd();
         GameOverAd.SetActive(false);
         text.enabled = true;
         animation_.Play(showAnimationName);

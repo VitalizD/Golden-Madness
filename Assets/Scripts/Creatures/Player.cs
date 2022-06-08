@@ -90,6 +90,11 @@ public class Player : MonoBehaviour, IStorage
         health = 100;
     }
 
+    public void NonViewedAd()
+    {
+        StopAllCoroutines();
+    }
+
     public States State
     {
         get => (States)animator.GetInteger("State");
@@ -126,7 +131,6 @@ public class Player : MonoBehaviour, IStorage
             {
                 if (PlayerPrefs.HasKey(PlayerPrefsKeys.TutorialDone) && bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone)))
                 {
-                    StopAllCoroutines();
                     gameObject.SetActive(false);
                     gameOver.ShowGameOverAd();
                 }
