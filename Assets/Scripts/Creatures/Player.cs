@@ -1,14 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
-using Agava.YandexGames;
+using System.Linq;
 
 public class Player : MonoBehaviour, IStorage
 {
     public static Player instanse = null;
-
-    [Header("Ad")]
-    [SerializeField] public GameObject GameOverAd;
 
     [Header("Loading Parameters")]
     [SerializeField] private bool loadParameters = true;
@@ -121,7 +120,9 @@ public class Player : MonoBehaviour, IStorage
             {
                 if (PlayerPrefs.HasKey(PlayerPrefsKeys.TutorialDone) && bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone)))
                 {
-                    GameOverAd.SetActive(true);
+                    StopAllCoroutines();
+                    gameObject.SetActive(false);
+                    gameOver.ShowAndReturnToVillage();
                 }
                 else
                 {
@@ -131,21 +132,6 @@ public class Player : MonoBehaviour, IStorage
                 if (displayFilter) displayFilter.RemoveFilter();
             }
         }
-    }
-
-    public void Ad()
-    {
-        VideoAd.Show();
-        health = 100;
-        GameOverAd.SetActive(false);
-    }
-
-    public void ToVillage()
-    {
-        GameOverAd.SetActive(false);
-        StopAllCoroutines();
-        gameObject.SetActive(false);
-        gameOver.ShowAndReturnToVillage();
     }
 
     public float PickaxeStrength
