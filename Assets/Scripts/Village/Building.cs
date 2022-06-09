@@ -196,11 +196,11 @@ public class Building : MonoBehaviour, IStorage
                 case BuildingType.Workshow:
                     upgradeWindow.SetTitle("Мастерская");
                     upgradeWindow.SetToolIcon(SpritesStorage.instanse.Lamp);
-                    upgradeWindow.SetDescriptionAlignLeft();
+                    //upgradeWindow.SetDescriptionAlignLeft();
                     if (currentLevel > 0)
                         upgradeWindow.SetAction("Улучшить лампу");
 
-                    var pprefix = $"Время горения\n{prefix}+";
+                    var pprefix = $"Время \nгорения {prefix}+";
                     var ppostfix = $"%{postfix}";
                     void WorkshopUpgradeEffect() => Player.instanse.AddTimeDecreaseValue(0.5f);
 
