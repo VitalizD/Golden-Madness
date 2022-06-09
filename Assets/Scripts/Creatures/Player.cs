@@ -62,10 +62,13 @@ public class Player : MonoBehaviour, IStorage
     private LayerMask groundMask;
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
+    private Vector2 attackDistanse;
     private float fixedZPosition;
     private float xAttackPoint;
 
-    private Vector2 attackDistanse;
+    private float initialEnemyDamage;
+    private float initialTileDamage;
+    private float initialHitDamageToPickaxe;
 
     private Coroutine reloadAttack;
 
@@ -205,21 +208,21 @@ public class Player : MonoBehaviour, IStorage
 
     public void AddMaxEnemyDamage(int valueInPercents)
     {
-        maxEnemyDamage += (int)(maxEnemyDamage * (valueInPercents / 100f));
+        maxEnemyDamage += (int)(initialEnemyDamage * (valueInPercents / 100f));
         enemyDamage = maxEnemyDamage;
         Save();
     }
 
     public void AddMaxTileDamage(float valueInPercents)
     {
-        maxTileDamage += maxTileDamage * (valueInPercents / 100f);
+        maxTileDamage += initialTileDamage * (valueInPercents / 100f);
         tileDamage = maxTileDamage;
         Save();
     }
 
     public void AddHitDamageToPickaxe(float valueInPercents)
     {
-        hitDamageToPickaxe += hitDamageToPickaxe * (valueInPercents / 100f);
+        hitDamageToPickaxe += initialHitDamageToPickaxe * (valueInPercents / 100f);
         Save();
     }
 
@@ -294,6 +297,10 @@ public class Player : MonoBehaviour, IStorage
         xAttackPoint = attackPoint.localPosition.x;
 
         attackDistanse = attackPoint.GetComponent<CapsuleCollider2D>().size;
+
+        initialEnemyDamage = maxEnemyDamage;
+        initialHitDamageToPickaxe = hitDamageToPickaxe;
+        initialTileDamage = maxTileDamage;
     }
 
     private void Start()

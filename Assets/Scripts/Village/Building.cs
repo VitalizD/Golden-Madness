@@ -200,22 +200,23 @@ public class Building : MonoBehaviour, IStorage
                     if (currentLevel > 0)
                         upgradeWindow.SetAction("Улучшить лампу");
 
-                    var workshowDescription = $"Время горения\n{prefix}+50 секунд{postfix}";
+                    var pprefix = $"Время горения\n{prefix}+";
+                    var ppostfix = $"%{postfix}";
                     void WorkshopUpgradeEffect() => Player.instanse.AddTimeDecreaseValue(0.5f);
 
                     switch (currentLevel)
                     {
                         case 0: UpdateUpgradeWindow("Позволяет улучшать лампу", ResourceTypes.Coal, 10, null); break;
-                        case 1: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 15, WorkshopUpgradeEffect); break;
-                        case 2: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 20, WorkshopUpgradeEffect); break;
-                        case 3: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 25, WorkshopUpgradeEffect); break;
-                        case 4: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 30, WorkshopUpgradeEffect); break;
-                        case 5: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 35, WorkshopUpgradeEffect); break;
-                        case 6: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 40, WorkshopUpgradeEffect); break;
-                        case 7:UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 45, WorkshopUpgradeEffect);break;
-                        case 8: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 50, WorkshopUpgradeEffect); break;
-                        case 9: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Quartz, 55, WorkshopUpgradeEffect); break;
-                        case 10: UpdateUpgradeWindow(workshowDescription, ResourceTypes.Coal, 60, WorkshopUpgradeEffect); break;
+                        case 1: UpdateUpgradeWindow($"{pprefix}10{ppostfix}", ResourceTypes.Quartz, 15, WorkshopUpgradeEffect); break;
+                        case 2: UpdateUpgradeWindow($"{pprefix}20{ppostfix}", ResourceTypes.Coal, 20, WorkshopUpgradeEffect); break;
+                        case 3: UpdateUpgradeWindow($"{pprefix}30{ppostfix}", ResourceTypes.Quartz, 25, WorkshopUpgradeEffect); break;
+                        case 4: UpdateUpgradeWindow($"{pprefix}40{ppostfix}", ResourceTypes.Coal, 30, WorkshopUpgradeEffect); break;
+                        case 5: UpdateUpgradeWindow($"{pprefix}50{ppostfix}", ResourceTypes.Quartz, 35, WorkshopUpgradeEffect); break;
+                        case 6: UpdateUpgradeWindow($"{pprefix}60{ppostfix}", ResourceTypes.Coal, 40, WorkshopUpgradeEffect); break;
+                        case 7:UpdateUpgradeWindow($"{pprefix}70{ppostfix}", ResourceTypes.Quartz, 45, WorkshopUpgradeEffect);break;
+                        case 8: UpdateUpgradeWindow($"{pprefix}80{ppostfix}", ResourceTypes.Coal, 50, WorkshopUpgradeEffect); break;
+                        case 9: UpdateUpgradeWindow($"{pprefix}90{ppostfix}", ResourceTypes.Quartz, 55, WorkshopUpgradeEffect); break;
+                        case 10: UpdateUpgradeWindow($"{pprefix}100{ppostfix}", ResourceTypes.Coal, 60, WorkshopUpgradeEffect); break;
                         case 11:
                             upgradeWindow.Hide();
                             maxLevel = true;
