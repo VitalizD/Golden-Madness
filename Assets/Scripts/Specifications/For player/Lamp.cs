@@ -54,16 +54,18 @@ public class Lamp : MonoBehaviour, IStorage
 
     public float FuelDecreaseValue { get => fuelDecreaseValue; set => fuelDecreaseValue = value; }
 
+    public float TimeFuelDecrease { get => timeFuelDecrease; set => timeFuelDecrease = value; }
+
     public void Save()
     {
         PlayerPrefs.SetFloat(PlayerPrefsKeys.FuelCount, fuelCount);
-        PlayerPrefs.SetFloat(PlayerPrefsKeys.FuelDecreaseValue, fuelDecreaseValue);
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.TimeDecreaseValue, timeFuelDecrease);
     }
 
     public void Load()
     {
         FuelCount = PlayerPrefs.GetFloat(PlayerPrefsKeys.FuelCount, fuelCount);
-        fuelDecreaseValue = PlayerPrefs.GetFloat(PlayerPrefsKeys.FuelDecreaseValue, fuelDecreaseValue);
+        timeFuelDecrease = PlayerPrefs.GetFloat(PlayerPrefsKeys.TimeDecreaseValue, timeFuelDecrease);
     }
 
     private void Awake()

@@ -3,10 +3,19 @@ using UnityEngine;
 
 public static class ResourcesSaver
 {
-    public static void SaveInVillage(Dictionary<ResourceTypes, int> resources)
+    public static void ReplaceInVillage(Dictionary<ResourceTypes, int> resources)
     {
         foreach (var type in resources.Keys)
             PlayerPrefs.SetInt(type.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, resources[type]);
+    }
+
+    public static void AddInVillage(Dictionary<ResourceTypes, int> resources)
+    {
+        foreach (var type in resources.Keys)
+        {
+            var previousCount = PlayerPrefs.GetInt(type.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, 0);
+            PlayerPrefs.SetInt(type.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, previousCount + resources[type]);
+        }
     }
 
     public static void SaveInBackpack(Dictionary<ResourceTypes, int> resources)

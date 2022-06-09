@@ -21,22 +21,24 @@ public class Teleporter : MonoBehaviour
     private States state = States.Stayed;
     private Vector2 toPosition;
     private Action actionAfterTransition;
+    private Action actionAfterLightening;
 
     private Image blackFilterImage;
 
     public States State { get => state; }
 
-    public void Go(Vector2 to, Action actionAfterTransition, float fadeSpeed)
+    public void Go(Vector2 to, Action actionAfterTransition, float fadeSpeed, Action actionAfterLightening = null)
     {
         toPosition = to;
-        Go(actionAfterTransition, fadeSpeed);
+        Go(actionAfterTransition, fadeSpeed, actionAfterLightening);
     }
 
-    public void Go(Action actionAfterTransition, float fadeSpeed)
+    public void Go(Action actionAfterTransition, float fadeSpeed, Action actionAfterLightening = null)
     {
         blackFilterImage.enabled = true;
         this.fadeSpeed = fadeSpeed;
         this.actionAfterTransition = actionAfterTransition;
+        this.actionAfterLightening = actionAfterLightening;
         state = States.Darkening;
 
         if (Player.instanse != null)
@@ -92,6 +94,7 @@ public class Teleporter : MonoBehaviour
                 {
                     state = States.Stayed;
                     blackFilterImage.enabled = false;
+                    actionAfterLightening?.Invoke();
                 }
             }
 

@@ -18,6 +18,10 @@ public class SpritesStorage : MonoBehaviour
     [SerializeField] private Sprite dynamite;
     [SerializeField] private Sprite antidote;
 
+    [Header("Tools")]
+    [SerializeField] private Sprite pickaxe;
+    [SerializeField] private Sprite lamp;
+
     public Sprite GoldIcon { get => goldIcon; }
 
     public Sprite CoalIcon { get => coalIcon; }
@@ -37,6 +41,10 @@ public class SpritesStorage : MonoBehaviour
     public Sprite Dynamite { get => dynamite; }
 
     public Sprite Antidote { get => antidote; }
+
+    public Sprite Pickaxe { get => pickaxe; }
+
+    public Sprite Lamp { get => lamp; }
 
     private void Awake()
     {
