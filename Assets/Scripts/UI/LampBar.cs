@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LampBar : MonoBehaviour
 {
     public Slider slider;
+    [SerializeField] private Lamp Lamp; 
 
     //public void Start()
     //{
@@ -14,6 +15,17 @@ public class LampBar : MonoBehaviour
     //}
     public void SetFuelValue(float value)
     {
-        slider.value = value / 100f;
+
+        slider.maxValue = 100f;
+        slider.value = Lamp.FuelCount;
+    }
+
+    public void Update()
+    {
+        slider.value = Lamp.FuelCount;
+    }
+    public void SetLamp(float lamp)
+    {
+        slider.value = lamp;
     }
 }

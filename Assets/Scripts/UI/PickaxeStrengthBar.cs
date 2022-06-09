@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class PickaxeStrengthBar : MonoBehaviour
 {
     public Slider slider;
-
-    //public void Start()
-    //{
-    //    slider.maxValue = 100f;
-    //    slider.value = 100f;
-    //}
+    [SerializeField] private Player player;
+    
+    public void Start()
+    {
+        slider.maxValue = 100f;
+        slider.value = player.PickaxeStrength;
+    }
 
     public void SetStrength(float strength) 
     {
