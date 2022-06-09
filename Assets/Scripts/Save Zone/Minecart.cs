@@ -19,8 +19,9 @@ public class Minecart : MonoBehaviour
             canBeUsed = value;
             pressActionKey.SetActive(value);
 
-            if (!value)
-                minecartAnimation.Play(leaveAnimationName);
+            minecartAnimation.Play(leaveAnimationName);
+            if (value)
+                minecartAnimation.Stop(leaveAnimationName);
         }
     }
 

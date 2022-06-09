@@ -64,6 +64,7 @@ public class Player : MonoBehaviour, IStorage
     private Vector2 attackDistanse;
     private float fixedZPosition;
     private float xAttackPoint;
+    private float defaultSpeed;
 
     private float initialEnemyDamage;
     private float initialTileDamage;
@@ -322,6 +323,7 @@ public class Player : MonoBehaviour, IStorage
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
         fixedZPosition = transform.position.z;
         xAttackPoint = attackPoint.localPosition.x;
+        defaultSpeed = speed;
 
         attackDistanse = attackPoint.GetComponent<CapsuleCollider2D>().size;
 
@@ -370,7 +372,7 @@ public class Player : MonoBehaviour, IStorage
         var position = transform.position;
         transform.position = new Vector3(position.x, position.y, fixedZPosition);
 
-        speed = backpack.isFull() ? 3f*0.85f : 3f;
+        speed = backpack.IsFull() ? defaultSpeed * backpack.FullInventorySpeedMultiplier : defaultSpeed;
 
         //CheckGrounded();
 

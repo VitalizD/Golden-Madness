@@ -5,6 +5,7 @@ public class Backpack : MonoBehaviour, IStorage
 {
     [SerializeField] private int maxCapacity = 100;
     [SerializeField] private int currentFullness = 0;
+    [SerializeField] private float fullInventorySpeedMultiplier = 0.85f;
     [SerializeField] private string fullInventoryPhrase = "Мой рюкзак заполнен!";
     [SerializeField] private string cannotTakePhrase = "Мне больше не унести!";
 
@@ -20,11 +21,11 @@ public class Backpack : MonoBehaviour, IStorage
         }
     }
 
-    public bool isFull() {
-        return currentFullness == maxCapacity;
-    }
+    public bool IsFull() => currentFullness == maxCapacity;
 
     public int CurrentFullness { get => currentFullness; }
+
+    public float FullInventorySpeedMultiplier { get => fullInventorySpeedMultiplier; }
 
     private void Start()
     {

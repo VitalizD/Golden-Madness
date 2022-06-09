@@ -60,7 +60,7 @@ public class Chest : MonoBehaviour
                 System.Reflection.BindingFlags.Instance|
                 System.Reflection.BindingFlags.DeclaredOnly);
             
-            var anyAmountIncreased = false;
+            //var anyAmountIncreased = false;
             var amountGenerated = rng.Next(1,5);
             /*Debug.Log("Consumabels in chest generated: "+ amountGenerated);*/
             foreach (var propertyInfo in consumabelsList.OrderBy(x => rng.Next()).ToList())
@@ -80,7 +80,7 @@ public class Chest : MonoBehaviour
                 /*Debug.Log("[+] Current count: " + currentCount);
                 Debug.Log("[+] Random amount: " + randomAmount);*/
                 propertyInfo.SetValue(consumables, currentCount + randomAmount);
-                if (((int)propertyInfo.GetValue(consumables) - currentCount) > 0) anyAmountIncreased = true;
+                //if (((int)propertyInfo.GetValue(consumables) - currentCount) > 0) anyAmountIncreased = true;
                 amountGenerated -= (int)propertyInfo.GetValue(consumables) - currentCount;
             }
             if (amountGenerated>0) {

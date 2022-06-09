@@ -7,7 +7,6 @@ public class HealthBar : MonoBehaviour
 {
     public Slider slider;
     public Text hp;
-    [SerializeField] private Player player;
 
     public void SetHealth(int health)
     {

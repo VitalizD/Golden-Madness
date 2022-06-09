@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Selection : MonoBehaviour
 {
-    [SerializeField] private float movingSpeed = 20f;
+    //[SerializeField] private float movingSpeed = 20f;
     [SerializeField] private float colorChangeSpeed = 5f;
     [SerializeField] private float flickerDuration = 0.25f;
     [SerializeField] private Color activeColor;

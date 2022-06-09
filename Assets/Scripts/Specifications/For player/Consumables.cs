@@ -26,6 +26,8 @@ public class Consumables : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100)] private static float smokingPipeRecovery = 50f;
     public Text smokingPipes;
 
+    private bool loaded = false;
+
     public static int MaxCount { get => maxCount; set => maxCount = value; }
 
     #region FuelTanks
@@ -43,7 +45,7 @@ public class Consumables : MonoBehaviour, IStorage
 
             fuelTanks.text = fuelTanksCount.ToString();
 
-            if (fuelTanksCount - initialValue > 0)
+            if (fuelTanksCount - initialValue > 0 && loaded)
                 TakingConsumables.instanse.AddConsumable("Топливо", fuelTanksCount - initialValue, SpritesStorage.instanse.FuelTank);
         }
     }
@@ -74,7 +76,7 @@ public class Consumables : MonoBehaviour, IStorage
                 healthPacks.text = "" + value;
             }
 
-            if (healthPacksCount - initialValue > 0)
+            if (healthPacksCount - initialValue > 0 && loaded)
                 TakingConsumables.instanse.AddConsumable("Еда", healthPacksCount - initialValue, SpritesStorage.instanse.HealthPack);
         } 
     }
@@ -103,7 +105,7 @@ public class Consumables : MonoBehaviour, IStorage
                 smokingPipes.text = "" + value;
             }
 
-            if (smokingPipesCount - initialValue > 0)
+            if (smokingPipesCount - initialValue > 0 && loaded)
                 TakingConsumables.instanse.AddConsumable("Трубка", smokingPipesCount - initialValue, SpritesStorage.instanse.SmokingPipe);
         }
     }
@@ -133,7 +135,7 @@ public class Consumables : MonoBehaviour, IStorage
                 grindstones.text = "" + value;
             }
 
-            if (grindstonesCount - initialValue > 0)
+            if (grindstonesCount - initialValue > 0 && loaded)
                 TakingConsumables.instanse.AddConsumable("Точильный камень", grindstonesCount - initialValue, SpritesStorage.instanse.Grindstone);
         }
     }
@@ -154,6 +156,7 @@ public class Consumables : MonoBehaviour, IStorage
         GrindstonesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
         HealthPacksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
         SmokingPipesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
+        loaded = true;
     }
 
     public void SetDefaultValues()

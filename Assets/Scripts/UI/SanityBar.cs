@@ -9,12 +9,12 @@ public class SanityBar : MonoBehaviour
     public Text sp;
     [SerializeField] private SanityController sanityController;
 
-    public void Start()
-    {
-        slider.maxValue = 100f;
-        slider.value = sanityController.Sanity;
-        sp.text = sanityController.Sanity + "/100";
-    }
+    //public void Start()
+    //{
+    //    slider.maxValue = 100f;
+    //    slider.value = sanityController.Sanity;
+    //    sp.text = sanityController.Sanity + "/100";
+    //}
 
     public void SetSanity(float sanity)
     {
