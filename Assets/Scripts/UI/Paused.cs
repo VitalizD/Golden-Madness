@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class Paused : MonoBehaviour
 {
@@ -39,7 +38,7 @@ public class Paused : MonoBehaviour
         gameIsPause = false;
     }
 
-    private void Pause()
+    public void Pause()
     {
         pause.SetActive(true);
         Time.timeScale = 0f;

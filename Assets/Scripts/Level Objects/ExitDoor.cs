@@ -1,5 +1,5 @@
 using UnityEngine;
-using System;
+using Agava.YandexGames;
 
 public class ExitDoor : MonoBehaviour
 {
@@ -42,6 +42,8 @@ public class ExitDoor : MonoBehaviour
             ServiceInfo.CheckpointConditionDone = true; // Для обучения
             Player.instanse.Save();
             teleporter.Go(Player.instanse.transform.position, action, fadeSpeed);
+
+            InterestialAd.Show();
         }
     }
 }

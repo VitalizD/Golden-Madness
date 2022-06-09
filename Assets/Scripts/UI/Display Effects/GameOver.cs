@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using Agava.YandexGames;
 
 public class GameOver : MonoBehaviour
 {
+    [SerializeField] private GameObject GameOverAd;
     [SerializeField] private float timeBeforeTeleport = 5f;
     [SerializeField] private float fadeSpeed = 0.7f;
 
@@ -14,8 +16,22 @@ public class GameOver : MonoBehaviour
 
     private readonly string showAnimationName = "Show";
 
+    public void ShowGameOverAd()
+    {
+        GameOverAd.SetActive(true);
+    }
+
+    public void Ad()
+    {
+        VideoAd.Show();
+        GameOverAd.SetActive(false);
+        Player.instanse.ViewedAd();
+    }
+
     public void ShowAndReturnToVillage()
     {
+        Player.instanse.NonViewedAd();
+        GameOverAd.SetActive(false);
         text.enabled = true;
         animation_.Play(showAnimationName);
         StartCoroutine(GoToVillage());

@@ -1,9 +1,7 @@
 using UnityEngine;
-using UnityEngine.Events;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
-using System.Linq;
+
 
 public class Player : MonoBehaviour, IStorage
 {
@@ -57,6 +55,7 @@ public class Player : MonoBehaviour, IStorage
     private PlayerDialogWindow dialogWindow;
     private GameOver gameOver;
     private RedFilter displayFilter;
+    private Paused paused;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -75,6 +74,7 @@ public class Player : MonoBehaviour, IStorage
     private bool isAttacking = false;
     private bool canAttack = true;
     private bool isDigging = false;
+    private bool adViewed = false;
 
     public bool IsDigging { get => isDigging; set => isDigging = value; }
 
@@ -83,6 +83,27 @@ public class Player : MonoBehaviour, IStorage
     public bool CanJump { get => jumpCheckingPoint.CanJump; }
 
     public float TouchingDistance { get => touchingDistance; }
+
+    public void ViewedAd()
+    {
+        //paused.Pause();
+        transform.position = checkpoint;
+        gameObject.SetActive(true);
+        Health = 100;
+        sanity.Sanity = 100;
+        invulnerability = false;
+        isStunned = false;
+        feelPain = false;
+        isAttacking = false;
+        canAttack = true;
+        isDigging = false;
+        adViewed = true;
+    }
+
+    public void NonViewedAd()
+    {
+        StopAllCoroutines();
+    }
 
     public States State
     {
@@ -120,9 +141,15 @@ public class Player : MonoBehaviour, IStorage
             {
                 if (PlayerPrefs.HasKey(PlayerPrefsKeys.TutorialDone) && bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone)))
                 {
-                    StopAllCoroutines();
                     gameObject.SetActive(false);
-                    gameOver.ShowAndReturnToVillage();
+                    if (adViewed)
+                    {
+                        gameOver.ShowAndReturnToVillage();
+                    }
+                    else
+                    {
+                        gameOver.ShowGameOverAd();
+                    }
                 }
                 else
                 {
