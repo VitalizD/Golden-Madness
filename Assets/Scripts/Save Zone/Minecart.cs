@@ -3,6 +3,7 @@ using UnityEngine;
 public class Minecart : MonoBehaviour
 {
     private const string leaveAnimationName = "Leave";
+    private const string returnAnimationName = "Return";
 
     [SerializeField] private bool canBeUsed = true;
     [SerializeField] private GameObject minecart;
@@ -19,9 +20,9 @@ public class Minecart : MonoBehaviour
             canBeUsed = value;
             pressActionKey.SetActive(value);
 
-            minecartAnimation.Play(leaveAnimationName);
-            if (value)
-                minecartAnimation.Stop(leaveAnimationName);
+            minecartAnimation.Play(returnAnimationName);
+            if (!value)
+                minecartAnimation.Play(leaveAnimationName);
         }
     }
 
