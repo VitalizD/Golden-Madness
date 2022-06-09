@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2972431328789732385}
   - component: {fileID: 12381715864921681}
   - component: {fileID: 3400822411512147553}
+  - component: {fileID: 2494956999904252168}
   m_Layer: 0
   m_Name: Exit Door
   m_TagString: Untagged
@@ -116,6 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7bf99fb1a26974cb16c5cc109bd575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  control: {fileID: 0}
+  exitMenu: {fileID: 0}
   sceneName: Village
 --- !u!114 &2972431328789732385
 MonoBehaviour:
@@ -169,6 +172,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1684353, y: 1.1468468}
   m_EdgeRadius: 0
+--- !u!114 &2494956999904252168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358043821391573200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918b7c8441983904e97cda0fb17956e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5282857239656642324
 PrefabInstance:
   m_ObjectHideFlags: 0

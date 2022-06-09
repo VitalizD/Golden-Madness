@@ -9,9 +9,9 @@ public class floorDoorToSZ : MonoBehaviour
     {
         var colliders = new List<Collider2D>
         {
-            Physics2D.OverlapPoint(new Vector2(transform.position.x - 1 , transform.position.y - 1)),
-            Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y - 1)),
-            Physics2D.OverlapPoint(new Vector2(transform.position.x + 1, transform.position.y - 1)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x - 1 , transform.position.y - 1.25f)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y - 1.25f)),
+            Physics2D.OverlapPoint(new Vector2(transform.position.x + 1, transform.position.y - 1.25f)),
         }
         .Where(collaider => collaider && collaider.gameObject.layer == LayerMask.NameToLayer(ServiceInfo.GroundLayerName) &&
                 !(collaider.gameObject.GetComponent<AttachedTile>()) )
