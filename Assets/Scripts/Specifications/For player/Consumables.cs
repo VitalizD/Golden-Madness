@@ -166,4 +166,10 @@ public class Consumables : MonoBehaviour, IStorage
         SmokingPipesCount = 1;
         GrindstonesCount = 1;
     }
+
+    private void Start()
+    {
+        if (!ServiceInfo.TutorialDone)
+            loaded = true;
+    }
 }
