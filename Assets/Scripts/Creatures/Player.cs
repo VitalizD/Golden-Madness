@@ -88,6 +88,9 @@ public class Player : MonoBehaviour, IStorage
 
     public float TouchingDistance { get => touchingDistance; }
 
+    public float DefaultSpeed { get => defaultSpeed;}
+    public float Speed { get => speed; set => speed = value; }
+
     public void ViewedAd()
     {
         //paused.Pause();
@@ -190,6 +193,8 @@ public class Player : MonoBehaviour, IStorage
             enemyDamage = (int)Mathf.Ceil(Mathf.Lerp(maxEnemyDamage * minEnemyDamageInPercents / 100, maxEnemyDamage, pickaxeStrength / 100));
         }
     }
+
+    
 
     public void Save()
     {
@@ -372,7 +377,6 @@ public class Player : MonoBehaviour, IStorage
         var position = transform.position;
         transform.position = new Vector3(position.x, position.y, fixedZPosition);
 
-        speed = backpack.IsFull() ? defaultSpeed * backpack.FullInventorySpeedMultiplier : defaultSpeed;
 
         //CheckGrounded();
 

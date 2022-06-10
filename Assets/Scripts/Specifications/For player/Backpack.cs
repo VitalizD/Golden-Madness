@@ -47,6 +47,8 @@ public class Backpack : MonoBehaviour, IStorage
         ++currentFullness;
         ++resourcesCounts[resource];
 
+        if (IsFull()) Player.instanse.Speed = Player.instanse.DefaultSpeed * FullInventorySpeedMultiplier;
+
         if (currentFullness == maxCapacity)
             Player.instanse.Say(fullInventoryPhrase, 4f);
 
@@ -70,6 +72,7 @@ public class Backpack : MonoBehaviour, IStorage
 
     public void Clear()
     {
+        Player.instanse.Speed = Player.instanse.DefaultSpeed;
         currentFullness = 0;
         resourcesCounts = new Dictionary<ResourceTypes, int>
         {
