@@ -30,6 +30,8 @@ public class ResourcesController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI capacityText;
     [SerializeField] private Color maxFullnessColor;
     [SerializeField] private Transform oneResource;
+    [SerializeField] private GameObject backpack;
+    [SerializeField] private GameObject box;
 
     [Header("Panels")]
     [SerializeField] private GameObject normalPanel;
@@ -46,7 +48,7 @@ public class ResourcesController : MonoBehaviour
     private TextMeshProUGUI oneResourceTitle;
     private TextMeshProUGUI oneResourceCount;
 
-    private Backpack backpack;
+    private Backpack playerBackpack;
 
     private Dictionary<ResourceTypes, ResourceInfo> resourcesInfo;
     private bool allResourcesShowed = false;
@@ -63,7 +65,7 @@ public class ResourcesController : MonoBehaviour
 
         var resource = resourcesInfo[type];
         oneResourceTitle.text = resource.title;
-        oneResourceCount.text = $"{backpack.GetOne(type)} <color=green>+ 1</color>";
+        oneResourceCount.text = $"{playerBackpack.GetOne(type)} <color=green>+ 1</color>";
 
         if (resource.sprite != null)
             oneResourceIcon.sprite = resource.sprite;
@@ -100,7 +102,7 @@ public class ResourcesController : MonoBehaviour
 
     private void Start()
     {
-        backpack = Player.instanse.GetComponent<Backpack>();
+        playerBackpack = Player.instanse.GetComponent<Backpack>();
 
         var icons = SpritesStorage.instanse;
         resourcesInfo = new Dictionary<ResourceTypes, ResourceInfo>
@@ -110,20 +112,30 @@ public class ResourcesController : MonoBehaviour
             [ResourceTypes.GoldOre] = new ResourceInfo("«олото", icons.GoldIcon, goldCount),
             [ResourceTypes.Coal] = new ResourceInfo("”голь", icons.CoalIcon, coalCount)
         };
+
+        if (inVillage)
+        {
+            backpack.SetActive(false);
+            box.SetActive(true);
+            ActiveAllResourcesPanel();
+        }
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Tab) && !allResourcesShowed)
+        if (!inVillage)
         {
-            allResourcesShowed = true;
-            ShowAllResources();
-        }
+            if (Input.GetKey(KeyCode.Tab) && !allResourcesShowed)
+            {
+                allResourcesShowed = true;
+                ShowAllResources();
+            }
 
-        if (Input.GetKeyUp(KeyCode.Tab))
-        {
-            allResourcesShowed = false;
-            HideAllResources();
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                allResourcesShowed = false;
+                HideAllResources();
+            }
         }
     }
 
@@ -140,7 +152,7 @@ public class ResourcesController : MonoBehaviour
 
     private void UpdateResourcesCounts()
     {
-        var resources = backpack.GetAll();
+        var resources = playerBackpack.GetAll();
 
         if (inVillage)
             resources = VillageController.instanse.GetAllRecources();
