@@ -4,18 +4,25 @@ using System.Collections.Generic;
 
 public class Tile : MonoBehaviour
 {
+    private const string shakeAnimationName = "Shake";
+
     [SerializeField] private float health = 10;
     [SerializeField] private float diggingDifficulty = 1;
+    [SerializeField] private float shakingTime = 0.24f;
     [SerializeField] private bool isBedrock = false;
     [SerializeField] private bool destroyAttachedTiles = true;
     [SerializeField] private ResourceTypes resourceType = ResourceTypes.None;
     [SerializeField] private Sprite[] destructionDegrees;
     [SerializeField] private Sprite[] variants;
 
-    private SpriteRenderer tileSprite;
-    private SpriteRenderer destructionSprite;
+    [Space]
+
+    [SerializeField] private SpriteRenderer tileSprite;
+    [SerializeField] private SpriteRenderer destructionSprite;
+
     private Selection selection;
     private Player player;
+    private Animation animation_;
 
     private float maxHealth;
     private readonly float checkingDistanceToDestroyAttachedTiles = 0.505f;
@@ -35,8 +42,12 @@ public class Tile : MonoBehaviour
                 AddResourceToBackpack(resourceType);
                 Destroy(gameObject);
             }
-            else if (destructionDegrees.Length > 0)
-                ChangeDestructionDegree();
+            else
+            {
+                StartCoroutine(Shake());
+                if (destructionDegrees.Length > 0)
+                    ChangeDestructionDegree();
+            }
         }
     }
 
@@ -46,8 +57,7 @@ public class Tile : MonoBehaviour
     {
         selection = GameObject.Find("Selection").GetComponent<Selection>();
         maxHealth = health;
-        destructionSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        tileSprite = GetComponent<SpriteRenderer>();
+        animation_ = GetComponent<Animation>();
 
         if (variants.Length > 0)
             tileSprite.sprite = variants[Random.Range(0, variants.Length)];
@@ -88,7 +98,7 @@ public class Tile : MonoBehaviour
         if (selection.Equals(null) || player.Equals(null))
             return;
         /*Debug.Log(isSelectionInTouchingDistance());*/
-        if (!isBedrock && isSelectionInTouchingDistance())
+        if (!isBedrock && IsSelectionInTouchingDistance())
         {
             selection.Move(transform.position);
             selection.gameObject.SetActive(true);
@@ -130,7 +140,7 @@ public class Tile : MonoBehaviour
             selection.SetNormalColor();
     }
 
-    private bool isSelectionInTouchingDistance() {
+    private bool IsSelectionInTouchingDistance() {
         if (isBedrock) { return false; }
         var referencePoint = new Vector2(player.transform.position.x, player.transform.position.y);
         var distance = Vector2.Distance(transform.position, referencePoint);
@@ -196,5 +206,13 @@ public class Tile : MonoBehaviour
     {
         if (resourceType != ResourceTypes.None && player)
             player.GetComponent<Backpack>().Add(resourceType);
+    }
+
+    private IEnumerator Shake()
+    {
+        animation_.Play(shakeAnimationName);
+        yield return new WaitForSeconds(shakingTime);
+        animation_.Stop(shakeAnimationName);
+        tileSprite.transform.localPosition = new Vector3(0, 0, 0);
     }
 }
