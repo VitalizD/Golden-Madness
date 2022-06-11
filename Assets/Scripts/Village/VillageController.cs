@@ -32,6 +32,8 @@ public class VillageController : MonoBehaviour, IStorage
         resourcesCounts[type] += count;
         if (resourcesCounts[type] < 0)
             resourcesCounts[type] = 0;
+
+        ResourcesController.instanse.UpdateResourcesCounts();
     }
 
     public void FinishTutorial()

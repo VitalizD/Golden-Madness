@@ -83,6 +83,17 @@ public class ResourcesController : MonoBehaviour
         capacityText.text = $"{value} / {maxValue}";
     }
 
+    public void UpdateResourcesCounts()
+    {
+        var resources = playerBackpack.GetAll();
+
+        if (inVillage)
+            resources = VillageController.instanse.GetAllRecources();
+
+        foreach (var type in resourcesInfo.Keys)
+            resourcesInfo[type].count.text = resources[type].ToString();
+    }
+
     private void Awake()
     {
         if (instanse == null)
@@ -117,7 +128,7 @@ public class ResourcesController : MonoBehaviour
         {
             backpack.SetActive(false);
             box.SetActive(true);
-            ActiveAllResourcesPanel();
+            ShowAllResources();
         }
     }
 
@@ -148,17 +159,6 @@ public class ResourcesController : MonoBehaviour
     private void HideAllResources()
     {
         ActiveNormalPanel();
-    }
-
-    private void UpdateResourcesCounts()
-    {
-        var resources = playerBackpack.GetAll();
-
-        if (inVillage)
-            resources = VillageController.instanse.GetAllRecources();
-
-        foreach (var type in resourcesInfo.Keys)
-            resourcesInfo[type].count.text = resources[type].ToString();
     }
 
     private IEnumerator HideOneResourcePanel()
