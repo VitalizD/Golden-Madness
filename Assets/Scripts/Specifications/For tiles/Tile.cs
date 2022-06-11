@@ -55,7 +55,7 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
-        selection = GameObject.Find("Selection").GetComponent<Selection>();
+        //selection = GameObject.Find("Selection").GetComponent<Selection>();
         maxHealth = health;
         animation_ = GetComponent<Animation>();
 
@@ -95,7 +95,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (selection.Equals(null) || player.Equals(null))
+        if (selection == null || player == null)
             return;
         /*Debug.Log(isSelectionInTouchingDistance());*/
         if (!isBedrock && IsSelectionInTouchingDistance())
