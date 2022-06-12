@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3811609408520390090}
   m_Layer: 0
-  m_Name: Chank Air 2
+  m_Name: Chunk Air 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,10 @@ PrefabInstance:
     - target: {fileID: 2407188958462990908, guid: 9e41ef61d4f311741b61598427324002, type: 3}
       propertyPath: m_Name
       value: SP Nothing Stalactite Quartz On Stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 2407188958462990910, guid: 9e41ef61d4f311741b61598427324002, type: 3}
+      propertyPath: objects.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2407188958462990911, guid: 9e41ef61d4f311741b61598427324002, type: 3}
       propertyPath: m_RootOrder
