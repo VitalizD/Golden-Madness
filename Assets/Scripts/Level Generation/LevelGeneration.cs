@@ -5,10 +5,19 @@ using System.Collections.Generic;
 
 public class LevelGeneration : MonoBehaviour
 {
+    public static LevelGeneration Instanse { get; private set; } = null;
+
     [Header("Bounds")]
     [SerializeField] private int minX;
     [SerializeField] private int maxX;
     [SerializeField] private int minY;
+
+    [Header("Ore Spawn Settings")]
+    [SerializeField] [Range(0f, 1f)] private float spawnOreChance = 0.15f;
+    [SerializeField] private GameObject[] oresPrefabs;
+
+    [Tooltip("Укажите части (например, 1, 1, 2)")]
+    [SerializeField] private float[] spawnChances;
 
     [Space]
 
@@ -31,8 +40,22 @@ public class LevelGeneration : MonoBehaviour
 
     public bool IsGenerated { get => isGenerated; }
 
+    public float SpawnOreChance { get => spawnOreChance; }
+
+    public GameObject[] OrePrefabs { get => oresPrefabs; }
+
+    public float[] SpawnChances { get => spawnChances; }
+
     private void Awake()
     {
+        if (oresPrefabs.Length != spawnChances.Length)
+            throw new System.Exception("Размеры массивов \"Spawn Chances\" и \"Ores Prefabs\" не совпадают");
+
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
+            Destroy(gameObject);
+
         directionsWithoutLeft = directions.Where(dir => dir != Direction.Left).ToArray();
         directionsWithoutRight = directions.Where(dir => dir != Direction.Right).ToArray();
     }
