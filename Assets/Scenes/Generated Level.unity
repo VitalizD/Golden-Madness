@@ -3716,7 +3716,7 @@ Transform:
   - {fileID: 1151983112}
   - {fileID: 1324564843}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &459308799
 GameObject:
@@ -3760,7 +3760,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &481380595 stripped
 Transform:
@@ -11755,7 +11755,7 @@ MonoBehaviour:
   minX: 5
   maxX: 35
   minY: -35
-  spawnOreChance: 0.1
+  spawnOreChance: 0.05
   oresPrefabs:
   - {fileID: 3788701958168617642, guid: 03e457fe747afb04bb94e62185103d23, type: 3}
   - {fileID: 6877663932330377676, guid: 93e0171de4b1acd4faf4ca2cae4f74ce, type: 3}
@@ -11803,6 +11803,11 @@ MonoBehaviour:
   - {fileID: 7883508397490966496, guid: 321e360bd2bb0454c8fc0ca6cea616ca, type: 3}
   - {fileID: 6208773350419585494, guid: 3ccf0fbd60239e6468ee8606dd8c8895, type: 3}
   - {fileID: 8740100455060902022, guid: f380c4eea1a556045b05d6fab830671d, type: 3}
+  exitRooms:
+  - {fileID: 8254906265131003453, guid: a95573248f2a94a48a28e92966e6ba26, type: 3}
+  - {fileID: 5523334253152913785, guid: 70523d153c76ba24e9edf55c1b9d99d8, type: 3}
+  - {fileID: 2982165350330941091, guid: 979788bb19a25034db8d2523e3460ed1, type: 3}
+  - {fileID: 5814744069836713381, guid: f62d8e0120f50c0488bfc196974d8ff2, type: 3}
 --- !u!4 &1521807024
 Transform:
   m_ObjectHideFlags: 0
@@ -17270,6 +17275,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 3011918488052775782, guid: a3bae737e4f5b314f862377253c296fe, type: 2}
+    - target: {fileID: 5661314287556610742, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 59.204834
+      objectReference: {fileID: 0}
     - target: {fileID: 5730481857620532839, guid: b52acedd9d1001740bd4d8eee4f94b4e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

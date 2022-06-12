@@ -29,9 +29,10 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private Transform[] startPositions;
     [SerializeField] private RoomSpawner[] roomSpawners;
 
-    [Header("Rooms\n0 -> LR;\n1 -> LRB;\n2 -> LRT;\n3 -> LRTB")]
+    [Header("Rooms\n\n0 -> LR;\n1 -> LRB;\n2 -> LRT;\n3 -> LRTB")]
     [SerializeField] private GameObject[] rooms;
     [SerializeField] private GameObject[] entryRooms;
+    [SerializeField] private GameObject[] exitRooms;
 
     private Direction[] directionsWithoutLeft;
     private Direction[] directionsWithoutRight;
@@ -67,7 +68,7 @@ public class LevelGeneration : MonoBehaviour
         transform.position = startPositions[Random.Range(0, startPositions.Length)].position;
         GenerateRoom(GetRandomRoomFrom(entryRooms));
         directionValue = GetRandomDirectionFrom(directions);
-        StartCoroutine(GenerateRoom());
+        StartCoroutine(GenerateNext());
     }
 
     private void OnDrawGizmosSelected()
@@ -109,11 +110,10 @@ public class LevelGeneration : MonoBehaviour
 
             if (transform.position.y > minY)
             {
-                var roomDetection = Physics2D.OverlapCircle(transform.position, roomDetectionRadius, roomMask);
-                var room = roomDetection.GetComponent<RoomInfo>();
-                if (room.Type != RoomDirection.LeftRightBottom && room.Type != RoomDirection.LeftRightTopBottom)
+                var currentRoom = GetCurrentRoomInfo();
+                if (currentRoom.Type != RoomDirection.LeftRightBottom && currentRoom.Type != RoomDirection.LeftRightTopBottom)
                 {
-                    room.Remove();
+                    currentRoom.Remove();
                     GameObject neededRoom;
                     if (bottomCounter >= 2)
                     {
@@ -139,6 +139,10 @@ public class LevelGeneration : MonoBehaviour
             }
             else
             {
+                var currentRoom = GetCurrentRoomInfo();
+                currentRoom.Remove();
+                GenerateRoom(exitRooms[(int)currentRoom.Type]);
+
                 isGenerated = true;
                 foreach (var roomSpawner in roomSpawners)
                     roomSpawner.Spawn(rooms, roomMask, roomDetectionRadius);
@@ -152,11 +156,13 @@ public class LevelGeneration : MonoBehaviour
 
     private void GenerateRoom(GameObject room) => Instantiate(room, transform.position, Quaternion.identity);
 
-    private IEnumerator GenerateRoom()
+    private RoomInfo GetCurrentRoomInfo() => Physics2D.OverlapCircle(transform.position, roomDetectionRadius, roomMask).GetComponent<RoomInfo>();
+
+    private IEnumerator GenerateNext()
     {
         yield return new WaitForSeconds(timeBetweenRooms);
         Move();
         if (!isGenerated)
-            StartCoroutine(GenerateRoom());
+            StartCoroutine(GenerateNext());
     }
 }
