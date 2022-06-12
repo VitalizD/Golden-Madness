@@ -29,13 +29,15 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private Transform[] startPositions;
     [SerializeField] private RoomSpawner[] roomSpawners;
 
-    // Indexes: 0 -> LR; 1 -> LRB; 2 -> LRT; 3 -> LRTB
+    [Header("Rooms\n0 -> LR;\n1 -> LRB;\n2 -> LRT;\n3 -> LRTB")]
     [SerializeField] private GameObject[] rooms;
+    [SerializeField] private GameObject[] entryRooms;
 
     private Direction[] directionsWithoutLeft;
     private Direction[] directionsWithoutRight;
     private Direction directionValue;
     private bool isGenerated = false;
+    private bool onFirstRoom = true;
     private int bottomCounter = 0;
 
     public bool IsGenerated { get => isGenerated; }
@@ -63,7 +65,7 @@ public class LevelGeneration : MonoBehaviour
     private void Start()
     {
         transform.position = startPositions[Random.Range(0, startPositions.Length)].position;
-        Instantiate(GetRandomRoom(), transform.position, Quaternion.identity);
+        GenerateRoom(GetRandomRoomFrom(entryRooms));
         directionValue = GetRandomDirectionFrom(directions);
         StartCoroutine(GenerateRoom());
     }
@@ -80,8 +82,9 @@ public class LevelGeneration : MonoBehaviour
             if (transform.position.x < maxX)
             {
                 bottomCounter = 0;
+                onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x + moveAmount, transform.position.y);
-                Instantiate(GetRandomRoom(), transform.position, Quaternion.identity);
+                GenerateRoom(GetRandomRoomFrom(rooms));
                 directionValue = GetRandomDirectionFrom(directionsWithoutLeft);
             }
             else
@@ -92,8 +95,9 @@ public class LevelGeneration : MonoBehaviour
             if (transform.position.x > minX)
             {
                 bottomCounter = 0;
+                onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x - moveAmount, transform.position.y);
-                Instantiate(GetRandomRoom(), transform.position, Quaternion.identity);
+                GenerateRoom(GetRandomRoomFrom(rooms));
                 directionValue = GetRandomDirectionFrom(directionsWithoutRight);
             }
             else
@@ -109,22 +113,28 @@ public class LevelGeneration : MonoBehaviour
                 var room = roomDetection.GetComponent<RoomInfo>();
                 if (room.Type != RoomDirection.LeftRightBottom && room.Type != RoomDirection.LeftRightTopBottom)
                 {
+                    room.Remove();
+                    GameObject neededRoom;
                     if (bottomCounter >= 2)
                     {
-                        room.Remove();
-                        Instantiate(rooms[3], transform.position, Quaternion.identity);
+                        neededRoom = rooms[3]; // LRTB
                     }
                     else
                     {
-                        room.Remove();
-                        var neededIndexes = new[] { RoomDirection.LeftRightBottom, RoomDirection.LeftRightTopBottom };
+                        var neededIndexes = new[] { RoomDirection.LeftRightBottom, RoomDirection.LeftRightTopBottom }; // LRB, LRTB
                         var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
-                        Instantiate(rooms[randomIndex], transform.position, Quaternion.identity);
+                        neededRoom = rooms[randomIndex];
                     }
+
+                    if (!onFirstRoom)
+                        GenerateRoom(neededRoom);
+                    else
+                        GenerateRoom(entryRooms[(int)neededRoom.GetComponent<RoomInfo>().Type]);
                 }
 
+                onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x, transform.position.y - moveAmount);
-                Instantiate(rooms[Random.Range(2, 4)], transform.position, Quaternion.identity);
+                GenerateRoom(rooms[Random.Range(2, 4)]); // LRT, LRTB
                 directionValue = GetRandomDirectionFrom(directions);
             }
             else
@@ -138,12 +148,14 @@ public class LevelGeneration : MonoBehaviour
 
     private Direction GetRandomDirectionFrom(Direction[] array) => array[Random.Range(0, array.Length)];
 
-    private GameObject GetRandomRoom() => rooms[Random.Range(0, rooms.Length)];
+    private GameObject GetRandomRoomFrom(GameObject[] array) => array[Random.Range(0, array.Length)];
+
+    private void GenerateRoom(GameObject room) => Instantiate(room, transform.position, Quaternion.identity);
 
     private IEnumerator GenerateRoom()
     {
-        Move();
         yield return new WaitForSeconds(timeBetweenRooms);
+        Move();
         if (!isGenerated)
             StartCoroutine(GenerateRoom());
     }

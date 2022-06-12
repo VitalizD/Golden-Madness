@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5565893164389870032}
   - component: {fileID: -542486944421861939}
   - component: {fileID: 2598906681451757548}
+  - component: {fileID: -3398389379805851597}
   m_Layer: 8
   m_Name: Room LRT
   m_TagString: Untagged
@@ -80,7 +81,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -96,6 +97,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.01, y: 0.01}
   m_EdgeRadius: 0
+--- !u!156049354 &-3398389379805851597
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5565893164389870039}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
 --- !u!1001 &620831668528438087
 PrefabInstance:
   m_ObjectHideFlags: 0

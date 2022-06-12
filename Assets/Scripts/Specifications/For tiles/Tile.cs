@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private bool isBedrock = false;
     [SerializeField] private bool destroyAttachedTiles = true;
     [SerializeField] private ResourceTypes resourceType = ResourceTypes.None;
+    [SerializeField] private LayerMask groundMask;
     [SerializeField] private Sprite[] destructionDegrees;
     [SerializeField] private Sprite[] variants;
 
@@ -66,6 +67,10 @@ public class Tile : MonoBehaviour
     private void Start()
     {
         player = Player.instanse;
+
+        //var tileDetection = Physics2D.OverlapCircle(transform.position, 0.001f, groundMask);
+        //if (tileDetection != null)
+        //    Destroy(gameObject);
     }
 
     /*private void OnMouseEnter()
