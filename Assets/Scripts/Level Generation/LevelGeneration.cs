@@ -14,6 +14,7 @@ public class LevelGeneration : MonoBehaviour
 
     [Header("Ore Spawn Settings")]
     [SerializeField] [Range(0f, 1f)] private float spawnOreChance = 0.15f;
+    [SerializeField] [Range(0f, 1f)] private float spawnQuartzChance = 0.5f;
     [SerializeField] private GameObject[] oresPrefabs;
 
     [Tooltip("Укажите части (например, 1, 1, 2)")]
@@ -25,14 +26,17 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private float timeBetweenRooms = 0.25f;
     [SerializeField] private float roomDetectionRadius = 1f;
     [SerializeField] private LayerMask roomMask;
+    [SerializeField] private DoorFromSaveZone doorFromSaveZone;
     [SerializeField] private Direction[] directions;
     [SerializeField] private Transform[] startPositions;
     [SerializeField] private RoomSpawner[] roomSpawners;
+    [SerializeField] private SaveZoneSpawner[] saveZoneSpawners;
 
     [Header("Rooms\n\n0 -> LR;\n1 -> LRB;\n2 -> LRT;\n3 -> LRTB")]
     [SerializeField] private GameObject[] rooms;
     [SerializeField] private GameObject[] entryRooms;
     [SerializeField] private GameObject[] exitRooms;
+    [SerializeField] private GameObject[] saveZoneRooms;
 
     private Direction[] directionsWithoutLeft;
     private Direction[] directionsWithoutRight;
@@ -45,14 +49,21 @@ public class LevelGeneration : MonoBehaviour
 
     public float SpawnOreChance { get => spawnOreChance; }
 
+    public float SpawnQuartzChance { get => spawnQuartzChance; }
+
     public GameObject[] OrePrefabs { get => oresPrefabs; }
 
     public float[] SpawnChances { get => spawnChances; }
+
+    public DoorFromSaveZone DoorFromSaveZone { get => doorFromSaveZone; }
 
     private void Awake()
     {
         if (oresPrefabs.Length != spawnChances.Length)
             throw new System.Exception("Размеры массивов \"Spawn Chances\" и \"Ores Prefabs\" не совпадают");
+
+        if (doorFromSaveZone == null)
+            throw new System.ArgumentNullException("\"Door From Save Zone\" не задана");
 
         if (Instanse == null)
             Instanse = this;
@@ -146,6 +157,8 @@ public class LevelGeneration : MonoBehaviour
                 isGenerated = true;
                 foreach (var roomSpawner in roomSpawners)
                     roomSpawner.Spawn(rooms, roomMask, roomDetectionRadius);
+
+                StartCoroutine(GenerateSaveZones());
             }
         }
     }
@@ -157,6 +170,23 @@ public class LevelGeneration : MonoBehaviour
     private void GenerateRoom(GameObject room) => Instantiate(room, transform.position, Quaternion.identity);
 
     private RoomInfo GetCurrentRoomInfo() => Physics2D.OverlapCircle(transform.position, roomDetectionRadius, roomMask).GetComponent<RoomInfo>();
+
+    private IEnumerator GenerateSaveZones()
+    {
+        yield return new WaitForSeconds(timeBetweenRooms);
+
+        if (saveZoneSpawners.Length > 0)
+        {
+            foreach (var spawner in saveZoneSpawners)
+            {
+                var point = spawner.GetRandomPoint();
+                transform.position = point.position;
+                var currentRoom = GetCurrentRoomInfo();
+                currentRoom.Remove();
+                GenerateRoom(saveZoneRooms[(int)currentRoom.Type]);
+            }
+        }
+    }
 
     private IEnumerator GenerateNext()
     {
