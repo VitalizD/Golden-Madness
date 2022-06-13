@@ -12,6 +12,13 @@ public class Paused : MonoBehaviour
     [SerializeField] private GameObject exitMenu;
     [SerializeField] private float fadeSpeed = 0.7f;
 
+    private SpriteRenderer selection;
+
+    private void Awake()
+    {
+        selection = GameObject.FindGameObjectWithTag(ServiceInfo.SelectionTag).GetComponent<SpriteRenderer>();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && Teleporter.instanse.State == Teleporter.States.Stayed)
@@ -33,6 +40,7 @@ public class Paused : MonoBehaviour
 
     public void Resume()
     {
+        selection.enabled = true;
         pause.SetActive(false);
         Time.timeScale = 1f;
         gameIsPause = false;
@@ -40,6 +48,7 @@ public class Paused : MonoBehaviour
 
     public void Pause()
     {
+        selection.enabled = false;
         pause.SetActive(true);
         Time.timeScale = 0f;
         gameIsPause = true;
