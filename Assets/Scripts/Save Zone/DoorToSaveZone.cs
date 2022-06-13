@@ -33,6 +33,14 @@ public class DoorToSaveZone : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
+    private void Start()
+    {
+        if (LevelGeneration.Instanse == null)
+            return;
+
+        doorFromSaveZone = LevelGeneration.Instanse.DoorFromSaveZone;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canBeUsed && trigger.IsTriggered && teleporter.State == Teleporter.States.Stayed)

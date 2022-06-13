@@ -24,7 +24,8 @@ public class Stalactite : MonoBehaviour
 
     public void Active(float timeBeforeFalling)
     {
-        StartCoroutine(Fall(timeBeforeFalling));
+        if (!LevelGeneration.Instanse.IsGenerated)
+            StartCoroutine(Fall(timeBeforeFalling));
     }
 
     private void Awake()

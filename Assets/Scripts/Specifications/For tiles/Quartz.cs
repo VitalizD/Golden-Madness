@@ -69,10 +69,11 @@ public class Quartz : MonoBehaviour
 
     //}
 
-    //private void Start()
-    //{
-    //    var random = Random.Range(0, 2);
-    //    if (random == 0)
-    //        Destroy(gameObject);
-    //}
+    private void Start()
+    {
+        var spawnChance = LevelGeneration.Instanse.SpawnQuartzChance;
+        var random = Random.Range(0f, 1f);
+        if (random > spawnChance)
+            Destroy(gameObject);
+    }
 }
