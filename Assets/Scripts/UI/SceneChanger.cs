@@ -9,6 +9,8 @@ public class SceneChanger : MonoBehaviour
 
 	private Teleporter teleporter;
 
+    public string SceneName { get => sceneName;}
+
     private void Awake()
     {
 		var blackFilter = GameObject.FindGameObjectWithTag(ServiceInfo.BlackFilterTag);

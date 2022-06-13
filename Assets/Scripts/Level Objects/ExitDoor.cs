@@ -37,7 +37,12 @@ public class ExitDoor : MonoBehaviour
             {
                 sceneChanger.ChangeScene();
             }
-
+            if (sceneChanger.SceneName == "Village")
+            {
+                var backpack = Player.instanse.GetComponent<Backpack>();
+                ResourcesSaver.AddInVillage(backpack.GetAll());
+                backpack.Clear();
+            }
             CanBeUsed = false;
             ServiceInfo.CheckpointConditionDone = true; // Для обучения
             Player.instanse.Save();
