@@ -11,6 +11,11 @@ public class Creature : MonoBehaviour
     [SerializeField] private Color damageColor = Color.white;
     [SerializeField] private bool repulsiable;
     [SerializeField] private States[] states;
+    [SerializeField] private bool stalagmitesCanThrowAway=false;
+    private float repulsiveForce = 3f;
+
+    private readonly float delayInSeconds = 1f;
+    private float timer;
 
     private Color normalColor;
     private bool attacked = false;
@@ -62,6 +67,7 @@ public class Creature : MonoBehaviour
 
     private void Awake()
     {
+        timer = delayInSeconds;
         animator = GetComponent<Animator>();
         rigidbody2D_ = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
@@ -100,5 +106,38 @@ public class Creature : MonoBehaviour
         yield return new WaitForSeconds(damageColorTime);
         sprite.color = normalColor;
         attacked = false;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+      
+        var danger = collision.collider.GetComponent<Danger>();
+        if (danger) {
+            timer += Time.deltaTime;
+            if (timer >= delayInSeconds) 
+            {
+                Debug.Log(timer);
+                GetDamage(danger.Damage);
+                if (stalagmitesCanThrowAway) this.Throw(transform.position, repulsiveForce);
+                timer = 0f;
+            }
+        } 
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        var danger = collision.collider.GetComponent<Danger>();
+        if (danger)
+            timer = delayInSeconds;
+    }
+
+    private void GetDamage(int damage)
+    {
+        this.Health -= damage;
+    }
+
+    IEnumerator Wait(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
     }
 }
