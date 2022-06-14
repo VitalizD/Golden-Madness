@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IStorage
 {
-    public static Player instanse = null;
+    public static Player Instanse { get; private set; } = null;
 
     [Header("Loading Parameters")]
     [SerializeField] private bool loadParameters = true;
@@ -308,9 +308,9 @@ public class Player : MonoBehaviour, IStorage
 
     private void Awake()
     {
-        if (instanse == null)
-            instanse = this;
-        else if (instanse == this)
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
             Destroy(gameObject);
 
         rigidBody2d = GetComponent<Rigidbody2D>();

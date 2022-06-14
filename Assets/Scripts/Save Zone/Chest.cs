@@ -46,7 +46,7 @@ public class Chest : MonoBehaviour
 
     private void Start()
     {
-        consumables = Player.instanse.GetComponent<Consumables>();
+        consumables = Player.Instanse.GetComponent<Consumables>();
     }
 
     private void Update()

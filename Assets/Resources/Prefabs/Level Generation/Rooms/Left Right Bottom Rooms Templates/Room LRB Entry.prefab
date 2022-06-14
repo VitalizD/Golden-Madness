@@ -363,6 +363,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
+--- !u!4 &5485767418154930230 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5746124757636429390, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
+  m_PrefabInstance: {fileID: 260938724575438456}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &283139919485190079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1957,6 +1962,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8158967579811058574, guid: cf154e8afd19a9642a1246620b51ff77, type: 3}
+      propertyPath: spawnPointPlayer
+      value: 
+      objectReference: {fileID: 5485767418154930230}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf154e8afd19a9642a1246620b51ff77, type: 3}
 --- !u!4 &7883508397490966503 stripped

@@ -113,7 +113,7 @@ public class ResourcesController : MonoBehaviour
 
     private void Start()
     {
-        playerBackpack = Player.instanse.GetComponent<Backpack>();
+        playerBackpack = Player.Instanse.GetComponent<Backpack>();
 
         var icons = SpritesStorage.instanse;
         resourcesInfo = new Dictionary<ResourceTypes, ResourceInfo>

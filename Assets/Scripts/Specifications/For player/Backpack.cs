@@ -40,17 +40,17 @@ public class Backpack : MonoBehaviour, IStorage
     {
         if (currentFullness >= maxCapacity)
         {
-            Player.instanse.Say(cannotTakePhrase, 2f);
+            Player.Instanse.Say(cannotTakePhrase, 2f);
             return;
         }
 
         ++currentFullness;
         ++resourcesCounts[resource];
 
-        if (IsFull()) Player.instanse.Speed = Player.instanse.DefaultSpeed * FullInventorySpeedMultiplier;
+        if (IsFull()) Player.Instanse.Speed = Player.Instanse.DefaultSpeed * FullInventorySpeedMultiplier;
 
         if (currentFullness == maxCapacity)
-            Player.instanse.Say(fullInventoryPhrase, 4f);
+            Player.Instanse.Say(fullInventoryPhrase, 4f);
 
         if (currentFullness <= maxCapacity)
             ResourcesController.instanse.ShowOneResource(resource);
@@ -72,7 +72,7 @@ public class Backpack : MonoBehaviour, IStorage
 
     public void Clear()
     {
-        Player.instanse.Speed = Player.instanse.DefaultSpeed;
+        Player.Instanse.Speed = Player.Instanse.DefaultSpeed;
         currentFullness = 0;
         resourcesCounts = new Dictionary<ResourceTypes, int>
         {

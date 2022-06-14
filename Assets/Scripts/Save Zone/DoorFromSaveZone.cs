@@ -67,7 +67,7 @@ public class DoorFromSaveZone : MonoBehaviour
                 CameraController.instanse.EnableMoving = true;
                 CameraController.instanse.transform.position = exitPosition;
                 CameraController.instanse.Size = normalCameraSize;
-                Player.instanse.GetComponent<SanityController>().DecreasingEnabled = true;
+                Player.Instanse.GetComponent<SanityController>().DecreasingEnabled = true;
             }
 
             CanBeUsed = false;

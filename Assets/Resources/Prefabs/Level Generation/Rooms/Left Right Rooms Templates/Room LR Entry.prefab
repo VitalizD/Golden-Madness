@@ -370,6 +370,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6595441263758408677, guid: 8dce605c9c00bd94082f05e721b06b01, type: 3}
+      propertyPath: spawnPointPlayer
+      value: 
+      objectReference: {fileID: 6959643341934834531}
     - target: {fileID: 2021848999952800299, guid: 8dce605c9c00bd94082f05e721b06b01, type: 3}
       propertyPath: m_Name
       value: Room LR Entry
@@ -1183,6 +1187,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
+--- !u!4 &6959643341934834531 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5746124757636429390, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
+  m_PrefabInstance: {fileID: 3399031050113844525}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3409821819004635793
 PrefabInstance:
   m_ObjectHideFlags: 0

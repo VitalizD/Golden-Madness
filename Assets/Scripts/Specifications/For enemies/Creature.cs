@@ -40,7 +40,7 @@ public class Creature : MonoBehaviour
             else
             {
                 attacked = true;
-                ChangeDirectionTowards(Player.instanse.transform.position);
+                ChangeDirectionTowards(Player.Instanse.transform.position);
                 sprite.color = damageColor;
                 child?.ReactToAttack();
                 StartCoroutine(SetNormalColor());

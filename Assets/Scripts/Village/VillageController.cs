@@ -93,7 +93,7 @@ public class VillageController : MonoBehaviour, IStorage
 
     private void SetPlayerParameters()
     {
-        var player = Player.instanse;
+        var player = Player.Instanse;
         player.Load();
         player.Health = 100;
         player.PickaxeStrength = 100f;

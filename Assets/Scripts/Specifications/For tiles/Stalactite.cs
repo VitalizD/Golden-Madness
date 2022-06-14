@@ -24,7 +24,7 @@ public class Stalactite : MonoBehaviour
 
     public void Active(float timeBeforeFalling)
     {
-        if (!LevelGeneration.Instanse.IsGenerated)
+        if (LevelGeneration.Instanse.IsGenerated)
             StartCoroutine(Fall(timeBeforeFalling));
     }
 
@@ -39,7 +39,7 @@ public class Stalactite : MonoBehaviour
 
     private void Start()
     {
-        player = Player.instanse.transform;
+        player = Player.Instanse.transform;
     }
 
     private void OnDrawGizmosSelected()

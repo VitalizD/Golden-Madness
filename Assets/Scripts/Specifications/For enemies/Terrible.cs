@@ -17,8 +17,8 @@ public class Terrible : MonoBehaviour
     {
         if (playerInArea)
         {
-            if (Player.instanse != null)
-                Player.instanse.GetComponent<SanityController>().DecreasingSanity -= decreasingSanityInArea;
+            if (Player.Instanse != null)
+                Player.Instanse.GetComponent<SanityController>().DecreasingSanity -= decreasingSanityInArea;
             playerInArea = false;
         }
     }
@@ -30,7 +30,7 @@ public class Terrible : MonoBehaviour
 
     private void Start()
     {
-        sanity = Player.instanse.GetComponent<SanityController>();
+        sanity = Player.Instanse.GetComponent<SanityController>();
     }
 
     private void OnDrawGizmosSelected()

@@ -40,7 +40,8 @@ public class LevelGeneration : MonoBehaviour
 
     private Direction[] directionsWithoutLeft;
     private Direction[] directionsWithoutRight;
-    private Direction directionValue;
+    private Direction currentDirection;
+    private Vector2 spawnPointPlayer;
     private bool isGenerated = false;
     private bool onFirstRoom = true;
     private int bottomCounter = 0;
@@ -78,8 +79,9 @@ public class LevelGeneration : MonoBehaviour
     {
         transform.position = startPositions[Random.Range(0, startPositions.Length)].position;
         GenerateRoom(GetRandomRoomFrom(entryRooms));
-        directionValue = GetRandomDirectionFrom(directions);
-        StartCoroutine(GenerateNext());
+        spawnPointPlayer = GetCurrentRoomInfo().SpawnPointPlayer.position;
+        currentDirection = GetRandomDirectionFrom(directions);
+        StartCoroutine(Move());
     }
 
     private void OnDrawGizmosSelected()
@@ -87,9 +89,12 @@ public class LevelGeneration : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, roomDetectionRadius);
     }
 
-    private void Move()
+    private IEnumerator Move()
     {
-        if (directionValue == Direction.Right) // Move right
+        yield return new WaitForSeconds(timeBetweenRooms);
+        var wayIsGeneratred = false;
+
+        if (currentDirection == Direction.Right) // Move right
         {
             if (transform.position.x < maxX)
             {
@@ -97,12 +102,12 @@ public class LevelGeneration : MonoBehaviour
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x + moveAmount, transform.position.y);
                 GenerateRoom(GetRandomRoomFrom(rooms));
-                directionValue = GetRandomDirectionFrom(directionsWithoutLeft);
+                currentDirection = GetRandomDirectionFrom(directionsWithoutLeft);
             }
             else
-                directionValue = Direction.Bottom;
+                currentDirection = Direction.Bottom;
         }
-        else if (directionValue == Direction.Left) // Move left
+        else if (currentDirection == Direction.Left) // Move left
         {
             if (transform.position.x > minX)
             {
@@ -110,12 +115,12 @@ public class LevelGeneration : MonoBehaviour
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x - moveAmount, transform.position.y);
                 GenerateRoom(GetRandomRoomFrom(rooms));
-                directionValue = GetRandomDirectionFrom(directionsWithoutRight);
+                currentDirection = GetRandomDirectionFrom(directionsWithoutRight);
             }
             else
-                directionValue = Direction.Bottom;
+                currentDirection = Direction.Bottom;
         }
-        else if (directionValue == Direction.Bottom) // Move bottom
+        else if (currentDirection == Direction.Bottom) // Move bottom
         {
             ++bottomCounter;
 
@@ -146,7 +151,7 @@ public class LevelGeneration : MonoBehaviour
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x, transform.position.y - moveAmount);
                 GenerateRoom(rooms[Random.Range(2, 4)]); // LRT, LRTB
-                directionValue = GetRandomDirectionFrom(directions);
+                currentDirection = GetRandomDirectionFrom(directions);
             }
             else
             {
@@ -154,13 +159,13 @@ public class LevelGeneration : MonoBehaviour
                 currentRoom.Remove();
                 GenerateRoom(exitRooms[(int)currentRoom.Type]);
 
-                isGenerated = true;
-                foreach (var roomSpawner in roomSpawners)
-                    roomSpawner.Spawn(rooms, roomMask, roomDetectionRadius);
-
-                StartCoroutine(GenerateSaveZones());
+                wayIsGeneratred = true;
+                StartCoroutine(GenerateRandomRooms());
             }
         }
+
+        if (!wayIsGeneratred)
+            StartCoroutine(Move());
     }
 
     private Direction GetRandomDirectionFrom(Direction[] array) => array[Random.Range(0, array.Length)];
@@ -170,6 +175,16 @@ public class LevelGeneration : MonoBehaviour
     private void GenerateRoom(GameObject room) => Instantiate(room, transform.position, Quaternion.identity);
 
     private RoomInfo GetCurrentRoomInfo() => Physics2D.OverlapCircle(transform.position, roomDetectionRadius, roomMask).GetComponent<RoomInfo>();
+
+    private IEnumerator GenerateRandomRooms()
+    {
+        foreach (var roomSpawner in roomSpawners)
+        {
+            yield return new WaitForSeconds(timeBetweenRooms);
+            roomSpawner.Spawn(rooms, roomMask, roomDetectionRadius);
+        }
+        StartCoroutine(GenerateSaveZones());
+    }
 
     private IEnumerator GenerateSaveZones()
     {
@@ -186,13 +201,14 @@ public class LevelGeneration : MonoBehaviour
                 GenerateRoom(saveZoneRooms[(int)currentRoom.Type]);
             }
         }
+
+        yield return new WaitForSeconds(timeBetweenRooms);
+        FinishGeneration();
     }
 
-    private IEnumerator GenerateNext()
+    private void FinishGeneration()
     {
-        yield return new WaitForSeconds(timeBetweenRooms);
-        Move();
-        if (!isGenerated)
-            StartCoroutine(GenerateNext());
+        isGenerated = true;
+        Player.Instanse.transform.position = spawnPointPlayer;
     }
 }

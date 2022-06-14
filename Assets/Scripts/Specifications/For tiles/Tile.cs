@@ -56,7 +56,7 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
-        //selection = GameObject.Find("Selection").GetComponent<Selection>();
+        selection = GameObject.FindGameObjectWithTag(ServiceInfo.SelectionTag).GetComponent<Selection>();
         maxHealth = health;
         animation_ = GetComponent<Animation>();
 
@@ -66,7 +66,7 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
-        player = Player.instanse;
+        player = Player.Instanse;
 
         //var tileDetection = Physics2D.OverlapCircle(transform.position, 0.001f, groundMask);
         //if (tileDetection != null)
@@ -88,7 +88,7 @@ public class Tile : MonoBehaviour
     {
         StopDigging();
         if (selection != null)
-            selection.gameObject.SetActive(false);
+            selection.SetActive(false);
         if (player != null)
             player.RemoveSelectedTile();
     }
@@ -106,11 +106,11 @@ public class Tile : MonoBehaviour
         if (!isBedrock && IsSelectionInTouchingDistance())
         {
             selection.Move(transform.position);
-            selection.gameObject.SetActive(true);
+            selection.SetActive(true);
             player.SetSelectedTile(this);
         }
         else {
-            selection.gameObject.SetActive(false);
+            selection.SetActive(false);
             player.RemoveSelectedTile();
         }
 
@@ -134,7 +134,7 @@ public class Tile : MonoBehaviour
 
         StopDigging();
         if (selection != null)
-            selection.gameObject.SetActive(false);
+            selection.SetActive(false);
     }
 
     private void StopDigging()
@@ -145,8 +145,11 @@ public class Tile : MonoBehaviour
             selection.SetNormalColor();
     }
 
-    private bool IsSelectionInTouchingDistance() {
-        if (isBedrock) { return false; }
+    private bool IsSelectionInTouchingDistance()
+    {
+        if (isBedrock)
+            return false;
+
         var referencePoint = new Vector2(player.transform.position.x, player.transform.position.y);
         var distance = Vector2.Distance(transform.position, referencePoint);
         return distance < player.TouchingDistance;

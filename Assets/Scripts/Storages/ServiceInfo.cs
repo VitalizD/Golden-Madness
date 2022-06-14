@@ -12,6 +12,7 @@ public static class ServiceInfo
     public static string GameOverTag { get; } = "Game Over";
     public static string RedFilterTag { get; } = "Red Filter";
     public static string GroundTag { get; } = "Ground";
+    public static string SelectionTag { get; } = "Selection";
 
     public static string VillageScene { get; } = "Village";
     public static string TutorialLevel { get; } = "TutorialLevel";

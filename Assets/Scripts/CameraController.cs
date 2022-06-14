@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {    
         if (!player)
-            player = Player.instanse.transform;
+            player = Player.Instanse.transform;
     }
 
     private void Update()

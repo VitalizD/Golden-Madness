@@ -41,8 +41,8 @@ public class Teleporter : MonoBehaviour
         this.actionAfterLightening = actionAfterLightening;
         state = States.Darkening;
 
-        if (Player.instanse != null)
-            Player.instanse.SetStun(maxStunPlayerTime - fadeSpeed);
+        if (Player.Instanse != null)
+            Player.Instanse.SetStun(maxStunPlayerTime - fadeSpeed);
     }
 
     public void Stop()
@@ -105,8 +105,8 @@ public class Teleporter : MonoBehaviour
 
     private void Teleport()
     {
-        if (toPosition != Vector2.zero && Player.instanse != null)
-            Player.instanse.transform.position = toPosition;
+        if (toPosition != Vector2.zero && Player.Instanse != null)
+            Player.Instanse.transform.position = toPosition;
 
         actionAfterTransition?.Invoke();
         actionAfterTransition = null;

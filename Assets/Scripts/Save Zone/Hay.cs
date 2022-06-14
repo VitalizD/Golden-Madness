@@ -30,7 +30,7 @@ public class Hay : MonoBehaviour
 
     private void Start()
     {
-        dialogWindow = Player.instanse.transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
+        dialogWindow = Player.Instanse.transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
     }
 
     private void Update()
@@ -39,7 +39,7 @@ public class Hay : MonoBehaviour
         {
             void action()
             {
-                Player.instanse.Sleep();
+                Player.Instanse.Sleep();
                 dialogWindow.gameObject.SetActive(true);
                 dialogWindow.Show("Tеперь я чувствую себя бодрым", 4);
 
@@ -47,7 +47,7 @@ public class Hay : MonoBehaviour
             }
 
             CanBeUsed = false;
-            teleporter.Go(Player.instanse.transform.position, action, fadeSpeed);
+            teleporter.Go(Player.Instanse.transform.position, action, fadeSpeed);
         }
     }
 }

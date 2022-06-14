@@ -31,11 +31,11 @@ public class TutorialCheckpoint : MonoBehaviour
         if (informationText != "" && InformationWindow.instance)
             InformationWindow.instance.Show(informationText, funcCondition);
 
-        Player.instanse.Checkpoint = transform.position;
+        Player.Instanse.Checkpoint = transform.position;
 
         if (playerWords != "")
         {
-            var dialogWindowObj = Player.instanse.transform.GetChild(2);
+            var dialogWindowObj = Player.Instanse.transform.GetChild(2);
             if (dialogWindowObj)
             {
                 dialogWindowObj.gameObject.SetActive(true);

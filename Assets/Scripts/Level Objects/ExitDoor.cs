@@ -40,8 +40,8 @@ public class ExitDoor : MonoBehaviour
 
             CanBeUsed = false;
             ServiceInfo.CheckpointConditionDone = true; // Для обучения
-            Player.instanse.Save();
-            teleporter.Go(Player.instanse.transform.position, action, fadeSpeed);
+            Player.Instanse.Save();
+            teleporter.Go(Player.Instanse.transform.position, action, fadeSpeed);
 
             InterestialAd.Show();
         }

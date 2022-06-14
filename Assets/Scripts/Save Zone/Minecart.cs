@@ -37,7 +37,7 @@ public class Minecart : MonoBehaviour
     {
         if (trigger.IsTriggered && Input.GetKeyDown(KeyCode.E) && canBeUsed)
         {
-            var backpack = Player.instanse.GetComponent<Backpack>();
+            var backpack = Player.Instanse.GetComponent<Backpack>();
             ResourcesSaver.AddInVillage(backpack.GetAll());
             backpack.Clear();
 

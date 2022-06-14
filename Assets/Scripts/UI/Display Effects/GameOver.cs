@@ -25,12 +25,12 @@ public class GameOver : MonoBehaviour
     {
         VideoAd.Show();
         GameOverAd.SetActive(false);
-        Player.instanse.ViewedAd();
+        Player.Instanse.ViewedAd();
     }
 
     public void ShowAndReturnToVillage()
     {
-        Player.instanse.NonViewedAd();
+        Player.Instanse.NonViewedAd();
         GameOverAd.SetActive(false);
         text.enabled = true;
         animation_.Play(showAnimationName);
@@ -52,7 +52,7 @@ public class GameOver : MonoBehaviour
         void action() 
         { 
             sceneChanger.ChangeScene();
-            Player.instanse.gameObject.SetActive(true);
+            Player.Instanse.gameObject.SetActive(true);
             text.enabled = false;
         }
         teleporter.Go(new Vector2(), action, fadeSpeed);
