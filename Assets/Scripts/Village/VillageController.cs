@@ -88,6 +88,7 @@ public class VillageController : MonoBehaviour, IStorage
             }
         }
 
+        PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelNumber, 0);
         SetPlayerParameters();
     }
 

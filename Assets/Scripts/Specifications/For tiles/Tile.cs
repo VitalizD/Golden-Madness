@@ -198,7 +198,7 @@ public class Tile : MonoBehaviour
                 var stalactite = attachedComponent.GetComponent<Stalactite>();
                 var tile = attachedComponent.GetComponent<Tile>();
 
-                if (tile != null)
+                if (tile != null && (LevelGeneration.Instanse == null || LevelGeneration.Instanse.IsGenerated))
                     AddResourceToBackpack(tile.ResourceType);
 
                 if (stalactite != null)

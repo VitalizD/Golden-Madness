@@ -6,6 +6,8 @@ public class OreSpawner : MonoBehaviour
     private void Start()
     {
         var levelGen = LevelGeneration.Instanse;
+        if (levelGen == null)
+            return;
 
         var random = Random.Range(0f, 1f);
         if (random > levelGen.SpawnOreChance)

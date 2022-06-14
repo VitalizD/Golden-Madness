@@ -2173,6 +2173,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1529438411073486972, guid: d31dd13b8e280e64784be456ca12dad6, type: 3}
+      propertyPath: leftLimit
+      value: 4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529438411073486972, guid: d31dd13b8e280e64784be456ca12dad6, type: 3}
       propertyPath: rightLimit
       value: 7.64
       objectReference: {fileID: 0}
@@ -2559,6 +2563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeUsed: 1
   fadeSpeed: 0.7
+  nameLevelPrefix: Level
 --- !u!114 &1723276615
 MonoBehaviour:
   m_ObjectHideFlags: 0

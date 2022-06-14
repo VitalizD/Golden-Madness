@@ -5,6 +5,8 @@ public class ExitDoor : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
     [SerializeField] private float fadeSpeed = 0.7f;
+    [SerializeField] private string nameLevelPrefix = "Level";
+    [SerializeField] private string nextScene = "";
 
     private Teleporter teleporter;
     private SceneChanger sceneChanger;
@@ -33,15 +35,23 @@ public class ExitDoor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && trigger.IsTriggered && canBeUsed && teleporter.State == Teleporter.States.Stayed) 
         {
+            var currentLevel = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelNumber, 1);
+            var currentChapter = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentChapter, 1);
+            ++currentLevel;
+            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelNumber, currentLevel);
+
             void action()
             {
-                sceneChanger.ChangeScene();
+                if (nextScene == "")
+                    sceneChanger.ChangeScene($"{nameLevelPrefix} {currentChapter}.{currentLevel}");
+                else
+                    sceneChanger.ChangeScene(nextScene);
             }
 
             CanBeUsed = false;
             ServiceInfo.CheckpointConditionDone = true; // Для обучения
             Player.Instanse.Save();
-            teleporter.Go(Player.Instanse.transform.position, action, fadeSpeed);
+            teleporter.Go(action, fadeSpeed);
 
             InterestialAd.Show();
         }

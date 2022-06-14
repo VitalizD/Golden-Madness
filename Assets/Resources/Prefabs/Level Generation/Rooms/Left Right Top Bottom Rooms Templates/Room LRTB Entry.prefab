@@ -52,6 +52,37 @@ MonoBehaviour:
   - {fileID: 8623328712443880558, guid: feb86b793539b32468165bc08997d8ff, type: 3}
   - {fileID: 4709660431510415003, guid: 1362d88fecbb3d243b57a42a3be7539f, type: 3}
   - {fileID: 4709660431510415003, guid: 1362d88fecbb3d243b57a42a3be7539f, type: 3}
+--- !u!1 &2896136474150642266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7337921034555450582}
+  m_Layer: 8
+  m_Name: SP Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7337921034555450582
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896136474150642266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8740100455060902017}
+  m_RootOrder: 57
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5905320915543872639
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,11 +710,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5746124757636429390, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.011396885
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5746124757636429390, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.9812126
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5746124757636429390, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -719,11 +750,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
---- !u!4 &6077088820281905201 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5746124757636429390, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
-  m_PrefabInstance: {fileID: 2010995841956423295}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2187482182552091398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1760,7 +1786,7 @@ PrefabInstance:
     - target: {fileID: -930687445322154590, guid: 63175b53b6109c64a904d99b13b6b7c6, type: 3}
       propertyPath: spawnPointPlayer
       value: 
-      objectReference: {fileID: 6077088820281905201}
+      objectReference: {fileID: 7337921034555450582}
     - target: {fileID: 2357713990100392953, guid: 63175b53b6109c64a904d99b13b6b7c6, type: 3}
       propertyPath: m_RootOrder
       value: 0

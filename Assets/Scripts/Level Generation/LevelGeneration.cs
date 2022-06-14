@@ -202,7 +202,7 @@ public class LevelGeneration : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(timeBetweenRooms);
+        yield return new WaitForSeconds(timeBetweenRooms + 0.1f);
         FinishGeneration();
     }
 
