@@ -43,7 +43,12 @@ public class ExitDoor : MonoBehaviour
             void action()
             {
                 if (nextScene == "")
-                    sceneChanger.ChangeScene($"{nameLevelPrefix} {currentChapter}.{currentLevel}");
+                {
+                    if (currentLevel < 6)
+                        sceneChanger.ChangeScene($"{nameLevelPrefix} {currentChapter}.{currentLevel}");
+                    else
+                        sceneChanger.ChangeScene(ServiceInfo.VillageScene);
+                }
                 else
                     sceneChanger.ChangeScene(nextScene);
             }
