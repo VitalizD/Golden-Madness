@@ -102,14 +102,15 @@ public class Tile : MonoBehaviour
     {
         if (selection == null || player == null)
             return;
-        /*Debug.Log(isSelectionInTouchingDistance());*/
+
         if (!isBedrock && IsSelectionInTouchingDistance())
         {
             selection.Move(transform.position);
             selection.SetActive(true);
             player.SetSelectedTile(this);
         }
-        else {
+        else
+        {
             selection.SetActive(false);
             player.RemoveSelectedTile();
         }
@@ -157,7 +158,7 @@ public class Tile : MonoBehaviour
 
     private void CheckDistance()
     {
-        if (isBedrock || player.State != States.Idle)
+        if (isBedrock || player.State == States.Dig || player.State == States.Attack || player.State == States.Pain)
             return;
 
         var referencePoint = new Vector2(player.transform.position.x, player.transform.position.y);
