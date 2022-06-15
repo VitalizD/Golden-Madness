@@ -156,7 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9effe401df66c43418c507bdba7ef8d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCount: 5
   fuelTanksCount: 0
   fuelTanks: {fileID: 0}
   grindstonesCount: 0
@@ -195,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCapacity: 20
   currentFullness: 0
+  fullInventorySpeedMultiplier: 0.85
   fullInventoryPhrase: "\u041C\u043E\u0439 \u0440\u044E\u043A\u0437\u0430\u043A \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D!"
   cannotTakePhrase: "\u042F \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0443\u043D\u0435\u0441\u0443!"
 --- !u!114 &1926600330374022812
@@ -225,6 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 0}
   sp: {fileID: 0}
+  sanityController: {fileID: 0}
 --- !u!114 &6458866122718615110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +291,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8543eb46b467c3a48bd8477187eaad6e, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
