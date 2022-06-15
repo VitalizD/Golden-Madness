@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1477855920894126917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6004183769894735970}
+  m_Layer: 8
+  m_Name: SP Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6004183769894735970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477855920894126917}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.04, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1901940706802464546}
+  m_RootOrder: 71
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3546124390452899553
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +404,7 @@ PrefabInstance:
     - target: {fileID: -6595441263758408677, guid: 8dce605c9c00bd94082f05e721b06b01, type: 3}
       propertyPath: spawnPointPlayer
       value: 
-      objectReference: {fileID: 6959643341934834531}
+      objectReference: {fileID: 6004183769894735970}
     - target: {fileID: 2021848999952800299, guid: 8dce605c9c00bd94082f05e721b06b01, type: 3}
       propertyPath: m_Name
       value: Room LR Entry
@@ -1187,11 +1218,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
---- !u!4 &6959643341934834531 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5746124757636429390, guid: 9de6878b51829ca47b993251013b73d6, type: 3}
-  m_PrefabInstance: {fileID: 3399031050113844525}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3409821819004635793
 PrefabInstance:
   m_ObjectHideFlags: 0

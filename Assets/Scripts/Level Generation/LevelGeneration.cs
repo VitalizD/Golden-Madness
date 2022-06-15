@@ -78,8 +78,7 @@ public class LevelGeneration : MonoBehaviour
     private void Start()
     {
         transform.position = startPositions[Random.Range(0, startPositions.Length)].position;
-        GenerateRoom(GetRandomRoomFrom(entryRooms));
-        spawnPointPlayer = GetCurrentRoomInfo().SpawnPointPlayer.position;
+        GenerateEntryRoom(GetRandomRoomFrom(entryRooms));
         currentDirection = GetRandomDirectionFrom(directions);
         StartCoroutine(Move());
     }
@@ -145,7 +144,7 @@ public class LevelGeneration : MonoBehaviour
                     if (!onFirstRoom)
                         GenerateRoom(neededRoom);
                     else
-                        GenerateRoom(entryRooms[(int)neededRoom.GetComponent<RoomInfo>().Type]);
+                        GenerateEntryRoom(entryRooms[(int)neededRoom.GetComponent<RoomInfo>().Type]);
                 }
 
                 onFirstRoom = false;
@@ -166,6 +165,12 @@ public class LevelGeneration : MonoBehaviour
 
         if (!wayIsGeneratred)
             StartCoroutine(Move());
+    }
+
+    private void GenerateEntryRoom(GameObject room)
+    {
+        GenerateRoom(room);
+        spawnPointPlayer = GetCurrentRoomInfo().SpawnPointPlayer.position;
     }
 
     private Direction GetRandomDirectionFrom(Direction[] array) => array[Random.Range(0, array.Length)];
