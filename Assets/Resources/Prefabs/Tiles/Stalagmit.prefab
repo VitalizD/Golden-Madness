@@ -51,7 +51,7 @@ EdgeCollider2D:
   m_EdgeRadius: 0
   m_Points:
   - {x: -0.20903617, y: 0.1058546}
-  - {x: 0.27315614, y: 0.1051586}
+  - {x: 0.25496957, y: 0.1051586}
   m_AdjacentStartPoint: {x: 0.24, y: 0.35}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1fb31dae0427f42bb3790f2c56afe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceX: 15
+  forceX: 8
   forceY: 9
 --- !u!1001 &500106696254564714
 PrefabInstance:
@@ -90,6 +90,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3766323893367269293, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4482244365625360364, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_FlipX
       value: 0
@@ -144,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4532311684490593640, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6138516677227342361, guid: 36fb0196d0a1b3749ba28db00e383855, type: 3}
       propertyPath: m_Size.x
