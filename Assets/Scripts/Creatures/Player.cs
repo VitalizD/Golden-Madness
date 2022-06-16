@@ -387,7 +387,7 @@ public class Player : MonoBehaviour, IStorage
 
     private void LateUpdate()
     {
-        dialogWindow.transform.localScale = new Vector3(scaleX, 1, 1);
+        dialogWindow.transform.localScale = new Vector3(scaleX > 0 ? 1 : -1, 1, 1);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -413,7 +413,7 @@ public class Player : MonoBehaviour, IStorage
     private void OnAttack()
     {
         //var raycastHits = Physics2D.RaycastAll(transform.position, transform.right * (sprite.flipX ? -1 : 1), attackDistance, enemiesMask);
-        var hits = Physics2D.OverlapCapsuleAll(attackPoint.position, attackDistanse, CapsuleDirection2D.Vertical, 0, enemiesMask);
+        var hits = Physics2D.OverlapCapsuleAll(attackPoint.position, attackDistanse, CapsuleDirection2D.Horizontal, 0, enemiesMask);
 
         foreach (var raycastHit in hits)
         {
