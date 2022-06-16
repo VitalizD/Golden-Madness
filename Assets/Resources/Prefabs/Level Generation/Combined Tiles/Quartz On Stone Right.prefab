@@ -29,7 +29,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5141468480514437797}
-  - {fileID: 3212920313349029667}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -38,7 +37,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 914901669888912185}
+    m_TransformParent: {fileID: 2251643413017963917}
     m_Modifications:
     - target: {fileID: 988996899020285152, guid: 79a9aeef78e3b644d80f8e9553a701ee, type: 3}
       propertyPath: m_RootOrder
@@ -62,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 988996899020285152, guid: 79a9aeef78e3b644d80f8e9553a701ee, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 988996899020285152, guid: 79a9aeef78e3b644d80f8e9553a701ee, type: 3}
       propertyPath: m_LocalRotation.y
@@ -94,11 +93,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a9aeef78e3b644d80f8e9553a701ee, type: 3}
---- !u!4 &3212920313349029667 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 988996899020285152, guid: 79a9aeef78e3b644d80f8e9553a701ee, type: 3}
-  m_PrefabInstance: {fileID: 2391140303846185923}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8203704950402378939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,6 +150,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+--- !u!4 &2251643413017963917 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7991105301372748086, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  m_PrefabInstance: {fileID: 8203704950402378939}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5141468480514437797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3928054185583894046, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
