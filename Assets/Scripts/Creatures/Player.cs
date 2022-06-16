@@ -15,6 +15,7 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private CheckingForJump jumpCheckingPoint;
+    [SerializeField] private SpriteRenderer sprite;
     public HealthBar healthBar;
     public SanityBar sanityBar;
     public Text healthPacks;
@@ -25,8 +26,8 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private int minEnemyDamageInPercents = 60;
     [SerializeField] private float repulsiveForce;
     [SerializeField] private float jerkForce = 3f;
-    [SerializeField] private float attackTime = 0.3f;
-    [SerializeField] private float reloadAttackTime = 0.5f;
+    [SerializeField] private float attackTime = 0.5f;
+    [SerializeField] private float reloadAttackTime = 0.1f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
     [SerializeField] private Transform attackPoint;
@@ -46,7 +47,6 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100f)] private float sanityRecovery = 50f;
 
     private Rigidbody2D rigidBody2d;
-    private SpriteRenderer sprite;
     private Animator animator;
     private SanityController sanity;
     private Consumables consumables;
@@ -64,6 +64,7 @@ public class Player : MonoBehaviour, IStorage
     private float fixedZPosition;
     private float xAttackPoint;
     private float defaultSpeed;
+    private float scaleXValue;
 
     private float initialEnemyDamage;
     private float initialTileDamage;
@@ -310,7 +311,6 @@ public class Player : MonoBehaviour, IStorage
             Destroy(gameObject);
 
         rigidBody2d = GetComponent<Rigidbody2D>();
-        sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         sanity = GetComponent<SanityController>();
         consumables = GetComponent<Consumables>();
@@ -324,6 +324,7 @@ public class Player : MonoBehaviour, IStorage
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
         fixedZPosition = transform.position.z;
         xAttackPoint = attackPoint.localPosition.x;
+        scaleXValue = transform.localScale.x;
         defaultSpeed = speed;
 
         attackDistanse = attackPoint.GetComponent<CapsuleCollider2D>().size;
@@ -476,8 +477,10 @@ public class Player : MonoBehaviour, IStorage
 
         var dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-        sprite.flipX = dir.x < 0;
-        attackPoint.localPosition = sprite.flipX ? new Vector3(-xAttackPoint, attackPoint.localPosition.y, 5) : new Vector3(xAttackPoint, attackPoint.localPosition.y, 5);
+        var scaleX = dir.x < 0 ? -scaleXValue : scaleXValue;
+        transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+        //sprite.flipX = dir.x < 0;
+        //attackPoint.localPosition = sprite.flipX ? new Vector3(-xAttackPoint, attackPoint.localPosition.y, 5) : new Vector3(xAttackPoint, attackPoint.localPosition.y, 5);
     }
 
     private void Jump()
@@ -492,7 +495,7 @@ public class Player : MonoBehaviour, IStorage
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-        rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
+        //rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
 
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());
