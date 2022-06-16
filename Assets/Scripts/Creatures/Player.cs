@@ -346,7 +346,7 @@ public class Player : MonoBehaviour, IStorage
 
     private void Update()
     {
-        if (jumpCheckingPoint.CanJump && !isStunned && Input.GetButtonDown("Jump"))
+        if (jumpCheckingPoint.CanJump && !isStunned && (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W)))
             Jump();
 
         if (canAttack && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
