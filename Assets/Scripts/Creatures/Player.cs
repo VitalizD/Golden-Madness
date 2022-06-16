@@ -65,6 +65,7 @@ public class Player : MonoBehaviour, IStorage
     private float xAttackPoint;
     private float defaultSpeed;
     private float scaleXValue;
+    private float scaleX;
 
     private float initialEnemyDamage;
     private float initialTileDamage;
@@ -384,6 +385,11 @@ public class Player : MonoBehaviour, IStorage
             Run();
     }
 
+    private void LateUpdate()
+    {
+        dialogWindow.transform.localScale = new Vector3(scaleX, 1, 1);
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (invulnerability)
@@ -477,7 +483,7 @@ public class Player : MonoBehaviour, IStorage
 
         var dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-        var scaleX = dir.x < 0 ? -scaleXValue : scaleXValue;
+        scaleX = dir.x < 0 ? -scaleXValue : scaleXValue;
         transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
         //sprite.flipX = dir.x < 0;
         //attackPoint.localPosition = sprite.flipX ? new Vector3(-xAttackPoint, attackPoint.localPosition.y, 5) : new Vector3(xAttackPoint, attackPoint.localPosition.y, 5);
