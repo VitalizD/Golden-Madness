@@ -387,7 +387,7 @@ public class Player : MonoBehaviour, IStorage
 
     private void LateUpdate()
     {
-        dialogWindow.transform.localScale = new Vector3(scaleX > 0 ? 1 : -1, 1, 1);
+        dialogWindow.transform.localScale = new Vector3(scaleX >= 0 ? 1 : -1, 1, 1);
     }
 
     private void OnCollisionStay2D(Collision2D collision)

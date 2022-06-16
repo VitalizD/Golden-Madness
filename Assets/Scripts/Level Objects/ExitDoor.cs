@@ -45,19 +45,17 @@ public class ExitDoor : MonoBehaviour
                 if (nextScene == "")
                 {
                     if (currentLevel < 6)
+                    {
+                        var backpack = Player.Instanse.GetComponent<Backpack>();
+                        ResourcesSaver.AddInVillage(backpack.GetAll());
+                        backpack.Clear();
                         sceneChanger.ChangeScene($"{nameLevelPrefix} {currentChapter}.{currentLevel}");
+                    }
                     else
                         sceneChanger.ChangeScene(ServiceInfo.VillageScene);
                 }
                 else
                     sceneChanger.ChangeScene(nextScene);
-            }
-
-            if (sceneChanger.SceneName == ServiceInfo.VillageScene)
-            {
-                var backpack = Player.Instanse.GetComponent<Backpack>();
-                ResourcesSaver.AddInVillage(backpack.GetAll());
-                backpack.Clear();
             }
 
             CanBeUsed = false;
