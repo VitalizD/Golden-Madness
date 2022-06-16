@@ -11,6 +11,7 @@ public class Paused : MonoBehaviour
     [SerializeField] private GameObject control;
     [SerializeField] private GameObject exitMenu;
     [SerializeField] private float fadeSpeed = 0.7f;
+    [SerializeField] private ColorButton[] buttons;
 
     private SpriteRenderer selection;
 
@@ -44,6 +45,11 @@ public class Paused : MonoBehaviour
         pause.SetActive(false);
         Time.timeScale = 1f;
         gameIsPause = false;
+
+        foreach (var button in buttons)
+        {
+            button.InitColor();
+        }
     }
 
     public void Pause()

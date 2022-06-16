@@ -18,14 +18,26 @@ public class Teleporter : MonoBehaviour
 
     private float fadeSpeed = 1.2f;
     private float alphaInterpolation = 0;
-    private States state = States.Stayed;
+    private States currentState = States.Stayed;
+    private States lastState = States.Stayed;
     private Vector2 toPosition;
     private Action actionAfterTransition;
     private Action actionAfterLightening;
 
     private Image blackFilterImage;
 
-    public States State { get => state; }
+    public States State { get => currentState; }
+
+    public void Pause()
+    {
+        lastState = currentState;
+        currentState = States.Stayed;
+    }
+
+    public void Resume()
+    {
+        currentState = States.Lightening;
+    }
 
     public void Go(Vector2 to, Action actionAfterTransition, float fadeSpeed, Action actionAfterLightening = null)
     {
@@ -39,7 +51,7 @@ public class Teleporter : MonoBehaviour
         this.fadeSpeed = fadeSpeed;
         this.actionAfterTransition = actionAfterTransition;
         this.actionAfterLightening = actionAfterLightening;
-        state = States.Darkening;
+        currentState = States.Darkening;
 
         if (Player.Instanse != null)
             Player.Instanse.SetStun(maxStunPlayerTime - fadeSpeed);
@@ -47,7 +59,7 @@ public class Teleporter : MonoBehaviour
 
     public void Stop()
     {
-        state = States.Stayed;
+        currentState = States.Stayed;
         blackFilterImage.enabled = false;
         alphaInterpolation = 0;
         blackFilterImage.color = new Color(blackFilterImage.color.r, blackFilterImage.color.g, blackFilterImage.color.b, 0);
@@ -75,24 +87,24 @@ public class Teleporter : MonoBehaviour
 
     private void ChangeAlpha()
     {
-        if (state != States.Stayed)
+        if (currentState != States.Stayed)
         {
             var delta = Time.deltaTime * fadeSpeed;
 
-            if (state == States.Darkening && alphaInterpolation < 1)
+            if (currentState == States.Darkening && alphaInterpolation < 1)
             {
                 alphaInterpolation += delta;
 
                 if (alphaInterpolation >= 1)
                     Teleport();
             }
-            else if (state == States.Lightening && alphaInterpolation > 0)
+            else if (currentState == States.Lightening && alphaInterpolation > 0)
             {
                 alphaInterpolation -= delta;
 
                 if (alphaInterpolation <= 0)
                 {
-                    state = States.Stayed;
+                    currentState = States.Stayed;
                     blackFilterImage.enabled = false;
                     actionAfterLightening?.Invoke();
                 }
@@ -110,7 +122,7 @@ public class Teleporter : MonoBehaviour
 
         actionAfterTransition?.Invoke();
         actionAfterTransition = null;
-        state = States.Lightening;
+        currentState = States.Lightening;
         toPosition = Vector2.zero;
     }
 }

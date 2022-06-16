@@ -4,22 +4,29 @@ using UnityEngine.EventSystems;
 
 public class ColorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private Color highlighted;
 
-    public Color Highlighted;
-    private Color Normal;
+    private Text text;
+    private Color normal;
 
-    void Start()
+    private void Awake()
     {
-        Normal = GetComponentInChildren<Text>().color;
+        text = GetComponentInChildren<Text>();
+        normal = text.color;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GetComponentInChildren<Text>().color = Highlighted;
+        text.color = highlighted;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        GetComponentInChildren<Text>().color = Normal;
+        InitColor();
+    }
+
+    public void InitColor()
+    {
+        text.color = normal;
     }
 }
