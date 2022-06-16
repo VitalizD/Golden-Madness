@@ -41,6 +41,8 @@ public class Tile : MonoBehaviour
             if (health <= 0)
             {
                 AddResourceToBackpack(resourceType);
+                if (destroyAttachedTiles)
+                    DestroyAttachedTiles();
                 Destroy(gameObject);
             }
             else
@@ -130,9 +132,6 @@ public class Tile : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (destroyAttachedTiles)
-            DestroyAttachedTiles();
-
         StopDigging();
         if (selection != null)
             selection.SetActive(false);
@@ -203,7 +202,10 @@ public class Tile : MonoBehaviour
                     AddResourceToBackpack(tile.ResourceType);
 
                 if (stalactite != null)
+                {
+                    stalactite.transform.SetParent(null);
                     stalactite.Active(0);
+                }
                 else
                     Destroy(attachedComponent.gameObject);
 
