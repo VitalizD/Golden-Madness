@@ -33,6 +33,14 @@ public class DoorToSaveZone : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
+    private void Start()
+    {
+        if (LevelGeneration.Instanse == null)
+            return;
+
+        doorFromSaveZone = LevelGeneration.Instanse.DoorFromSaveZone;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canBeUsed && trigger.IsTriggered && teleporter.State == Teleporter.States.Stayed)
@@ -42,7 +50,7 @@ public class DoorToSaveZone : MonoBehaviour
                 CameraController.instanse.EnableMoving = false;
                 CameraController.instanse.transform.position = doorFromSaveZone.CameraPosition;
                 CameraController.instanse.Size = doorFromSaveZone.CameraSizeInSaveZone;
-                Player.instanse.GetComponent<SanityController>().DecreasingEnabled = false;
+                Player.Instanse.GetComponent<SanityController>().DecreasingEnabled = false;
                 sprite.sprite = blockedDoorSprite;
             }
 

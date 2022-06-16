@@ -248,6 +248,9 @@ MonoBehaviour:
   isBedrock: 0
   destroyAttachedTiles: 1
   resourceType: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
   destructionDegrees:
   - {fileID: 21300000, guid: 36911eda0c7cfa045b67decc32734af0, type: 3}
   - {fileID: 21300000, guid: 00b75578567bcd04eb8355a532f16192, type: 3}

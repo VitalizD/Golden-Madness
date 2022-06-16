@@ -6,9 +6,11 @@ public class Stalactite : MonoBehaviour
     [SerializeField] private float rangeToActivate;
     [SerializeField] private float shakingRange;
     [SerializeField] private float shakingRate = 10f;
-    [SerializeField] private float timeBeforeFalling;
+    [SerializeField] private float timeBeforeFallingMin = 0.25f;
+    [SerializeField] private float timeBeforeFallingMax = 2f;
     [SerializeField] private int extraFallingDamage = 5;
     [SerializeField] private float repulsiveForce;
+    [SerializeField] private Transform raycastStartPoint;
 
     private Rigidbody2D rb;
     private Transform player;
@@ -24,7 +26,8 @@ public class Stalactite : MonoBehaviour
 
     public void Active(float timeBeforeFalling)
     {
-        StartCoroutine(Fall(timeBeforeFalling));
+        if (LevelGeneration.Instanse.IsGenerated)
+            StartCoroutine(Fall(timeBeforeFalling, timeBeforeFalling));
     }
 
     private void Awake()
@@ -38,7 +41,7 @@ public class Stalactite : MonoBehaviour
 
     private void Start()
     {
-        player = Player.instanse.transform;
+        player = Player.Instanse.transform;
     }
 
     private void OnDrawGizmosSelected()
@@ -53,11 +56,8 @@ public class Stalactite : MonoBehaviour
         if (isShaking)
             transform.position = new Vector2(Mathf.Lerp(leftBorderShaking, rightBorderShaking, Mathf.PingPong(Time.time * shakingRate, 1)), transform.position.y);
 
-        if (!isActive && 
-            player.position.x >= leftBorderTrigger && 
-            player.position.x <= rightBorderTrigger && 
-            player.position.y < transform.position.y)
-            StartCoroutine(Fall(timeBeforeFalling));
+        if (PlayerDetected())
+            StartCoroutine(Fall(timeBeforeFallingMin, timeBeforeFallingMax));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -82,12 +82,29 @@ public class Stalactite : MonoBehaviour
         StartCoroutine(Destroy());
     }
 
-    private IEnumerator Fall(float timeBeforeFalling)
+    private bool PlayerDetected()
+    {
+        var playerNear = !isActive &&
+            player.position.x >= leftBorderTrigger &&
+            player.position.x <= rightBorderTrigger &&
+            player.position.y < transform.position.y;
+
+        if (!playerNear)
+            return false;
+
+        var layer = 1 << 3 | 1 << 7; // 3 - Ground; 7 - Player
+        var raycastHit = Physics2D.Raycast(raycastStartPoint.position, -transform.up, Mathf.Infinity, layer);
+        var playerDetection = raycastHit.collider.GetComponent<Player>();
+
+        return playerDetection != null;
+    }
+
+    private IEnumerator Fall(float timeBeforeFallingMin, float timeBeforeFallingMax)
     {
         isActive = true;
         isShaking = true;
 
-        yield return new WaitForSeconds(timeBeforeFalling);
+        yield return new WaitForSeconds(Random.Range(timeBeforeFallingMin, timeBeforeFallingMax));
 
         var dangerPoint = transform.Find(dangerPointName);
         if (dangerPoint) Destroy(dangerPoint.gameObject);

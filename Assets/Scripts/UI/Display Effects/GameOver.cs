@@ -5,45 +5,54 @@ using Agava.YandexGames;
 
 public class GameOver : MonoBehaviour
 {
-    [SerializeField] private GameObject GameOverAd;
-    [SerializeField] private float timeBeforeTeleport = 5f;
-    [SerializeField] private float fadeSpeed = 0.7f;
+    [SerializeField] private GameObject gameOverAd;
+    [SerializeField] private float timeBeforeTeleport = 7f;
+    [SerializeField] private float fadeSpeed = 0.5f;
 
-    private Animation animation_;
+    [Header("Completed Levels Text")]
+    [SerializeField] private TextMeshProUGUI completedLevelsText;
+    [SerializeField] private float timeBeforeCompletedLevels = 1f;
+    [SerializeField] private string completedLevelsTextPrefix = "Пройдено уровней: ";
+
     private Teleporter teleporter;
     private SceneChanger sceneChanger;
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI gameOverText;
+    private Animation gameOverTextAnimation;
+    private Animation completedLevelTextAnimation;
 
     private readonly string showAnimationName = "Show";
 
     public void ShowGameOverAd()
     {
-        GameOverAd.SetActive(true);
+        gameOverAd.SetActive(true);
     }
 
     public void Ad()
     {
         VideoAd.Show();
-        GameOverAd.SetActive(false);
-        Player.instanse.ViewedAd();
+        gameOverAd.SetActive(false);
+        Player.Instanse.ViewedAd();
     }
 
     public void ShowAndReturnToVillage()
     {
-        Player.instanse.NonViewedAd();
-        GameOverAd.SetActive(false);
-        text.enabled = true;
-        animation_.Play(showAnimationName);
+        Player.Instanse.NonViewedAd();
+        gameOverAd.SetActive(false);
+        gameOverText.enabled = true;
+        gameOverTextAnimation.Play(showAnimationName);
         StartCoroutine(GoToVillage());
+        StartCoroutine(ShowCompletedLevelText());
     }
 
     private void Awake()
     {
-        animation_ = GetComponent<Animation>();
+        gameOverTextAnimation = GetComponent<Animation>();
+        completedLevelTextAnimation = completedLevelsText.GetComponent<Animation>();
         teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.BlackFilterTag).GetComponent<Teleporter>();
         sceneChanger = GetComponent<SceneChanger>();
-        text = GetComponent<TextMeshProUGUI>();
-        text.enabled = false;
+        gameOverText = GetComponent<TextMeshProUGUI>();
+        gameOverText.enabled = false;
+        completedLevelsText.enabled = false;
     }
 
     private IEnumerator GoToVillage()
@@ -52,9 +61,19 @@ public class GameOver : MonoBehaviour
         void action() 
         { 
             sceneChanger.ChangeScene();
-            Player.instanse.gameObject.SetActive(true);
-            text.enabled = false;
+            Player.Instanse.gameObject.SetActive(true);
+            gameOverText.enabled = false;
+            completedLevelsText.enabled = false;
         }
-        teleporter.Go(new Vector2(), action, fadeSpeed);
+        teleporter.Go(action, fadeSpeed);
+    }
+
+    private IEnumerator ShowCompletedLevelText()
+    {
+        var currentLevel = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelNumber, 0);
+        completedLevelsText.text = completedLevelsTextPrefix + (currentLevel - 1).ToString();
+        yield return new WaitForSeconds(timeBeforeCompletedLevels);
+        completedLevelsText.enabled = true;
+        completedLevelTextAnimation.Play(showAnimationName);
     }
 }

@@ -75,7 +75,7 @@ public class Building : MonoBehaviour, IStorage
                 Upgrade();
             }
             else
-                Player.instanse.Say("Не хватает ресурсов", 3f);
+                Player.Instanse.Say("Не хватает ресурсов", 3f);
         }
     }
 
@@ -99,7 +99,7 @@ public class Building : MonoBehaviour, IStorage
         {
             CanBeUsed = false;
             upgradeWindow.Hide();
-            Teleporter.instanse.Go(Player.instanse.transform.position, action, buildingFadeSpeed, () => CanBeUsed = true);
+            Teleporter.instanse.Go(Player.Instanse.transform.position, action, buildingFadeSpeed, () => CanBeUsed = true);
         }
         else
             action();
@@ -162,26 +162,26 @@ public class Building : MonoBehaviour, IStorage
                                 void action()
                                 {
                                     ServiceInfo.CheckpointConditionDone = true; // Для обучения
-                                    Player.instanse.AddMaxTileDamage(10);
+                                    Player.Instanse.AddMaxTileDamage(10);
                                 }
                                 UpdateUpgradeWindow($"Скорость {prefix}+10%{postfix}", ResourceTypes.GoldOre, 3, action);
                                 break;
                             }
-                        case 2: UpdateUpgradeWindow($"Урон {prefix}+10%{postfix}", ResourceTypes.IronOre, 10, () => Player.instanse.AddMaxEnemyDamage(10)); break;
-                        case 3: UpdateUpgradeWindow($"Прочность {prefix}+10%{postfix}", ResourceTypes.GoldOre, 15, () => Player.instanse.AddHitDamageToPickaxe(-10)); break;
-                        case 4: UpdateUpgradeWindow($"Скорость {prefix}+20%{postfix}", ResourceTypes.IronOre, 20, () => Player.instanse.AddMaxTileDamage(20)); break;
-                        case 5: UpdateUpgradeWindow($"Урон {prefix}+20%{postfix}", ResourceTypes.GoldOre, 25, () => Player.instanse.AddMaxEnemyDamage(20)); break;
-                        case 6: UpdateUpgradeWindow($"Прочность {prefix}+20%{postfix}", ResourceTypes.IronOre, 30, () => Player.instanse.AddHitDamageToPickaxe(-20)); break;
-                        case 7: UpdateUpgradeWindow($"Скорость {prefix}+30%{postfix}", ResourceTypes.GoldOre, 35, () => Player.instanse.AddMaxTileDamage(30)); break;
-                        case 8: UpdateUpgradeWindow($"Урон {prefix}+30%{postfix}", ResourceTypes.IronOre, 40, () => Player.instanse.AddMaxEnemyDamage(30)); break;
-                        case 9: UpdateUpgradeWindow($"Прочность {prefix}+30%{postfix}", ResourceTypes.IronOre, 45, () => Player.instanse.AddHitDamageToPickaxe(-30)); break;
+                        case 2: UpdateUpgradeWindow($"Урон {prefix}+10%{postfix}", ResourceTypes.IronOre, 10, () => Player.Instanse.AddMaxEnemyDamage(10)); break;
+                        case 3: UpdateUpgradeWindow($"Прочность {prefix}+10%{postfix}", ResourceTypes.GoldOre, 15, () => Player.Instanse.AddHitDamageToPickaxe(-10)); break;
+                        case 4: UpdateUpgradeWindow($"Скорость {prefix}+20%{postfix}", ResourceTypes.IronOre, 20, () => Player.Instanse.AddMaxTileDamage(20)); break;
+                        case 5: UpdateUpgradeWindow($"Урон {prefix}+20%{postfix}", ResourceTypes.GoldOre, 25, () => Player.Instanse.AddMaxEnemyDamage(20)); break;
+                        case 6: UpdateUpgradeWindow($"Прочность {prefix}+20%{postfix}", ResourceTypes.IronOre, 30, () => Player.Instanse.AddHitDamageToPickaxe(-20)); break;
+                        case 7: UpdateUpgradeWindow($"Скорость {prefix}+30%{postfix}", ResourceTypes.GoldOre, 35, () => Player.Instanse.AddMaxTileDamage(30)); break;
+                        case 8: UpdateUpgradeWindow($"Урон {prefix}+30%{postfix}", ResourceTypes.IronOre, 40, () => Player.Instanse.AddMaxEnemyDamage(30)); break;
+                        case 9: UpdateUpgradeWindow($"Прочность {prefix}+30%{postfix}", ResourceTypes.IronOre, 45, () => Player.Instanse.AddHitDamageToPickaxe(-30)); break;
                         case 10:
                             {
                                 void action()
                                 {
-                                    Player.instanse.AddMaxTileDamage(50);
-                                    Player.instanse.AddHitDamageToPickaxe(-50);
-                                    Player.instanse.AddMaxEnemyDamage(50);
+                                    Player.Instanse.AddMaxTileDamage(50);
+                                    Player.Instanse.AddHitDamageToPickaxe(-50);
+                                    Player.Instanse.AddMaxEnemyDamage(50);
                                 }
                                 UpdateUpgradeWindow($"Прочность {prefix}+50%{postfix}\nСкорость {prefix}+50%{postfix}\nУрон {prefix}+50%{postfix}", ResourceTypes.IronOre, 50, action);
                                 break;
@@ -202,7 +202,7 @@ public class Building : MonoBehaviour, IStorage
 
                     var pprefix = $"Время \nгорения {prefix}+";
                     var ppostfix = $"%{postfix}";
-                    void WorkshopUpgradeEffect() => Player.instanse.AddTimeDecreaseValue(0.5f);
+                    void WorkshopUpgradeEffect() => Player.Instanse.AddTimeDecreaseValue(0.5f);
 
                     switch (currentLevel)
                     {
@@ -237,8 +237,8 @@ public class Building : MonoBehaviour, IStorage
                             SetRequiredResource(ResourceTypes.Quartz, 5);
                             actionAfterUpgrading = () =>
                             {
-                                Player.instanse.AddSleepingBagHealthRecovery(30);
-                                Player.instanse.AddSleepingBagSanityRecovery(60);
+                                Player.Instanse.AddSleepingBagHealthRecovery(30);
+                                Player.Instanse.AddSleepingBagSanityRecovery(60);
                             };
                             break;
                         case 2:
@@ -246,8 +246,8 @@ public class Building : MonoBehaviour, IStorage
                             SetRequiredResource(ResourceTypes.Quartz, 22);
                             actionAfterUpgrading = () =>
                             {
-                                Player.instanse.AddSleepingBagHealthRecovery(30);
-                                Player.instanse.AddSleepingBagSanityRecovery(60);
+                                Player.Instanse.AddSleepingBagHealthRecovery(30);
+                                Player.Instanse.AddSleepingBagSanityRecovery(60);
                             };
                             break;
                         case 3:
@@ -255,8 +255,8 @@ public class Building : MonoBehaviour, IStorage
                             SetRequiredResource(ResourceTypes.Quartz, 38);
                             actionAfterUpgrading = () =>
                             {
-                                Player.instanse.AddSleepingBagHealthRecovery(30);
-                                Player.instanse.AddSleepingBagSanityRecovery(60);
+                                Player.Instanse.AddSleepingBagHealthRecovery(30);
+                                Player.Instanse.AddSleepingBagSanityRecovery(60);
                                 upgradeWindow.Hide();
                             };
                             break;
@@ -277,19 +277,19 @@ public class Building : MonoBehaviour, IStorage
                         case 1:
                             upgradeWindow.SetDescription("Увеличивает переносимый вес на 10 едениц");
                             SetRequiredResource(ResourceTypes.IronOre, 5);
-                            actionAfterUpgrading = () => Player.instanse.AddBackpackCapacity(10);
+                            actionAfterUpgrading = () => Player.Instanse.AddBackpackCapacity(10);
                             break;
                         case 2:
                             upgradeWindow.SetDescription("Увеличивает переносимый вес на 10 едениц");
                             SetRequiredResource(ResourceTypes.IronOre, 17);
-                            actionAfterUpgrading = () => Player.instanse.AddBackpackCapacity(10);
+                            actionAfterUpgrading = () => Player.Instanse.AddBackpackCapacity(10);
                             break;
                         case 3:
                             upgradeWindow.SetDescription("Увеличивает переносимый вес на 10 едениц");
                             SetRequiredResource(ResourceTypes.IronOre, 29);
                             actionAfterUpgrading = () =>
                             {
-                                Player.instanse.AddBackpackCapacity(10);
+                                Player.Instanse.AddBackpackCapacity(10);
                                 upgradeWindow.Hide();
                             };
                             break;

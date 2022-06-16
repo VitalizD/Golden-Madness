@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IStorage
 {
-    public static Player instanse = null;
+    public static Player Instanse { get; private set; } = null;
 
     [Header("Loading Parameters")]
     [SerializeField] private bool loadParameters = true;
@@ -55,7 +55,6 @@ public class Player : MonoBehaviour, IStorage
     private PlayerDialogWindow dialogWindow;
     private GameOver gameOver;
     private RedFilter displayFilter;
-    private Paused paused;
 
     private Tile selectedTile;
     private LayerMask groundMask;
@@ -90,27 +89,6 @@ public class Player : MonoBehaviour, IStorage
 
     public float DefaultSpeed { get => defaultSpeed;}
     public float Speed { get => speed; set => speed = value; }
-
-    public void ViewedAd()
-    {
-        //paused.Pause();
-        transform.position = checkpoint;
-        gameObject.SetActive(true);
-        Health = 100;
-        sanity.Sanity = 100;
-        invulnerability = false;
-        isStunned = false;
-        feelPain = false;
-        isAttacking = false;
-        canAttack = true;
-        isDigging = false;
-        adViewed = true;
-    }
-
-    public void NonViewedAd()
-    {
-        StopAllCoroutines();
-    }
 
     public States State
     {
@@ -193,8 +171,6 @@ public class Player : MonoBehaviour, IStorage
             enemyDamage = (int)Mathf.Ceil(Mathf.Lerp(maxEnemyDamage * minEnemyDamageInPercents / 100, maxEnemyDamage, pickaxeStrength / 100));
         }
     }
-
-    
 
     public void Save()
     {
@@ -283,6 +259,26 @@ public class Player : MonoBehaviour, IStorage
         Save();
     }
 
+    public void ViewedAd()
+    {
+        transform.position = checkpoint;
+        gameObject.SetActive(true);
+        Health = 100;
+        sanity.Sanity = 100;
+        invulnerability = false;
+        isStunned = false;
+        feelPain = false;
+        isAttacking = false;
+        canAttack = true;
+        isDigging = false;
+        adViewed = true;
+    }
+
+    public void NonViewedAd()
+    {
+        StopAllCoroutines();
+    }
+
     public void Sleep()
     {
         Health += healthRecovery;
@@ -308,9 +304,9 @@ public class Player : MonoBehaviour, IStorage
 
     private void Awake()
     {
-        if (instanse == null)
-            instanse = this;
-        else if (instanse == this)
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
             Destroy(gameObject);
 
         rigidBody2d = GetComponent<Rigidbody2D>();
@@ -474,8 +470,8 @@ public class Player : MonoBehaviour, IStorage
 
     private void Run()
     {
-        isDigging = false;
-        if (jumpCheckingPoint.CanJump && !isAttacking)
+        //isDigging = false;
+        if (jumpCheckingPoint.CanJump && !isAttacking && !isDigging)
             State = States.Walk;
 
         var dir = transform.right * Input.GetAxis("Horizontal");
