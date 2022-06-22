@@ -1,6 +1,7 @@
 public static class PlayerPrefsKeys
 {
     public static string TutorialDone { get; } = "TutorialDone";
+    public static string TutorialDoneInCave { get; } = "TutorialDoneInCave";
     public static string FuelTanksCount { get; } = "FuelTanksCount";
     public static string GrindstonesCount { get; } = "GrindstonesCount";
     public static string HealthPacksCount { get; } = "HealthPacksCount";

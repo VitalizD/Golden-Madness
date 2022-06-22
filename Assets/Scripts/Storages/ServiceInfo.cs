@@ -21,5 +21,6 @@ public static class ServiceInfo
     public static int ChildIndexOfLamp { get; } = 3;
 
     public static bool CheckpointConditionDone { get; set; } = false;
+    public static bool TutorialDoneInCave { get; set; } = false;
     public static bool TutorialDone { get; set; } = true;
 }

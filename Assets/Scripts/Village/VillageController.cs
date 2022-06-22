@@ -84,6 +84,7 @@ public class VillageController : MonoBehaviour, IStorage
             if (!ServiceInfo.TutorialDone)
             {
                 resourcesCounts[ResourceTypes.GoldOre] = 6;
+                PlayerPrefs.SetString(PlayerPrefsKeys.TutorialDoneInCave, "true");
                 triggers.SetActive(true);
             }
         }
