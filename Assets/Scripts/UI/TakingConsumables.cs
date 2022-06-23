@@ -6,7 +6,7 @@ using System.Collections;
 
 public class TakingConsumables : MonoBehaviour
 {
-    public static TakingConsumables instanse = null;
+    public static TakingConsumables Instanse { get; private set; } = null;
 
     private const string textAnimationName = "Show";
     private const string iconAnimationName = "Show";
@@ -42,9 +42,9 @@ public class TakingConsumables : MonoBehaviour
 
     private void Awake()
     {
-        if (instanse == null)
-            instanse = this;
-        else if (instanse == this)
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
             Destroy(gameObject);
 
         textAnimation = text.GetComponent<Animation>();

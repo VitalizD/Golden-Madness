@@ -215,6 +215,7 @@ public class LevelGeneration : MonoBehaviour
     {
         isGenerated = true;
         Player.Instanse.transform.position = spawnPointPlayer;
+        Player.Instanse.SetCheckpoint();
         Camera.main.transform.position = spawnPointPlayer;
     }
 }

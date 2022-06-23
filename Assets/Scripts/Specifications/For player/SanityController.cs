@@ -6,8 +6,6 @@ public class SanityController : MonoBehaviour
 {
     [SerializeField] private bool enableDecreasing = true;
     [SerializeField] [Range(0, 100)] private float sanity = 100f;
-    [SerializeField] private SanityBar sanityBar;
-    [SerializeField] private Text smockingPipes;
 
     private readonly float decreasingBetweenTime = 1f;
 
@@ -21,21 +19,12 @@ public class SanityController : MonoBehaviour
         get => sanity; 
         set
         {
-            if (value < 0)
-            {
-                sanity = 0;
-                sanityBar.SetSanity(0);
-            }
-            else if (value > 100)
-            {
-                sanity = 100f;
-                sanityBar.SetSanity(100f);
-            }
-            else
-            { 
-                sanity = value;
-                sanityBar.SetSanity(value);
-            }
+            if (value < 0) sanity = 0;
+            else if (value > 100) sanity = 100f;
+            else sanity = value;
+
+            if (HotbarController.Instanse != null)
+                HotbarController.Instanse.SetBarValue(BarType.Sanity, sanity);
         }
     }
 
@@ -50,7 +39,7 @@ public class SanityController : MonoBehaviour
 
     public void Load()
     {
-        sanity = PlayerPrefs.GetFloat(PlayerPrefsKeys.Sanity, sanity);
+        Sanity = PlayerPrefs.GetFloat(PlayerPrefsKeys.Sanity, sanity);
     }
 
     private void Awake()
@@ -61,7 +50,7 @@ public class SanityController : MonoBehaviour
     private void Start()
     {
         decreaseSanity = StartCoroutine(DecreaseSanity());
-        sanityBar.SetSanity(sanity);
+        Sanity = sanity;
     }
 
     private void Update()
@@ -69,9 +58,7 @@ public class SanityController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4) && consumables.SmokingPipesCount > 0)
         {
             Sanity += Consumables.SmokingPipesRecovery;
-            sanityBar.SetSanity(Sanity);
             --consumables.SmokingPipesCount;
-            smockingPipes.text = "" + consumables.SmokingPipesCount;
         }
     }
 
@@ -81,10 +68,7 @@ public class SanityController : MonoBehaviour
         {
             yield return new WaitForSeconds(decreasingBetweenTime);
             if (enableDecreasing)
-            {
-                sanity -= DecreasingSanity;
-                sanityBar.SetSanity(sanity);
-            }
+                Sanity -= DecreasingSanity;
         }
     }
 }

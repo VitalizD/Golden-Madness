@@ -8,23 +8,19 @@ public class Consumables : MonoBehaviour, IStorage
 
     [Header("Fuel tanks")]
     [SerializeField] private int fuelTanksCount = 1;
-    [SerializeField] [Range(0, 100)] private static float fuelTankRecovery = 50f;
-    public Text fuelTanks;
+    private readonly static float fuelTankRecovery = 50f;
 
     [Header("Grindstones")]
     [SerializeField] private int grindstonesCount = 1;
-    [SerializeField] [Range(0, 100)] private static float grindstoneRecovery = 50;
-    public Text grindstones;
+    private readonly static float grindstoneRecovery = 50;
 
     [Header("Health packs")]
     [SerializeField] private int healthPacksCount = 1;
-    [SerializeField] [Range(0, 100)] private static int healthPackRecovery = 50;
-    public Text healthPacks;
+    private readonly static int healthPackRecovery = 50;
 
     [Header("Smoking pipes")]
     [SerializeField] private int smokingPipesCount = 1;
-    [SerializeField] [Range(0, 100)] private static float smokingPipeRecovery = 50f;
-    public Text smokingPipes;
+    private readonly static float smokingPipeRecovery = 50f;
 
     private bool loaded = false;
 
@@ -43,10 +39,11 @@ public class Consumables : MonoBehaviour, IStorage
             else if (value > maxCount) fuelTanksCount = maxCount;
             else fuelTanksCount = value;
 
-            fuelTanks.text = fuelTanksCount.ToString();
+            if (HotbarController.Instanse != null)
+                HotbarController.Instanse.SetConsumableCount(ConsumableType.FuelTank, fuelTanksCount);
 
             if (fuelTanksCount - initialValue > 0 && loaded)
-                TakingConsumables.instanse.AddConsumable("Топливо", fuelTanksCount - initialValue, SpritesStorage.instanse.FuelTank);
+                TakingConsumables.Instanse.AddConsumable("Топливо", fuelTanksCount - initialValue, SpritesStorage.instanse.FuelTank);
         }
     }
 
@@ -56,28 +53,22 @@ public class Consumables : MonoBehaviour, IStorage
 
     #region HealthPacks
 
-    public int HealthPacksCount { get => healthPacksCount;
+    public int HealthPacksCount 
+    { 
+        get => healthPacksCount;
         set 
         {
             var initialValue = healthPacksCount;
 
-            if (value < 0)
-            {
-                healthPacksCount = 0;
-                healthPacks.text = "" + 0;
-            }
-            else if (value > maxCount)
-            {
-                healthPacksCount = maxCount;
-                healthPacks.text = "" + maxCount;
-            }
-            else { 
-                healthPacksCount = value;
-                healthPacks.text = "" + value;
-            }
+            if (value < 0) healthPacksCount = 0;
+            else if (value > maxCount) healthPacksCount = maxCount;
+            else healthPacksCount = value;
+
+            if (HotbarController.Instanse != null)
+                HotbarController.Instanse.SetConsumableCount(ConsumableType.HealthPack, healthPacksCount);
 
             if (healthPacksCount - initialValue > 0 && loaded)
-                TakingConsumables.instanse.AddConsumable("Еда", healthPacksCount - initialValue, SpritesStorage.instanse.HealthPack);
+                TakingConsumables.Instanse.AddConsumable("Еда", healthPacksCount - initialValue, SpritesStorage.instanse.HealthPack);
         } 
     }
     public static int HealthPacksRecovery { get => healthPackRecovery;}
@@ -90,23 +81,15 @@ public class Consumables : MonoBehaviour, IStorage
         {
             var initialValue = smokingPipesCount;
 
-            if (value < 0)
-            {
-                smokingPipesCount = 0;
-                smokingPipes.text = "" + 0;
-            }
-            else if (value > maxCount)
-            {
-                smokingPipesCount = maxCount;
-                smokingPipes.text = "" + maxCount;
-            }
-            else { 
-                smokingPipesCount = value;
-                smokingPipes.text = "" + value;
-            }
+            if (value < 0) smokingPipesCount = 0;
+            else if (value > maxCount) smokingPipesCount = maxCount;
+            else smokingPipesCount = value;
+
+            if (HotbarController.Instanse != null)
+                HotbarController.Instanse.SetConsumableCount(ConsumableType.SmokingPipe, smokingPipesCount);
 
             if (smokingPipesCount - initialValue > 0 && loaded)
-                TakingConsumables.instanse.AddConsumable("Трубка", smokingPipesCount - initialValue, SpritesStorage.instanse.SmokingPipe);
+                TakingConsumables.Instanse.AddConsumable("Трубка", smokingPipesCount - initialValue, SpritesStorage.instanse.SmokingPipe);
         }
     }
     public static float SmokingPipesRecovery { get => smokingPipeRecovery;}
@@ -120,23 +103,15 @@ public class Consumables : MonoBehaviour, IStorage
         {
             var initialValue = grindstonesCount;
 
-            if (value < 0)
-            {
-                grindstonesCount = 0;
-                grindstones.text = "" + 0;
-            }
-            else if (value > maxCount)
-            {
-                grindstonesCount = maxCount;
-                grindstones.text = "" + maxCount;
-            }
-            else { 
-                grindstonesCount = value;
-                grindstones.text = "" + value;
-            }
+            if (value < 0) grindstonesCount = 0;
+            else if (value > maxCount) grindstonesCount = maxCount;
+            else grindstonesCount = value;
+
+            if (HotbarController.Instanse != null)
+                HotbarController.Instanse.SetConsumableCount(ConsumableType.Grindstone, grindstonesCount);
 
             if (grindstonesCount - initialValue > 0 && loaded)
-                TakingConsumables.instanse.AddConsumable("Точильный камень", grindstonesCount - initialValue, SpritesStorage.instanse.Grindstone);
+                TakingConsumables.Instanse.AddConsumable("Точильный камень", grindstonesCount - initialValue, SpritesStorage.instanse.Grindstone);
         }
     }
     public static float GrindstoneRecovery { get => grindstoneRecovery; }

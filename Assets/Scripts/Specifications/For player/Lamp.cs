@@ -10,7 +10,6 @@ public class Lamp : MonoBehaviour, IStorage
     [SerializeField] private float maxLightRange = 25f;
     [SerializeField] private float fuelDecreaseValue = 1f;
     [SerializeField] private float timeFuelDecrease = 5f;
-    [SerializeField] private LampBar lampBar;
 
     private readonly float checkFuelCountBetweenTime = 2f;
 
@@ -31,24 +30,20 @@ public class Lamp : MonoBehaviour, IStorage
     private Coroutine decreaseFuel;
     private Coroutine checkFuelCount;
 
-    public Text fuelTanks;
-
     public float FuelCount
     {
         get => fuelCount;
         set
         {
-            if (value < 0)
-                fuelCount = 0;
-            else if (value > 100)
-                fuelCount = 100;
-            else
-                fuelCount = value;
+            if (value < 0) fuelCount = 0;
+            else if (value > 100) fuelCount = 100;
+            else fuelCount = value;
 
             if (light_ != null)
                 light_.range = Mathf.Lerp(minLightRange, maxLightRange, fuelCount / 100);
 
-            lampBar.SetValue(fuelCount);
+            if (HotbarController.Instanse != null)
+                HotbarController.Instanse.SetBarValue(BarType.Lamp, fuelCount);
         }
     }
 
@@ -65,7 +60,7 @@ public class Lamp : MonoBehaviour, IStorage
     public void Load()
     {
         FuelCount = PlayerPrefs.GetFloat(PlayerPrefsKeys.FuelCount, fuelCount);
-        timeFuelDecrease = PlayerPrefs.GetFloat(PlayerPrefsKeys.TimeDecreaseValue, timeFuelDecrease);
+        TimeFuelDecrease = PlayerPrefs.GetFloat(PlayerPrefsKeys.TimeDecreaseValue, timeFuelDecrease);
     }
 
     private void Awake()
@@ -87,9 +82,7 @@ public class Lamp : MonoBehaviour, IStorage
         if (Input.GetKeyDown(KeyCode.Alpha1) && consumables.FuelTanksCount > 0)
         {
             FuelCount += Consumables.FuelTankRecovery;
-            lampBar.SetValue(FuelCount);
             --consumables.FuelTanksCount;
-            fuelTanks.text = "" + consumables.FuelTanksCount;
         }
     }
 

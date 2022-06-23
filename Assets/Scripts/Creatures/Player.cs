@@ -16,16 +16,12 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private CheckingForJump jumpCheckingPoint;
     [SerializeField] private SpriteRenderer sprite;
-    public HealthBar healthBar;
-    public SanityBar sanityBar;
-    public Text healthPacks;
 
     [Header("Fight")]
     [SerializeField] private int enemyDamage = 10;
     [SerializeField] private int maxEnemyDamage = 10;
     [SerializeField] private int minEnemyDamageInPercents = 60;
     [SerializeField] private float repulsiveForce;
-    [SerializeField] private float jerkForce = 3f;
     [SerializeField] private float attackTime = 0.5f;
     [SerializeField] private float reloadAttackTime = 0.1f;
     [SerializeField] private float invulnerabilityTime = 1f;
@@ -39,8 +35,6 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private float maxTileDamage = 1f;
     [SerializeField] [Range(0, 100f)] private float minTileDamageInPercents = 20;
     [SerializeField] private float touchingDistance;
-    public PickaxeStrengthBar pickaxeStrengthBar;
-    public Text grindstones;
 
     [Header("Sleeping Bag")]
     [SerializeField] [Range(0, 100)] private int healthRecovery = 20;
@@ -57,12 +51,10 @@ public class Player : MonoBehaviour, IStorage
     private RedFilter displayFilter;
 
     private Tile selectedTile;
-    private LayerMask groundMask;
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
     private Vector2 attackDistanse;
     private float fixedZPosition;
-    private float xAttackPoint;
     private float defaultSpeed;
     private float scaleXValue;
     private float scaleX;
@@ -89,7 +81,8 @@ public class Player : MonoBehaviour, IStorage
 
     public float TouchingDistance { get => touchingDistance; }
 
-    public float DefaultSpeed { get => defaultSpeed;}
+    public float DefaultSpeed { get => defaultSpeed; }
+
     public float Speed { get => speed; set => speed = value; }
 
     public States State
@@ -120,10 +113,13 @@ public class Player : MonoBehaviour, IStorage
                 State = States.Pain;
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
-                if (displayFilter) displayFilter.ChangeColor(health - value);
+                if (displayFilter != null) displayFilter.ChangeColor(health - value);
             }
             health = value > 100 ? 100 : value;
-            healthBar.SetHealth(health);
+
+            if (HotbarController.Instanse != null)
+                HotbarController.Instanse.SetBarValue(BarType.Health, health);
+
             if (health <= 0)
             {
                 if (PlayerPrefs.HasKey(PlayerPrefsKeys.TutorialDone) && bool.Parse(PlayerPrefs.GetString(PlayerPrefsKeys.TutorialDone)))
@@ -143,7 +139,7 @@ public class Player : MonoBehaviour, IStorage
                     health = 100;
                     transform.position = checkpoint;
                 }
-                if (displayFilter) displayFilter.RemoveFilter();
+                if (displayFilter != null) displayFilter.RemoveFilter();
             }
         }
     }
@@ -153,21 +149,12 @@ public class Player : MonoBehaviour, IStorage
         get => pickaxeStrength;
         set
         {
-            if (value < 0)
-            {
-                pickaxeStrength = 0;
-                pickaxeStrengthBar.SetStrength(0);
-            }
-            else if (value > 100)
-            {
-                pickaxeStrength = 100f;
-                pickaxeStrengthBar.SetStrength(100f);
-            }
-            else
-            { 
-                pickaxeStrength = value;
-                pickaxeStrengthBar.SetStrength(value);
-            }
+            if (value < 0) pickaxeStrength = 0;
+            else if (value > 100) pickaxeStrength = 100f;
+            else pickaxeStrength = value;
+
+            if (HotbarController.Instanse != null)
+                HotbarController.Instanse.SetBarValue(BarType.Pickaxe, pickaxeStrength);
 
             tileDamage = Mathf.Lerp(maxTileDamage * minTileDamageInPercents / 100, maxTileDamage, pickaxeStrength / 100);
             enemyDamage = (int)Mathf.Ceil(Mathf.Lerp(maxEnemyDamage * minEnemyDamageInPercents / 100, maxEnemyDamage, pickaxeStrength / 100));
@@ -284,9 +271,7 @@ public class Player : MonoBehaviour, IStorage
     public void Sleep()
     {
         Health += healthRecovery;
-        healthBar.SetHealth(Health);
         sanity.Sanity += sanityRecovery;
-        sanityBar.SetSanity(sanity.Sanity);
     }
 
     public void SetStun() => SetStun(stunTime);
@@ -303,6 +288,8 @@ public class Player : MonoBehaviour, IStorage
         dialogWindow.gameObject.SetActive(true);
         dialogWindow.Show(text, sayingTime);
     }
+
+    public void SetCheckpoint() => checkpoint = transform.position;
 
     private void Awake()
     {
@@ -321,10 +308,8 @@ public class Player : MonoBehaviour, IStorage
         gameOver = GameObject.FindGameObjectWithTag(ServiceInfo.GameOverTag).GetComponent<GameOver>();
         displayFilter = GameObject.FindGameObjectWithTag(ServiceInfo.RedFilterTag).GetComponent<RedFilter>();
 
-        groundMask = LayerMask.GetMask(ServiceInfo.GroundLayerName);
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
         fixedZPosition = transform.position.z;
-        xAttackPoint = attackPoint.localPosition.x;
         scaleXValue = transform.localScale.x;
         defaultSpeed = speed;
 
@@ -351,32 +336,24 @@ public class Player : MonoBehaviour, IStorage
 
         if (canAttack && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
             Attack();
-        //��������� ������
+
         if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
         {
             PickaxeStrength += Consumables.GrindstoneRecovery;
-            pickaxeStrengthBar.SetStrength(PickaxeStrength);
             --consumables.GrindstonesCount;
-            grindstones.text = "" + consumables.GrindstonesCount;
         }
-        //������� �����
+
         if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
         {
             Health += Consumables.HealthPacksRecovery;
-            healthBar.SetHealth(Health);
             --consumables.HealthPacksCount;
-            healthPacks.text = "" + consumables.HealthPacksCount;
         }
-
     }
 
     private void FixedUpdate()
     {
         var position = transform.position;
         transform.position = new Vector3(position.x, position.y, fixedZPosition);
-
-
-        //CheckGrounded();
 
         if (jumpCheckingPoint.CanJump && !isAttacking && !isStunned && !isDigging)
             State = States.Idle;
@@ -401,18 +378,13 @@ public class Player : MonoBehaviour, IStorage
 
     private void OnDrawGizmosSelected()
     {
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(attackPoint.position, attackDistanceX);
-
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, touchingDistance);
-
     }
 
-    // �������� �� ���� � �������� "Attack"
+    // Назначен на ключ в анимации "Attack"
     private void OnAttack()
     {
-        //var raycastHits = Physics2D.RaycastAll(transform.position, transform.right * (sprite.flipX ? -1 : 1), attackDistance, enemiesMask);
         var hits = Physics2D.OverlapCapsuleAll(attackPoint.position, attackDistanse, CapsuleDirection2D.Horizontal, 0, enemiesMask);
 
         foreach (var raycastHit in hits)
@@ -427,7 +399,7 @@ public class Player : MonoBehaviour, IStorage
         }
     }
 
-    // �������� �� ���� � �������� "Dig"
+    // Назначен на ключ в анимации "Dig"
     private void HitTile()
     {
         if (!selectedTile)
@@ -436,7 +408,6 @@ public class Player : MonoBehaviour, IStorage
         var damage = selectedTile.DiggingDifficulty < tileDamage ? tileDamage / selectedTile.DiggingDifficulty : tileDamage;
         selectedTile.Health -= damage;
         PickaxeStrength -= hitDamageToPickaxe;
-        pickaxeStrengthBar.SetStrength(PickaxeStrength);
         canAttack = false;
 
         if (reloadAttack != null) StopCoroutine(reloadAttack);
@@ -446,27 +417,22 @@ public class Player : MonoBehaviour, IStorage
     private void GetDamage(Collider2D collision)
     {
         var danger = collision.GetComponent<Danger>();
-        if (danger)
+        if (danger != null)
         {
             Health -= danger.Damage;
-            healthBar.SetHealth(Health);
             State = States.Pain;
             SetStun();
 
             var terrible = collision.GetComponent<Terrible>();
-            if (terrible)
-            { 
-                sanity.Sanity -= terrible.DecreasingSanityAfterAttack;
-                sanityBar.SetSanity(sanity.Sanity);
-            }
-                
+            if (terrible != null)
+                sanity.Sanity -= terrible.DecreasingSanityAfterAttack;                
         }
     }
 
     private void Throw(Collider2D collision)
     {
         var repulsion = collision.GetComponent<Repulsive>();
-        if (repulsion)
+        if (repulsion != null)
         {
             var colPosition = collision.transform.position;
             var playerPosition = transform.position;
@@ -506,26 +472,6 @@ public class Player : MonoBehaviour, IStorage
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());
     }
-
-    //private void CheckGrounded()
-    //{
-    //    if (!jumpCheckingPoint.CanJump)
-    //    {
-    //        if (rigidBody2d.velocity.y > 0)
-    //            State = States.Jump;
-    //        else if (rigidBody2d.velocity.y < 0)
-    //            State = States.Fall;
-    //    }
-
-    //    var collaiders = Physics2D.OverlapCircleAll(
-    //        new Vector2(transform.position.x, transform.position.y + yOffsetToGround), jumpCheckRadius, groundMask);
-    //    isGrounded = collaiders.Length > 0;
-    //}
-
-    //private void ChangeDirectionTowards(Vector2 position)
-    //{
-    //    sprite.flipX = position.x <= transform.position.x;
-    //}
 
     private IEnumerator DisableInvulnerability()
     {
