@@ -16,9 +16,6 @@ GameObject:
   - component: {fileID: 99395948229621791}
   - component: {fileID: 5101184335126964010}
   - component: {fileID: 5772696817491646705}
-  - component: {fileID: 1926600330374022812}
-  - component: {fileID: 7751600400649213137}
-  - component: {fileID: 6458866122718615110}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -102,14 +99,10 @@ MonoBehaviour:
   jumpForce: 8
   jumpCheckingPoint: {fileID: 1332513084546739594}
   sprite: {fileID: 984370221206082735}
-  healthBar: {fileID: 1926600330374022812}
-  sanityBar: {fileID: 7751600400649213137}
-  healthPacks: {fileID: 0}
   enemyDamage: 10
   maxEnemyDamage: 10
   minEnemyDamageInPercents: 60
   repulsiveForce: 3.2
-  jerkForce: 0
   attackTime: 0.8
   reloadAttackTime: 0.8
   invulnerabilityTime: 1
@@ -121,8 +114,6 @@ MonoBehaviour:
   maxTileDamage: 1
   minTileDamageInPercents: 20
   touchingDistance: 1.5
-  pickaxeStrengthBar: {fileID: 6458866122718615110}
-  grindstones: {fileID: 0}
   healthRecovery: 20
   sanityRecovery: 50
 --- !u!95 &984370220786920454
@@ -158,13 +149,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuelTanksCount: 0
-  fuelTanks: {fileID: 0}
   grindstonesCount: 0
-  grindstones: {fileID: 0}
   healthPacksCount: 0
-  healthPacks: {fileID: 0}
   smokingPipesCount: 0
-  smokingPipes: {fileID: 0}
+  fuelTankRecovery: 30
+  grindstoneRecovery: 30
+  healthPackRecovery: 30
+  smokingPipeRecovery: 30
 --- !u!114 &5101184335126964010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,8 +170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableDecreasing: 1
   sanity: 100
-  sanityBar: {fileID: 7751600400649213137}
-  smockingPipes: {fileID: 0}
 --- !u!114 &5772696817491646705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,48 +187,6 @@ MonoBehaviour:
   fullInventorySpeedMultiplier: 0.85
   fullInventoryPhrase: "\u041C\u043E\u0439 \u0440\u044E\u043A\u0437\u0430\u043A \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D!"
   cannotTakePhrase: "\u042F \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0443\u043D\u0435\u0441\u0443!"
---- !u!114 &1926600330374022812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984370220786920460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e3544906ff05248bd108d26730d0fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  hp: {fileID: 0}
---- !u!114 &7751600400649213137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984370220786920460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f352dccbc27fbf64cbfcd1e12a5fe2cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  sp: {fileID: 0}
-  sanityController: {fileID: 0}
---- !u!114 &6458866122718615110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984370220786920460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b0b57b5fede5a41bbee2906926efd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
 --- !u!1 &984370221206082729
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +656,6 @@ GameObject:
   - component: {fileID: 1635360014515291880}
   - component: {fileID: 4750881196579373436}
   - component: {fileID: 2537205635252364338}
-  - component: {fileID: 5322104867713374391}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -828,21 +774,6 @@ MonoBehaviour:
   maxLightRange: 25
   fuelDecreaseValue: 1
   timeFuelDecrease: 5
-  lampBar: {fileID: 0}
-  fuelTanks: {fileID: 0}
---- !u!114 &5322104867713374391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5606018953659525155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c65f91eec573ab4088c58a267b23765, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
 --- !u!1 &5831702624987111799
 GameObject:
   m_ObjectHideFlags: 0
