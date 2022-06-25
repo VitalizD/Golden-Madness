@@ -85,6 +85,7 @@ public class Building : MonoBehaviour, IStorage
         {
             ++currentLevel;
             actionAfterUpgrading?.Invoke();
+            HotbarController.Instanse.Load();
 
             if (!maxLevel)
                 upgradeWindow.Show();
@@ -191,6 +192,7 @@ public class Building : MonoBehaviour, IStorage
                             maxLevel = true;
                             break;
                     }
+                    //HotbarController.Instanse.SetEquipmentLevel(EquipmentType.Pickaxe, currentLevel);
                     break;
 
                 case BuildingType.Workshow:
@@ -222,6 +224,7 @@ public class Building : MonoBehaviour, IStorage
                             maxLevel = true;
                             break;
                     }
+                    //HotbarController.Instanse.SetEquipmentLevel(EquipmentType.Lamp, currentLevel);
                     break;
 
                 case BuildingType.SleepingBagShop:
