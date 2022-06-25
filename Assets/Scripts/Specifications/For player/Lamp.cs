@@ -79,10 +79,10 @@ public class Lamp : MonoBehaviour, IStorage
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && consumables.FuelTanksCount > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && consumables.GetCount(ConsumableType.FuelTank) > 0)
         {
-            FuelCount += Consumables.FuelTankRecovery;
-            --consumables.FuelTanksCount;
+            FuelCount += consumables.GetRecovery(ConsumableType.FuelTank);
+            consumables.Add(ConsumableType.FuelTank, -1);
         }
     }
 

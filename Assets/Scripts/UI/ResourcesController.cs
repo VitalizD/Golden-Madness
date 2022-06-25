@@ -115,13 +115,13 @@ public class ResourcesController : MonoBehaviour
     {
         playerBackpack = Player.Instanse.GetComponent<Backpack>();
 
-        var icons = SpritesStorage.instanse;
+        var icons = SpritesStorage.Instanse;
         resourcesInfo = new Dictionary<ResourceTypes, ResourceInfo>
         {
-            [ResourceTypes.Quartz] = new ResourceInfo("Êגאנצ", icons.QuartzIcon, quartzCount),
-            [ResourceTypes.IronOre] = new ResourceInfo("Æוכוחמ", icons.IronIcon, ironCount),
-            [ResourceTypes.GoldOre] = new ResourceInfo("Çמכמעמ", icons.GoldIcon, goldCount),
-            [ResourceTypes.Coal] = new ResourceInfo("Óדמכü", icons.CoalIcon, coalCount)
+            [ResourceTypes.Quartz] = new ResourceInfo("Êגאנצ", icons.GetResource(ResourceTypes.Quartz), quartzCount),
+            [ResourceTypes.IronOre] = new ResourceInfo("Æוכוחמ", icons.GetResource(ResourceTypes.IronOre), ironCount),
+            [ResourceTypes.GoldOre] = new ResourceInfo("Çמכמעמ", icons.GetResource(ResourceTypes.GoldOre), goldCount),
+            [ResourceTypes.Coal] = new ResourceInfo("Óדמכü", icons.GetResource(ResourceTypes.Coal), coalCount)
         };
 
         if (inVillage)

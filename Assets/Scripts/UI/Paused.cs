@@ -22,7 +22,7 @@ public class Paused : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && Teleporter.instanse.State == Teleporter.States.Stayed)
+        if (Input.GetKeyDown(KeyCode.Escape) && Teleporter.Instanse.State == Teleporter.States.Stayed)
         {
             if (gameIsPause)
             {
@@ -91,7 +91,7 @@ public class Paused : MonoBehaviour
         pause.SetActive(false);
         exitMenu.SetActive(false);
         Time.timeScale = 1f;
-        Teleporter.instanse.Go(() => SceneManager.LoadScene("MainScreen"), fadeSpeed);
+        Teleporter.Instanse.Go(() => SceneManager.LoadScene("MainScreen"), fadeSpeed);
     }
 
     public void ToVillage()
@@ -99,6 +99,6 @@ public class Paused : MonoBehaviour
         gameIsPause = false;
         Time.timeScale = 1f;
         pause.SetActive(false);
-        Teleporter.instanse.Go(() => SceneManager.LoadScene("Village"), fadeSpeed);
+        Teleporter.Instanse.Go(() => SceneManager.LoadScene("Village"), fadeSpeed);
     }
 }

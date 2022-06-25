@@ -1,8 +1,9 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SpritesStorage : MonoBehaviour
 {
-    public static SpritesStorage instanse = null;
+    public static SpritesStorage Instanse { get; private set; } = null;
 
     [Header("Resources")]
     [SerializeField] private Sprite goldIcon;
@@ -22,37 +23,47 @@ public class SpritesStorage : MonoBehaviour
     [SerializeField] private Sprite pickaxe;
     [SerializeField] private Sprite lamp;
 
-    public Sprite GoldIcon { get => goldIcon; }
+    private Dictionary<ConsumableType, Sprite> consumables;
+    private Dictionary<ResourceTypes, Sprite> resources;
+    private Dictionary<EquipmentType, Sprite> equipments;
 
-    public Sprite CoalIcon { get => coalIcon; }
+    public Sprite GetConsumable(ConsumableType type) => consumables[type];
 
-    public Sprite QuartzIcon { get => quartzIcon; }
+    public Sprite GetResource(ResourceTypes type) => resources[type];
 
-    public Sprite IronIcon { get => ironIcon; }
-
-    public Sprite FuelTank { get => fuelTank; }
-
-    public Sprite Grindstone { get => grindstone; }
-
-    public Sprite HealthPack { get => healthPack; }
-
-    public Sprite SmokingPipe { get => smokingPipe; }
-
-    public Sprite Dynamite { get => dynamite; }
-
-    public Sprite Antidote { get => antidote; }
-
-    public Sprite Pickaxe { get => pickaxe; }
-
-    public Sprite Lamp { get => lamp; }
+    public Sprite GetEquipment(EquipmentType type) => equipments[type];
 
     private void Awake()
     {
-        if (instanse == null)
-            instanse = this;
+        if (Instanse == null)
+            Instanse = this;
         else
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        consumables = new Dictionary<ConsumableType, Sprite>
+        {
+            [ConsumableType.FuelTank] = fuelTank,
+            [ConsumableType.Grindstone] = grindstone,
+            [ConsumableType.HealthPack] = healthPack,
+            [ConsumableType.SmokingPipe] = smokingPipe,
+            [ConsumableType.Dynamite] = dynamite,
+            [ConsumableType.Antidote] = antidote
+        };
+
+        resources = new Dictionary<ResourceTypes, Sprite>
+        {
+            [ResourceTypes.Coal] = coalIcon,
+            [ResourceTypes.GoldOre] = goldIcon,
+            [ResourceTypes.IronOre] = ironIcon,
+            [ResourceTypes.Quartz] = quartzIcon
+        };
+
+        equipments = new Dictionary<EquipmentType, Sprite>
+        {
+            [EquipmentType.Pickaxe] = pickaxe,
+            [EquipmentType.Lamp] = lamp
+        };
     }
 }

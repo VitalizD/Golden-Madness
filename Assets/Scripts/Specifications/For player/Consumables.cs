@@ -4,118 +4,22 @@ using System.Collections.Generic;
 
 public class Consumables : MonoBehaviour, IStorage
 {
-    [SerializeField] private static int maxCount = 5;
-
-    [Header("Fuel tanks")]
+    [Header("Counts")]
     [SerializeField] private int fuelTanksCount = 1;
-    private readonly static float fuelTankRecovery = 50f;
-
-    [Header("Grindstones")]
     [SerializeField] private int grindstonesCount = 1;
-    private readonly static float grindstoneRecovery = 50;
-
-    [Header("Health packs")]
     [SerializeField] private int healthPacksCount = 1;
-    private readonly static int healthPackRecovery = 50;
-
-    [Header("Smoking pipes")]
     [SerializeField] private int smokingPipesCount = 1;
-    private readonly static float smokingPipeRecovery = 50f;
 
+    [Header("Recoveries")]
+    [SerializeField] private float fuelTankRecovery = 50f;
+    [SerializeField] private float grindstoneRecovery = 50f;
+    [SerializeField] private float healthPackRecovery = 50;
+    [SerializeField] private float smokingPipeRecovery = 50f;
+
+    private Dictionary<ConsumableType, int> consumableCounts;
+    private Dictionary<ConsumableType, string> consumableNames;
+    private Dictionary<ConsumableType, float> consumableRecoveries;
     private bool loaded = false;
-
-    public static int MaxCount { get => maxCount; set => maxCount = value; }
-
-    #region FuelTanks
-
-    public int FuelTanksCount 
-    { 
-        get => fuelTanksCount;
-        set
-        {
-            var initialValue = fuelTanksCount;
-
-            if (value < 0) fuelTanksCount = 0;
-            else if (value > maxCount) fuelTanksCount = maxCount;
-            else fuelTanksCount = value;
-
-            if (HotbarController.Instanse != null)
-                HotbarController.Instanse.SetConsumableCount(ConsumableType.FuelTank, fuelTanksCount);
-
-            if (fuelTanksCount - initialValue > 0 && loaded)
-                TakingConsumables.Instanse.AddConsumable("Топливо", fuelTanksCount - initialValue, SpritesStorage.instanse.FuelTank);
-        }
-    }
-
-    public static float FuelTankRecovery { get => fuelTankRecovery; }
-
-    #endregion
-
-    #region HealthPacks
-
-    public int HealthPacksCount 
-    { 
-        get => healthPacksCount;
-        set 
-        {
-            var initialValue = healthPacksCount;
-
-            if (value < 0) healthPacksCount = 0;
-            else if (value > maxCount) healthPacksCount = maxCount;
-            else healthPacksCount = value;
-
-            if (HotbarController.Instanse != null)
-                HotbarController.Instanse.SetConsumableCount(ConsumableType.HealthPack, healthPacksCount);
-
-            if (healthPacksCount - initialValue > 0 && loaded)
-                TakingConsumables.Instanse.AddConsumable("Еда", healthPacksCount - initialValue, SpritesStorage.instanse.HealthPack);
-        } 
-    }
-    public static int HealthPacksRecovery { get => healthPackRecovery;}
-
-    #endregion HealthPacks
-
-    #region Smoking Pipes
-    public int SmokingPipesCount { get => smokingPipesCount; 
-        set 
-        {
-            var initialValue = smokingPipesCount;
-
-            if (value < 0) smokingPipesCount = 0;
-            else if (value > maxCount) smokingPipesCount = maxCount;
-            else smokingPipesCount = value;
-
-            if (HotbarController.Instanse != null)
-                HotbarController.Instanse.SetConsumableCount(ConsumableType.SmokingPipe, smokingPipesCount);
-
-            if (smokingPipesCount - initialValue > 0 && loaded)
-                TakingConsumables.Instanse.AddConsumable("Трубка", smokingPipesCount - initialValue, SpritesStorage.instanse.SmokingPipe);
-        }
-    }
-    public static float SmokingPipesRecovery { get => smokingPipeRecovery;}
-    #endregion
-
-    #region Grindstone
-    public int GrindstonesCount
-    {
-        get => grindstonesCount;
-        set
-        {
-            var initialValue = grindstonesCount;
-
-            if (value < 0) grindstonesCount = 0;
-            else if (value > maxCount) grindstonesCount = maxCount;
-            else grindstonesCount = value;
-
-            if (HotbarController.Instanse != null)
-                HotbarController.Instanse.SetConsumableCount(ConsumableType.Grindstone, grindstonesCount);
-
-            if (grindstonesCount - initialValue > 0 && loaded)
-                TakingConsumables.Instanse.AddConsumable("Точильный камень", grindstonesCount - initialValue, SpritesStorage.instanse.Grindstone);
-        }
-    }
-    public static float GrindstoneRecovery { get => grindstoneRecovery; }
-    #endregion
 
     public void Save()
     {
@@ -127,19 +31,83 @@ public class Consumables : MonoBehaviour, IStorage
 
     public void Load()
     {
-        FuelTanksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.FuelTanksCount, fuelTanksCount);
-        GrindstonesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
-        HealthPacksCount = PlayerPrefs.GetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
-        SmokingPipesCount = PlayerPrefs.GetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
+        consumableCounts = new Dictionary<ConsumableType, int>
+        {
+            [ConsumableType.FuelTank] = PlayerPrefs.GetInt(PlayerPrefsKeys.FuelTanksCount, fuelTanksCount),
+            [ConsumableType.Grindstone] = PlayerPrefs.GetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount),
+            [ConsumableType.HealthPack] = PlayerPrefs.GetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount),
+            [ConsumableType.SmokingPipe] = PlayerPrefs.GetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount),
+            [ConsumableType.Dynamite] = PlayerPrefs.GetInt(PlayerPrefsKeys.DynamitesCount, 0),
+            [ConsumableType.Antidote] = PlayerPrefs.GetInt(PlayerPrefsKeys.AntidotesCount, 0)
+        };
+        HotbarController.Instanse.UpdateConsumablesCount(consumableCounts);
         loaded = true;
     }
 
+    public void Add(ConsumableType type, int count)
+    {
+        var initialValue = consumableCounts[type];
+
+        if (consumableCounts[type] + count < 0)
+            consumableCounts[type] = 0;
+        else consumableCounts[type] += count;
+
+        if (HotbarController.Instanse != null)
+            HotbarController.Instanse.SetConsumableCount(type, consumableCounts[type]);
+
+        if (consumableCounts[type] - initialValue > 0 && loaded)
+            TakingConsumables.Instanse.AddConsumable(consumableNames[type], consumableCounts[type] - initialValue, SpritesStorage.Instanse.GetConsumable(type));
+    }
+
+    public int GetCount(ConsumableType type) => consumableCounts[type];
+
+    public float GetRecovery(ConsumableType type) => consumableRecoveries[type];
+
     public void SetDefaultValues()
     {
-        FuelTanksCount = 1;
-        HealthPacksCount = 1;
-        SmokingPipesCount = 1;
-        GrindstonesCount = 1;
+        consumableCounts = new Dictionary<ConsumableType, int>
+        {
+            [ConsumableType.FuelTank] = 1,
+            [ConsumableType.Grindstone] = 1,
+            [ConsumableType.HealthPack] = 1,
+            [ConsumableType.SmokingPipe] = 1,
+            [ConsumableType.Dynamite] = 1,
+            [ConsumableType.Antidote] = 1
+        };
+        HotbarController.Instanse.UpdateConsumablesCount(consumableCounts);
+    }
+
+    private void Awake()
+    {
+        consumableCounts = new Dictionary<ConsumableType, int>
+        {
+            [ConsumableType.FuelTank] = 0,
+            [ConsumableType.Grindstone] = 0,
+            [ConsumableType.HealthPack] = 0,
+            [ConsumableType.SmokingPipe] = 0,
+            [ConsumableType.Dynamite] = 0,
+            [ConsumableType.Antidote] = 0
+        };
+
+        consumableNames = new Dictionary<ConsumableType, string>
+        {
+            [ConsumableType.FuelTank] = "Топливо",
+            [ConsumableType.Grindstone] = "Точильный камень",
+            [ConsumableType.HealthPack] = "Еда",
+            [ConsumableType.SmokingPipe] = "Трубка",
+            [ConsumableType.Dynamite] = "Динамит",
+            [ConsumableType.Antidote] = "Противоядие"
+        };
+
+        consumableRecoveries = new Dictionary<ConsumableType, float>
+        {
+            [ConsumableType.FuelTank] = fuelTankRecovery,
+            [ConsumableType.Grindstone] = grindstoneRecovery,
+            [ConsumableType.HealthPack] = healthPackRecovery,
+            [ConsumableType.SmokingPipe] = smokingPipeRecovery,
+        };
+
+        HotbarController.Instanse.UpdateConsumablesCount(consumableCounts);
     }
 
     private void Start()

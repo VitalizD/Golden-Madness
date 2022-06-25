@@ -337,16 +337,16 @@ public class Player : MonoBehaviour, IStorage
         if (canAttack && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
             Attack();
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GetCount(ConsumableType.Grindstone) > 0)
         {
-            PickaxeStrength += Consumables.GrindstoneRecovery;
-            --consumables.GrindstonesCount;
+            PickaxeStrength += consumables.GetRecovery(ConsumableType.Grindstone);
+            consumables.Add(ConsumableType.Grindstone, -1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.GetCount(ConsumableType.HealthPack) > 0)
         {
-            Health += Consumables.HealthPacksRecovery;
-            --consumables.HealthPacksCount;
+            Health += (int)consumables.GetRecovery(ConsumableType.HealthPack);
+            consumables.Add(ConsumableType.HealthPack, -1);
         }
     }
 

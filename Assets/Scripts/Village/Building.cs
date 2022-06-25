@@ -100,7 +100,7 @@ public class Building : MonoBehaviour, IStorage
         {
             CanBeUsed = false;
             upgradeWindow.Hide();
-            Teleporter.instanse.Go(Player.Instanse.transform.position, action, buildingFadeSpeed, () => CanBeUsed = true);
+            Teleporter.Instanse.Go(Player.Instanse.transform.position, action, buildingFadeSpeed, () => CanBeUsed = true);
         }
         else
             action();
@@ -123,6 +123,12 @@ public class Building : MonoBehaviour, IStorage
         upgradeWindow.SetDescription(description);
         SetRequiredResource(requiredResource, count);
         this.actionAfterUpgrading = actionAfterUpgrading;
+    }
+
+    private void ExecuteIfLastLevel()
+    {
+        upgradeWindow.Hide();
+        maxLevel = true;
     }
 
     private void UpdateInfo()
@@ -150,7 +156,7 @@ public class Building : MonoBehaviour, IStorage
             {
                 case BuildingType.Forge:
                     upgradeWindow.SetTitle("Кузница");
-                    upgradeWindow.SetToolIcon(SpritesStorage.instanse.Pickaxe);
+                    upgradeWindow.SetToolIcon(SpritesStorage.Instanse.GetEquipment(EquipmentType.Pickaxe));
                     if (currentLevel > 0)
                         upgradeWindow.SetAction("Улучшить кирку");
                     switch (currentLevel)
@@ -187,17 +193,13 @@ public class Building : MonoBehaviour, IStorage
                                 UpdateUpgradeWindow($"Прочность {prefix}+50%{postfix}\nСкорость {prefix}+50%{postfix}\nУрон {prefix}+50%{postfix}", ResourceTypes.IronOre, 50, action);
                                 break;
                             }
-                        case 11:
-                            upgradeWindow.Hide();
-                            maxLevel = true;
-                            break;
+                        case 11: ExecuteIfLastLevel(); break;
                     }
-                    //HotbarController.Instanse.SetEquipmentLevel(EquipmentType.Pickaxe, currentLevel);
                     break;
 
                 case BuildingType.Workshow:
                     upgradeWindow.SetTitle("Мастерская");
-                    upgradeWindow.SetToolIcon(SpritesStorage.instanse.Lamp);
+                    upgradeWindow.SetToolIcon(SpritesStorage.Instanse.GetEquipment(EquipmentType.Lamp));
                     //upgradeWindow.SetDescriptionAlignLeft();
                     if (currentLevel > 0)
                         upgradeWindow.SetAction("Улучшить лампу");
@@ -219,12 +221,8 @@ public class Building : MonoBehaviour, IStorage
                         case 8: UpdateUpgradeWindow($"{pprefix}80{ppostfix}", ResourceTypes.Coal, 50, WorkshopUpgradeEffect); break;
                         case 9: UpdateUpgradeWindow($"{pprefix}90{ppostfix}", ResourceTypes.Quartz, 55, WorkshopUpgradeEffect); break;
                         case 10: UpdateUpgradeWindow($"{pprefix}100{ppostfix}", ResourceTypes.Coal, 60, WorkshopUpgradeEffect); break;
-                        case 11:
-                            upgradeWindow.Hide();
-                            maxLevel = true;
-                            break;
+                        case 11: ExecuteIfLastLevel(); break;
                     }
-                    //HotbarController.Instanse.SetEquipmentLevel(EquipmentType.Lamp, currentLevel);
                     break;
 
                 case BuildingType.SleepingBagShop:
@@ -263,9 +261,7 @@ public class Building : MonoBehaviour, IStorage
                                 upgradeWindow.Hide();
                             };
                             break;
-                        case 4:
-                            maxLevel = true;
-                            break;
+                        case 4: ExecuteIfLastLevel(); break;
                     }
                     break;
 
@@ -296,9 +292,7 @@ public class Building : MonoBehaviour, IStorage
                                 upgradeWindow.Hide();
                             };
                             break;
-                        case 4:
-                            maxLevel = true;
-                            break;
+                        case 4: ExecuteIfLastLevel(); break;
                     }
                     break;
             }

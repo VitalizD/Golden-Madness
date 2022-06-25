@@ -64,6 +64,12 @@ public class HotbarController : MonoBehaviour
         equipmentLevels[type].text = $"Óð. {value}";
     }
 
+    public void UpdateConsumablesCount(Dictionary<ConsumableType, int> counts)
+    {
+        foreach (var element in counts)
+            SetConsumableCount(element.Key, element.Value);
+    }
+
     private void Awake()
     {
         if (Instanse == null)
