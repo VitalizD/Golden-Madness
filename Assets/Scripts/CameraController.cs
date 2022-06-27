@@ -47,6 +47,13 @@ public class CameraController : MonoBehaviour
             Move();
             FixedCamera();
         }
+
+        //if (Input.GetButton("Vertical"))
+        //{
+        //    toPosition.y = player.position.y * Input.GetAxis("Vertical");
+        //    transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
+        //    enableMoving = false;
+        //}
     }
 
     private void OnDrawGizmosSelected()
