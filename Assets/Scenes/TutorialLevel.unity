@@ -23664,7 +23664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307617025073805696, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.5
+      value: -5.25
       objectReference: {fileID: 0}
     - target: {fileID: 3307617025073805696, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23701,6 +23701,14 @@ PrefabInstance:
     - target: {fileID: 3307617025073805700, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
       propertyPath: m_Name
       value: Door To Save Zone
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418994514344606206, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
+      propertyPath: m_Size.y
+      value: 1.4060173
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418994514344606206, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.041758537
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0f1a9e52b034a247920113e6e17cfb6, type: 3}
