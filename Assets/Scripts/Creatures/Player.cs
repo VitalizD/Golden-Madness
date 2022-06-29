@@ -29,7 +29,7 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private float reloadAttackTime = 0.1f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
-    [SerializeField] private Transform attackPoint;
+    [SerializeField] private PlayerAttackPoint attackPoint;
 
     [Header("Pickaxe")]
     [SerializeField] [Range(0, 100f)] private float pickaxeStrength = 100f;
@@ -365,11 +365,6 @@ public class Player : MonoBehaviour, IStorage
             Run();
     }
 
-    //private void LateUpdate()
-    //{
-    //    dialogWindow.transform.localScale = new Vector3(scaleX >= 0 ? 1 : -1, 1, 1);
-    //}
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (invulnerability)
@@ -388,8 +383,9 @@ public class Player : MonoBehaviour, IStorage
     // Назначен на ключ в анимации "Attack"
     private void OnAttack()
     {
-        var hits = Physics2D.OverlapCapsuleAll(attackPoint.position, attackDistanse, CapsuleDirection2D.Horizontal, 0, enemiesMask);
+        attackPoint.PlayTraceAnimation();
 
+        var hits = Physics2D.OverlapCapsuleAll(attackPoint.transform.position, attackDistanse, CapsuleDirection2D.Horizontal, 0, enemiesMask);
         foreach (var raycastHit in hits)
         {
             var creature = raycastHit.GetComponent<Creature>();
@@ -446,16 +442,14 @@ public class Player : MonoBehaviour, IStorage
 
     private void Run()
     {
-        //isDigging = false;
         if (jumpCheckingPoint.CanJump && !isAttacking && !isDigging)
             State = States.Walk;
 
         var dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-        scaleX = dir.x < 0 ? -scaleXValue : scaleXValue;
-        character.localScale = new Vector3(scaleX, character.localScale.y, character.localScale.z);
-        //sprite.flipX = dir.x < 0;
-        //attackPoint.localPosition = sprite.flipX ? new Vector3(-xAttackPoint, attackPoint.localPosition.y, 5) : new Vector3(xAttackPoint, attackPoint.localPosition.y, 5);
+
+        if (State != States.Attack)
+            Mirror(dir.x < 0);
     }
 
     private void Jump()
@@ -466,14 +460,19 @@ public class Player : MonoBehaviour, IStorage
 
     private void Attack()
     {
-        //ChangeDirectionTowards(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Mirror(Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x);
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-        //rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
 
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());
+    }
+
+    private void Mirror(bool condition)
+    {
+        scaleX = condition ? -scaleXValue : scaleXValue;
+        character.localScale = new Vector3(scaleX, character.localScale.y, character.localScale.z);
     }
 
     private IEnumerator DisableInvulnerability()

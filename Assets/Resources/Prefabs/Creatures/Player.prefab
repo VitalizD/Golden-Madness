@@ -106,7 +106,7 @@ MonoBehaviour:
   reloadAttackTime: 0.8
   invulnerabilityTime: 1
   stunTime: 0.3
-  attackPoint: {fileID: 1649143053615963485}
+  attackPoint: {fileID: 7517227805910426143}
   pickaxeStrength: 100
   hitDamageToPickaxe: 0.5
   tileDamage: 1
@@ -990,6 +990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1649143053615963485}
   - component: {fileID: 1632610508467808567}
+  - component: {fileID: 7517227805910426143}
   m_Layer: 0
   m_Name: Attack Point
   m_TagString: Untagged
@@ -1028,6 +1029,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0.23494342, y: -0.000000028007435}
   m_Size: {x: 1.6735604, y: 1.5000167}
   m_Direction: 1
+--- !u!114 &7517227805910426143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009271923449310318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e9a9376e1a1264e89efbdaf62fb864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tracePrefab: {fileID: 7440099548828512664, guid: a277cc3d668037249ba55e30cb823699, type: 3}
 --- !u!1 &7948947896978701508
 GameObject:
   m_ObjectHideFlags: 0
