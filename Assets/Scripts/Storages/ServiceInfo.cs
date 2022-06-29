@@ -17,9 +17,6 @@ public static class ServiceInfo
     public static string VillageScene { get; } = "Village";
     public static string TutorialLevel { get; } = "TutorialLevel";
 
-    public static int ChildIndexOfDialogWindow { get; } = 2;
-    public static int ChildIndexOfLamp { get; } = 3;
-
     public static bool CheckpointConditionDone { get; set; } = false;
     public static bool TutorialDoneInCave { get; set; } = false;
     public static bool TutorialDone { get; set; } = true;

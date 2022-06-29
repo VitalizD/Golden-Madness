@@ -11,10 +11,10 @@ public class Consumables : MonoBehaviour, IStorage
     [SerializeField] private int smokingPipesCount = 1;
 
     [Header("Recoveries")]
-    [SerializeField] private float fuelTankRecovery = 50f;
-    [SerializeField] private float grindstoneRecovery = 50f;
-    [SerializeField] private float healthPackRecovery = 50;
-    [SerializeField] private float smokingPipeRecovery = 50f;
+    [SerializeField] private float fuelTankRecovery = 30f;
+    [SerializeField] private float grindstoneRecovery = 30f;
+    [SerializeField] private float healthPackRecovery = 30f;
+    [SerializeField] private float smokingPipeRecovery = 30f;
 
     private Dictionary<ConsumableType, int> consumableCounts;
     private Dictionary<ConsumableType, string> consumableNames;
@@ -40,7 +40,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Dynamite] = PlayerPrefs.GetInt(PlayerPrefsKeys.DynamitesCount, 0),
             [ConsumableType.Antidote] = PlayerPrefs.GetInt(PlayerPrefsKeys.AntidotesCount, 0)
         };
-        HotbarController.Instanse.UpdateConsumablesCount(consumableCounts);
+        UpdateHotbar();
         loaded = true;
     }
 
@@ -74,8 +74,16 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Dynamite] = 1,
             [ConsumableType.Antidote] = 1
         };
-        HotbarController.Instanse.UpdateConsumablesCount(consumableCounts);
+        UpdateHotbar();
     }
+
+    public void SetFuelTanksCount(int value) => Add(ConsumableType.FuelTank, value);
+
+    public void SetGrindstonesCount(int value) => Add(ConsumableType.Grindstone, value);
+
+    public void SetHealthPacksCount(int value) => Add(ConsumableType.HealthPack, value);
+
+    public void SetSmokingPipesCount(int value) => Add(ConsumableType.SmokingPipe, value);
 
     private void Awake()
     {
@@ -106,13 +114,18 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.HealthPack] = healthPackRecovery,
             [ConsumableType.SmokingPipe] = smokingPipeRecovery,
         };
-
-        HotbarController.Instanse.UpdateConsumablesCount(consumableCounts);
+        UpdateHotbar();
     }
 
     private void Start()
     {
         if (!ServiceInfo.TutorialDone)
             loaded = true;
+    }
+
+    private void UpdateHotbar()
+    {
+        if (HotbarController.Instanse != null)
+            HotbarController.Instanse.UpdateConsumablesCount(consumableCounts);
     }
 }

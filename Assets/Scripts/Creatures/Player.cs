@@ -14,8 +14,11 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100)] private int health = 100;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private Transform character;
     [SerializeField] private CheckingForJump jumpCheckingPoint;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Lamp lamp;
+    [SerializeField] private PlayerDialogWindow dialogWindow;
 
     [Header("Fight")]
     [SerializeField] private int enemyDamage = 10;
@@ -45,8 +48,6 @@ public class Player : MonoBehaviour, IStorage
     private SanityController sanity;
     private Consumables consumables;
     private Backpack backpack;
-    private Lamp lamp;
-    private PlayerDialogWindow dialogWindow;
     private GameOver gameOver;
     private RedFilter displayFilter;
 
@@ -54,8 +55,9 @@ public class Player : MonoBehaviour, IStorage
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
     private Vector2 attackDistanse;
-    private float fixedZPosition;
     private float defaultSpeed;
+
+    private float fixedZPosition;
     private float scaleXValue;
     private float scaleX;
 
@@ -204,6 +206,8 @@ public class Player : MonoBehaviour, IStorage
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
 
+    public void SetFuelCount(float value) => lamp.FuelCount = value;
+
     public void AddMaxEnemyDamage(int valueInPercents)
     {
         maxEnemyDamage += (int)(initialEnemyDamage * (valueInPercents / 100f));
@@ -303,14 +307,13 @@ public class Player : MonoBehaviour, IStorage
         sanity = GetComponent<SanityController>();
         consumables = GetComponent<Consumables>();
         backpack = GetComponent<Backpack>();
-        lamp = transform.GetChild(ServiceInfo.ChildIndexOfLamp).GetComponent<Lamp>();
-        dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
         gameOver = GameObject.FindGameObjectWithTag(ServiceInfo.GameOverTag).GetComponent<GameOver>();
         displayFilter = GameObject.FindGameObjectWithTag(ServiceInfo.RedFilterTag).GetComponent<RedFilter>();
 
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
         fixedZPosition = transform.position.z;
         scaleXValue = transform.localScale.x;
+        character.localScale = transform.localScale;
         defaultSpeed = speed;
 
         attackDistanse = attackPoint.GetComponent<CapsuleCollider2D>().size;
@@ -362,10 +365,10 @@ public class Player : MonoBehaviour, IStorage
             Run();
     }
 
-    private void LateUpdate()
-    {
-        dialogWindow.transform.localScale = new Vector3(scaleX >= 0 ? 1 : -1, 1, 1);
-    }
+    //private void LateUpdate()
+    //{
+    //    dialogWindow.transform.localScale = new Vector3(scaleX >= 0 ? 1 : -1, 1, 1);
+    //}
 
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -450,7 +453,7 @@ public class Player : MonoBehaviour, IStorage
         var dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
         scaleX = dir.x < 0 ? -scaleXValue : scaleXValue;
-        transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+        character.localScale = new Vector3(scaleX, character.localScale.y, character.localScale.z);
         //sprite.flipX = dir.x < 0;
         //attackPoint.localPosition = sprite.flipX ? new Vector3(-xAttackPoint, attackPoint.localPosition.y, 5) : new Vector3(xAttackPoint, attackPoint.localPosition.y, 5);
     }

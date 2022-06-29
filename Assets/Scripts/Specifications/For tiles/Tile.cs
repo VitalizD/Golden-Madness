@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private float shakingTime = 0.24f;
     [SerializeField] private bool isBedrock = false;
     [SerializeField] private bool destroyAttachedTiles = true;
+    [SerializeField] private bool drawFrames = true;
     [SerializeField] private ResourceTypes resourceType = ResourceTypes.None;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Sprite[] destructionDegrees;
@@ -67,7 +68,7 @@ public class Tile : MonoBehaviour
     public void DrawFrames()
     {
         framesDrawed = true;
-        if (GetComponent<AttachedTile>() != null)
+        if (!drawFrames || GetComponent<AttachedTile>() != null)
             return;
         StartCoroutine(Draw());
 
@@ -153,7 +154,7 @@ public class Tile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!framesDrawed && LevelGeneration.Instanse.IsGenerated)
+        if (!framesDrawed && (LevelGeneration.Instanse == null || LevelGeneration.Instanse.IsGenerated))
             DrawFrames();
     }
 

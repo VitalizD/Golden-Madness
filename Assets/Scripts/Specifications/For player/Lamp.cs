@@ -10,6 +10,8 @@ public class Lamp : MonoBehaviour, IStorage
     [SerializeField] private float maxLightRange = 25f;
     [SerializeField] private float fuelDecreaseValue = 1f;
     [SerializeField] private float timeFuelDecrease = 5f;
+    [SerializeField] private SanityController sanity;
+    [SerializeField] private Consumables consumables;
 
     private readonly float checkFuelCountBetweenTime = 2f;
 
@@ -24,8 +26,6 @@ public class Lamp : MonoBehaviour, IStorage
     private float currentDecreasingSanity = 0;
 
     private Light light_;
-    private Consumables consumables;
-    private SanityController sanity;
 
     private Coroutine decreaseFuel;
     private Coroutine checkFuelCount;
@@ -66,8 +66,6 @@ public class Lamp : MonoBehaviour, IStorage
     private void Awake()
     {
         light_ = GetComponent<Light>();
-        consumables = transform.parent.GetComponent<Consumables>();
-        sanity = transform.parent.GetComponent<SanityController>();
     }
 
     private void Start()
