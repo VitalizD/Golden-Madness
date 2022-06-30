@@ -50,6 +50,7 @@ public class Player : MonoBehaviour, IStorage
     private Backpack backpack;
     private GameOver gameOver;
     private RedFilter displayFilter;
+    private DamageText damageText;
 
     private Tile selectedTile;
     private LayerMask enemiesMask;
@@ -116,6 +117,7 @@ public class Player : MonoBehaviour, IStorage
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
                 if (displayFilter != null) displayFilter.ChangeColor(health - value);
+                damageText.ShowDamage(health - value, transform.position);
             }
             health = value > 100 ? 100 : value;
 
@@ -309,6 +311,7 @@ public class Player : MonoBehaviour, IStorage
         backpack = GetComponent<Backpack>();
         gameOver = GameObject.FindGameObjectWithTag(ServiceInfo.GameOverTag).GetComponent<GameOver>();
         displayFilter = GameObject.FindGameObjectWithTag(ServiceInfo.RedFilterTag).GetComponent<RedFilter>();
+        damageText = GameObject.FindGameObjectWithTag(ServiceInfo.GameplayCanvasTag).GetComponent<DamageText>();
 
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
         fixedZPosition = transform.position.z;
