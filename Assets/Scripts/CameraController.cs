@@ -5,8 +5,9 @@ public class CameraController : MonoBehaviour
     public static CameraController instanse = null;
 
     [SerializeField] private bool enableMoving = true;
-    [SerializeField] private float speed = 1f;
+    //[SerializeField] private float speed = 1f;
     [SerializeField] private float yOffset = 1.6f;
+    [SerializeField] private float lookUpOrDown = 3f;
     [SerializeField] private float upLimit;
     [SerializeField] private float bottomLimit;
     [SerializeField] private float leftLimit;
@@ -46,14 +47,8 @@ public class CameraController : MonoBehaviour
         {
             Move();
             FixedCamera();
+            Look();
         }
-
-        //if (Input.GetButton("Vertical"))
-        //{
-        //    toPosition.y = player.position.y * Input.GetAxis("Vertical");
-        //    transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
-        //    enableMoving = false;
-        //}
     }
 
     private void OnDrawGizmosSelected()
@@ -82,7 +77,39 @@ public class CameraController : MonoBehaviour
             toPosition = player.position;
             toPosition.y = player.position.y - yOffset;
             toPosition.z = zPosition;
-            transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
+            transform.position = Vector3.Lerp(transform.position, toPosition, 1);//, Time.deltaTime * speed);
         }
+    }
+
+    private void Look()
+    {
+        if (Input.GetButton("Vertical"))
+        {
+            toPosition.y = player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical"));
+            transform.position = toPosition;
+            FixedCamera();
+        }
+
+        if (!Input.GetButton("Vertical"))
+        {
+            toPosition.y = player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical"));
+            transform.position = toPosition;
+            FixedCamera();
+        }
+
+        //if (Input.GetButton("Vertical") && !Input.GetButton("Horizontal") && !Input.GetButton("Jump"))
+        //{
+        //    toPosition.y = player.position.y - yOffset - (lookUpOrDown * Input.GetAxis("Vertical"));
+        //    transform.position = toPosition;
+        //    //toPosition.y = player.position.y * Input.GetAxis("Vertical");
+        //    //transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
+        //}
+
+        //if (!Input.GetButton("Vertical") || (Input.GetButton("Vertical") && (Input.GetButton("Horizontal") || !Input.GetButton("Jump"))))
+        //{
+        //    toPosition.y = player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical"));
+        //    transform.position = toPosition;
+        //    FixedCamera();
+        //}
     }
 }
