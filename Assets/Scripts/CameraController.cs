@@ -83,33 +83,11 @@ public class CameraController : MonoBehaviour
 
     private void Look()
     {
-        if (Input.GetButton("Vertical"))
+        if (Input.GetButton("Vertical") || !Input.GetButton("Vertical"))
         {
             toPosition.y = player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical"));
             transform.position = toPosition;
             FixedCamera();
         }
-
-        if (!Input.GetButton("Vertical"))
-        {
-            toPosition.y = player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical"));
-            transform.position = toPosition;
-            FixedCamera();
-        }
-
-        //if (Input.GetButton("Vertical") && !Input.GetButton("Horizontal") && !Input.GetButton("Jump"))
-        //{
-        //    toPosition.y = player.position.y - yOffset - (lookUpOrDown * Input.GetAxis("Vertical"));
-        //    transform.position = toPosition;
-        //    //toPosition.y = player.position.y * Input.GetAxis("Vertical");
-        //    //transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
-        //}
-
-        //if (!Input.GetButton("Vertical") || (Input.GetButton("Vertical") && (Input.GetButton("Horizontal") || !Input.GetButton("Jump"))))
-        //{
-        //    toPosition.y = player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical"));
-        //    transform.position = toPosition;
-        //    FixedCamera();
-        //}
     }
 }
