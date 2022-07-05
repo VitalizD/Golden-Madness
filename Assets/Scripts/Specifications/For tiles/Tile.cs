@@ -5,12 +5,14 @@ using System.Collections.Generic;
 public class Tile : MonoBehaviour
 {
     private const string shakeAnimationName = "Shake";
+    private const float checkingDistanceToAttachedTiles = 0.505f;
 
     [SerializeField] private float health = 10;
     [SerializeField] private float diggingDifficulty = 1;
     [SerializeField] private float shakingTime = 0.24f;
     [SerializeField] private bool isBedrock = false;
     [SerializeField] private bool destroyAttachedTiles = true;
+    [SerializeField] private bool drawFrames = true;
     [SerializeField] private ResourceTypes resourceType = ResourceTypes.None;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Sprite[] destructionDegrees;
@@ -21,12 +23,18 @@ public class Tile : MonoBehaviour
     [SerializeField] private SpriteRenderer tileSprite;
     [SerializeField] private SpriteRenderer destructionSprite;
 
+    [Header("Frame Sprites")]
+    [SerializeField] private GameObject frameTop;
+    [SerializeField] private GameObject frameBottom;
+    [SerializeField] private GameObject frameLeft;
+    [SerializeField] private GameObject frameRight;
+
     private Selection selection;
     private Player player;
     private Animation animation_;
 
     private float maxHealth;
-    private readonly float checkingDistanceToDestroyAttachedTiles = 0.505f;
+    private bool framesDrawed = false;
 
     public float DiggingDifficulty { get => diggingDifficulty; }
 
@@ -41,6 +49,7 @@ public class Tile : MonoBehaviour
             if (health <= 0)
             {
                 AddResourceToBackpack(resourceType);
+                DrawFramesOnNeighboringTiles();
                 if (destroyAttachedTiles)
                     DestroyAttachedTiles();
                 Destroy(gameObject);
@@ -56,6 +65,34 @@ public class Tile : MonoBehaviour
 
     public bool IsBedrock { get => isBedrock; set => isBedrock = value; }
 
+    public void DrawFrames()
+    {
+        framesDrawed = true;
+        if (!drawFrames || GetComponent<AttachedTile>() != null)
+            return;
+        StartCoroutine(Draw());
+
+        IEnumerator Draw()
+        {
+            yield return new WaitForSeconds(0.001f);
+
+            var colliders = GetNearestTiles();
+            foreach (var collider in colliders)
+            {
+                if (collider.Value == null || collider.Value.GetComponent<AttachedTile>() != null)
+                {
+                    switch (collider.Key)
+                    {
+                        case Direction.Top: frameTop.SetActive(true); break;
+                        case Direction.Bottom: frameBottom.SetActive(true); break;
+                        case Direction.Left: frameLeft.SetActive(true); break;
+                        case Direction.Right: frameRight.SetActive(true); break;
+                    }
+                }
+            }
+        }
+    }
+
     private void Awake()
     {
         selection = GameObject.FindGameObjectWithTag(ServiceInfo.SelectionTag).GetComponent<Selection>();
@@ -69,22 +106,7 @@ public class Tile : MonoBehaviour
     private void Start()
     {
         player = Player.Instanse;
-
-        //var tileDetection = Physics2D.OverlapCircle(transform.position, 0.001f, groundMask);
-        //if (tileDetection != null)
-        //    Destroy(gameObject);
     }
-
-    /*private void OnMouseEnter()
-    {
-        *//*if (isBedrock)
-            return;*/
-
-        /*if (selection != null)
-            selection.gameObject.SetActive(true);
-        if (player != null)
-            player.SetSelectedTile(this);*//*
-    }*/
 
     private void OnMouseExit()
     {
@@ -128,6 +150,12 @@ public class Tile : MonoBehaviour
     private void OnMouseUp()
     {
         StopDigging();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!framesDrawed && (LevelGeneration.Instanse == null || LevelGeneration.Instanse.IsGenerated))
+            DrawFrames();
     }
 
     private void OnDestroy()
@@ -179,13 +207,7 @@ public class Tile : MonoBehaviour
 
     private void DestroyAttachedTiles()
     {
-        var colliders = new List<Collider2D>
-        {
-            Physics2D.OverlapPoint(new Vector2(transform.position.x + checkingDistanceToDestroyAttachedTiles, transform.position.y)),
-            Physics2D.OverlapPoint(new Vector2(transform.position.x - checkingDistanceToDestroyAttachedTiles, transform.position.y)),
-            Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y + checkingDistanceToDestroyAttachedTiles)),
-            Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y - checkingDistanceToDestroyAttachedTiles))
-        };
+        var colliders = GetNearestTiles().Values;
 
         foreach (var collider in colliders)
         {
@@ -217,6 +239,34 @@ public class Tile : MonoBehaviour
     {
         if (resourceType != ResourceTypes.None && player)
             player.GetComponent<Backpack>().Add(resourceType);
+    }
+
+    private void DrawFramesOnNeighboringTiles()
+    {
+        var neighboringTiles = GetNearestTiles().Values;
+        foreach (var neighboringTile in neighboringTiles)
+        {
+            if (neighboringTile == null)
+                continue;
+
+            var tile = neighboringTile.GetComponent<Tile>();
+
+            if (tile == null)
+                continue;
+
+            tile.DrawFrames();
+        }
+    }
+
+    private Dictionary<Direction, Collider2D> GetNearestTiles()
+    {
+        return new Dictionary<Direction, Collider2D>
+        {
+            [Direction.Right] = Physics2D.OverlapPoint(new Vector2(transform.position.x + checkingDistanceToAttachedTiles, transform.position.y), groundMask),
+            [Direction.Left] = Physics2D.OverlapPoint(new Vector2(transform.position.x - checkingDistanceToAttachedTiles, transform.position.y), groundMask),
+            [Direction.Top] = Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y + checkingDistanceToAttachedTiles), groundMask),
+            [Direction.Bottom] = Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y - checkingDistanceToAttachedTiles), groundMask)
+        };
     }
 
     private IEnumerator Shake()

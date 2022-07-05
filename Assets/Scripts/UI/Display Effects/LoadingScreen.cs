@@ -13,7 +13,7 @@ public class LoadingScreen : MonoBehaviour
         {
             return;
         }
-        Teleporter.instanse.Pause();
+        Teleporter.Instanse.Pause();
         loadingText.SetActive(true);
         teleporterResumed = false;
     }
@@ -26,7 +26,7 @@ public class LoadingScreen : MonoBehaviour
         }
         if (LevelGeneration.Instanse.IsGenerated && !teleporterResumed)
         {
-            Teleporter.instanse.Resume();
+            Teleporter.Instanse.Resume();
             loadingText.SetActive(false);
             teleporterResumed = true;
         }

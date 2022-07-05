@@ -12,6 +12,10 @@ public class HotbarController : MonoBehaviour
     [SerializeField] private BarController healthBar;
     [SerializeField] private BarController sanityBar;
 
+    [Header("Level Texts")]
+    [SerializeField] private TextMeshProUGUI pickaxeLevel;
+    [SerializeField] private TextMeshProUGUI lampLevel;
+
     [Header("Consumables")]
     [SerializeField] private TextMeshProUGUI fuelTanksCount;
     [SerializeField] private TextMeshProUGUI grindstonesCount;
@@ -22,6 +26,13 @@ public class HotbarController : MonoBehaviour
 
     private Dictionary<ConsumableType, TextMeshProUGUI> consumablesCounts;
     private Dictionary<BarType, BarController> bars;
+    private Dictionary<EquipmentType, TextMeshProUGUI> equipmentLevels;
+
+    public void Load()
+    {
+        SetEquipmentLevel(EquipmentType.Pickaxe, PlayerPrefs.GetInt(BuildingType.Forge.ToString() + PlayerPrefsKeys.CurrentLevelOfBuildingPostfix, 1));
+        SetEquipmentLevel(EquipmentType.Lamp, PlayerPrefs.GetInt(BuildingType.Workshow.ToString() + PlayerPrefsKeys.CurrentLevelOfBuildingPostfix, 1));
+    }
 
     public void SetConsumableCount(ConsumableType type, int value)
     {
@@ -43,6 +54,20 @@ public class HotbarController : MonoBehaviour
     {
         var currentValue = bars[type].GetValue();
         bars[type].SetValue(currentValue + value);
+    }
+
+    public void SetEquipmentLevel(EquipmentType type, int value)
+    {
+        if (value < 1)
+            value = 1;
+
+        equipmentLevels[type].text = $"Óð. {value}";
+    }
+
+    public void UpdateConsumablesCount(Dictionary<ConsumableType, int> counts)
+    {
+        foreach (var element in counts)
+            SetConsumableCount(element.Key, element.Value);
     }
 
     private void Awake()
@@ -69,5 +94,16 @@ public class HotbarController : MonoBehaviour
             [BarType.Health] = healthBar,
             [BarType.Sanity] = sanityBar
         };
+
+        equipmentLevels = new Dictionary<EquipmentType, TextMeshProUGUI>
+        {
+            [EquipmentType.Pickaxe] = pickaxeLevel,
+            [EquipmentType.Lamp] = lampLevel
+        };
+    }
+
+    private void Start()
+    {
+        Load();
     }
 }

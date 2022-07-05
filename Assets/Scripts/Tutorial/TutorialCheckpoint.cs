@@ -34,16 +34,7 @@ public class TutorialCheckpoint : MonoBehaviour
         Player.Instanse.Checkpoint = transform.position;
 
         if (playerWords != "")
-        {
-            var dialogWindowObj = Player.Instanse.transform.GetChild(2);
-            if (dialogWindowObj)
-            {
-                dialogWindowObj.gameObject.SetActive(true);
-                var dialogWindow = dialogWindowObj.GetComponent<PlayerDialogWindow>();
-                if (dialogWindow)
-                    dialogWindow.Show(playerWords, timeHidingDialogWindow);
-            }
-        }
+            Player.Instanse.Say(playerWords, timeHidingDialogWindow);
 
         if (funcCondition == null)
             Destroy(gameObject);

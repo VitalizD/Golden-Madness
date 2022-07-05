@@ -11,7 +11,7 @@ public class Creature : MonoBehaviour
     [SerializeField] private Color damageColor = Color.white;
     [SerializeField] private bool repulsiable;
     [SerializeField] private States[] states;
-    [SerializeField] private bool stalagmitesCanThrowAway=false;
+    [SerializeField] private bool stalagmitesCanThrowAway = false;
     private float repulsiveForce = 3f;
 
     private readonly float delayInSeconds = 1f;
@@ -25,6 +25,7 @@ public class Creature : MonoBehaviour
     private Rigidbody2D rigidbody2D_;
     private SpriteRenderer sprite;
     private ICreature child;
+    private DamageText damageText;
 
     public float Speed { get => speed; set => speed = value >= 0 ? value : speed; }
 
@@ -39,7 +40,12 @@ public class Creature : MonoBehaviour
         get => health;
         set
         {
+            var delta = health - value;
+            if (delta > 0)
+                damageText.ShowDamage(delta, transform.position);
+
             health = value;
+
             if (health <= 0)
                 Destroy(gameObject);
             else
@@ -64,22 +70,6 @@ public class Creature : MonoBehaviour
     }
 
     public void SetChild(ICreature value) => child = value;
-
-    private void Awake()
-    {
-        timer = delayInSeconds;
-        animator = GetComponent<Animator>();
-        rigidbody2D_ = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        normalColor = sprite.color;
-    }
-
-    private void OnDestroy()
-    {
-        var terrible = GetComponent<Terrible>();
-        if (terrible != null)
-            terrible.Cancel();
-    }
 
     public void Throw(Vector2 startPoint, float force)
     {
@@ -108,16 +98,32 @@ public class Creature : MonoBehaviour
         attacked = false;
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void Awake()
     {
-      
+        timer = delayInSeconds;
+        animator = GetComponent<Animator>();
+        rigidbody2D_ = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
+        damageText = GameObject.FindGameObjectWithTag(ServiceInfo.GameplayCanvasTag).GetComponent<DamageText>();
+        normalColor = sprite.color;
+    }
+
+    private void OnDestroy()
+    {
+        var terrible = GetComponent<Terrible>();
+        if (terrible != null)
+            terrible.Cancel();
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {     
         var danger = collision.collider.GetComponent<Danger>();
-        if (danger) {
+        if (danger)
+        {
             timer += Time.deltaTime;
             if (timer >= delayInSeconds) 
             {
-                Debug.Log(timer);
-                GetDamage(danger.Damage);
+                Health -= danger.Damage;
                 if (stalagmitesCanThrowAway) this.Throw(transform.position, repulsiveForce);
                 timer = 0f;
             }
@@ -129,11 +135,6 @@ public class Creature : MonoBehaviour
         var danger = collision.collider.GetComponent<Danger>();
         if (danger)
             timer = delayInSeconds;
-    }
-
-    private void GetDamage(int damage)
-    {
-        this.Health -= damage;
     }
 
     IEnumerator Wait(float time)

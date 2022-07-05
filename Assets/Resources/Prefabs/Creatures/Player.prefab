@@ -16,9 +16,6 @@ GameObject:
   - component: {fileID: 99395948229621791}
   - component: {fileID: 5101184335126964010}
   - component: {fileID: 5772696817491646705}
-  - component: {fileID: 1926600330374022812}
-  - component: {fileID: 7751600400649213137}
-  - component: {fileID: 6458866122718615110}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -38,12 +35,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 984370221206082734}
-  - {fileID: 4898213955527495611}
   - {fileID: 7494783934899537338}
-  - {fileID: 3791962589903257141}
-  - {fileID: 8562130234798620002}
-  - {fileID: 1649143053615963485}
+  - {fileID: 3499471482827718647}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -100,29 +93,26 @@ MonoBehaviour:
   health: 100
   speed: 4
   jumpForce: 8
+  character: {fileID: 3499471482827718647}
   jumpCheckingPoint: {fileID: 1332513084546739594}
   sprite: {fileID: 984370221206082735}
-  healthBar: {fileID: 1926600330374022812}
-  sanityBar: {fileID: 7751600400649213137}
-  healthPacks: {fileID: 0}
+  lamp: {fileID: 2537205635252364338}
+  dialogWindow: {fileID: 228342703490646129}
   enemyDamage: 10
   maxEnemyDamage: 10
   minEnemyDamageInPercents: 60
   repulsiveForce: 3.2
-  jerkForce: 0
   attackTime: 0.8
   reloadAttackTime: 0.8
   invulnerabilityTime: 1
   stunTime: 0.3
-  attackPoint: {fileID: 1649143053615963485}
+  attackPoint: {fileID: 7517227805910426143}
   pickaxeStrength: 100
   hitDamageToPickaxe: 0.5
   tileDamage: 1
   maxTileDamage: 1
-  minTileDamageInPercents: 20
+  minTileDamageInPercents: 50
   touchingDistance: 1.5
-  pickaxeStrengthBar: {fileID: 6458866122718615110}
-  grindstones: {fileID: 0}
   healthRecovery: 20
   sanityRecovery: 50
 --- !u!95 &984370220786920454
@@ -158,13 +148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuelTanksCount: 0
-  fuelTanks: {fileID: 0}
   grindstonesCount: 0
-  grindstones: {fileID: 0}
   healthPacksCount: 0
-  healthPacks: {fileID: 0}
   smokingPipesCount: 0
-  smokingPipes: {fileID: 0}
+  fuelTankRecovery: 100
+  grindstoneRecovery: 100
+  healthPackRecovery: 30
+  smokingPipeRecovery: 30
 --- !u!114 &5101184335126964010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,8 +169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableDecreasing: 1
   sanity: 100
-  sanityBar: {fileID: 7751600400649213137}
-  smockingPipes: {fileID: 0}
 --- !u!114 &5772696817491646705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,48 +186,6 @@ MonoBehaviour:
   fullInventorySpeedMultiplier: 0.85
   fullInventoryPhrase: "\u041C\u043E\u0439 \u0440\u044E\u043A\u0437\u0430\u043A \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D!"
   cannotTakePhrase: "\u042F \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0443\u043D\u0435\u0441\u0443!"
---- !u!114 &1926600330374022812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984370220786920460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e3544906ff05248bd108d26730d0fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  hp: {fileID: 0}
---- !u!114 &7751600400649213137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984370220786920460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f352dccbc27fbf64cbfcd1e12a5fe2cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  sp: {fileID: 0}
-  sanityController: {fileID: 0}
---- !u!114 &6458866122718615110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984370220786920460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b0b57b5fede5a41bbee2906926efd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
 --- !u!1 &984370221206082729
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,13 +210,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984370221206082729}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 384216189051101082}
-  m_Father: {fileID: 984370220786920449}
+  m_Father: {fileID: 3499471482827718647}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &984370221206082735
@@ -426,6 +372,42 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &1227339665982007427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3499471482827718647}
+  m_Layer: 7
+  m_Name: Character
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3499471482827718647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227339665982007427}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 984370221206082734}
+  - {fileID: 4898213955527495611}
+  - {fileID: 3791962589903257141}
+  - {fileID: 8562130234798620002}
+  - {fileID: 1649143053615963485}
+  m_Father: {fileID: 984370220786920449}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2056211009995252146
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,13 +433,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056211009995252146}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.498, z: 5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.49800003, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 984370220786920449}
-  m_RootOrder: 4
+  m_Father: {fileID: 3499471482827718647}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5153300068490805026
 BoxCollider2D:
@@ -524,13 +506,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061743498411214084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.126, z: -1}
+  m_LocalPosition: {x: 0, y: 1.1259999, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2388622574239073422}
   m_Father: {fileID: 984370220786920449}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7051947126700689430
 SpriteRenderer:
@@ -709,7 +691,6 @@ GameObject:
   - component: {fileID: 1635360014515291880}
   - component: {fileID: 4750881196579373436}
   - component: {fileID: 2537205635252364338}
-  - component: {fileID: 5322104867713374391}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -724,13 +705,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606018953659525155}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 984370220786920449}
-  m_RootOrder: 3
+  m_Father: {fileID: 3499471482827718647}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1635360014515291880
 Light:
@@ -827,22 +808,9 @@ MonoBehaviour:
   minLightRange: 8
   maxLightRange: 25
   fuelDecreaseValue: 1
-  timeFuelDecrease: 5
-  lampBar: {fileID: 0}
-  fuelTanks: {fileID: 0}
---- !u!114 &5322104867713374391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5606018953659525155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c65f91eec573ab4088c58a267b23765, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
+  timeFuelDecrease: 2
+  sanity: {fileID: 5101184335126964010}
+  consumables: {fileID: 99395948229621791}
 --- !u!1 &5831702624987111799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1649143053615963485}
   - component: {fileID: 1632610508467808567}
+  - component: {fileID: 7517227805910426143}
   m_Layer: 0
   m_Name: Attack Point
   m_TagString: Untagged
@@ -1036,13 +1005,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7009271923449310318}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.409, y: 0, z: 5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.4090004, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 984370220786920449}
-  m_RootOrder: 5
+  m_Father: {fileID: 3499471482827718647}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1632610508467808567
 CapsuleCollider2D:
@@ -1060,6 +1029,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0.23494342, y: -0.000000028007435}
   m_Size: {x: 1.6735604, y: 1.5000167}
   m_Direction: 1
+--- !u!114 &7517227805910426143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009271923449310318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e9a9376e1a1264e89efbdaf62fb864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tracePrefab: {fileID: 7440099548828512664, guid: a277cc3d668037249ba55e30cb823699, type: 3}
+  traceZPosition: -6
 --- !u!1 &7948947896978701508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,12 +1068,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7948947896978701508}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.638, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 984370220786920449}
+  m_Father: {fileID: 3499471482827718647}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &6502240540297770001
@@ -1124,3 +1107,4 @@ MonoBehaviour:
   velocityForDamage: 14
   damageMultiplier: 3
   repulsiveForceMultiplier: 1.3
+  rigidBody: {fileID: 984370220786920451}

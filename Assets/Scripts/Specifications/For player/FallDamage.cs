@@ -5,26 +5,22 @@ public class FallDamage : MonoBehaviour
     [SerializeField] private float velocityForDamage;
     [SerializeField] private float damageMultiplier = 1f;
     [SerializeField] private float repulsiveForceMultiplier = 1.3f;
-
-    private Rigidbody2D rb;
-    private Player player;
+    [SerializeField] private Rigidbody2D rigidBody;
 
     private LayerMask groundMask;
 
     private void Awake()
     {
-        rb = transform.parent.GetComponent<Rigidbody2D>();
         groundMask = LayerMask.NameToLayer(ServiceInfo.GroundLayerName);
-        player = transform.parent.GetComponent<Player>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == groundMask && rb.velocity.y < -velocityForDamage)
+        if (collision.gameObject.layer == groundMask && rigidBody.velocity.y < -velocityForDamage)
         {
-            var damage = -rb.velocity.y - velocityForDamage;
-            rb.AddForce(-rb.velocity.y * repulsiveForceMultiplier * transform.up, ForceMode2D.Impulse);
-            player.Health -= (int)(damage * damageMultiplier);
+            var damage = -rigidBody.velocity.y - velocityForDamage;
+            rigidBody.AddForce(-rigidBody.velocity.y * repulsiveForceMultiplier * transform.up, ForceMode2D.Impulse);
+            Player.Instanse.Health -= (int)(damage * damageMultiplier);
         }
     }
 }

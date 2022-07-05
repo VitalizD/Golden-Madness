@@ -11,7 +11,7 @@ public class Teleporter : MonoBehaviour
         Lightening
     }
 
-    public static Teleporter instanse = null;
+    public static Teleporter Instanse { get; private set; } = null;
 
     [Tooltip("Чем выше, тем больше продлится обездвиживание персонажа")]
     [SerializeField] private float maxStunPlayerTime = 3f;
@@ -19,7 +19,6 @@ public class Teleporter : MonoBehaviour
     private float fadeSpeed = 1.2f;
     private float alphaInterpolation = 0;
     private States currentState = States.Stayed;
-    private States lastState = States.Stayed;
     private Vector2 toPosition;
     private Action actionAfterTransition;
     private Action actionAfterLightening;
@@ -30,13 +29,13 @@ public class Teleporter : MonoBehaviour
 
     public void Pause()
     {
-        lastState = currentState;
         currentState = States.Stayed;
     }
 
     public void Resume()
     {
-        currentState = States.Lightening;
+        if (alphaInterpolation > 0)
+            currentState = States.Lightening;
     }
 
     public void Go(Vector2 to, Action actionAfterTransition, float fadeSpeed, Action actionAfterLightening = null)
@@ -67,9 +66,9 @@ public class Teleporter : MonoBehaviour
 
     private void Awake()
     {
-        if (instanse == null)
-            instanse = this;
-        else if (instanse == this)
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
             Destroy(gameObject);
 
         blackFilterImage = GetComponent<Image>();

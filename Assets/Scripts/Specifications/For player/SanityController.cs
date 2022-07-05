@@ -55,10 +55,10 @@ public class SanityController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha4) && consumables.SmokingPipesCount > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha4) && consumables.GetCount(ConsumableType.SmokingPipe) > 0)
         {
-            Sanity += Consumables.SmokingPipesRecovery;
-            --consumables.SmokingPipesCount;
+            Sanity += consumables.GetRecovery(ConsumableType.SmokingPipe);
+            consumables.Add(ConsumableType.SmokingPipe, -1);
         }
     }
 

@@ -14,8 +14,11 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100)] private int health = 100;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private Transform character;
     [SerializeField] private CheckingForJump jumpCheckingPoint;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Lamp lamp;
+    [SerializeField] private PlayerDialogWindow dialogWindow;
 
     [Header("Fight")]
     [SerializeField] private int enemyDamage = 10;
@@ -26,7 +29,7 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private float reloadAttackTime = 0.1f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float stunTime = 0.5f;
-    [SerializeField] private Transform attackPoint;
+    [SerializeField] private PlayerAttackPoint attackPoint;
 
     [Header("Pickaxe")]
     [SerializeField] [Range(0, 100f)] private float pickaxeStrength = 100f;
@@ -45,17 +48,17 @@ public class Player : MonoBehaviour, IStorage
     private SanityController sanity;
     private Consumables consumables;
     private Backpack backpack;
-    private Lamp lamp;
-    private PlayerDialogWindow dialogWindow;
     private GameOver gameOver;
     private RedFilter displayFilter;
+    private DamageText damageText;
 
     private Tile selectedTile;
     private LayerMask enemiesMask;
     private Vector2 checkpoint;
     private Vector2 attackDistanse;
-    private float fixedZPosition;
     private float defaultSpeed;
+
+    private float fixedZPosition;
     private float scaleXValue;
     private float scaleX;
 
@@ -114,6 +117,7 @@ public class Player : MonoBehaviour, IStorage
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
                 if (displayFilter != null) displayFilter.ChangeColor(health - value);
+                //damageText.ShowDamage(health - value, transform.position);
             }
             health = value > 100 ? 100 : value;
 
@@ -203,6 +207,8 @@ public class Player : MonoBehaviour, IStorage
     public void RemoveSelectedTile() => selectedTile = null;
 
     public void AddForce(Vector2 force) => rigidBody2d.AddForce(force, ForceMode2D.Impulse);
+
+    public void SetFuelCount(float value) => lamp.FuelCount = value;
 
     public void AddMaxEnemyDamage(int valueInPercents)
     {
@@ -303,14 +309,14 @@ public class Player : MonoBehaviour, IStorage
         sanity = GetComponent<SanityController>();
         consumables = GetComponent<Consumables>();
         backpack = GetComponent<Backpack>();
-        lamp = transform.GetChild(ServiceInfo.ChildIndexOfLamp).GetComponent<Lamp>();
-        dialogWindow = transform.GetChild(ServiceInfo.ChildIndexOfDialogWindow).GetComponent<PlayerDialogWindow>();
         gameOver = GameObject.FindGameObjectWithTag(ServiceInfo.GameOverTag).GetComponent<GameOver>();
         displayFilter = GameObject.FindGameObjectWithTag(ServiceInfo.RedFilterTag).GetComponent<RedFilter>();
+        damageText = GameObject.FindGameObjectWithTag(ServiceInfo.GameplayCanvasTag).GetComponent<DamageText>();
 
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
         fixedZPosition = transform.position.z;
         scaleXValue = transform.localScale.x;
+        character.localScale = transform.localScale;
         defaultSpeed = speed;
 
         attackDistanse = attackPoint.GetComponent<CapsuleCollider2D>().size;
@@ -337,16 +343,16 @@ public class Player : MonoBehaviour, IStorage
         if (canAttack && !isDigging && !isStunned && Input.GetButtonDown("Fire1"))
             Attack();
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GrindstonesCount > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && consumables.GetCount(ConsumableType.Grindstone) > 0)
         {
-            PickaxeStrength += Consumables.GrindstoneRecovery;
-            --consumables.GrindstonesCount;
+            PickaxeStrength += consumables.GetRecovery(ConsumableType.Grindstone);
+            consumables.Add(ConsumableType.Grindstone, -1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.HealthPacksCount > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && consumables.GetCount(ConsumableType.HealthPack) > 0)
         {
-            Health += Consumables.HealthPacksRecovery;
-            --consumables.HealthPacksCount;
+            Health += (int)consumables.GetRecovery(ConsumableType.HealthPack);
+            consumables.Add(ConsumableType.HealthPack, -1);
         }
     }
 
@@ -360,11 +366,6 @@ public class Player : MonoBehaviour, IStorage
 
         if (!isStunned && Input.GetButton("Horizontal"))
             Run();
-    }
-
-    private void LateUpdate()
-    {
-        dialogWindow.transform.localScale = new Vector3(scaleX >= 0 ? 1 : -1, 1, 1);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -385,8 +386,9 @@ public class Player : MonoBehaviour, IStorage
     // Назначен на ключ в анимации "Attack"
     private void OnAttack()
     {
-        var hits = Physics2D.OverlapCapsuleAll(attackPoint.position, attackDistanse, CapsuleDirection2D.Horizontal, 0, enemiesMask);
+        attackPoint.PlayTraceAnimation();
 
+        var hits = Physics2D.OverlapCapsuleAll(attackPoint.transform.position, attackDistanse, CapsuleDirection2D.Horizontal, 0, enemiesMask);
         foreach (var raycastHit in hits)
         {
             var creature = raycastHit.GetComponent<Creature>();
@@ -443,16 +445,14 @@ public class Player : MonoBehaviour, IStorage
 
     private void Run()
     {
-        //isDigging = false;
         if (jumpCheckingPoint.CanJump && !isAttacking && !isDigging)
             State = States.Walk;
 
         var dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-        scaleX = dir.x < 0 ? -scaleXValue : scaleXValue;
-        transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
-        //sprite.flipX = dir.x < 0;
-        //attackPoint.localPosition = sprite.flipX ? new Vector3(-xAttackPoint, attackPoint.localPosition.y, 5) : new Vector3(xAttackPoint, attackPoint.localPosition.y, 5);
+
+        if (State != States.Attack)
+            Mirror(dir.x < 0);
     }
 
     private void Jump()
@@ -463,14 +463,19 @@ public class Player : MonoBehaviour, IStorage
 
     private void Attack()
     {
-        //ChangeDirectionTowards(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Mirror(Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x);
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-        //rigidBody2d.AddForce(transform.right * (sprite.flipX ? -jerkForce : jerkForce), ForceMode2D.Impulse);
 
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());
+    }
+
+    private void Mirror(bool condition)
+    {
+        scaleX = condition ? -scaleXValue : scaleXValue;
+        character.localScale = new Vector3(scaleX, character.localScale.y, character.localScale.z);
     }
 
     private IEnumerator DisableInvulnerability()
