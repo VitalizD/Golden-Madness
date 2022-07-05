@@ -215,8 +215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radiusInfluence: 5
-  decreasingSanityInArea: 0.1
-  decreasingSanityAfterAttack: 1
+  decreasingSanityInArea: 0.25
+  decreasingSanityAfterAttack: 2
 --- !u!61 &8299724333830376263
 BoxCollider2D:
   m_ObjectHideFlags: 0

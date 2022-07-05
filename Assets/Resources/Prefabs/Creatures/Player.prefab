@@ -111,7 +111,7 @@ MonoBehaviour:
   hitDamageToPickaxe: 0.5
   tileDamage: 1
   maxTileDamage: 1
-  minTileDamageInPercents: 20
+  minTileDamageInPercents: 50
   touchingDistance: 1.5
   healthRecovery: 20
   sanityRecovery: 50
@@ -151,8 +151,8 @@ MonoBehaviour:
   grindstonesCount: 0
   healthPacksCount: 0
   smokingPipesCount: 0
-  fuelTankRecovery: 30
-  grindstoneRecovery: 30
+  fuelTankRecovery: 100
+  grindstoneRecovery: 100
   healthPackRecovery: 30
   smokingPipeRecovery: 30
 --- !u!114 &5101184335126964010
@@ -808,7 +808,7 @@ MonoBehaviour:
   minLightRange: 8
   maxLightRange: 25
   fuelDecreaseValue: 1
-  timeFuelDecrease: 5
+  timeFuelDecrease: 2
   sanity: {fileID: 5101184335126964010}
   consumables: {fileID: 99395948229621791}
 --- !u!1 &5831702624987111799
@@ -1042,6 +1042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tracePrefab: {fileID: 7440099548828512664, guid: a277cc3d668037249ba55e30cb823699, type: 3}
+  traceZPosition: -6
 --- !u!1 &7948947896978701508
 GameObject:
   m_ObjectHideFlags: 0

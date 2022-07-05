@@ -117,7 +117,7 @@ public class Player : MonoBehaviour, IStorage
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
                 if (displayFilter != null) displayFilter.ChangeColor(health - value);
-                damageText.ShowDamage(health - value, transform.position);
+                //damageText.ShowDamage(health - value, transform.position);
             }
             health = value > 100 ? 100 : value;
 
