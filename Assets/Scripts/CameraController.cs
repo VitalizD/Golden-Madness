@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
     public static CameraController instanse = null;
 
     [SerializeField] private bool enableMoving = true;
-    //[SerializeField] private float speed = 1f;
+    [SerializeField] private float speed = 1f;
     [SerializeField] private float yOffset = 1.6f;
     [SerializeField] private float lookUpOrDown = 3f;
     [SerializeField] private float upLimit;
@@ -47,7 +47,7 @@ public class CameraController : MonoBehaviour
         {
             Move();
             FixedCamera();
-            Look();
+            //Look();
         }
     }
 
@@ -72,22 +72,26 @@ public class CameraController : MonoBehaviour
 
     private void Move()
     {
-        if (player != null)
-        {
-            toPosition = player.position;
-            toPosition.y = player.position.y - yOffset;
-            toPosition.z = zPosition;
-            transform.position = Vector3.Lerp(transform.position, toPosition, 1);//, Time.deltaTime * speed);
-        }
+        if (player == null)
+            return;
+
+        toPosition = player.position;
+        toPosition.y = player.position.y - yOffset;
+        toPosition.z = zPosition;
+
+        if (Input.GetButton("Vertical") || !Input.GetButton("Vertical"))
+            toPosition.y += lookUpOrDown * Input.GetAxis("Vertical");
+
+        transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
     }
 
-    private void Look()
-    {
-        if (Input.GetButton("Vertical") || !Input.GetButton("Vertical"))
-        {
-            toPosition.y = player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical"));
-            transform.position = toPosition;
-            FixedCamera();
-        }
-    }
+    //private void Look()
+    //{
+    //    if (Input.GetButton("Vertical") || !Input.GetButton("Vertical"))
+    //    {
+    //        toPosition.y = Vector3.Lerp(player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical")));
+    //        transform.position = toPosition;
+    //        FixedCamera();
+    //    }
+    //}
 }
