@@ -65,7 +65,10 @@ public class VillageController : MonoBehaviour, IStorage
             instanse = this;
         else if (instanse == this)
             Destroy(gameObject);
+    }
 
+    private void Start()
+    {
         var icons = SpritesStorage.Instanse;
         resourcesSprites = new Dictionary<ResourceTypes, Sprite>
         {
@@ -74,10 +77,7 @@ public class VillageController : MonoBehaviour, IStorage
             [ResourceTypes.IronOre] = icons.GetResource(ResourceTypes.IronOre),
             [ResourceTypes.Quartz] = icons.GetResource(ResourceTypes.Quartz)
         };
-    }
 
-    private void Start()
-    {
         if (loadResources)
         {
             Load();
