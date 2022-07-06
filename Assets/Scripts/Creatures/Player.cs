@@ -43,6 +43,10 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100)] private int healthRecovery = 20;
     [SerializeField] [Range(0, 100f)] private float sanityRecovery = 50f;
 
+    [Header("SFX")]
+    //[SerializeField] private AudioSource digSFX;
+    [SerializeField] private AudioSource getDamageSFX;
+
     private Rigidbody2D rigidBody2d;
     private Animator animator;
     private SanityController sanity;
@@ -113,6 +117,7 @@ public class Player : MonoBehaviour, IStorage
         {
             if (value < health && !loadParameters)
             {
+                AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerHit);
                 State = States.Pain;
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
@@ -406,7 +411,8 @@ public class Player : MonoBehaviour, IStorage
     {
         if (!selectedTile)
             return;
-
+        //digSFX.Play();
+        AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerDig);
         var damage = selectedTile.DiggingDifficulty < tileDamage ? tileDamage / selectedTile.DiggingDifficulty : tileDamage;
         selectedTile.Health -= damage;
         PickaxeStrength -= hitDamageToPickaxe;
@@ -421,6 +427,8 @@ public class Player : MonoBehaviour, IStorage
         var danger = collision.GetComponent<Danger>();
         if (danger != null)
         {
+
+            
             Health -= danger.Damage;
             State = States.Pain;
             SetStun();
