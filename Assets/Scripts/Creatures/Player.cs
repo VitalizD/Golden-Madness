@@ -140,7 +140,7 @@ public class Player : MonoBehaviour, IStorage
                 }
                 else
                 {
-                    health = 100;
+                    Health = 100;
                     transform.position = checkpoint;
                 }
                 if (displayFilter != null) displayFilter.RemoveFilter();
