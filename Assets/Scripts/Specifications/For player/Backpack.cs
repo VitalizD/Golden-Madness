@@ -53,7 +53,7 @@ public class Backpack : MonoBehaviour, IStorage
             Player.Instanse.Say(fullInventoryPhrase, 4f);
 
         if (currentFullness <= maxCapacity)
-            ResourcesController.instanse.ShowOneResource(resource);
+            ResourcesController.Instanse.ShowOneResource(resource);
 
         UpdateTextFullness();
     }
@@ -73,6 +73,7 @@ public class Backpack : MonoBehaviour, IStorage
     public void Clear()
     {
         Player.Instanse.Speed = Player.Instanse.DefaultSpeed;
+
         currentFullness = 0;
         resourcesCounts = new Dictionary<ResourceTypes, int>
         {
@@ -81,6 +82,10 @@ public class Backpack : MonoBehaviour, IStorage
             [ResourceTypes.IronOre] = 0,
             [ResourceTypes.Quartz] = 0
         };
+
+        if (ResourcesController.Instanse != null)
+            ResourcesController.Instanse.UpdateResourcesCounts();
+
         UpdateTextFullness();
     }
 
@@ -114,7 +119,7 @@ public class Backpack : MonoBehaviour, IStorage
 
     private void UpdateTextFullness()
     {
-        if (ResourcesController.instanse != null)
-            ResourcesController.instanse.SetCapacity(currentFullness, maxCapacity);
+        if (ResourcesController.Instanse != null)
+            ResourcesController.Instanse.SetCapacity(currentFullness, maxCapacity);
     }
 }

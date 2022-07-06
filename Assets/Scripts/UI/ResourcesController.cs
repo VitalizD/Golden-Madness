@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ResourcesController : MonoBehaviour
 {
-    public static ResourcesController instanse = null;
+    public static ResourcesController Instanse { get; private set; } = null;
 
     private struct ResourceInfo
     {
@@ -85,10 +85,15 @@ public class ResourcesController : MonoBehaviour
 
     public void UpdateResourcesCounts()
     {
-        var resources = playerBackpack.GetAll();
+        var resources = new Dictionary<ResourceTypes, int>();
 
         if (inVillage)
             resources = VillageController.instanse.GetAllRecources();
+        else if (playerBackpack != null)
+            resources = playerBackpack.GetAll();
+
+        if (resources.Count == 0)
+            return;
 
         foreach (var type in resourcesInfo.Keys)
             resourcesInfo[type].count.text = resources[type].ToString();
@@ -96,9 +101,9 @@ public class ResourcesController : MonoBehaviour
 
     private void Awake()
     {
-        if (instanse == null)
-            instanse = this;
-        else if (instanse == this)
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
             Destroy(gameObject);
 
         oneResourceIcon = oneResource.GetChild(0).GetComponent<Image>();
