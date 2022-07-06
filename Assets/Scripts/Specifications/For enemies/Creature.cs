@@ -118,7 +118,8 @@ public class Creature : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {     
         var danger = collision.collider.GetComponent<Danger>();
-        if (danger)
+        var creature = collision.collider.GetComponent<Creature>();
+        if (danger&&!creature)
         {
             timer += Time.deltaTime;
             if (timer >= delayInSeconds) 
