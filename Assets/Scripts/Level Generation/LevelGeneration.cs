@@ -91,7 +91,7 @@ public class LevelGeneration : MonoBehaviour
     private IEnumerator Move()
     {
         yield return new WaitForSeconds(timeBetweenRooms);
-        var wayIsGeneratred = false;
+        var wayIsGenerated = false;
 
         if (currentDirection == Direction.Right) // Move right
         {
@@ -100,7 +100,11 @@ public class LevelGeneration : MonoBehaviour
                 bottomCounter = 0;
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x + moveAmount, transform.position.y);
-                GenerateRoom(GetRandomRoomFrom(rooms));
+
+                var neededIndexes = new[] { RoomDirection.LeftRight, RoomDirection.LeftRightTop }; // LR, LRT
+                var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
+                GenerateRoom(rooms[randomIndex]);
+
                 currentDirection = GetRandomDirectionFrom(directionsWithoutLeft);
             }
             else
@@ -113,7 +117,11 @@ public class LevelGeneration : MonoBehaviour
                 bottomCounter = 0;
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x - moveAmount, transform.position.y);
-                GenerateRoom(GetRandomRoomFrom(rooms));
+
+                var neededIndexes = new[] { RoomDirection.LeftRight, RoomDirection.LeftRightTop }; // LR, LRT
+                var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
+                GenerateRoom(rooms[randomIndex]);
+
                 currentDirection = GetRandomDirectionFrom(directionsWithoutRight);
             }
             else
@@ -132,13 +140,13 @@ public class LevelGeneration : MonoBehaviour
                     GameObject neededRoom;
                     if (bottomCounter >= 2)
                     {
-                        neededRoom = rooms[3]; // LRTB
+                        neededRoom = rooms[(int)RoomDirection.LeftRightTopBottom]; // LRTB
                     }
                     else
                     {
-                        var neededIndexes = new[] { RoomDirection.LeftRightBottom, RoomDirection.LeftRightTopBottom }; // LRB, LRTB
-                        var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
-                        neededRoom = rooms[randomIndex];
+                        //var neededIndexes = new[] { RoomDirection.LeftRightBottom, RoomDirection.LeftRightTopBottom }; // LRB, LRTB
+                        //var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
+                        neededRoom = rooms[(int)RoomDirection.LeftRightBottom];
                     }
 
                     if (!onFirstRoom)
@@ -149,7 +157,7 @@ public class LevelGeneration : MonoBehaviour
 
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x, transform.position.y - moveAmount);
-                GenerateRoom(rooms[Random.Range(2, 4)]); // LRT, LRTB
+                GenerateRoom(rooms[(int)RoomDirection.LeftRightTop]); // LRT
                 currentDirection = GetRandomDirectionFrom(directions);
             }
             else
@@ -158,12 +166,12 @@ public class LevelGeneration : MonoBehaviour
                 currentRoom.Remove();
                 GenerateRoom(exitRooms[(int)currentRoom.Type]);
 
-                wayIsGeneratred = true;
+                wayIsGenerated = true;
                 StartCoroutine(GenerateRandomRooms());
             }
         }
 
-        if (!wayIsGeneratred)
+        if (!wayIsGenerated)
             StartCoroutine(Move());
     }
 
@@ -186,7 +194,7 @@ public class LevelGeneration : MonoBehaviour
         foreach (var roomSpawner in roomSpawners)
         {
             yield return new WaitForSeconds(timeBetweenRooms);
-            roomSpawner.Spawn(rooms, roomMask, roomDetectionRadius);
+            roomSpawner.Spawn(new[] { rooms[(int)RoomDirection.LeftRight] }, roomMask, roomDetectionRadius);
         }
         StartCoroutine(GenerateSaveZones());
     }
