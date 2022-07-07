@@ -454,8 +454,11 @@ public class Player : MonoBehaviour, IStorage
     private void Run()
     {
         if (jumpCheckingPoint.CanJump && !isAttacking && !isDigging)
+        {
+            AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerWalk);
             State = States.Walk;
-
+        }
+            
         var dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
 
@@ -466,16 +469,19 @@ public class Player : MonoBehaviour, IStorage
     private void Jump()
     {
         isDigging = false;
+        Debug.Log(AudioManager.SoundName.PlayerJump);
+        AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerJump);
         rigidBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
     private void Attack()
     {
         Mirror(Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x);
+
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-
+        AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerSwing);
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());
     }
