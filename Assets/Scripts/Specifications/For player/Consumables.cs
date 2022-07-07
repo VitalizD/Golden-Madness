@@ -56,7 +56,7 @@ public class Consumables : MonoBehaviour, IStorage
             HotbarController.Instanse.SetConsumableCount(type, consumableCounts[type]);
 
         if (consumableCounts[type] - initialValue > 0 && loaded)
-            TakingConsumables.Instanse.AddConsumable(consumableNames[type], consumableCounts[type] - initialValue, SpritesStorage.Instanse.GetConsumable(type));
+            TextMessagesQueue.Instanse.Add($"{consumableNames[type]} x{consumableCounts[type] - initialValue}", SpritesStorage.Instanse.GetConsumable(type), 1f);
     }
 
     public int GetCount(ConsumableType type) => consumableCounts[type];

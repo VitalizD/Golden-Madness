@@ -98,8 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableMoving: 1
+  fix: 0
   speed: 3
-  yOffset: 1.7
+  yOffset: 1
+  lookUpOrDown: 3
   upLimit: 9
   bottomLimit: 3
   leftLimit: 4.9

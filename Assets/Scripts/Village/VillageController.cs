@@ -102,5 +102,7 @@ public class VillageController : MonoBehaviour, IStorage
         player.SetFuelCount(100f);
         player.GetComponent<SanityController>().Sanity = 100f;
         player.GetComponent<Consumables>().SetDefaultValues();
+
+        PlayerPrefs.DeleteKey(PlayerPrefsKeys.CurrentChapter);
     }
 }

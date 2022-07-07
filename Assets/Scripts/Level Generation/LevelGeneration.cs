@@ -22,11 +22,13 @@ public class LevelGeneration : MonoBehaviour
 
     [Space]
 
+    [SerializeField] private bool lastLevel = false;
     [SerializeField] private int moveAmount;
     [SerializeField] private float timeBetweenRooms = 0.25f;
     [SerializeField] private float roomDetectionRadius = 1f;
     [SerializeField] private LayerMask roomMask;
     [SerializeField] private DoorFromSaveZone doorFromSaveZone;
+    [SerializeField] private GameObject artifactRoom;
     [SerializeField] private Direction[] directions;
     [SerializeField] private Transform[] startPositions;
     [SerializeField] private RoomSpawner[] roomSpawners;
@@ -156,7 +158,11 @@ public class LevelGeneration : MonoBehaviour
             {
                 var currentRoom = GetCurrentRoomInfo();
                 currentRoom.Remove();
-                GenerateRoom(exitRooms[(int)currentRoom.Type]);
+
+                if (lastLevel)
+                    GenerateRoom(artifactRoom);
+                else
+                    GenerateRoom(exitRooms[(int)currentRoom.Type]);
 
                 wayIsGeneratred = true;
                 StartCoroutine(GenerateRandomRooms());
