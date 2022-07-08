@@ -22420,15 +22420,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.889999
+      value: 9.29
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1000004
+      value: 8.564
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 984370220786920449, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22485,6 +22485,22 @@ PrefabInstance:
     - target: {fileID: 984370220786920461, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: pickaxeStrengthBar
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 984370221206082735, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_Size.x
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 984370221206082735, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_Size.y
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 984370221206082735, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 874f583ef0ae34645976624903a80cd3, type: 3}
+    - target: {fileID: 984370221206082735, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 984370221206082735, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -22557,6 +22573,10 @@ PrefabInstance:
     - target: {fileID: 5322104867713374391, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: slider
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293167313827068837, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6458866122718615110, guid: 89925e7ae6200784fa95d757f84225da, type: 3}
       propertyPath: player
