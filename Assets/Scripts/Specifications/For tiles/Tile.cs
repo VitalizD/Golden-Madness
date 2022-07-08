@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private bool isBedrock = false;
     [SerializeField] private bool destroyAttachedTiles = true;
     [SerializeField] private bool drawFrames = true;
-    [SerializeField] private ResourceTypes resourceType = ResourceTypes.None;
+    [SerializeField] private ResourceType resourceType = ResourceType.None;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Sprite[] destructionDegrees;
     [SerializeField] private Sprite[] variants;
@@ -38,7 +38,7 @@ public class Tile : MonoBehaviour
 
     public float DiggingDifficulty { get => diggingDifficulty; }
 
-    public ResourceTypes ResourceType { get => resourceType; }
+    public ResourceType ResourceType { get => resourceType; }
 
     public float Health
     {
@@ -235,9 +235,9 @@ public class Tile : MonoBehaviour
         }
     }
 
-    private void AddResourceToBackpack(ResourceTypes resourceType)
+    private void AddResourceToBackpack(ResourceType resourceType)
     {
-        if (resourceType != ResourceTypes.None && player)
+        if (resourceType != ResourceType.None && player)
             player.GetComponent<Backpack>().Add(resourceType);
     }
 

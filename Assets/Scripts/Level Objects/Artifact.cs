@@ -25,9 +25,7 @@ public class Artifact : MonoBehaviour
             collider2d.enabled = false;
             lighting.enabled = false;
             anim.Play(takeAnimationName);
-            var currentChapter = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentChapter, 1);
-            if (currentChapter < 3)
-                PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentChapter, ++currentChapter);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.ArtifactPartFounded, 1);
 
             StartCoroutine(ShowMessage());
         }

@@ -7,6 +7,8 @@ public class PressActionKey : MonoBehaviour
 
     private GameObject e;
 
+    public void Show() => e.SetActive(true);
+
     public void SetActive(bool value)
     {
         isActive = value;

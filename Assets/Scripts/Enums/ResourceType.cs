@@ -1,4 +1,4 @@
-public enum ResourceTypes
+public enum ResourceType
 {
     None,
     GoldOre,

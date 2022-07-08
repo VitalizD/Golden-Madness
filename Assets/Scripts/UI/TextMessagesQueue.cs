@@ -11,7 +11,7 @@ public class TextMessagesQueue : MonoBehaviour
     private const string showAnimationName = "Show";
     private const string hideAnimationName = "Hide";
 
-    [SerializeField] private bool inVillage = false;
+    //[SerializeField] private bool inVillage = false;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Image icon;
 
@@ -22,8 +22,8 @@ public class TextMessagesQueue : MonoBehaviour
 
     public void Add(string text, Sprite icon, float delay)
     {
-        if (inVillage)
-            return;
+        //if (inVillage)
+        //    return;
 
         consumablesQueue.Enqueue((text, icon, delay));
         Play();

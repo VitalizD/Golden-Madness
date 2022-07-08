@@ -24,12 +24,12 @@ public class SpritesStorage : MonoBehaviour
     [SerializeField] private Sprite lamp;
 
     private Dictionary<ConsumableType, Sprite> consumables;
-    private Dictionary<ResourceTypes, Sprite> resources;
+    private Dictionary<ResourceType, Sprite> resources;
     private Dictionary<EquipmentType, Sprite> equipments;
 
     public Sprite GetConsumable(ConsumableType type) => consumables[type];
 
-    public Sprite GetResource(ResourceTypes type) => resources[type];
+    public Sprite GetResource(ResourceType type) => resources[type];
 
     public Sprite GetEquipment(EquipmentType type) => equipments[type];
 
@@ -52,12 +52,12 @@ public class SpritesStorage : MonoBehaviour
             [ConsumableType.Antidote] = antidote
         };
 
-        resources = new Dictionary<ResourceTypes, Sprite>
+        resources = new Dictionary<ResourceType, Sprite>
         {
-            [ResourceTypes.Coal] = coalIcon,
-            [ResourceTypes.GoldOre] = goldIcon,
-            [ResourceTypes.IronOre] = ironIcon,
-            [ResourceTypes.Quartz] = quartzIcon
+            [ResourceType.Coal] = coalIcon,
+            [ResourceType.GoldOre] = goldIcon,
+            [ResourceType.IronOre] = ironIcon,
+            [ResourceType.Quartz] = quartzIcon
         };
 
         equipments = new Dictionary<EquipmentType, Sprite>

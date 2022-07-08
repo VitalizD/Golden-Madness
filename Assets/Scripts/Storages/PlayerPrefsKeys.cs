@@ -21,6 +21,7 @@ public static class PlayerPrefsKeys
     public static string TimeDecreaseValue { get; } = "TimeDecreaseValue";
     public static string CurrentLevelNumber { get; } = "CurrentLevelNumber";
     public static string CurrentChapter { get; } = "CurrentChapter";
+    public static string ArtifactPartFounded { get; } = "ArtifactPartFounded";
     public static string ResourcesCountPrefix { get; } = "Count";
     public static string ResourcesCountInBackpackPrefix { get; } = "CountInBackpack";
     public static string CurrentLevelOfBuildingPostfix { get; } = "CurrentLevel";

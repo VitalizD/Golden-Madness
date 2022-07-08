@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Consumables : MonoBehaviour, IStorage
 {
@@ -55,7 +56,7 @@ public class Consumables : MonoBehaviour, IStorage
         if (HotbarController.Instanse != null)
             HotbarController.Instanse.SetConsumableCount(type, consumableCounts[type]);
 
-        if (consumableCounts[type] - initialValue > 0 && loaded)
+        if (consumableCounts[type] - initialValue > 0 && loaded && SceneManager.GetActiveScene().name != ServiceInfo.VillageScene)
             TextMessagesQueue.Instanse.Add($"{consumableNames[type]} x{consumableCounts[type] - initialValue}", SpritesStorage.Instanse.GetConsumable(type), 1f);
     }
 
