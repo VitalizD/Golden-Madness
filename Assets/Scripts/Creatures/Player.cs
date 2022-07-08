@@ -45,7 +45,10 @@ public class Player : MonoBehaviour, IStorage
 
     [Header("SFX")]
     //[SerializeField] private AudioSource digSFX;
-    [SerializeField] private AudioSource getDamageSFX;
+    [SerializeField] private SFX hurtSFX;
+    [SerializeField] private SFX digSFX;
+    [SerializeField] private SFX swingSFX;
+    [SerializeField] private SFX jumpSFX;
 
     private Rigidbody2D rigidBody2d;
     private Animator animator;
@@ -117,7 +120,8 @@ public class Player : MonoBehaviour, IStorage
         {
             if (value < health && !loadParameters)
             {
-                AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerHit);
+                hurtSFX.Play();
+                //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerHit);
                 State = States.Pain;
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
@@ -411,8 +415,8 @@ public class Player : MonoBehaviour, IStorage
     {
         if (!selectedTile)
             return;
-        //digSFX.Play();
-        AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerDig);
+        digSFX.Play();
+        //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerDig);
         var damage = selectedTile.DiggingDifficulty < tileDamage ? tileDamage / selectedTile.DiggingDifficulty : tileDamage;
         selectedTile.Health -= damage;
         PickaxeStrength -= hitDamageToPickaxe;
@@ -455,7 +459,7 @@ public class Player : MonoBehaviour, IStorage
     {
         if (jumpCheckingPoint.CanJump && !isAttacking && !isDigging)
         {
-            AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerWalk);
+            //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerWalk);
             State = States.Walk;
         }
             
@@ -469,8 +473,9 @@ public class Player : MonoBehaviour, IStorage
     private void Jump()
     {
         isDigging = false;
-        Debug.Log(AudioManager.SoundName.PlayerJump);
-        AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerJump);
+        //Debug.Log(AudioManager.SoundName.PlayerJump);
+        jumpSFX.Play();
+        //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerJump);
         rigidBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
@@ -481,7 +486,8 @@ public class Player : MonoBehaviour, IStorage
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-        AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerSwing);
+        swingSFX.Play();
+        //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerSwing);
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack());
     }

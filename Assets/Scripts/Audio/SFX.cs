@@ -27,13 +27,12 @@ public class SFX : ScriptableObject
     [SerializeField] private bool is3D;
     [SerializeField] private float maxDistance=20f;
     [SerializeField] private Vector3 position = new Vector3(0,0,0);
-    [SerializeField] private float delay = .2f;
+    [SerializeField] private float delay;
     [SerializeField] private AudioRolloffMode rolloffMode=AudioRolloffMode.Linear;
     [SerializeField] private List<AudioClip> audioClips;
 
     public float MasterVol { get => masterVol; set => masterVol = value; }
-
-    
+    public Vector3 Position { get => position; set => position = value; }
 
     public AudioSource Play(AudioSource audioSourceParam = null) 
     {
@@ -42,13 +41,15 @@ public class SFX : ScriptableObject
         {
             var _obj = new GameObject("Sound", typeof(AudioSource));
             src = _obj.GetComponent<AudioSource>();
+            src.gameObject.transform.position = position;
             src.loop = isLooped;
-            src.volume = vol;
+            src.volume = vol*masterVol;
             src.maxDistance = maxDistance;
             src.rolloffMode = rolloffMode;
             src.spatialBlend = is3D ? value3D : value2D;
         }
-        var clip = audioClips[Random.Range(0, audioClips.Count)];
+        var clip = audioClips[(int)Random.Range(0, audioClips.Count)];
+        src.clip = clip;
         playMethodDict =
         new Dictionary<playMethod, System.Action<AudioSource>>
         {
@@ -59,6 +60,7 @@ public class SFX : ScriptableObject
         };
         playMethodDict[method].Invoke(src);
         Destroy(src.gameObject, src.clip.length);
+        Debug.Log(position);
         return src;
     }
 }

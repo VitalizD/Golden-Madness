@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f072acbe916f44893364ba3e0d17ec, type: 3}
+  m_Name: hurt
+  m_EditorClassIdentifier: 
+  vol: 1
+  audioSource: {fileID: 0}
+  method: 1
+  isLooped: 0
+  is3D: 0
+  maxDistance: 20
+  position: {x: 0, y: 0, z: 0}
+  delay: 0
+  rolloffMode: 1
+  audioClips:
+  - {fileID: 8300000, guid: f1464626f64bcdd46a80833f665b8d9e, type: 3}
+  - {fileID: 8300000, guid: a355b6f1bf26de44888ac6e3c1ee5d84, type: 3}
+  - {fileID: 8300000, guid: 35e7bdf7212bb7e4987e8a6526e094f4, type: 3}
+  - {fileID: 8300000, guid: 08bb24eea4c8737488c589dfe5cb1d62, type: 3}
