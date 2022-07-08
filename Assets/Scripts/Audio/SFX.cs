@@ -60,7 +60,7 @@ public class SFX : ScriptableObject
         };
         playMethodDict[method].Invoke(src);
         Destroy(src.gameObject, src.clip.length);
-        Debug.Log(position);
+        //Debug.Log(position);
         return src;
     }
 }
