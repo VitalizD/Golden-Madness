@@ -449,7 +449,9 @@ public class Player : MonoBehaviour, IStorage
             State = States.Walk;
 
         var dir = transform.right * Input.GetAxis("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
+        //rigidBody2d.AddForce(speed * dir, ForceMode2D.Impulse);
+        transform.Translate(speed * Time.fixedDeltaTime * dir);
+        //transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
 
         if (State != States.Attack)
             Mirror(dir.x < 0);
