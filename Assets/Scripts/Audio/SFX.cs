@@ -46,7 +46,7 @@ public class SFX : ScriptableObject
             src.volume = vol;
             src.maxDistance = maxDistance;
             src.rolloffMode = rolloffMode;
-            src.spatialBlend = is3D ?value3D:value2D;
+            src.spatialBlend = is3D ? value3D : value2D;
         }
         var clip = audioClips[Random.Range(0, audioClips.Count)];
         playMethodDict =
@@ -55,11 +55,10 @@ public class SFX : ScriptableObject
             {playMethod.Play, audioSrc=>audioSrc.Play() },
             {playMethod.PlayOneShot, audioSrc=>audioSrc.PlayOneShot(clip) },
             {playMethod.PlayDelayed, audioSrc=>audioSrc.PlayDelayed(delay) },
-            {playMethod.PlayClipAtPoint, audioSrc=>AudioSource.PlayClipAtPoint(clip) },
-            {playMethod.Play, audioSrc=>audioSrc.Play() },
-            {playMethod.Play, audioSrc=>audioSrc.Play() },
+            {playMethod.PlayClipAtPoint, audioSrc => AudioSource.PlayClipAtPoint(clip,position) }
         };
-
+        playMethodDict[method].Invoke(src);
+        Destroy(src.gameObject, src.clip.length);
         return src;
     }
 }
