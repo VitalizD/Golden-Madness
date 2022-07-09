@@ -10,6 +10,7 @@ public class Chest : MonoBehaviour
 
     [Tooltip("Количество = индекс + 1\nУкажите части, например, 35, 30, 20 и 15")]
     [SerializeField] private float[] dropCountConsumableChances = new[] { 35f, 30f, 20f, 15f };
+    [SerializeField] private SFX openSFX;
 
     private SpriteRenderer sprite;
     private TriggerZone trigger;
@@ -30,6 +31,7 @@ public class Chest : MonoBehaviour
 
     private void Awake()
     {
+        openSFX.Position = gameObject.transform.position;
         sprite = GetComponent<SpriteRenderer>();
         trigger = GetComponent<TriggerZone>();
         pressActionKey = GetComponent<PressActionKey>();
@@ -45,6 +47,7 @@ public class Chest : MonoBehaviour
     {
         if (canBeUsed && trigger.IsTriggered && Input.GetKeyDown(KeyCode.E))
         {
+            openSFX.Play();
             var consumablesCount = GetConsumablesCount();
             var consumablesToAdd = GetRandomConsumables(consumablesCount);
 

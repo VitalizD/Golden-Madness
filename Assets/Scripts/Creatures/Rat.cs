@@ -17,6 +17,7 @@ public class Rat : MonoBehaviour, ICreature
     [SerializeField] private float playerCheckBetweenTime = 0.5f;
     [SerializeField] private float aggressiveModeTime = 5f;
     [SerializeField] private float aggressiveSpeed = 1.5f;
+  
 
     [SerializeField] private UnityEvent onDestroy;
 
@@ -126,6 +127,8 @@ public class Rat : MonoBehaviour, ICreature
         isMoving = true;
         temporarilyStop = StartCoroutine(TemporarilyStop());
     }
+
+
 
     private IEnumerator ActivateAggressiveMode()
     {
