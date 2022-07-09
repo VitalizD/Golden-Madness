@@ -49,6 +49,7 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private SFX digSFX;
     [SerializeField] private SFX swingSFX;
     [SerializeField] private SFX jumpSFX;
+    [SerializeField] private SFX walkSFX;
 
     private Rigidbody2D rigidBody2d;
     private Animator animator;
@@ -390,6 +391,13 @@ public class Player : MonoBehaviour, IStorage
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, touchingDistance);
+    }
+
+
+    private void OnPlayerStep() 
+    {
+        if(State==States.Walk&&jumpCheckingPoint.CanJump)
+            walkSFX.Play();
     }
 
     // Назначен на ключ в анимации "Attack"
