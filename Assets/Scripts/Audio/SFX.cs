@@ -18,21 +18,35 @@ public class SFX : ScriptableObject
 
     private float value2D = 0f;
     private float value3D = 1f;
-    private float masterVol = 1f;
+    private static float masterVol = 1f;
 
     [Range(0, 1)] [SerializeField] private float vol=1f;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private playMethod method;
     [SerializeField] private bool isLooped;
     [SerializeField] private bool is3D;
+    [SerializeField] private float minDistance = 5f;
     [SerializeField] private float maxDistance=20f;
     [SerializeField] private Vector3 position = new Vector3(0,0,0);
     [SerializeField] private float delay;
     [SerializeField] private AudioRolloffMode rolloffMode=AudioRolloffMode.Linear;
     [SerializeField] private List<AudioClip> audioClips;
 
-    public float MasterVol { get => masterVol; set => masterVol = value; }
+    public static float MasterVol 
+    { 
+        get => masterVol;
+        set
+        {
+            if(value<0)
+                masterVol = 0;
+            else if (value > 1)
+                masterVol = 1;
+            else masterVol = value;
+            //if (audioSource != null) audioSource.volume = vol * masterVol;
+        }
+    }
     public Vector3 Position { get => position; set => position = value; }
+
 
     public AudioSource Play(AudioSource audioSourceParam = null) 
     {
@@ -44,6 +58,7 @@ public class SFX : ScriptableObject
             src.gameObject.transform.position = position;
             src.loop = isLooped;
             src.volume = vol*masterVol;
+            src.minDistance = minDistance;
             src.maxDistance = maxDistance;
             src.rolloffMode = rolloffMode;
             src.spatialBlend = is3D ? value3D : value2D;
@@ -60,7 +75,6 @@ public class SFX : ScriptableObject
         };
         playMethodDict[method].Invoke(src);
         Destroy(src.gameObject, src.clip.length);
-        //Debug.Log(position);
         return src;
     }
 }
