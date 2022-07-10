@@ -490,6 +490,7 @@ public class Player : MonoBehaviour, IStorage
             rigidBody2d.velocity = Vector2.zero;
             transform.position = new Vector2(Tile.GetCenterPositionOfNearestTile(transform.position).x, transform.position.y);
         }
+        transform.rotation = Quaternion.identity;
 
         var dir = transform.up * Input.GetAxis("Vertical");
         rigidBody2d.MovePosition(rigidBody2d.position + climbingSpeed * Time.fixedDeltaTime * (Vector2)dir);

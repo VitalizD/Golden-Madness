@@ -78,9 +78,9 @@ public class Chest : MonoBehaviour
         var result = new Dictionary<ConsumableType, int>();
         var consumableTypes = (ConsumableType[])System.Enum.GetValues(typeof(ConsumableType));
 
-        // Исключаем динамит и противоядие из списка возможных расходников. Временное решение
+        // Исключаем противоядие из списка возможных расходников. Временное решение
         consumableTypes = consumableTypes
-            .Where(element => element != ConsumableType.Rope && element != ConsumableType.Antidote)
+            .Where(element => element != ConsumableType.Antidote)
             .ToArray();
 
         for (var i = 0; i < count; ++i)
@@ -94,44 +94,4 @@ public class Chest : MonoBehaviour
         }
         return result;
     }
-
-    //{
-    //    //���� �������������� �������
-    //    System.Random rng = new System.Random();
-    //    var consumabelsList = consumables.GetType().GetProperties(
-    //        System.Reflection.BindingFlags.Public|
-    //        System.Reflection.BindingFlags.Instance|
-    //        System.Reflection.BindingFlags.DeclaredOnly);
-
-    //    //var anyAmountIncreased = false;
-    //    var amountGenerated = rng.Next(1,5);
-    //    /*Debug.Log("Consumabels in chest generated: "+ amountGenerated);*/
-    //    foreach (var propertyInfo in consumabelsList.OrderBy(x => rng.Next()).ToList())
-    //    {
-    //        if (amountGenerated == 0) break;
-    //        /*Debug.Log("||||||||||||||||||||||||||||||||||||||||||||||||");
-    //        Debug.Log(propertyInfo.Name);
-    //        Debug.Log("[+] Current Remainer: " + amountGenerated);*/
-    //        var consumableObj = propertyInfo.GetValue(consumables);
-    //        if (!consumableObj.GetType().Equals(1.GetType()))
-    //        {
-    //            Debug.Log("Property type is not int!");
-    //            continue;
-    //        }
-    //        var currentCount = (int)consumableObj;
-    //        var randomAmount = rng.Next(1,amountGenerated);
-    //        /*Debug.Log("[+] Current count: " + currentCount);
-    //        Debug.Log("[+] Random amount: " + randomAmount);*/
-    //        propertyInfo.SetValue(consumables, currentCount + randomAmount);
-    //        //if (((int)propertyInfo.GetValue(consumables) - currentCount) > 0) anyAmountIncreased = true;
-    //        amountGenerated -= (int)propertyInfo.GetValue(consumables) - currentCount;
-    //    }
-    //    if (amountGenerated>0) {
-    //        /*Debug.Log("unlucky");*/
-    //        var notFullConsumabelsList = consumabelsList
-    //            .Where(x => (int)x.GetValue(consumables) < Consumables.MaxCount)
-    //            .ToList();
-    //        var randomConsumable = notFullConsumabelsList[rng.Next(notFullConsumabelsList.Count())];
-    //        randomConsumable.SetValue(consumables, (int)randomConsumable.GetValue(consumables) + amountGenerated);
-    //    }
 }

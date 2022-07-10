@@ -21,7 +21,7 @@ public class HotbarController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI grindstonesCount;
     [SerializeField] private TextMeshProUGUI healthPacksCount;
     [SerializeField] private TextMeshProUGUI smokingPipesCount;
-    [SerializeField] private TextMeshProUGUI dynamitesCount;
+    [SerializeField] private TextMeshProUGUI ropesCount;
     [SerializeField] private TextMeshProUGUI antidotesCount;
 
     private Dictionary<ConsumableType, TextMeshProUGUI> consumablesCounts;
@@ -83,7 +83,7 @@ public class HotbarController : MonoBehaviour
             [ConsumableType.Grindstone] = grindstonesCount,
             [ConsumableType.HealthPack] = healthPacksCount,
             [ConsumableType.SmokingPipe] = smokingPipesCount,
-            [ConsumableType.Rope] = dynamitesCount,
+            [ConsumableType.Rope] = ropesCount,
             [ConsumableType.Antidote] = antidotesCount
         };
 

@@ -25,11 +25,11 @@ public class Consumables : MonoBehaviour, IStorage
 
     public void Save()
     {
-        PlayerPrefs.SetInt(PlayerPrefsKeys.FuelTanksCount, fuelTanksCount);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.RopesCount, ropesCount);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.FuelTanksCount, consumableCounts[ConsumableType.FuelTank]);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.GrindstonesCount, consumableCounts[ConsumableType.Grindstone]);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.HealthPacksCount, consumableCounts[ConsumableType.HealthPack]);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.SmokingPipesCount, consumableCounts[ConsumableType.SmokingPipe]);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.RopesCount, consumableCounts[ConsumableType.Rope]);
     }
 
     public void Load()
