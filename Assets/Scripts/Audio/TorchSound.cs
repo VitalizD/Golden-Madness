@@ -1,21 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 public class TorchSound : MonoBehaviour
 {
     [SerializeField] private SFX torchSFX;
-    private AudioSource torchAudioSource;
 
 
-    private void Awake()
+
+    private void Start()
     {
+        //this.Log(gameObject);
         torchSFX.Position = gameObject.transform.position;
-        torchAudioSource = torchSFX.Play();
+        torchSFX.Play();
+        //SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(SFX.);
     }
 
-    void Update()
+    private void Update()
     {
-        SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(value => torchAudioSource.volume = value);
+        if (!torchSFX.AudioSource.isPlaying)
+        {
+            this.Log(gameObject);
+        }
     }
+
 }

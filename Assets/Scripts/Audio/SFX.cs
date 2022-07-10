@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Events;
 using UnityEngine;
+using UnityEngine.Events;
+using Utils;
 
 
 [CreateAssetMenu(menuName = "SFX", fileName = "New SFX")]
@@ -19,9 +22,10 @@ public class SFX : ScriptableObject
     private float value2D = 0f;
     private float value3D = 1f;
     private static float masterVol = 1f;
+    private AudioSource audioSource;
+    public event System.Action<float> onVolumeChanged;
 
     [Range(0, 1)] [SerializeField] private float vol=1f;
-    [SerializeField] private AudioSource audioSource;
     [SerializeField] private playMethod method;
     [SerializeField] private bool isLooped;
     [SerializeField] private bool is3D;
@@ -46,35 +50,76 @@ public class SFX : ScriptableObject
         }
     }
     public Vector3 Position { get => position; set => position = value; }
+    public AudioSource AudioSource { get => audioSource;}
 
 
-    public AudioSource Play(AudioSource audioSourceParam = null) 
+    //THIS BULLSHIT DOESN'T WORK LIKE M.O. AWAKE, NEED TO CREATE S.O. MANUALY (Like OnCreate).
+    //REF:https://www.reddit.com/r/gamedev/comments/anjhfs/im_doing_some_weird_shit_with_scriptable_objects/
+    //private void Awake()
+    //{
+    //UPDATE: NVM
+    //Dont touch this bullshit https://forum.unity.com/threads/how-to-create-persistent-listener-to-an-event.264228/
+    //    Debug.Log("Awake");
+    //    onVolumeChanged += ChangeMasterVolume;
+    //    var targetInfo = UnityEvent.GetValidMethodInfo(this, nameof(ChangeMasterVolume), new System.Type[0]);
+    //    UnityAction methodDelegate = System.Delegate.CreateDelegate(typeof(UnityAction), this, targetInfo) as UnityAction;//delegat ChangeMasterVolume
+    //    var action = new UnityAction<GameObject>(onVolumeChanged);
+    //    var slider = SoundSetting.Instanse.GameVolume;
+    //    SoundSetting.Instanse.GameVolume.onValueChanged.AddPer((value) =>
+    //    {
+    //        MasterVol = value;
+    //        Debug.Log($"Vol must be changed to {value}");
+    //        if (audioSource != null)
+    //        {
+    //            audioSource.volume = vol * masterVol;
+    //        }
+    //    }
+    //    );
+    //    UnityEventTools.AddPersistentListener(BigExplosionEvent, methodDelegate);
+    //    UnityEventTools.AddVoidPersistentListener(slider.onValueChanged, methodDelegate);
+    //}
+
+    public void ChangeMasterVolume(float volValue)
     {
-        var src = audioSourceParam;
-        if (src == null)
+        //Debug.Log($"Vol must be changed to {volValue}");
+        MasterVol = volValue;
+        //this.Log($"Vol must be changed to {masterVolume}");
+        if (audioSource != null)
         {
-            var _obj = new GameObject("Sound", typeof(AudioSource));
-            src = _obj.GetComponent<AudioSource>();
-            src.gameObject.transform.position = position;
-            src.loop = isLooped;
-            src.volume = vol*masterVol;
-            src.minDistance = minDistance;
-            src.maxDistance = maxDistance;
-            src.rolloffMode = rolloffMode;
-            src.spatialBlend = is3D ? value3D : value2D;
+            audioSource.volume = vol*masterVol;
         }
+    }
+
+    public AudioSource Play() 
+    {
+        //this.Log(audioSource);
         var clip = audioClips[(int)Random.Range(0, audioClips.Count)];
-        src.clip = clip;
-        playMethodDict =
-        new Dictionary<playMethod, System.Action<AudioSource>>
+        if (audioSource == null)
         {
-            {playMethod.Play, audioSrc=>audioSrc.Play() },
-            {playMethod.PlayOneShot, audioSrc=>audioSrc.PlayOneShot(clip) },
-            {playMethod.PlayDelayed, audioSrc=>audioSrc.PlayDelayed(delay) },
-            {playMethod.PlayClipAtPoint, audioSrc => AudioSource.PlayClipAtPoint(clip,position) }
-        };
-        playMethodDict[method].Invoke(src);
-        Destroy(src.gameObject, src.clip.length);
-        return src;
+            onVolumeChanged += ChangeMasterVolume;
+            //Debug.Log(SoundSetting.Instanse.GameVolume.onValueChanged);
+            SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(x=>onVolumeChanged(x));
+            var _obj = new GameObject("Sound", typeof(AudioSource));
+            audioSource = _obj.GetComponent<AudioSource>();
+            audioSource.gameObject.transform.position = position;
+            audioSource.loop = isLooped;
+            audioSource.volume = vol*masterVol;
+            audioSource.minDistance = minDistance;
+            audioSource.maxDistance = maxDistance;
+            audioSource.rolloffMode = rolloffMode;
+            audioSource.spatialBlend = is3D ? value3D : value2D;
+            playMethodDict =
+            new Dictionary<playMethod, System.Action<AudioSource>>
+            {
+                {playMethod.Play, audioSrc=>audioSrc.Play() },
+                {playMethod.PlayOneShot, audioSrc=>audioSrc.PlayOneShot(clip) },
+                {playMethod.PlayDelayed, audioSrc=>audioSrc.PlayDelayed(delay) },
+                {playMethod.PlayClipAtPoint, audioSrc => AudioSource.PlayClipAtPoint(clip,position) }
+            };
+        } 
+        audioSource.clip = clip;
+        playMethodDict[method]?.Invoke(audioSource);
+        Destroy(audioSource.gameObject, audioSource.clip.length);
+        return audioSource;
     }
 }
