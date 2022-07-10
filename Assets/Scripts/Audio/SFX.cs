@@ -96,9 +96,9 @@ public class SFX : ScriptableObject
         var clip = audioClips[(int)Random.Range(0, audioClips.Count)];
         if (audioSource == null)
         {
-            onVolumeChanged += ChangeMasterVolume;
-            //Debug.Log(SoundSetting.Instanse.GameVolume.onValueChanged);
-            SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(x=>onVolumeChanged(x));
+            //TODO: THIS SHIT MIGH FUCK UP TORCHES, CHECK IT OUT
+            //onVolumeChanged += ChangeMasterVolume;
+            //SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(x=>onVolumeChanged(x));
             var _obj = new GameObject("Sound", typeof(AudioSource));
             audioSource = _obj.GetComponent<AudioSource>();
             audioSource.gameObject.transform.position = position;
