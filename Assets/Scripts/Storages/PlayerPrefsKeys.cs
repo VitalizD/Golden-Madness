@@ -6,7 +6,7 @@ public static class PlayerPrefsKeys
     public static string GrindstonesCount { get; } = "GrindstonesCount";
     public static string HealthPacksCount { get; } = "HealthPacksCount";
     public static string SmokingPipesCount { get; } = "SmokingPipesCount";
-    public static string DynamitesCount { get; } = "DynamitesCount";
+    public static string RopesCount { get; } = "DynamitesCount";
     public static string AntidotesCount { get; } = "AntidotesCount";
     public static string BackpackCapacity { get; } = "BackpackCapacity";
     public static string MaxEnemyDamage { get; } = "MaxEnemyDamage";

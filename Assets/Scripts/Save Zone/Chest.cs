@@ -80,7 +80,7 @@ public class Chest : MonoBehaviour
 
         // Исключаем динамит и противоядие из списка возможных расходников. Временное решение
         consumableTypes = consumableTypes
-            .Where(element => element != ConsumableType.Dynamite && element != ConsumableType.Antidote)
+            .Where(element => element != ConsumableType.Rope && element != ConsumableType.Antidote)
             .ToArray();
 
         for (var i = 0; i < count; ++i)

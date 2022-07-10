@@ -83,7 +83,7 @@ public class HotbarController : MonoBehaviour
             [ConsumableType.Grindstone] = grindstonesCount,
             [ConsumableType.HealthPack] = healthPacksCount,
             [ConsumableType.SmokingPipe] = smokingPipesCount,
-            [ConsumableType.Dynamite] = dynamitesCount,
+            [ConsumableType.Rope] = dynamitesCount,
             [ConsumableType.Antidote] = antidotesCount
         };
 

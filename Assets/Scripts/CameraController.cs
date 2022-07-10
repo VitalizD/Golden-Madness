@@ -83,7 +83,7 @@ public class CameraController : MonoBehaviour
         toPosition.y = player.position.y - yOffset;
         toPosition.z = zPosition;
 
-        if (Input.GetButton("Vertical") || !Input.GetButton("Vertical"))
+        if (!Player.Instanse.IsClimbing && Player.Instanse.CanJump)
             toPosition.y += lookUpOrDown * Input.GetAxis("Vertical");
 
         transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Tile : MonoBehaviour
 {
+    public const float Size = 1f;
+
     private const string shakeAnimationName = "Shake";
     private const float checkingDistanceToAttachedTiles = 0.505f;
 
@@ -64,6 +66,15 @@ public class Tile : MonoBehaviour
     }
 
     public bool IsBedrock { get => isBedrock; set => isBedrock = value; }
+
+    public static Vector3 GetCenterPositionOfNearestTile(Vector3 position)
+    {
+        var deltaX = position.x - Mathf.Round(position.x);
+        var deltaY = position.y - Mathf.Round(position.y);
+        var x = Mathf.Round(position.x) + (deltaX < 0 ? -Tile.Size / 2 : Tile.Size / 2);
+        var y = Mathf.Round(position.y) + (deltaY < 0 ? -Tile.Size / 2 : Tile.Size / 2);
+        return new Vector3(x, y, 0);
+    }
 
     public void DrawFrames()
     {

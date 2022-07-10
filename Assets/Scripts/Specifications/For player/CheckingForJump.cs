@@ -5,7 +5,7 @@ public class CheckingForJump : MonoBehaviour
     private LayerMask groundMask;
     private LayerMask enemiesMask;
     private BoxCollider2D boxCollider2D;
-    private Collider2D[] resultColliders = new Collider2D[10];
+    private readonly Collider2D[] resultColliders = new Collider2D[10];
 
     private bool canJump = false;
 
@@ -20,6 +20,12 @@ public class CheckingForJump : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Player.Instanse.IsClimbing)
+        {
+            canJump = true;
+            return;
+        }
+
         var collisionsCount = boxCollider2D.OverlapCollider(new ContactFilter2D(), resultColliders);
         var finded = false;
         for (var i = 0; i < collisionsCount; ++i)

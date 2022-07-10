@@ -48,7 +48,7 @@ public class SpritesStorage : MonoBehaviour
             [ConsumableType.Grindstone] = grindstone,
             [ConsumableType.HealthPack] = healthPack,
             [ConsumableType.SmokingPipe] = smokingPipe,
-            [ConsumableType.Dynamite] = dynamite,
+            [ConsumableType.Rope] = dynamite,
             [ConsumableType.Antidote] = antidote
         };
 

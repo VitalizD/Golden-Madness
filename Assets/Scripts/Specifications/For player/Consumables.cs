@@ -10,6 +10,7 @@ public class Consumables : MonoBehaviour, IStorage
     [SerializeField] private int grindstonesCount = 1;
     [SerializeField] private int healthPacksCount = 1;
     [SerializeField] private int smokingPipesCount = 1;
+    [SerializeField] private int ropesCount = 1;
 
     [Header("Recoveries")]
     [SerializeField] private float fuelTankRecovery = 30f;
@@ -28,6 +29,7 @@ public class Consumables : MonoBehaviour, IStorage
         PlayerPrefs.SetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
         PlayerPrefs.SetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
         PlayerPrefs.SetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.RopesCount, ropesCount);
     }
 
     public void Load()
@@ -38,7 +40,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Grindstone] = PlayerPrefs.GetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount),
             [ConsumableType.HealthPack] = PlayerPrefs.GetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount),
             [ConsumableType.SmokingPipe] = PlayerPrefs.GetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount),
-            [ConsumableType.Dynamite] = PlayerPrefs.GetInt(PlayerPrefsKeys.DynamitesCount, 0),
+            [ConsumableType.Rope] = PlayerPrefs.GetInt(PlayerPrefsKeys.RopesCount, ropesCount),
             [ConsumableType.Antidote] = PlayerPrefs.GetInt(PlayerPrefsKeys.AntidotesCount, 0)
         };
         UpdateHotbar();
@@ -72,7 +74,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Grindstone] = 1,
             [ConsumableType.HealthPack] = 1,
             [ConsumableType.SmokingPipe] = 1,
-            [ConsumableType.Dynamite] = 1,
+            [ConsumableType.Rope] = 1,
             [ConsumableType.Antidote] = 1
         };
         UpdateHotbar();
@@ -94,7 +96,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Grindstone] = 0,
             [ConsumableType.HealthPack] = 0,
             [ConsumableType.SmokingPipe] = 0,
-            [ConsumableType.Dynamite] = 0,
+            [ConsumableType.Rope] = 0,
             [ConsumableType.Antidote] = 0
         };
 
@@ -104,7 +106,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Grindstone] = "Точильный камень",
             [ConsumableType.HealthPack] = "Еда",
             [ConsumableType.SmokingPipe] = "Трубка",
-            [ConsumableType.Dynamite] = "Динамит",
+            [ConsumableType.Rope] = "Канат",
             [ConsumableType.Antidote] = "Противоядие"
         };
 
