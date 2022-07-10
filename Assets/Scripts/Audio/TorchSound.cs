@@ -17,12 +17,5 @@ public class TorchSound : MonoBehaviour
         //SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(SFX.);
     }
 
-    private void Update()
-    {
-        if (!torchSFX.AudioSource.isPlaying)
-        {
-            this.Log(gameObject);
-        }
-    }
 
 }
