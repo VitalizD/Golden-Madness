@@ -9,7 +9,7 @@ public class TorchSound : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
         //this.Log(gameObject);
         torchSFX.Position = gameObject.transform.position;
