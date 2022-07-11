@@ -5,15 +5,16 @@ using Utils;
 
 public class TorchSound : MonoBehaviour
 {
-    [SerializeField] private SFX torchSFX;
+    [SerializeField] private AudioSource torchAudioSource;
 
 
 
-    private void Awake()
+    private void Start()
     {
         //this.Log(gameObject);
-        torchSFX.Position = gameObject.transform.position;
-        torchSFX.Play();
+        //For whatever fucking reason this fucking bullshit cant work with SFX system, here temp, duck tape solution. This is BAD, but whatever.
+        torchAudioSource.Play();
+        SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(value => torchAudioSource.volume = value);
         //SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(SFX.);
     }
 

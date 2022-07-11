@@ -90,36 +90,65 @@ public class SFX : ScriptableObject
         }
     }
 
-    public AudioSource Play() 
+    public AudioSource Play()
     {
         //this.Log(audioSource);
-        var clip = audioClips[(int)Random.Range(0, audioClips.Count)];
         if (audioSource == null)
         {
             //TODO: THIS SHIT MIGH FUCK UP TORCHES, CHECK IT OUT
-            //onVolumeChanged += ChangeMasterVolume;
-            //SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(x=>onVolumeChanged(x));
+            onVolumeChanged += ChangeMasterVolume;
+            SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(x => onVolumeChanged(x));
             var _obj = new GameObject("Sound", typeof(AudioSource));
             audioSource = _obj.GetComponent<AudioSource>();
             audioSource.gameObject.transform.position = position;
             audioSource.loop = isLooped;
-            audioSource.volume = vol*masterVol;
+            audioSource.volume = vol * masterVol;
             audioSource.minDistance = minDistance;
             audioSource.maxDistance = maxDistance;
             audioSource.rolloffMode = rolloffMode;
             audioSource.spatialBlend = is3D ? value3D : value2D;
-            playMethodDict =
+        }
+        playMethodDict =
             new Dictionary<playMethod, System.Action<AudioSource>>
             {
                 {playMethod.Play, audioSrc=>audioSrc.Play() },
-                {playMethod.PlayOneShot, audioSrc=>audioSrc.PlayOneShot(clip) },
+                {playMethod.PlayOneShot, audioSrc=>audioSrc.PlayOneShot(audioSrc.clip) },
                 {playMethod.PlayDelayed, audioSrc=>audioSrc.PlayDelayed(delay) },
-                {playMethod.PlayClipAtPoint, audioSrc => AudioSource.PlayClipAtPoint(clip,position) }
+                {playMethod.PlayClipAtPoint, audioSrc => AudioSource.PlayClipAtPoint(audioSrc.clip,position) }
             };
-        } 
-        audioSource.clip = clip;
-        playMethodDict[method]?.Invoke(audioSource);
+        audioSource.clip = audioClips[(int)Random.Range(0, audioClips.Count)];
+        playMethodDict[method].Invoke(audioSource);
         Destroy(audioSource.gameObject, audioSource.clip.length);
         return audioSource;
     }
+
+    //public AudioSource Play(AudioSource audioSourceParam = null)
+    //{
+    //    var src = audioSourceParam;
+    //    if (src == null)
+    //    {
+    //        var _obj = new GameObject("Sound", typeof(AudioSource));
+    //        src = _obj.GetComponent<AudioSource>();
+    //        src.gameObject.transform.position = position;
+    //        src.loop = isLooped;
+    //        src.volume = vol * masterVol;
+    //        src.minDistance = minDistance;
+    //        src.maxDistance = maxDistance;
+    //        src.rolloffMode = rolloffMode;
+    //        src.spatialBlend = is3D ? value3D : value2D;
+    //    }
+    //    var clip = audioClips[(int)Random.Range(0, audioClips.Count)];
+    //    src.clip = clip;
+    //    playMethodDict =
+    //    new Dictionary<playMethod, System.Action<AudioSource>>
+    //    {
+    //        {playMethod.Play, audioSrc=>audioSrc.Play() },
+    //        {playMethod.PlayOneShot, audioSrc=>audioSrc.PlayOneShot(clip) },
+    //        {playMethod.PlayDelayed, audioSrc=>audioSrc.PlayDelayed(delay) },
+    //        {playMethod.PlayClipAtPoint, audioSrc => AudioSource.PlayClipAtPoint(clip,position) }
+    //    };
+    //    playMethodDict[method].Invoke(src);
+    //    Destroy(src.gameObject, src.clip.length);
+    //    return src;
+    //}
 }
