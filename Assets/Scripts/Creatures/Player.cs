@@ -333,6 +333,19 @@ public class Player : MonoBehaviour, IStorage
 
     private void Update()
     {
+        if (jumpCheckingPoint.CanJump && !isAttacking && !isStunned && !isDigging && !Input.GetButton("Horizontal"))
+        {
+            if (isClimbing)
+            {
+                if (Input.GetButton("Vertical"))
+                    State = States.ClimbMove;
+                else
+                    State = States.ClimbIdle;
+            }
+            else
+                State = States.Idle;
+        }
+
         if (jumpCheckingPoint.CanJump && !isStunned && Input.GetButtonDown("Jump"))
             Jump();
 
@@ -349,19 +362,6 @@ public class Player : MonoBehaviour, IStorage
         {
             Health += (int)consumables.GetRecovery(ConsumableType.HealthPack);
             consumables.Add(ConsumableType.HealthPack, -1);
-        }
-
-        if (jumpCheckingPoint.CanJump && !isAttacking && !isStunned && !isDigging && !Input.GetButton("Horizontal"))
-        {
-            if (isClimbing)
-            {
-                if (Input.GetButton("Vertical"))
-                    State = States.ClimbMove;
-                else
-                    State = States.ClimbIdle;
-            }
-            else
-                State = States.Idle;
         }
     }
 
@@ -481,6 +481,7 @@ public class Player : MonoBehaviour, IStorage
             if (Input.GetButton("Vertical") && Input.GetAxis("Vertical") < 0)
                 return;
         }
+        StartCoroutine(jumpCheckingPoint.Jump());
         rigidBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 

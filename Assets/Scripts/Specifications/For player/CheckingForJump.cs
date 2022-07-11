@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CheckingForJump : MonoBehaviour
 {
@@ -8,8 +9,16 @@ public class CheckingForJump : MonoBehaviour
     private readonly Collider2D[] resultColliders = new Collider2D[10];
 
     private bool canJump = false;
+    private bool jumped = false;
 
     public bool CanJump { get => canJump; }
+
+    public IEnumerator Jump()
+    {
+        jumped = true;
+        yield return new WaitForSeconds(0.1f);
+        jumped = false;
+    }
 
     private void Awake()
     {
@@ -23,6 +32,11 @@ public class CheckingForJump : MonoBehaviour
         if (Player.Instanse.IsClimbing)
         {
             canJump = true;
+            return;
+        }
+        else if (jumped)
+        {
+            canJump = false;
             return;
         }
 

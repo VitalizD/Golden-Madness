@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
             player = Player.Instanse.transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (enableMoving)
         {
@@ -86,6 +86,6 @@ public class CameraController : MonoBehaviour
         if (!Player.Instanse.IsClimbing && Player.Instanse.CanJump)
             toPosition.y += lookUpOrDown * Input.GetAxis("Vertical");
 
-        transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
+        transform.position = Vector3.Lerp(transform.position, toPosition, Time.fixedDeltaTime * speed);
     }
 }
