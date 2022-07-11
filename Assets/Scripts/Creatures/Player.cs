@@ -474,8 +474,13 @@ public class Player : MonoBehaviour, IStorage
     private void Jump()
     {
         isDigging = false;
-        StopClimb();
         State = States.Jump;
+        if (isClimbing)
+        {
+            StopClimb();
+            if (Input.GetButton("Vertical") && Input.GetAxis("Vertical") < 0)
+                return;
+        }
         rigidBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
