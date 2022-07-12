@@ -37690,6 +37690,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1327895593}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: rooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 5749724748644893411, guid: b88e2734dcc4f044389db18bbc6a93f3, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: roomSpawners.Array.size
       value: 20
       objectReference: {fileID: 0}
@@ -40849,6 +40853,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5442683962309362243, guid: 6329a3f4cb770f5439241d2ba2df545d, type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565018502213830256, guid: 6329a3f4cb770f5439241d2ba2df545d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565018502213830256, guid: 6329a3f4cb770f5439241d2ba2df545d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565018502213830256, guid: 6329a3f4cb770f5439241d2ba2df545d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565018502213830256, guid: 6329a3f4cb770f5439241d2ba2df545d, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9142398143346898038, guid: 6329a3f4cb770f5439241d2ba2df545d, type: 3}

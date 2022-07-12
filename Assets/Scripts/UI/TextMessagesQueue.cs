@@ -20,11 +20,8 @@ public class TextMessagesQueue : MonoBehaviour
     private readonly Queue<(string text, Sprite icon, float delay)> consumablesQueue = new Queue<(string text, Sprite icon, float delay)>();
     private bool isPlaying = false;
 
-    public void Add(string text, Sprite icon, float delay)
+    public void Add(string text, Sprite icon, float delay = 1f)
     {
-        //if (inVillage)
-        //    return;
-
         consumablesQueue.Enqueue((text, icon, delay));
         Play();
     }

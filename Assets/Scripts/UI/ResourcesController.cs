@@ -56,7 +56,7 @@ public class ResourcesController : MonoBehaviour
 
     private Coroutine hideOneResourcePanel;
 
-    public void ShowOneResource(ResourceType type)
+    public void ShowOneResource(ResourceType type, int count = 1)
     {
         if (type == ResourceType.None)
             return;
@@ -65,7 +65,7 @@ public class ResourcesController : MonoBehaviour
 
         var resource = resourcesInfo[type];
         oneResourceTitle.text = resource.title;
-        oneResourceCount.text = $"{playerBackpack.GetOne(type)} <color=green>+ 1</color>";
+        oneResourceCount.text = $"{playerBackpack.GetOne(type)} <color=green>+ {count}</color>";
 
         if (resource.sprite != null)
             oneResourceIcon.sprite = resource.sprite;
