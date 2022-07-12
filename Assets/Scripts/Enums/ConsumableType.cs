@@ -4,6 +4,6 @@ public enum ConsumableType
     Grindstone,
     HealthPack,
     SmokingPipe,
-    Dynamite,
+    Rope,
     Antidote
 }

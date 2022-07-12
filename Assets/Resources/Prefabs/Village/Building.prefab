@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeUsed: 1
   loadLevel: 1
+  buildingFadeSpeed: 1
   buildingType: 0
   constructedBuildingSprite: {fileID: 0}
 --- !u!1001 &7653370427871190017
@@ -235,20 +236,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7764783724032662043, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
   m_PrefabInstance: {fileID: 7653370427871190017}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1382219363724784684 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8725894612000352301, guid: acab7fe7cf12f134b8adec7f68cc88ad, type: 3}
-  m_PrefabInstance: {fileID: 7653370427871190017}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7653370427871190029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382219363724784684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0ceddb985defeb4ebf6db4ec198991e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

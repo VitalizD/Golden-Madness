@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
-    public static CameraController instanse = null;
+    public static CameraController Instanse { get; private set; } = null;
 
     [SerializeField] private bool enableMoving = true;
+    [SerializeField] private bool fix = false;
     [SerializeField] private float speed = 1f;
     [SerializeField] private float yOffset = 1.6f;
     [SerializeField] private float lookUpOrDown = 3f;
@@ -21,13 +23,15 @@ public class CameraController : MonoBehaviour
 
     public bool EnableMoving { get => enableMoving; set => enableMoving = value; }
 
+    public bool Fix { get => fix; set => fix = value; }
+
     public float Size { get => camera_.orthographicSize; set => camera_.orthographicSize = value; }
 
     private void Awake()
     {
-        if (instanse == null)
-            instanse = this;
-        else if (instanse == this)
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
             Destroy(gameObject);
 
         zPosition = transform.position.z;
@@ -41,13 +45,13 @@ public class CameraController : MonoBehaviour
             player = Player.Instanse.transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (enableMoving)
         {
             Move();
-            FixedCamera();
-            //Look();
+            if (fix)
+                FixedCamera();
         }
     }
 
@@ -79,19 +83,9 @@ public class CameraController : MonoBehaviour
         toPosition.y = player.position.y - yOffset;
         toPosition.z = zPosition;
 
-        if (Input.GetButton("Vertical") || !Input.GetButton("Vertical"))
+        if (!Player.Instanse.IsClimbing && Player.Instanse.CanJump)
             toPosition.y += lookUpOrDown * Input.GetAxis("Vertical");
 
-        transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * speed);
+        transform.position = Vector3.Lerp(transform.position, toPosition, Time.fixedDeltaTime * speed);
     }
-
-    //private void Look()
-    //{
-    //    if (Input.GetButton("Vertical") || !Input.GetButton("Vertical"))
-    //    {
-    //        toPosition.y = Vector3.Lerp(player.position.y - yOffset + (lookUpOrDown * Input.GetAxis("Vertical")));
-    //        transform.position = toPosition;
-    //        FixedCamera();
-    //    }
-    //}
 }

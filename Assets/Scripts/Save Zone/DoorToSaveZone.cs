@@ -47,9 +47,10 @@ public class DoorToSaveZone : MonoBehaviour
         {
             void action()
             {
-                CameraController.instanse.EnableMoving = false;
-                CameraController.instanse.transform.position = doorFromSaveZone.CameraPosition;
-                CameraController.instanse.Size = doorFromSaveZone.CameraSizeInSaveZone;
+                //CameraController.Instanse.EnableMoving = false;
+                CameraController.Instanse.Fix = true;
+                CameraController.Instanse.transform.position = doorFromSaveZone.CameraPosition;
+                CameraController.Instanse.Size = doorFromSaveZone.CameraSizeInSaveZone;
                 Player.Instanse.GetComponent<SanityController>().DecreasingEnabled = false;
                 sprite.sprite = blockedDoorSprite;
             }

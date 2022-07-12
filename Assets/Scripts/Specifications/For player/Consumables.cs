@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Consumables : MonoBehaviour, IStorage
 {
@@ -9,6 +10,7 @@ public class Consumables : MonoBehaviour, IStorage
     [SerializeField] private int grindstonesCount = 1;
     [SerializeField] private int healthPacksCount = 1;
     [SerializeField] private int smokingPipesCount = 1;
+    [SerializeField] private int ropesCount = 1;
 
     [Header("Recoveries")]
     [SerializeField] private float fuelTankRecovery = 30f;
@@ -23,10 +25,11 @@ public class Consumables : MonoBehaviour, IStorage
 
     public void Save()
     {
-        PlayerPrefs.SetInt(PlayerPrefsKeys.FuelTanksCount, fuelTanksCount);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount);
-        PlayerPrefs.SetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.FuelTanksCount, consumableCounts[ConsumableType.FuelTank]);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.GrindstonesCount, consumableCounts[ConsumableType.Grindstone]);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.HealthPacksCount, consumableCounts[ConsumableType.HealthPack]);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.SmokingPipesCount, consumableCounts[ConsumableType.SmokingPipe]);
+        PlayerPrefs.SetInt(PlayerPrefsKeys.RopesCount, consumableCounts[ConsumableType.Rope]);
     }
 
     public void Load()
@@ -37,7 +40,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Grindstone] = PlayerPrefs.GetInt(PlayerPrefsKeys.GrindstonesCount, grindstonesCount),
             [ConsumableType.HealthPack] = PlayerPrefs.GetInt(PlayerPrefsKeys.HealthPacksCount, healthPacksCount),
             [ConsumableType.SmokingPipe] = PlayerPrefs.GetInt(PlayerPrefsKeys.SmokingPipesCount, smokingPipesCount),
-            [ConsumableType.Dynamite] = PlayerPrefs.GetInt(PlayerPrefsKeys.DynamitesCount, 0),
+            [ConsumableType.Rope] = PlayerPrefs.GetInt(PlayerPrefsKeys.RopesCount, ropesCount),
             [ConsumableType.Antidote] = PlayerPrefs.GetInt(PlayerPrefsKeys.AntidotesCount, 0)
         };
         UpdateHotbar();
@@ -55,8 +58,8 @@ public class Consumables : MonoBehaviour, IStorage
         if (HotbarController.Instanse != null)
             HotbarController.Instanse.SetConsumableCount(type, consumableCounts[type]);
 
-        if (consumableCounts[type] - initialValue > 0 && loaded)
-            TakingConsumables.Instanse.AddConsumable(consumableNames[type], consumableCounts[type] - initialValue, SpritesStorage.Instanse.GetConsumable(type));
+        if (consumableCounts[type] - initialValue > 0 && loaded && SceneManager.GetActiveScene().name != ServiceInfo.VillageScene)
+            TextMessagesQueue.Instanse.Add($"{consumableNames[type]} x{consumableCounts[type] - initialValue}", SpritesStorage.Instanse.GetConsumable(type), 1f);
     }
 
     public int GetCount(ConsumableType type) => consumableCounts[type];
@@ -71,7 +74,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Grindstone] = 1,
             [ConsumableType.HealthPack] = 1,
             [ConsumableType.SmokingPipe] = 1,
-            [ConsumableType.Dynamite] = 1,
+            [ConsumableType.Rope] = 1,
             [ConsumableType.Antidote] = 1
         };
         UpdateHotbar();
@@ -93,7 +96,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Grindstone] = 0,
             [ConsumableType.HealthPack] = 0,
             [ConsumableType.SmokingPipe] = 0,
-            [ConsumableType.Dynamite] = 0,
+            [ConsumableType.Rope] = 0,
             [ConsumableType.Antidote] = 0
         };
 
@@ -103,7 +106,7 @@ public class Consumables : MonoBehaviour, IStorage
             [ConsumableType.Grindstone] = "Точильный камень",
             [ConsumableType.HealthPack] = "Еда",
             [ConsumableType.SmokingPipe] = "Трубка",
-            [ConsumableType.Dynamite] = "Динамит",
+            [ConsumableType.Rope] = "Канат",
             [ConsumableType.Antidote] = "Противоядие"
         };
 

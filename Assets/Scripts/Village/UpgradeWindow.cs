@@ -19,28 +19,17 @@ public class UpgradeWindow : MonoBehaviour
 
     private bool canUpgrade = true;
 
-    private void Awake()
-    {
-        animation_ = GetComponent<Animation>();
-        level.text = "";
-
-        //var canvas = transform.GetChild(0);
-        //title = canvas.GetChild(0).GetComponent<TextMeshProUGUI>();
-        //description = canvas.GetChild(1).GetComponent<TextMeshProUGUI>();
-        //resourceIcon = canvas.GetChild(2).GetComponent<Image>();
-        //count = canvas.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
-        //action = canvas.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>();
-    }
-
     public void Show()
     {
         gameObject.SetActive(true);
-        animation_.Play("Show");
+        if (animation_ != null)
+            animation_.Play("Show");
     }
 
     public void Hide()
     {
-        animation_.Play("Hide");
+        if (animation_ != null)
+            animation_.Play("Hide");
     }
 
     public void SetTitle(string value)
@@ -60,7 +49,7 @@ public class UpgradeWindow : MonoBehaviour
 
     public void SetLevel(int value) => level.text = $"Ур. {value}";
 
-    public void SetRequiredResource(ResourceTypes type, int requiredCount)
+    public void SetRequiredResource(ResourceType type, int requiredCount)
     {
         resourceIcon.sprite = VillageController.instanse.GetResourceSprite(type);
         var currentResourcesCount = VillageController.instanse.GetResourcesCount(type);
@@ -97,6 +86,12 @@ public class UpgradeWindow : MonoBehaviour
     public void SetDescriptionAlignFlush() => description.alignment = TextAlignmentOptions.Flush;
 
     public void SetDescriptionAlignLeft() => description.alignment = TextAlignmentOptions.Left;
+
+    private void Awake()
+    {
+        animation_ = GetComponent<Animation>();
+        level.text = "";
+    }
 
     // Назначен на ключ в анимации "Hide"
     private void OnEndAnimation()

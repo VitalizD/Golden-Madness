@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ResourcesController : MonoBehaviour
 {
-    public static ResourcesController instanse = null;
+    public static ResourcesController Instanse { get; private set; } = null;
 
     private struct ResourceInfo
     {
@@ -50,15 +50,15 @@ public class ResourcesController : MonoBehaviour
 
     private Backpack playerBackpack;
 
-    private Dictionary<ResourceTypes, ResourceInfo> resourcesInfo;
+    private Dictionary<ResourceType, ResourceInfo> resourcesInfo;
     private bool allResourcesShowed = false;
     private Color capacityTextNormalColor;
 
     private Coroutine hideOneResourcePanel;
 
-    public void ShowOneResource(ResourceTypes type)
+    public void ShowOneResource(ResourceType type)
     {
-        if (type == ResourceTypes.None)
+        if (type == ResourceType.None)
             return;
 
         ActiveOneResourcePanel();
@@ -85,10 +85,15 @@ public class ResourcesController : MonoBehaviour
 
     public void UpdateResourcesCounts()
     {
-        var resources = playerBackpack.GetAll();
+        var resources = new Dictionary<ResourceType, int>();
 
         if (inVillage)
             resources = VillageController.instanse.GetAllRecources();
+        else if (playerBackpack != null)
+            resources = playerBackpack.GetAll();
+
+        if (resources.Count == 0)
+            return;
 
         foreach (var type in resourcesInfo.Keys)
             resourcesInfo[type].count.text = resources[type].ToString();
@@ -96,9 +101,9 @@ public class ResourcesController : MonoBehaviour
 
     private void Awake()
     {
-        if (instanse == null)
-            instanse = this;
-        else if (instanse == this)
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
             Destroy(gameObject);
 
         oneResourceIcon = oneResource.GetChild(0).GetComponent<Image>();
@@ -116,12 +121,12 @@ public class ResourcesController : MonoBehaviour
         playerBackpack = Player.Instanse.GetComponent<Backpack>();
 
         var icons = SpritesStorage.Instanse;
-        resourcesInfo = new Dictionary<ResourceTypes, ResourceInfo>
+        resourcesInfo = new Dictionary<ResourceType, ResourceInfo>
         {
-            [ResourceTypes.Quartz] = new ResourceInfo("Êגאנצ", icons.GetResource(ResourceTypes.Quartz), quartzCount),
-            [ResourceTypes.IronOre] = new ResourceInfo("Æוכוחמ", icons.GetResource(ResourceTypes.IronOre), ironCount),
-            [ResourceTypes.GoldOre] = new ResourceInfo("Çמכמעמ", icons.GetResource(ResourceTypes.GoldOre), goldCount),
-            [ResourceTypes.Coal] = new ResourceInfo("Óדמכü", icons.GetResource(ResourceTypes.Coal), coalCount)
+            [ResourceType.Quartz] = new ResourceInfo("Êגאנצ", icons.GetResource(ResourceType.Quartz), quartzCount),
+            [ResourceType.IronOre] = new ResourceInfo("Æוכוחמ", icons.GetResource(ResourceType.IronOre), ironCount),
+            [ResourceType.GoldOre] = new ResourceInfo("Çמכמעמ", icons.GetResource(ResourceType.GoldOre), goldCount),
+            [ResourceType.Coal] = new ResourceInfo("Óדמכü", icons.GetResource(ResourceType.Coal), coalCount)
         };
 
         if (inVillage)

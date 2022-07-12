@@ -55,7 +55,7 @@ public class DoorFromSaveZone : MonoBehaviour
 
     private void Start()
     {
-        normalCameraSize = CameraController.instanse.Size;
+        normalCameraSize = CameraController.Instanse.Size;
     }
 
     private void Update()
@@ -64,9 +64,10 @@ public class DoorFromSaveZone : MonoBehaviour
         {
             void action()
             {
-                CameraController.instanse.EnableMoving = true;
-                CameraController.instanse.transform.position = exitPosition;
-                CameraController.instanse.Size = normalCameraSize;
+                //CameraController.Instanse.EnableMoving = true;
+                CameraController.Instanse.Fix = false;
+                CameraController.Instanse.transform.position = exitPosition;
+                CameraController.Instanse.Size = normalCameraSize;
                 Player.Instanse.GetComponent<SanityController>().DecreasingEnabled = true;
             }
 
