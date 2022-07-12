@@ -46,7 +46,7 @@ public class Player : MonoBehaviour, IStorage
     [Header("SFX")]
     //[SerializeField] private AudioSource digSFX;
     [SerializeField] private SFX hurtSFX;
-    [SerializeField] private SFX digSFX;
+    //[SerializeField] private SFX digSFX;
     [SerializeField] private SFX swingSFX;
     [SerializeField] private SFX jumpSFX;
     [SerializeField] private SFX walkSFX;
@@ -423,7 +423,7 @@ public class Player : MonoBehaviour, IStorage
     {
         if (!selectedTile)
             return;
-        digSFX.Play();
+        //digSFX.Play();
         //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerDig);
         var damage = selectedTile.DiggingDifficulty < tileDamage ? tileDamage / selectedTile.DiggingDifficulty : tileDamage;
         selectedTile.Health -= damage;

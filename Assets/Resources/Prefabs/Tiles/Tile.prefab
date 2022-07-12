@@ -416,6 +416,7 @@ MonoBehaviour:
   shakingTime: 0.24
   isBedrock: 0
   destroyAttachedTiles: 1
+  drawFrames: 1
   resourceType: 0
   groundMask:
     serializedVersion: 2
@@ -438,6 +439,8 @@ MonoBehaviour:
   frameBottom: {fileID: 4410308048156104987}
   frameLeft: {fileID: 861209371310100889}
   frameRight: {fileID: 7189995353272430863}
+  digSFX: {fileID: 11400000, guid: e9966b7c467d23941b97110dc6dae674, type: 2}
+  destroySFX: {fileID: 11400000, guid: 61dc2175bed3f2e4db59ae88473dcee3, type: 2}
 --- !u!111 &3766323893367269293
 Animation:
   m_ObjectHideFlags: 0

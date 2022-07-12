@@ -117,8 +117,11 @@ public class SFX : ScriptableObject
                 {playMethod.PlayClipAtPoint, audioSrc => AudioSource.PlayClipAtPoint(audioSrc.clip,position) }
             };
         audioSource.clip = audioClips[(int)Random.Range(0, audioClips.Count)];
-        playMethodDict[method].Invoke(audioSource);
-        Destroy(audioSource.gameObject, audioSource.clip.length);
+        if (audioSource.clip != null)
+        {
+            playMethodDict[method].Invoke(audioSource);
+            Destroy(audioSource.gameObject, audioSource.clip.length);
+        }
         return audioSource;
     }
 
