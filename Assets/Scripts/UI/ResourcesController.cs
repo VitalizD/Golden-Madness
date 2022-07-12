@@ -44,6 +44,9 @@ public class ResourcesController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldCount;
     [SerializeField] private TextMeshProUGUI coalCount;
 
+    [Header("SFX")]
+    [SerializeField] private SFX menuPopUpSFX;
+
     private Image oneResourceIcon;
     private TextMeshProUGUI oneResourceTitle;
     private TextMeshProUGUI oneResourceCount;
@@ -143,6 +146,7 @@ public class ResourcesController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Tab) && !allResourcesShowed)
             {
+                menuPopUpSFX.Play();
                 allResourcesShowed = true;
                 ShowAllResources();
             }

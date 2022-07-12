@@ -5,6 +5,7 @@ public class Hay : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
     [SerializeField] private float fadeSpeed = 0.7f;
+    [SerializeField] private SFX haySFX;
 
     private Teleporter teleporter;
     private TriggerZone trigger;
@@ -31,6 +32,7 @@ public class Hay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && trigger.IsTriggered && canBeUsed)
         {
+            haySFX.Play();
             void action()
             {
                 Player.Instanse.Sleep();
