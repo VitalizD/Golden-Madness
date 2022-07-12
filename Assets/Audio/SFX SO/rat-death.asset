@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: rat-death
   m_EditorClassIdentifier: 
   vol: 1
-  audioSource: {fileID: 0}
-  method: 2
+  method: 1
   isLooped: 0
   is3D: 1
   minDistance: 5
   maxDistance: 20
-  position: {x: 13.224077, y: -7.5628266, z: 0}
+  position: {x: 18.51443, y: -16.580305, z: 0}
   delay: 0
-  rolloffMode: 1
+  rolloffMode: 0
   audioClips:
   - {fileID: 8300000, guid: 27e7b34ba196a7b4c8aa2ca276280254, type: 3}

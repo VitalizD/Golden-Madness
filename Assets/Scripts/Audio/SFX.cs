@@ -122,6 +122,17 @@ public class SFX : ScriptableObject
         return audioSource;
     }
 
+    public IEnumerator SoundFade(float time)
+    {
+        var startVol = audioSource?.volume;
+        if (startVol == null) yield break;
+        for(float currentVol = (float)startVol; currentVol > 0; currentVol -= 0.01f)
+        {
+            audioSource.volume = currentVol;
+            yield return new WaitForSeconds(time/100);
+        }
+    }
+
     //public AudioSource Play(AudioSource audioSourceParam = null)
     //{
     //    var src = audioSourceParam;
