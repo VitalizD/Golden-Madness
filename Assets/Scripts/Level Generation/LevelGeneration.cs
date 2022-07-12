@@ -18,7 +18,11 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private GameObject[] oresPrefabs;
 
     [Tooltip("Укажите части (например, 1, 1, 2)")]
-    [SerializeField] private float[] spawnChances;
+    [SerializeField] private float[] oreSpawnChances;
+
+    [Header("Enemies Spawn Settings")]
+    [SerializeField] private Creature[] enemies;
+    [SerializeField] private float[] enemySpawnChances;
 
     [Space]
 
@@ -56,13 +60,15 @@ public class LevelGeneration : MonoBehaviour
 
     public GameObject[] OrePrefabs { get => oresPrefabs; }
 
-    public float[] SpawnChances { get => spawnChances; }
+    public float[] SpawnChances { get => oreSpawnChances; }
 
     public DoorFromSaveZone DoorFromSaveZone { get => doorFromSaveZone; }
 
+    public GameObject GetRandomEnemy() => enemies[ServiceInfo.GetIndexByChancesArray(enemySpawnChances)].gameObject;
+
     private void Awake()
     {
-        if (oresPrefabs.Length != spawnChances.Length)
+        if (oresPrefabs.Length != oreSpawnChances.Length)
             throw new System.Exception("Размеры массивов \"Spawn Chances\" и \"Ores Prefabs\" не совпадают");
 
         if (doorFromSaveZone == null)
@@ -191,7 +197,11 @@ public class LevelGeneration : MonoBehaviour
 
     private GameObject GetRandomRoomFrom(GameObject[] array) => array[Random.Range(0, array.Length)];
 
-    private void GenerateRoom(GameObject room) => Instantiate(room, transform.position, Quaternion.identity);
+    private void GenerateRoom(GameObject room)
+    {
+        room.transform.localScale = new Vector3(1, 1, 1);
+        Instantiate(room, transform.position, Quaternion.identity);
+    }
 
     private RoomInfo GetCurrentRoomInfo() => Physics2D.OverlapCircle(transform.position, roomDetectionRadius, roomMask).GetComponent<RoomInfo>();
 

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6633982361947239545
+--- !u!1001 &3248272324593812673
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,15 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1430882430835898010, guid: 8d37f0856048d4f44812ee8d21cdf801, type: 3}
       propertyPath: m_Name
-      value: Left Right Rooms Templates (Level 1.2)
+      value: Left Right Rooms Templates (Level 1.3)
       objectReference: {fileID: 0}
     - target: {fileID: 8055883118733716856, guid: 8d37f0856048d4f44812ee8d21cdf801, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8055883118733716856, guid: 8d37f0856048d4f44812ee8d21cdf801, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8055883118733716856, guid: 8d37f0856048d4f44812ee8d21cdf801, type: 3}
       propertyPath: m_LocalPosition.x
@@ -61,11 +57,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8303464983846574963, guid: 8d37f0856048d4f44812ee8d21cdf801, type: 3}
       propertyPath: objects.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8303464983846574963, guid: 8d37f0856048d4f44812ee8d21cdf801, type: 3}
       propertyPath: objects.Array.data[5]
       value: 
       objectReference: {fileID: 3663585609874898055, guid: 3ddce49a380eaf74185bb7723ec0d4c5, type: 3}
+    - target: {fileID: 8303464983846574963, guid: 8d37f0856048d4f44812ee8d21cdf801, type: 3}
+      propertyPath: objects.Array.data[6]
+      value: 
+      objectReference: {fileID: 5229049656622885885, guid: 0cab5f51ef20de7449a8c7624c361c35, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d37f0856048d4f44812ee8d21cdf801, type: 3}
