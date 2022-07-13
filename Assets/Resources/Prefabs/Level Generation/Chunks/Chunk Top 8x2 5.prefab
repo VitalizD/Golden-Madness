@@ -1,0 +1,357 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1004193073669657045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1004193073669657046}
+  - component: {fileID: 1004193073669657047}
+  m_Layer: 0
+  m_Name: SP (Nothing) (Stone) (Stalactite On Stone) (Quartz On Stone Bottom) (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1004193073669657046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004193073669657045}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719352030075897336}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1004193073669657047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004193073669657045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b21f719d3e66e4d9be0e1962aee01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 8194785556238544359, guid: bc5b0fb55cc36be4f972b2302743a3e8, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 4709660431510415003, guid: 1362d88fecbb3d243b57a42a3be7539f, type: 3}
+  - {fileID: 1339735176213281411, guid: 419af00713dafdd41892cd26980f7f0e, type: 3}
+  - {fileID: 7317191526778110269, guid: 275ea845a2ad7314b97154bbf7f95d39, type: 3}
+--- !u!1 &2554181302409202085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2554181302409202086}
+  - component: {fileID: 2554181302409202087}
+  m_Layer: 0
+  m_Name: SP (Nothing) (Stone) (Stalactite On Stone) (Quartz On Stone Bottom) (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2554181302409202086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2554181302409202085}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.5, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719352030075897336}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2554181302409202087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2554181302409202085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b21f719d3e66e4d9be0e1962aee01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 8194785556238544359, guid: bc5b0fb55cc36be4f972b2302743a3e8, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 4709660431510415003, guid: 1362d88fecbb3d243b57a42a3be7539f, type: 3}
+  - {fileID: 1339735176213281411, guid: 419af00713dafdd41892cd26980f7f0e, type: 3}
+  - {fileID: 7317191526778110269, guid: 275ea845a2ad7314b97154bbf7f95d39, type: 3}
+  - {fileID: 5860963481671372680, guid: cfdd87e55e5bb4a4da55917ba01ad9b7, type: 3}
+--- !u!1 &2785441072875377699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1719352030075897336}
+  m_Layer: 8
+  m_Name: Chunk Top 8x2 5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1719352030075897336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785441072875377699}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3721730701294153744}
+  - {fileID: 4098423097325456538}
+  - {fileID: 4193130539861711652}
+  - {fileID: 2554181302409202086}
+  - {fileID: 1004193073669657046}
+  - {fileID: 4098427822912970780}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3721730701294153747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3721730701294153744}
+  - component: {fileID: 3721730701294153745}
+  m_Layer: 0
+  m_Name: SP (Nothing) (Stone) (Stalactite On Stone) (Quartz On Stone Bottom)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3721730701294153744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3721730701294153747}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.5, y: 3.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719352030075897336}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3721730701294153745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3721730701294153747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b21f719d3e66e4d9be0e1962aee01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 8194785556238544359, guid: bc5b0fb55cc36be4f972b2302743a3e8, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+--- !u!1 &4098423097325456537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4098423097325456538}
+  - component: {fileID: 4098423097325456539}
+  m_Layer: 0
+  m_Name: SP (Nothing) (Stone) (Stalactite On Stone) (Quartz On Stone Bottom) (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4098423097325456538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4098423097325456537}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 3.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719352030075897336}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4098423097325456539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4098423097325456537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b21f719d3e66e4d9be0e1962aee01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 8194785556238544359, guid: bc5b0fb55cc36be4f972b2302743a3e8, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+--- !u!1 &4098427822912970783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4098427822912970780}
+  - component: {fileID: 4098427822912970781}
+  m_Layer: 0
+  m_Name: SP (Nothing) (Stone) (Stalactite On Stone) (Quartz On Stone Bottom) (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4098427822912970780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4098427822912970783}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719352030075897336}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4098427822912970781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4098427822912970783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b21f719d3e66e4d9be0e1962aee01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 8194785556238544359, guid: bc5b0fb55cc36be4f972b2302743a3e8, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 4709660431510415003, guid: 1362d88fecbb3d243b57a42a3be7539f, type: 3}
+  - {fileID: 1339735176213281411, guid: 419af00713dafdd41892cd26980f7f0e, type: 3}
+  - {fileID: 7317191526778110269, guid: 275ea845a2ad7314b97154bbf7f95d39, type: 3}
+  - {fileID: 6388113518335699882, guid: 761133c0b98797b43ad10fca7c663799, type: 3}
+--- !u!1 &4193130539861711655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4193130539861711652}
+  - component: {fileID: 4193130539861711653}
+  m_Layer: 0
+  m_Name: SP (Nothing) (Stone) (Stalactite On Stone) (Quartz On Stone Bottom) (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4193130539861711652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193130539861711655}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 3.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1719352030075897336}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4193130539861711653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193130539861711655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b21f719d3e66e4d9be0e1962aee01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 8194785556238544359, guid: bc5b0fb55cc36be4f972b2302743a3e8, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 1320093835254140716, guid: 08e1a5edfbd95b84590e8746f2b7ebe4, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 444167595664569862, guid: 4f6c0a39ac28c3842844de7e425fcf30, type: 3}
+  - {fileID: 5860963481671372680, guid: cfdd87e55e5bb4a4da55917ba01ad9b7, type: 3}
