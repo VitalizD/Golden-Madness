@@ -422,7 +422,7 @@ public class Player : MonoBehaviour, IStorage
         canAttack = false;
 
         if (reloadAttack != null) StopCoroutine(reloadAttack);
-        reloadAttack = StartCoroutine(ReloadAttack());
+        reloadAttack = StartCoroutine(ReloadAttack(reloadAttackTime - 0.5f));
     }
 
     private void GetDamage(Collider2D collision)
@@ -519,7 +519,7 @@ public class Player : MonoBehaviour, IStorage
         isAttacking = true;
 
         StartCoroutine(FinishAttack());
-        reloadAttack = StartCoroutine(ReloadAttack());
+        reloadAttack = StartCoroutine(ReloadAttack(reloadAttackTime));
     }
 
     private void Mirror(bool condition)
@@ -553,9 +553,9 @@ public class Player : MonoBehaviour, IStorage
         isAttacking = false;
     }
 
-    private IEnumerator ReloadAttack()
+    private IEnumerator ReloadAttack(float afterTime)
     {
-        yield return new WaitForSeconds(reloadAttackTime);
+        yield return new WaitForSeconds(afterTime);
         canAttack = true;
     }
 
