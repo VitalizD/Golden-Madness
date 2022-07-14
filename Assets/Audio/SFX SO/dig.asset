@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: dig
   m_EditorClassIdentifier: 
   vol: 1
-  audioSource: {fileID: 0}
-  method: 1
+  method: 0
   isLooped: 0
   is3D: 0
+  minDistance: 5
   maxDistance: 20
   position: {x: 0, y: 0, z: 0}
   delay: 0

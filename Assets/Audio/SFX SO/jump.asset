@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: jump
   m_EditorClassIdentifier: 
   vol: 1
-  audioSource: {fileID: 0}
   method: 1
   isLooped: 0
   is3D: 0
+  minDistance: 5
   maxDistance: 20
   position: {x: 0, y: 0, z: 0}
   delay: 0
@@ -26,3 +26,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7623c14334ca4cb4da2ae53549ad8a85, type: 3}
   - {fileID: 8300000, guid: 32ca50c2c6703284a95974aa48a9eac0, type: 3}
   - {fileID: 8300000, guid: ce646cc678583864692eb3e2e33f3a95, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

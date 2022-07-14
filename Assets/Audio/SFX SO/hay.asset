@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f072acbe916f44893364ba3e0d17ec, type: 3}
   m_Name: hay
   m_EditorClassIdentifier: 
-  vol: 1
+  vol: 0.2
   method: 0
   isLooped: 0
   is3D: 0
@@ -21,4 +21,5 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   delay: 0
   rolloffMode: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 807b7c60b57f15a4cb16ba5f72628e25, type: 3}
