@@ -18,7 +18,7 @@ public class SoundSetting : MonoBehaviour
             Instanse = this;
         else if (Instanse == this)
             Destroy(gameObject);
-        gameVolume.value = 0.5f;
+        gameVolume.value = 0.01f;
     }
 
     private void Update()
