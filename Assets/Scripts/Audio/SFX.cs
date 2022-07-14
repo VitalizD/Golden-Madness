@@ -21,7 +21,7 @@ public class SFX : ScriptableObject
 
     private float value2D = 0f;
     private float value3D = 1f;
-    private static float masterVol = 1f;
+    private static float masterVol = 0.01f;
     private AudioSource audioSource;
     public event System.Action<float> onVolumeChanged;
 
