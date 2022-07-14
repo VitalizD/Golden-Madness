@@ -16,19 +16,7 @@ public class OreSpawner : MonoBehaviour
         var spawnChances = levelGen.SpawnChances;
         var oresPrefabs = levelGen.OrePrefabs;
 
-        var sum = spawnChances.Sum();
-        var current = 0f;
-        random = Random.Range(0f, sum);
-
-        for (var i = 0; i < oresPrefabs.Length; ++i)
-        {
-            current += spawnChances[i];
-            if (current >= random)
-            {
-                Instantiate(oresPrefabs[i], transform.position, Quaternion.identity, transform.parent);
-                Destroy(gameObject);
-                break;
-            }
-        }
+        Instantiate(oresPrefabs[ServiceInfo.GetIndexByChancesArray(spawnChances)], transform.position, Quaternion.identity, transform.parent);
+        Destroy(gameObject);
     }
 }

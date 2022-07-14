@@ -9,7 +9,14 @@ public class Backpack : MonoBehaviour, IStorage
     [SerializeField] private string fullInventoryPhrase = "Мой рюкзак заполнен!";
     [SerializeField] private string cannotTakePhrase = "Мне больше не унести!";
 
-    private Dictionary<ResourceTypes, int> resourcesCounts;
+    private Dictionary<ResourceType, int> resourcesCounts;
+    private static Dictionary<ResourceType, string> resourcesNames = new Dictionary<ResourceType, string>
+    {
+        [ResourceType.Coal] = "Уголь",
+        [ResourceType.GoldOre] = "Золото",
+        [ResourceType.IronOre] = "Железо",
+        [ResourceType.Quartz] = "Кристалл кварца"
+    };
 
     public int MaxCapacity 
     { 
@@ -21,7 +28,9 @@ public class Backpack : MonoBehaviour, IStorage
         }
     }
 
-    public bool IsFull() => currentFullness == maxCapacity;
+    public static string GetResourceName(ResourceType type) => resourcesNames[type];
+
+    public bool IsFull() => currentFullness >= maxCapacity;
 
     public int CurrentFullness { get => currentFullness; }
 
@@ -32,11 +41,11 @@ public class Backpack : MonoBehaviour, IStorage
         Clear();
     }
 
-    public int GetOne(ResourceTypes resourse) => resourcesCounts[resourse];
+    public int GetOne(ResourceType resourse) => resourcesCounts[resourse];
 
-    public Dictionary<ResourceTypes, int> GetAll() => resourcesCounts;
+    public Dictionary<ResourceType, int> GetAll() => resourcesCounts;
 
-    public void Add(ResourceTypes resource)
+    public void Add(ResourceType resource, int count = 1)
     {
         if (currentFullness >= maxCapacity)
         {
@@ -44,8 +53,8 @@ public class Backpack : MonoBehaviour, IStorage
             return;
         }
 
-        ++currentFullness;
-        ++resourcesCounts[resource];
+        currentFullness += count;
+        resourcesCounts[resource] += count;
 
         if (IsFull()) Player.Instanse.Speed = Player.Instanse.DefaultSpeed * FullInventorySpeedMultiplier;
 
@@ -53,12 +62,12 @@ public class Backpack : MonoBehaviour, IStorage
             Player.Instanse.Say(fullInventoryPhrase, 4f);
 
         if (currentFullness <= maxCapacity)
-            ResourcesController.Instanse.ShowOneResource(resource);
+            ResourcesController.Instanse.ShowOneResource(resource, count);
 
         UpdateTextFullness();
     }
 
-    public void Remove(ResourceTypes resource, int count)
+    public void Remove(ResourceType resource, int count)
     {
         resourcesCounts[resource] -= count;
 
@@ -75,12 +84,12 @@ public class Backpack : MonoBehaviour, IStorage
         Player.Instanse.Speed = Player.Instanse.DefaultSpeed;
 
         currentFullness = 0;
-        resourcesCounts = new Dictionary<ResourceTypes, int>
+        resourcesCounts = new Dictionary<ResourceType, int>
         {
-            [ResourceTypes.Coal] = 0,
-            [ResourceTypes.GoldOre] = 0,
-            [ResourceTypes.IronOre] = 0,
-            [ResourceTypes.Quartz] = 0
+            [ResourceType.Coal] = 0,
+            [ResourceType.GoldOre] = 0,
+            [ResourceType.IronOre] = 0,
+            [ResourceType.Quartz] = 0
         };
 
         if (ResourcesController.Instanse != null)
@@ -98,7 +107,7 @@ public class Backpack : MonoBehaviour, IStorage
     public void Load()
     {
         maxCapacity = PlayerPrefs.GetInt(PlayerPrefsKeys.BackpackCapacity, maxCapacity);
-        var newResourcesCounts = new Dictionary<ResourceTypes, int>();
+        var newResourcesCounts = new Dictionary<ResourceType, int>();
         foreach (var type in resourcesCounts.Keys)
         {
             var key = type.ToString() + PlayerPrefsKeys.ResourcesCountInBackpackPrefix;

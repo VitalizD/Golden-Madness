@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 99395948229621791}
   - component: {fileID: 5101184335126964010}
   - component: {fileID: 5772696817491646705}
+  - component: {fileID: 1844103248595953408}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -91,8 +92,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadParameters: 1
   health: 100
-  speed: 4
+  movementSpeed: 4
+  climbingSpeed: 2
   jumpForce: 8
+  reloadClimbTime: 0.5
+  ropeMask:
+    serializedVersion: 2
+    m_Bits: 512
   character: {fileID: 3499471482827718647}
   jumpCheckingPoint: {fileID: 1332513084546739594}
   sprite: {fileID: 984370221206082735}
@@ -102,8 +108,8 @@ MonoBehaviour:
   maxEnemyDamage: 10
   minEnemyDamageInPercents: 60
   repulsiveForce: 3.2
-  attackTime: 0.8
-  reloadAttackTime: 0.8
+  attackTime: 0.7
+  reloadAttackTime: 0.7
   invulnerabilityTime: 1
   stunTime: 0.3
   attackPoint: {fileID: 7517227805910426143}
@@ -156,6 +162,7 @@ MonoBehaviour:
   grindstonesCount: 0
   healthPacksCount: 0
   smokingPipesCount: 0
+  ropesCount: 1
   fuelTankRecovery: 100
   grindstoneRecovery: 100
   healthPackRecovery: 30
@@ -191,6 +198,20 @@ MonoBehaviour:
   fullInventorySpeedMultiplier: 0.85
   fullInventoryPhrase: "\u041C\u043E\u0439 \u0440\u044E\u043A\u0437\u0430\u043A \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D!"
   cannotTakePhrase: "\u042F \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0443\u043D\u0435\u0441\u0443!"
+--- !u!114 &1844103248595953408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984370220786920460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce664c8176feb0f42913792d714edc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 5
+  hook: {fileID: 901653830301045325, guid: 1436dd3cdc296264784940da645dac7f, type: 3}
 --- !u!1 &984370221206082729
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +291,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.165, y: 1.165}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -969,7 +990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &384216189051101082
 Transform:
   m_ObjectHideFlags: 0

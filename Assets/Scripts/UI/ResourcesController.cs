@@ -53,22 +53,22 @@ public class ResourcesController : MonoBehaviour
 
     private Backpack playerBackpack;
 
-    private Dictionary<ResourceTypes, ResourceInfo> resourcesInfo;
+    private Dictionary<ResourceType, ResourceInfo> resourcesInfo;
     private bool allResourcesShowed = false;
     private Color capacityTextNormalColor;
 
     private Coroutine hideOneResourcePanel;
 
-    public void ShowOneResource(ResourceTypes type)
+    public void ShowOneResource(ResourceType type, int count = 1)
     {
-        if (type == ResourceTypes.None)
+        if (type == ResourceType.None)
             return;
 
         ActiveOneResourcePanel();
 
         var resource = resourcesInfo[type];
         oneResourceTitle.text = resource.title;
-        oneResourceCount.text = $"{playerBackpack.GetOne(type)} <color=green>+ 1</color>";
+        oneResourceCount.text = $"{playerBackpack.GetOne(type)} <color=green>+ {count}</color>";
 
         if (resource.sprite != null)
             oneResourceIcon.sprite = resource.sprite;
@@ -88,7 +88,7 @@ public class ResourcesController : MonoBehaviour
 
     public void UpdateResourcesCounts()
     {
-        var resources = new Dictionary<ResourceTypes, int>();
+        var resources = new Dictionary<ResourceType, int>();
 
         if (inVillage)
             resources = VillageController.instanse.GetAllRecources();
@@ -124,12 +124,12 @@ public class ResourcesController : MonoBehaviour
         playerBackpack = Player.Instanse.GetComponent<Backpack>();
 
         var icons = SpritesStorage.Instanse;
-        resourcesInfo = new Dictionary<ResourceTypes, ResourceInfo>
+        resourcesInfo = new Dictionary<ResourceType, ResourceInfo>
         {
-            [ResourceTypes.Quartz] = new ResourceInfo("Êגאנצ", icons.GetResource(ResourceTypes.Quartz), quartzCount),
-            [ResourceTypes.IronOre] = new ResourceInfo("Æוכוחמ", icons.GetResource(ResourceTypes.IronOre), ironCount),
-            [ResourceTypes.GoldOre] = new ResourceInfo("Çמכמעמ", icons.GetResource(ResourceTypes.GoldOre), goldCount),
-            [ResourceTypes.Coal] = new ResourceInfo("Óדמכü", icons.GetResource(ResourceTypes.Coal), coalCount)
+            [ResourceType.Quartz] = new ResourceInfo("Êגאנצ", icons.GetResource(ResourceType.Quartz), quartzCount),
+            [ResourceType.IronOre] = new ResourceInfo("Æוכוחמ", icons.GetResource(ResourceType.IronOre), ironCount),
+            [ResourceType.GoldOre] = new ResourceInfo("Çמכמעמ", icons.GetResource(ResourceType.GoldOre), goldCount),
+            [ResourceType.Coal] = new ResourceInfo("Óדמכü", icons.GetResource(ResourceType.Coal), coalCount)
         };
 
         if (inVillage)

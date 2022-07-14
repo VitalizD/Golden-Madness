@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-
 
 public class Player : MonoBehaviour, IStorage
 {
@@ -12,8 +10,11 @@ public class Player : MonoBehaviour, IStorage
 
     [Header("Base")]
     [SerializeField] [Range(0, 100)] private int health = 100;
-    [SerializeField] private float speed = 3f;
+    [SerializeField] private float movementSpeed = 3f;
+    [SerializeField] private float climbingSpeed = 1f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float reloadClimbTime = 0.5f;
+    [SerializeField] private LayerMask ropeMask;
     [SerializeField] private Transform character;
     [SerializeField] private CheckingForJump jumpCheckingPoint;
     [SerializeField] private SpriteRenderer sprite;
@@ -58,7 +59,6 @@ public class Player : MonoBehaviour, IStorage
     private Backpack backpack;
     private GameOver gameOver;
     private RedFilter displayFilter;
-    private DamageText damageText;
 
     private Tile selectedTile;
     private LayerMask enemiesMask;
@@ -82,19 +82,23 @@ public class Player : MonoBehaviour, IStorage
     private bool isAttacking = false;
     private bool canAttack = true;
     private bool isDigging = false;
+    private bool isClimbing = false;
+    private bool canClimb = true;
     private bool adViewed = false;
 
     public bool IsDigging { get => isDigging; set => isDigging = value; }
 
+    public bool CanJump { get => jumpCheckingPoint.CanJump; }
+
     public Vector2 Checkpoint { get => checkpoint; set => checkpoint = value; }
 
-    public bool CanJump { get => jumpCheckingPoint.CanJump; }
+    public bool IsClimbing { get => isClimbing; }
 
     public float TouchingDistance { get => touchingDistance; }
 
     public float DefaultSpeed { get => defaultSpeed; }
 
-    public float Speed { get => speed; set => speed = value; }
+    public float Speed { get => movementSpeed; set => movementSpeed = value; }
 
     public States State
     {
@@ -127,7 +131,6 @@ public class Player : MonoBehaviour, IStorage
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
                 if (displayFilter != null) displayFilter.ChangeColor(health - value);
-                //damageText.ShowDamage(health - value, transform.position);
             }
             health = value > 100 ? 100 : value;
 
@@ -140,13 +143,9 @@ public class Player : MonoBehaviour, IStorage
                 {
                     gameObject.SetActive(false);
                     if (adViewed)
-                    {
                         gameOver.ShowAndReturnToVillage();
-                    }
                     else
-                    {
                         gameOver.ShowGameOverAd();
-                    }
                 }
                 else
                 {
@@ -163,9 +162,7 @@ public class Player : MonoBehaviour, IStorage
         get => pickaxeStrength;
         set
         {
-            if (value < 0) pickaxeStrength = 0;
-            else if (value > 100) pickaxeStrength = 100f;
-            else pickaxeStrength = value;
+            pickaxeStrength = Mathf.Clamp(value, 0f, 100f);
 
             if (HotbarController.Instanse != null)
                 HotbarController.Instanse.SetBarValue(BarType.Pickaxe, pickaxeStrength);
@@ -321,13 +318,12 @@ public class Player : MonoBehaviour, IStorage
         backpack = GetComponent<Backpack>();
         gameOver = GameObject.FindGameObjectWithTag(ServiceInfo.GameOverTag).GetComponent<GameOver>();
         displayFilter = GameObject.FindGameObjectWithTag(ServiceInfo.RedFilterTag).GetComponent<RedFilter>();
-        damageText = GameObject.FindGameObjectWithTag(ServiceInfo.GameplayCanvasTag).GetComponent<DamageText>();
 
         enemiesMask = LayerMask.GetMask(ServiceInfo.EnemiesLayerName);
         fixedZPosition = transform.position.z;
         scaleXValue = transform.localScale.x;
         character.localScale = transform.localScale;
-        defaultSpeed = speed;
+        defaultSpeed = movementSpeed;
 
         attackDistanse = attackPoint.GetComponent<CapsuleCollider2D>().size;
 
@@ -347,6 +343,19 @@ public class Player : MonoBehaviour, IStorage
 
     private void Update()
     {
+        if (jumpCheckingPoint.CanJump && !isAttacking && !isStunned && !isDigging && !Input.GetButton("Horizontal"))
+        {
+            if (isClimbing)
+            {
+                if (Input.GetButton("Vertical"))
+                    State = States.ClimbMove;
+                else
+                    State = States.ClimbIdle;
+            }
+            else
+                State = States.Idle;
+        }
+
         if (jumpCheckingPoint.CanJump && !isStunned && Input.GetButtonDown("Jump"))
             Jump();
 
@@ -371,11 +380,11 @@ public class Player : MonoBehaviour, IStorage
         var position = transform.position;
         transform.position = new Vector3(position.x, position.y, fixedZPosition);
 
-        if (jumpCheckingPoint.CanJump && !isAttacking && !isStunned && !isDigging)
-            State = States.Idle;
-
-        if (!isStunned && Input.GetButton("Horizontal"))
+        if (Input.GetButton("Horizontal") && !isStunned && !isClimbing)
             Run();
+
+        if (Input.GetButton("Vertical") && canClimb && Physics2D.OverlapCircleAll(transform.position, 0.1f, ropeMask).Length > 0)
+            Climb();
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -431,7 +440,7 @@ public class Player : MonoBehaviour, IStorage
         canAttack = false;
 
         if (reloadAttack != null) StopCoroutine(reloadAttack);
-        reloadAttack = StartCoroutine(ReloadAttack());
+        reloadAttack = StartCoroutine(ReloadAttack(reloadAttackTime - 0.5f));
     }
 
     private void GetDamage(Collider2D collision)
@@ -439,8 +448,8 @@ public class Player : MonoBehaviour, IStorage
         var danger = collision.GetComponent<Danger>();
         if (danger != null)
         {
+            StopClimb();
 
-            
             Health -= danger.Damage;
             State = States.Pain;
             SetStun();
@@ -465,6 +474,9 @@ public class Player : MonoBehaviour, IStorage
 
     private void Run()
     {
+        if (isClimbing)
+            return;
+
         if (jumpCheckingPoint.CanJump && !isAttacking && !isDigging)
         {
             //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerWalk);
@@ -472,7 +484,9 @@ public class Player : MonoBehaviour, IStorage
         }
             
         var dir = transform.right * Input.GetAxis("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
+        //rigidBody2d.AddForce(speed * dir, ForceMode2D.Impulse);
+        transform.Translate(movementSpeed * Time.fixedDeltaTime * dir);
+        //transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
 
         if (State != States.Attack)
             Mirror(dir.x < 0);
@@ -484,7 +498,41 @@ public class Player : MonoBehaviour, IStorage
         //Debug.Log(AudioManager.SoundName.PlayerJump);
         jumpSFX.Play();
         //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerJump);
+        State = States.Jump;
+        if (isClimbing)
+        {
+            StopClimb();
+            if (Input.GetButton("Vertical") && Input.GetAxis("Vertical") < 0)
+                return;
+        }
+        StartCoroutine(jumpCheckingPoint.Jump());
         rigidBody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    private void Climb()
+    {
+        if (!isClimbing)
+        {
+            isClimbing = true;
+            State = States.ClimbIdle;
+            rigidBody2d.constraints = RigidbodyConstraints2D.FreezePositionX;
+            rigidBody2d.gravityScale = 0f;
+            rigidBody2d.velocity = Vector2.zero;
+            transform.position = new Vector2(Tile.GetCenterPositionOfNearestTile(transform.position).x, transform.position.y);
+        }
+        transform.rotation = Quaternion.identity;
+
+        var dir = transform.up * Input.GetAxis("Vertical");
+        rigidBody2d.MovePosition(rigidBody2d.position + climbingSpeed * Time.fixedDeltaTime * (Vector2)dir);
+    }
+
+    private void StopClimb()
+    {
+        isClimbing = false;
+        rigidBody2d.gravityScale = 2.5f;
+        rigidBody2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+        canClimb = false;
+        StartCoroutine(ReloadClimb());
     }
 
     private void Attack()
@@ -497,7 +545,7 @@ public class Player : MonoBehaviour, IStorage
         swingSFX.Play();
         //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerSwing);
         StartCoroutine(FinishAttack());
-        reloadAttack = StartCoroutine(ReloadAttack());
+        reloadAttack = StartCoroutine(ReloadAttack(reloadAttackTime));
     }
 
     private void Mirror(bool condition)
@@ -531,9 +579,15 @@ public class Player : MonoBehaviour, IStorage
         isAttacking = false;
     }
 
-    private IEnumerator ReloadAttack()
+    private IEnumerator ReloadAttack(float afterTime)
     {
-        yield return new WaitForSeconds(reloadAttackTime);
+        yield return new WaitForSeconds(afterTime);
         canAttack = true;
+    }
+
+    private IEnumerator ReloadClimb()
+    {
+        yield return new WaitForSeconds(reloadClimbTime);
+        canClimb = true;
     }
 }

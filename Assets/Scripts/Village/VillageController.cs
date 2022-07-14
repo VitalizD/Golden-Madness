@@ -8,26 +8,26 @@ public class VillageController : MonoBehaviour, IStorage
     [SerializeField] private bool loadResources = true;
     [SerializeField] private GameObject triggers;
 
-    private Dictionary<ResourceTypes, int> resourcesCounts = new Dictionary<ResourceTypes, int>();
-    private Dictionary<ResourceTypes, Sprite> resourcesSprites = new Dictionary<ResourceTypes, Sprite>();
+    private Dictionary<ResourceType, int> resourcesCounts = new Dictionary<ResourceType, int>();
+    private Dictionary<ResourceType, Sprite> resourcesSprites = new Dictionary<ResourceType, Sprite>();
 
-    public int GetResourcesCount(ResourceTypes type)
+    public int GetResourcesCount(ResourceType type)
     {
         if (resourcesCounts.ContainsKey(type))
             return resourcesCounts[type];
         return 0;
     }
 
-    public Dictionary<ResourceTypes, int> GetAllRecources() => resourcesCounts;
+    public Dictionary<ResourceType, int> GetAllRecources() => resourcesCounts;
 
-    public Sprite GetResourceSprite(ResourceTypes type)
+    public Sprite GetResourceSprite(ResourceType type)
     {
         if (resourcesSprites.ContainsKey(type))
             return resourcesSprites[type];
         return null;
     }
 
-    public void AddResource(ResourceTypes type, int count)
+    public void AddResource(ResourceType type, int count)
     {
         resourcesCounts[type] += count;
         if (resourcesCounts[type] < 0)
@@ -50,12 +50,12 @@ public class VillageController : MonoBehaviour, IStorage
     public void Load()
     {
         var defaultValue = 0;
-        resourcesCounts = new Dictionary<ResourceTypes, int>
+        resourcesCounts = new Dictionary<ResourceType, int>
         {
-            [ResourceTypes.Coal] = PlayerPrefs.GetInt(ResourceTypes.Coal.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
-            [ResourceTypes.GoldOre] = PlayerPrefs.GetInt(ResourceTypes.GoldOre.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
-            [ResourceTypes.IronOre] = PlayerPrefs.GetInt(ResourceTypes.IronOre.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
-            [ResourceTypes.Quartz] = PlayerPrefs.GetInt(ResourceTypes.Quartz.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue)
+            [ResourceType.Coal] = PlayerPrefs.GetInt(ResourceType.Coal.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
+            [ResourceType.GoldOre] = PlayerPrefs.GetInt(ResourceType.GoldOre.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
+            [ResourceType.IronOre] = PlayerPrefs.GetInt(ResourceType.IronOre.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue),
+            [ResourceType.Quartz] = PlayerPrefs.GetInt(ResourceType.Quartz.ToString() + PlayerPrefsKeys.ResourcesCountPrefix, defaultValue)
         };
     }
 
@@ -70,12 +70,12 @@ public class VillageController : MonoBehaviour, IStorage
     private void Start()
     {
         var icons = SpritesStorage.Instanse;
-        resourcesSprites = new Dictionary<ResourceTypes, Sprite>
+        resourcesSprites = new Dictionary<ResourceType, Sprite>
         {
-            [ResourceTypes.GoldOre] = icons.GetResource(ResourceTypes.GoldOre),
-            [ResourceTypes.Coal] = icons.GetResource(ResourceTypes.Coal),
-            [ResourceTypes.IronOre] = icons.GetResource(ResourceTypes.IronOre),
-            [ResourceTypes.Quartz] = icons.GetResource(ResourceTypes.Quartz)
+            [ResourceType.GoldOre] = icons.GetResource(ResourceType.GoldOre),
+            [ResourceType.Coal] = icons.GetResource(ResourceType.Coal),
+            [ResourceType.IronOre] = icons.GetResource(ResourceType.IronOre),
+            [ResourceType.Quartz] = icons.GetResource(ResourceType.Quartz)
         };
 
         if (loadResources)
@@ -83,11 +83,12 @@ public class VillageController : MonoBehaviour, IStorage
             Load();
             if (!ServiceInfo.TutorialDone)
             {
-                resourcesCounts[ResourceTypes.GoldOre] = 6;
+                resourcesCounts[ResourceType.GoldOre] = 6;
                 PlayerPrefs.SetString(PlayerPrefsKeys.TutorialDoneInCave, "true");
                 triggers.SetActive(true);
             }
         }
+        //resourcesCounts[ResourceType.Quartz] = 10;
 
         PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelNumber, 0);
         SetPlayerParameters();

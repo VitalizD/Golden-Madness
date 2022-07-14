@@ -3,5 +3,6 @@
     Forge,
     Workshow,
     SleepingBagShop,
-    SewingWorkshop
+    SewingWorkshop,
+    Altar
 }

@@ -6,7 +6,7 @@ public static class PlayerPrefsKeys
     public static string GrindstonesCount { get; } = "GrindstonesCount";
     public static string HealthPacksCount { get; } = "HealthPacksCount";
     public static string SmokingPipesCount { get; } = "SmokingPipesCount";
-    public static string DynamitesCount { get; } = "DynamitesCount";
+    public static string RopesCount { get; } = "RopesCount";
     public static string AntidotesCount { get; } = "AntidotesCount";
     public static string BackpackCapacity { get; } = "BackpackCapacity";
     public static string MaxEnemyDamage { get; } = "MaxEnemyDamage";
@@ -21,6 +21,7 @@ public static class PlayerPrefsKeys
     public static string TimeDecreaseValue { get; } = "TimeDecreaseValue";
     public static string CurrentLevelNumber { get; } = "CurrentLevelNumber";
     public static string CurrentChapter { get; } = "CurrentChapter";
+    public static string ArtifactPartFounded { get; } = "ArtifactPartFounded";
     public static string ResourcesCountPrefix { get; } = "Count";
     public static string ResourcesCountInBackpackPrefix { get; } = "CountInBackpack";
     public static string CurrentLevelOfBuildingPostfix { get; } = "CurrentLevel";
