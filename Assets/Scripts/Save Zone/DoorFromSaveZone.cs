@@ -9,7 +9,7 @@ public class DoorFromSaveZone : MonoBehaviour
     private Teleporter teleporter;
     private Hay hay;
     private Minecart minecart;
-    private Chest chest;
+    private ChestSZ chest;
     private TriggerZone trigger;
     private PressActionKey pressActionKey;
 
@@ -48,7 +48,7 @@ public class DoorFromSaveZone : MonoBehaviour
         teleporter = GameObject.FindGameObjectWithTag(ServiceInfo.BlackFilterTag).GetComponent<Teleporter>();
         hay = GameObject.FindGameObjectWithTag(ServiceInfo.HayTag).GetComponent<Hay>();
         minecart = GameObject.FindGameObjectWithTag(ServiceInfo.MinecartTag).GetComponent<Minecart>();
-        chest = GameObject.FindGameObjectWithTag(ServiceInfo.ChestTag).GetComponent<Chest>();
+        chest = GameObject.FindGameObjectWithTag(ServiceInfo.ChestTag).GetComponent<ChestSZ>();
         trigger = GetComponent<TriggerZone>();
         pressActionKey = GetComponent<PressActionKey>();
     }

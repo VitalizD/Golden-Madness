@@ -1,3 +1,6 @@
+using UnityEngine;
+using System.Linq;
+
 public static class ServiceInfo
 {
     public static string GroundLayerName { get; } = "Ground";
@@ -19,4 +22,20 @@ public static class ServiceInfo
     public static bool CheckpointConditionDone { get; set; } = false;
     public static bool TutorialDoneInCave { get; set; } = false;
     public static bool TutorialDone { get; set; } = true;
+
+    public static int GetIndexByChancesArray(float[] spawnChances)
+    {
+        var sum = spawnChances.Sum();
+        var current = 0f;
+        var random = Random.Range(0f, sum);
+
+        for (var i = 0; i < spawnChances.Length; ++i)
+        {
+            current += spawnChances[i];
+            if (current >= random)
+                return i;
+        }
+
+        return 0;
+    }
 }

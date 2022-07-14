@@ -8178,6 +8178,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 1598536202226443175, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 1598536202226443175, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: oresPrefabs.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -8190,12 +8202,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5862975513096814979, guid: 47a3459e1b09bcd4ca50b104cfb08cde, type: 3}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: oreSpawnChances.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: spawnChances.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: spawnChances.Array.data[1]
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemySpawnChances.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: oreSpawnChances.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: oreSpawnChances.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemySpawnChances.Array.data[0]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1761541863725465522, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: m_Name

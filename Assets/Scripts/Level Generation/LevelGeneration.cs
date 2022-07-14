@@ -18,7 +18,11 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private GameObject[] oresPrefabs;
 
     [Tooltip("Укажите части (например, 1, 1, 2)")]
-    [SerializeField] private float[] spawnChances;
+    [SerializeField] private float[] oreSpawnChances;
+
+    [Header("Enemies Spawn Settings")]
+    [SerializeField] private Creature[] enemies;
+    [SerializeField] private float[] enemySpawnChances;
 
     [Space]
 
@@ -56,13 +60,15 @@ public class LevelGeneration : MonoBehaviour
 
     public GameObject[] OrePrefabs { get => oresPrefabs; }
 
-    public float[] SpawnChances { get => spawnChances; }
+    public float[] SpawnChances { get => oreSpawnChances; }
 
     public DoorFromSaveZone DoorFromSaveZone { get => doorFromSaveZone; }
 
+    public GameObject GetRandomEnemy() => enemies[ServiceInfo.GetIndexByChancesArray(enemySpawnChances)].gameObject;
+
     private void Awake()
     {
-        if (oresPrefabs.Length != spawnChances.Length)
+        if (oresPrefabs.Length != oreSpawnChances.Length)
             throw new System.Exception("Размеры массивов \"Spawn Chances\" и \"Ores Prefabs\" не совпадают");
 
         if (doorFromSaveZone == null)
@@ -93,7 +99,7 @@ public class LevelGeneration : MonoBehaviour
     private IEnumerator Move()
     {
         yield return new WaitForSeconds(timeBetweenRooms);
-        var wayIsGeneratred = false;
+        var wayIsGenerated = false;
 
         if (currentDirection == Direction.Right) // Move right
         {
@@ -102,7 +108,11 @@ public class LevelGeneration : MonoBehaviour
                 bottomCounter = 0;
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x + moveAmount, transform.position.y);
-                GenerateRoom(GetRandomRoomFrom(rooms));
+
+                var neededIndexes = new[] { RoomDirection.LeftRight, RoomDirection.LeftRightTop }; // LR, LRT
+                var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
+                GenerateRoom(rooms[randomIndex]);
+
                 currentDirection = GetRandomDirectionFrom(directionsWithoutLeft);
             }
             else
@@ -115,7 +125,11 @@ public class LevelGeneration : MonoBehaviour
                 bottomCounter = 0;
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x - moveAmount, transform.position.y);
-                GenerateRoom(GetRandomRoomFrom(rooms));
+
+                var neededIndexes = new[] { RoomDirection.LeftRight, RoomDirection.LeftRightTop }; // LR, LRT
+                var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
+                GenerateRoom(rooms[randomIndex]);
+
                 currentDirection = GetRandomDirectionFrom(directionsWithoutRight);
             }
             else
@@ -134,13 +148,13 @@ public class LevelGeneration : MonoBehaviour
                     GameObject neededRoom;
                     if (bottomCounter >= 2)
                     {
-                        neededRoom = rooms[3]; // LRTB
+                        neededRoom = rooms[(int)RoomDirection.LeftRightTopBottom]; // LRTB
                     }
                     else
                     {
-                        var neededIndexes = new[] { RoomDirection.LeftRightBottom, RoomDirection.LeftRightTopBottom }; // LRB, LRTB
-                        var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
-                        neededRoom = rooms[randomIndex];
+                        //var neededIndexes = new[] { RoomDirection.LeftRightBottom, RoomDirection.LeftRightTopBottom }; // LRB, LRTB
+                        //var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
+                        neededRoom = rooms[(int)RoomDirection.LeftRightBottom];
                     }
 
                     if (!onFirstRoom)
@@ -151,7 +165,7 @@ public class LevelGeneration : MonoBehaviour
 
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x, transform.position.y - moveAmount);
-                GenerateRoom(rooms[Random.Range(2, 4)]); // LRT, LRTB
+                GenerateRoom(rooms[(int)RoomDirection.LeftRightTop]); // LRT
                 currentDirection = GetRandomDirectionFrom(directions);
             }
             else
@@ -164,12 +178,12 @@ public class LevelGeneration : MonoBehaviour
                 else
                     GenerateRoom(exitRooms[(int)currentRoom.Type]);
 
-                wayIsGeneratred = true;
+                wayIsGenerated = true;
                 StartCoroutine(GenerateRandomRooms());
             }
         }
 
-        if (!wayIsGeneratred)
+        if (!wayIsGenerated)
             StartCoroutine(Move());
     }
 
@@ -183,7 +197,11 @@ public class LevelGeneration : MonoBehaviour
 
     private GameObject GetRandomRoomFrom(GameObject[] array) => array[Random.Range(0, array.Length)];
 
-    private void GenerateRoom(GameObject room) => Instantiate(room, transform.position, Quaternion.identity);
+    private void GenerateRoom(GameObject room)
+    {
+        room.transform.localScale = new Vector3(1, 1, 1);
+        Instantiate(room, transform.position, Quaternion.identity);
+    }
 
     private RoomInfo GetCurrentRoomInfo() => Physics2D.OverlapCircle(transform.position, roomDetectionRadius, roomMask).GetComponent<RoomInfo>();
 
@@ -192,7 +210,7 @@ public class LevelGeneration : MonoBehaviour
         foreach (var roomSpawner in roomSpawners)
         {
             yield return new WaitForSeconds(timeBetweenRooms);
-            roomSpawner.Spawn(rooms, roomMask, roomDetectionRadius);
+            roomSpawner.Spawn(new[] { rooms[(int)RoomDirection.LeftRight] }, roomMask, roomDetectionRadius);
         }
         StartCoroutine(GenerateSaveZones());
     }

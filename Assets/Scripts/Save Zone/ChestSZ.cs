@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Chest : MonoBehaviour
+public class ChestSZ : MonoBehaviour
 {
     [SerializeField] private bool canBeUsed = true;
-    [SerializeField] private Sprite openChestSprite;
 
     [Tooltip("Количество = индекс + 1\nУкажите части, например, 35, 30, 20 и 15")]
     [SerializeField] private float[] dropCountConsumableChances = new[] { 35f, 30f, 20f, 15f };
@@ -53,7 +52,7 @@ public class Chest : MonoBehaviour
 
             CanBeUsed = false;
             ServiceInfo.CheckpointConditionDone = true; // Для обучения
-            sprite.sprite = openChestSprite;
+            sprite.sprite = SpritesStorage.Instanse.OpenedChest;
         }
     }
 
