@@ -95,12 +95,12 @@ public class SFX : ScriptableObject
         //this.Log(audioSource);
         if (audioSource == null)
         {
-            //TODO: THIS SHIT MIGH FUCK UP TORCHES, CHECK IT OUT
             onVolumeChanged += ChangeMasterVolume;
             SoundSetting.Instanse.GameVolume.onValueChanged.AddListener(x => onVolumeChanged(x));
             var _obj = new GameObject("Sound", typeof(AudioSource));
             audioSource = _obj.GetComponent<AudioSource>();
             audioSource.gameObject.transform.position = position;
+            //_obj.transform.parent = audioSource.transform;
             audioSource.loop = isLooped;
             audioSource.volume = vol * masterVol;
             audioSource.minDistance = minDistance;
@@ -122,14 +122,18 @@ public class SFX : ScriptableObject
             playMethodDict[method].Invoke(audioSource);
             Destroy(audioSource.gameObject, audioSource.clip.length);
         }
+        else
+        {
+            Destroy(audioSource.gameObject);
+        }
         return audioSource;
     }
 
     public IEnumerator SoundFade(float time)
     {
-        var startVol = audioSource?.volume;
-        if (startVol == null) yield break;
-        for(float currentVol = (float)startVol; currentVol > 0; currentVol -= 0.01f)
+        if (audioSource == null) yield break;
+        var startVol = audioSource.volume;
+        for (float currentVol = startVol; currentVol > 0; currentVol -= 0.01f)
         {
             audioSource.volume = currentVol;
             yield return new WaitForSeconds(time/100);

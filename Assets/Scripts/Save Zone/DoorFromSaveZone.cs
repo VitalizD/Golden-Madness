@@ -62,6 +62,10 @@ public class DoorFromSaveZone : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && canBeUsed && trigger.IsTriggered && teleporter.State == Teleporter.States.Stayed)
         {
+            var fadeInLevelMusic = SceneMusic.Instanse.LevelMusic.GetComponent<Music>().MusicFade(false);
+            var fadeOutSaveZoneMusic = SceneMusic.Instanse.SafeZoneMusic.GetComponent<Music>().MusicFade(true);
+            StartCoroutine(fadeInLevelMusic);
+            StartCoroutine(fadeOutSaveZoneMusic);
             void action()
             {
                 //CameraController.Instanse.EnableMoving = true;

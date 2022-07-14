@@ -1,5 +1,6 @@
 using UnityEngine;
 using Agava.YandexGames;
+using Utils;
 
 public class DoorToSaveZone : MonoBehaviour
 {
@@ -45,6 +46,10 @@ public class DoorToSaveZone : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && canBeUsed && trigger.IsTriggered && teleporter.State == Teleporter.States.Stayed)
         {
+            var fadeOutLevelMusic = SceneMusic.Instanse.LevelMusic.GetComponent<Music>().MusicFade(true);
+            var fadeInSaveZoneMusic= SceneMusic.Instanse.SafeZoneMusic.GetComponent<Music>().MusicFade(false);
+            StartCoroutine(fadeOutLevelMusic);
+            StartCoroutine(fadeInSaveZoneMusic);
             void action()
             {
                 //CameraController.Instanse.EnableMoving = false;
@@ -60,6 +65,7 @@ public class DoorToSaveZone : MonoBehaviour
             teleporter.Go(doorFromSaveZone.transform.position, action, fadeSpeed);
 
             InterestialAd.Show();
+            
         }
     }
 }

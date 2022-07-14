@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundSetting : MonoBehaviour
+public class MusicSetting : MonoBehaviour
 {
-    [SerializeField] private Slider gameVolume;
-    public static SoundSetting Instanse;
+    [SerializeField] private Slider musicVolume;
+    public static MusicSetting Instanse;
     //public delegate void VolumeChange(float x);
     //public event VolumeChange onVolumeChanged;
 
-    public Slider GameVolume { get => gameVolume;}
+    public Slider MusicVolume { get => musicVolume; }
 
     private void Awake()
     {
@@ -18,14 +18,13 @@ public class SoundSetting : MonoBehaviour
             Instanse = this;
         else if (Instanse == this)
             Destroy(gameObject);
-        gameVolume.value = 0.5f;
+        musicVolume.value = 0.5f;
     }
 
     private void Update()
     {
-        gameVolume.gameObject.transform.position = Player.Instanse.transform.position+new Vector3(0,1,0);
+        musicVolume.gameObject.transform.position = Player.Instanse.transform.position - new Vector3(0, 1, 0);
         //gameVolume.onValueChanged.AddListener(x => onVolumeChanged?.Invoke(x));
 
     }
-    
 }
