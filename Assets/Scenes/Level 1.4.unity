@@ -59086,8 +59086,28 @@ PrefabInstance:
       value: 0.675
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: rooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 4526026938421588571, guid: e272e7a92cd740745ab4971f5d35ed34, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: rooms.Array.data[1]
+      value: 
+      objectReference: {fileID: 2255887896085253142, guid: 9bc61bcd6a1867b499bf05e2a5747b59, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 1598536202226443175, guid: dd8affc460da2124bb58764ca3aa0700, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: roomSpawners.Array.size
       value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: oreSpawnChances.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: roomSpawners.Array.data[16]
@@ -59142,6 +59162,22 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemySpawnChances.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: oreSpawnChances.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: oreSpawnChances.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: oreSpawnChances.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: saveZoneSpawners.Array.data[1]
       value: 
       objectReference: {fileID: 992848469}
@@ -59149,6 +59185,10 @@ PrefabInstance:
       propertyPath: saveZoneSpawners.Array.data[2]
       value: 
       objectReference: {fileID: 731785973}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: enemySpawnChances.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1761541863725465522, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: m_Name
       value: Level Components
