@@ -18,7 +18,7 @@ public class MusicSetting : MonoBehaviour
             Instanse = this;
         else if (Instanse == this)
             Destroy(gameObject);
-        musicVolume.value = 0.5f;
+        musicVolume.value = 0.2f;
     }
 
     private void Update()

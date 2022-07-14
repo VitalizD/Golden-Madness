@@ -64,8 +64,8 @@ public class DoorFromSaveZone : MonoBehaviour
         {
             var fadeInLevelMusic = SceneMusic.Instanse.LevelMusic.GetComponent<Music>().MusicFade(false);
             var fadeOutSaveZoneMusic = SceneMusic.Instanse.SafeZoneMusic.GetComponent<Music>().MusicFade(true);
-            StartCoroutine(fadeInLevelMusic);
             StartCoroutine(fadeOutSaveZoneMusic);
+            StartCoroutine(fadeInLevelMusic);
             void action()
             {
                 //CameraController.Instanse.EnableMoving = true;

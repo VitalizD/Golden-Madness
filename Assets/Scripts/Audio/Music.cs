@@ -9,6 +9,8 @@ public class Music : MonoBehaviour
 
     private void Start()
     {
+        if(musicAudioSource!=null)
+            musicAudioSource.volume = MusicSetting.Instanse.MusicVolume.value;
         MusicSetting.Instanse.MusicVolume.onValueChanged.AddListener(x=>ChangeMusicVol(x));
     }
 
