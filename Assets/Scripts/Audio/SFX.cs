@@ -138,6 +138,7 @@ public class SFX : ScriptableObject
             audioSource.volume = currentVol;
             yield return new WaitForSeconds(time/100);
         }
+        audioSource.enabled = false;
     }
 
     //public AudioSource Play(AudioSource audioSourceParam = null)
