@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f072acbe916f44893364ba3e0d17ec, type: 3}
   m_Name: swing
   m_EditorClassIdentifier: 
-  vol: 1
-  audioSource: {fileID: 0}
+  vol: 0.5
   method: 1
   isLooped: 0
   is3D: 0
+  minDistance: 5
   maxDistance: 20
   position: {x: 0, y: 0, z: 0}
   delay: 0
