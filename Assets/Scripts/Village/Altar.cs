@@ -5,6 +5,7 @@ public class Altar : MonoBehaviour
     private PressActionKey pressActionKey;
     private Building building;
     private TriggerZone triggerZone;
+    private AltarComponents altarComponents;
 
     private bool builded = false;
 
@@ -31,6 +32,7 @@ public class Altar : MonoBehaviour
         pressActionKey = GetComponent<PressActionKey>();
         building = GetComponent<Building>();
         triggerZone = GetComponent<TriggerZone>();
+        altarComponents = GetComponent<AltarComponents>();
     }
 
     private void Start()
@@ -54,6 +56,7 @@ public class Altar : MonoBehaviour
     private void NextChapter()
     {
         var currentChapter = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentChapter, 1);
+        altarComponents.ActivatePart(currentChapter);
         PlayerPrefs.SetInt(PlayerPrefsKeys.ArtifactPartFounded, 0);
         pressActionKey.SetActive(false);
 
