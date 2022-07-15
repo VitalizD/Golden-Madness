@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Hook : MonoBehaviour
 {
     private const float ropePartZPosition = 0.5f;
+    private const float checkingRadius = 0.1f;
 
     [SerializeField] private float speed;
     [SerializeField] private LayerMask groundMask;
@@ -18,7 +19,7 @@ public class Hook : MonoBehaviour
         for (var y = transform.position.y; y < transform.position.y + maxDistance; y += Tile.Size)
         {
             var checkpoint = new Vector3(transform.position.x, y, transform.position.z + ropePartZPosition);
-            if (Physics2D.OverlapCircleAll(checkpoint, 0.1f, groundMask).Length == 0)
+            if (Physics2D.OverlapCircleAll(checkpoint, checkingRadius, groundMask).Length == 0)
             {
                 var ropePart = Instantiate(this.ropePart, checkpoint, Quaternion.identity);
                 ropeParts.Add(ropePart);
@@ -46,10 +47,10 @@ public class Hook : MonoBehaviour
             if (Mathf.Abs(transform.position.y - endPosition.y) < 0.02f)
             {
                 isFlying = false;
-                foreach (var ropePart in ropeParts)
+                for (var i = 0; i < ropeParts.Count - 1; ++i)
                 {
-                    ropePart.SetActive(true);
-                    ropePart.transform.parent = transform;
+                    ropeParts[i].SetActive(true);
+                    ropeParts[i].transform.parent = transform;
                 }
             }
         }
