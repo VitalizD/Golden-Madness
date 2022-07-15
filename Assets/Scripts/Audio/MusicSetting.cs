@@ -23,7 +23,8 @@ public class MusicSetting : MonoBehaviour
 
     private void Update()
     {
-        musicVolume.gameObject.transform.position = Player.Instanse.transform.position - new Vector3(0, 1, 0);
+        if (Player.Instanse!=null) 
+            musicVolume.gameObject.transform.position = Player.Instanse.transform.position - new Vector3(0, 1, 0);
         //gameVolume.onValueChanged.AddListener(x => onVolumeChanged?.Invoke(x));
 
     }

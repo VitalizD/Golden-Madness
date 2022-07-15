@@ -28,9 +28,9 @@ public class SoundSetting : MonoBehaviour
 
     private void Update()
     {
-        
+
         //if(camera!=null) gameVolume.gameObject.transform.position = camera.transform.position + new Vector3(0, 1, 0);
-        gameVolume.gameObject.transform.position = Player.Instanse.transform.position+new Vector3(0,1,0);
+        if (Player.Instanse != null)  gameVolume.gameObject.transform.position = Player.Instanse.transform.position+new Vector3(0,1,0);
         //gameVolume.onValueChanged.AddListener(x => onVolumeChanged?.Invoke(x));
 
     }
