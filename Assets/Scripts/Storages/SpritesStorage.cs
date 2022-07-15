@@ -16,7 +16,7 @@ public class SpritesStorage : MonoBehaviour
     [SerializeField] private Sprite grindstone;
     [SerializeField] private Sprite healthPack;
     [SerializeField] private Sprite smokingPipe;
-    [SerializeField] private Sprite dynamite;
+    [SerializeField] private Sprite rope;
     [SerializeField] private Sprite antidote;
 
     [Header("Tools")]
@@ -53,7 +53,7 @@ public class SpritesStorage : MonoBehaviour
             [ConsumableType.Grindstone] = grindstone,
             [ConsumableType.HealthPack] = healthPack,
             [ConsumableType.SmokingPipe] = smokingPipe,
-            [ConsumableType.Rope] = dynamite,
+            [ConsumableType.Rope] = rope,
             [ConsumableType.Antidote] = antidote
         };
 
