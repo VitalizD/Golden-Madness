@@ -17,7 +17,6 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] private LayerMask ropeMask;
     [SerializeField] private Transform character;
     [SerializeField] private CheckingForJump jumpCheckingPoint;
-    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Lamp lamp;
     [SerializeField] private PlayerDialogWindow dialogWindow;
 
