@@ -6,36 +6,31 @@ using UnityEngine.UI;
 public class SoundSetting : MonoBehaviour
 {
     [SerializeField] private Slider gameVolume;
+    [SerializeField][Range(0,1)] private static float defaultVolume=0.5f;
+
     public static SoundSetting Instanse;
-    private Camera camera;
     //public delegate void VolumeChange(float x);
     //public event VolumeChange onVolumeChanged;
 
     public Slider GameVolume { get => gameVolume;}
+    public static float DefaultVolume { get => defaultVolume;}
 
     private void Awake()
     {
         if (Instanse == null)
         {
             Instanse = this;
-            DontDestroyOnLoad(Instanse);
         }
         else if (Instanse == this)
             Destroy(gameObject);
-        gameVolume.value = 0.01f;
+        gameVolume.onValueChanged.AddListener(vol => SaveSoundVolPref(vol));
+        gameVolume.value = PlayerPrefs.GetFloat(SoundSettingsPrefs.SoundVolume, defaultVolume);
+
     }
-    private void Start()
+    
+    private void SaveSoundVolPref(float value)
     {
-        //CameraController.Instanse.TryGetComponent<Camera>(out camera);
-    }
-
-    private void Update()
-    {
-
-        //if(camera!=null) gameVolume.gameObject.transform.position = camera.transform.position + new Vector3(0, 1, 0);
-        //if (Player.Instanse != null)  gameVolume.gameObject.transform.position = Player.Instanse.transform.position+new Vector3(0,1,0);
-        //gameVolume.onValueChanged.AddListener(x => onVolumeChanged?.Invoke(x));
-
+        PlayerPrefs.SetFloat(SoundSettingsPrefs.SoundVolume, value);
     }
     
 }
