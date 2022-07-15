@@ -6,6 +6,7 @@ public class LightFlicker : MonoBehaviour
     [SerializeField] private float minIntensity;
     [SerializeField] private float maxIntensity;
     [SerializeField] private float frequency;
+    
 
     private Light light_;
 

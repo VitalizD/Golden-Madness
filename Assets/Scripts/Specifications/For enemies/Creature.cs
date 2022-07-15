@@ -12,6 +12,9 @@ public class Creature : MonoBehaviour
     [SerializeField] private bool repulsiable;
     [SerializeField] private States[] states;
     [SerializeField] private bool stalagmitesCanThrowAway = false;
+    [SerializeField] private SFX idleSFX;
+    [SerializeField] private SFX hurtSFX;
+    [SerializeField] private SFX deathSFX;
     private float repulsiveForce = 3f;
 
     private readonly float delayInSeconds = 1f;
@@ -42,12 +45,20 @@ public class Creature : MonoBehaviour
         {
             var delta = health - value;
             if (delta > 0)
+            {
+                hurtSFX.Position= gameObject.transform.position;
+                if (value>0)
+                    hurtSFX.Play();
                 damageText.ShowDamage(delta, transform.position);
-
+            }
             health = value;
 
             if (health <= 0)
+            {
+                deathSFX.Position = gameObject.transform.position;
+                deathSFX.Play();
                 Destroy(gameObject);
+            }
             else
             {
                 attacked = true;
@@ -68,6 +79,8 @@ public class Creature : MonoBehaviour
                 animator.SetInteger("State", (int)value);
         }
     }
+
+    public SFX IdleSFX { get => idleSFX; set => idleSFX = value; }
 
     public void SetChild(ICreature value) => child = value;
 

@@ -31,6 +31,11 @@ public class Tile : MonoBehaviour
     [SerializeField] private GameObject frameLeft;
     [SerializeField] private GameObject frameRight;
 
+    [Space]
+
+    [SerializeField] private SFX digSFX;
+    [SerializeField] private SFX destroySFX;
+
     private Selection selection;
     private Player player;
     private Animation animation_;
@@ -50,6 +55,8 @@ public class Tile : MonoBehaviour
             health = value;
             if (health <= 0)
             {
+                digSFX.Play();
+                destroySFX.Play();
                 AddResourceToBackpack(resourceType);
                 DrawFramesOnNeighboringTiles();
                 if (destroyAttachedTiles)
@@ -58,6 +65,7 @@ public class Tile : MonoBehaviour
             }
             else
             {
+                digSFX.Play();
                 StartCoroutine(Shake());
                 if (destructionDegrees.Length > 0)
                     ChangeDestructionDegree();

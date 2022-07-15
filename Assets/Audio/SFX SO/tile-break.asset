@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f072acbe916f44893364ba3e0d17ec, type: 3}
+  m_Name: tile-break
+  m_EditorClassIdentifier: 
+  vol: 0.401
+  method: 0
+  isLooped: 0
+  is3D: 0
+  minDistance: 5
+  maxDistance: 20
+  position: {x: 0, y: 0, z: 0}
+  delay: 0
+  rolloffMode: 1
+  audioClips:
+  - {fileID: 8300000, guid: f6329d5e6837b2c4e84e57aab8e7d7e5, type: 3}
+  - {fileID: 8300000, guid: b3b7bfa96c6e0794d815c82e223b5e53, type: 3}

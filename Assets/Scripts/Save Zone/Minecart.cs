@@ -7,6 +7,7 @@ public class Minecart : MonoBehaviour
 
     [SerializeField] private bool canBeUsed = true;
     [SerializeField] private GameObject minecart;
+    [SerializeField] private SFX minecartSFX;
 
     private Animation minecartAnimation;
     private TriggerZone trigger;
@@ -40,7 +41,8 @@ public class Minecart : MonoBehaviour
             var backpack = Player.Instanse.GetComponent<Backpack>();
             ResourcesSaver.AddInVillage(backpack.GetAll());
             backpack.Clear();
-
+            minecartSFX.Play();
+            StartCoroutine(minecartSFX.SoundFade(1.5f));
             // Для обучающего уровня
             ServiceInfo.CheckpointConditionDone = true;
 

@@ -44,6 +44,14 @@ public class Player : MonoBehaviour, IStorage
     [SerializeField] [Range(0, 100)] private int healthRecovery = 20;
     [SerializeField] [Range(0, 100f)] private float sanityRecovery = 50f;
 
+    [Header("SFX")]
+    //[SerializeField] private AudioSource digSFX;
+    [SerializeField] private SFX hurtSFX;
+    //[SerializeField] private SFX digSFX;
+    [SerializeField] private SFX swingSFX;
+    [SerializeField] private SFX jumpSFX;
+    [SerializeField] private SFX walkSFX;
+
     private Rigidbody2D rigidBody2d;
     private Animator animator;
     private SanityController sanity;
@@ -117,6 +125,8 @@ public class Player : MonoBehaviour, IStorage
         {
             if (value < health && !loadParameters)
             {
+                hurtSFX.Play();
+                //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerHit);
                 State = States.Pain;
                 invulnerability = true;
                 StartCoroutine(DisableInvulnerability());
@@ -392,6 +402,13 @@ public class Player : MonoBehaviour, IStorage
         Gizmos.DrawWireSphere(transform.position, touchingDistance);
     }
 
+
+    private void OnPlayerStep() 
+    {
+        if(State==States.Walk&&jumpCheckingPoint.CanJump)
+            walkSFX.Play();
+    }
+
     // Назначен на ключ в анимации "Attack"
     private void OnAttack()
     {
@@ -415,7 +432,8 @@ public class Player : MonoBehaviour, IStorage
     {
         if (!selectedTile)
             return;
-
+        //digSFX.Play();
+        //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerDig);
         var damage = selectedTile.DiggingDifficulty < tileDamage ? tileDamage / selectedTile.DiggingDifficulty : tileDamage;
         selectedTile.Health -= damage;
         PickaxeStrength -= hitDamageToPickaxe;
@@ -460,8 +478,11 @@ public class Player : MonoBehaviour, IStorage
             return;
 
         if (jumpCheckingPoint.CanJump && !isAttacking && !isDigging)
+        {
+            //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerWalk);
             State = States.Walk;
-
+        }
+            
         var dir = transform.right * Input.GetAxis("Horizontal");
         //rigidBody2d.AddForce(speed * dir, ForceMode2D.Impulse);
         transform.Translate(movementSpeed * Time.fixedDeltaTime * dir);
@@ -474,6 +495,9 @@ public class Player : MonoBehaviour, IStorage
     private void Jump()
     {
         isDigging = false;
+        //Debug.Log(AudioManager.SoundName.PlayerJump);
+        jumpSFX.Play();
+        //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerJump);
         State = States.Jump;
         if (isClimbing)
         {
@@ -514,10 +538,12 @@ public class Player : MonoBehaviour, IStorage
     private void Attack()
     {
         Mirror(Camera.main.ScreenToWorldPoint(Input.mousePosition).x < transform.position.x);
+
         State = States.Attack;
         canAttack = false;
         isAttacking = true;
-
+        swingSFX.Play();
+        //AudioManager.Instance.PlaySound(AudioManager.SoundName.PlayerSwing);
         StartCoroutine(FinishAttack());
         reloadAttack = StartCoroutine(ReloadAttack(reloadAttackTime));
     }

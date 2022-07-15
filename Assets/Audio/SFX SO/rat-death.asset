@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f072acbe916f44893364ba3e0d17ec, type: 3}
+  m_Name: rat-death
+  m_EditorClassIdentifier: 
+  vol: 0.375
+  method: 1
+  isLooped: 0
+  is3D: 1
+  minDistance: 5
+  maxDistance: 20
+  position: {x: 21.196932, y: -7.562684, z: 0}
+  delay: 0
+  rolloffMode: 0
+  audioClips:
+  - {fileID: 8300000, guid: 27e7b34ba196a7b4c8aa2ca276280254, type: 3}
