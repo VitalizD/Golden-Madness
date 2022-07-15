@@ -16,7 +16,10 @@ public class SoundSetting : MonoBehaviour
     private void Awake()
     {
         if (Instanse == null)
+        {
             Instanse = this;
+            DontDestroyOnLoad(Instanse);
+        }
         else if (Instanse == this)
             Destroy(gameObject);
         gameVolume.value = 0.01f;
@@ -30,7 +33,7 @@ public class SoundSetting : MonoBehaviour
     {
 
         //if(camera!=null) gameVolume.gameObject.transform.position = camera.transform.position + new Vector3(0, 1, 0);
-        if (Player.Instanse != null)  gameVolume.gameObject.transform.position = Player.Instanse.transform.position+new Vector3(0,1,0);
+        //if (Player.Instanse != null)  gameVolume.gameObject.transform.position = Player.Instanse.transform.position+new Vector3(0,1,0);
         //gameVolume.onValueChanged.AddListener(x => onVolumeChanged?.Invoke(x));
 
     }

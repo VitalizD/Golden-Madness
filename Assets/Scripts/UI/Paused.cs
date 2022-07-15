@@ -18,6 +18,8 @@ public class Paused : MonoBehaviour
     private void Awake()
     {
         selection = GameObject.FindGameObjectWithTag(ServiceInfo.SelectionTag).GetComponent<SpriteRenderer>();
+        Pause();
+        Resume();
     }
 
     private void Update()
