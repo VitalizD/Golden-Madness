@@ -18,6 +18,9 @@ public class Consumables : MonoBehaviour, IStorage
     [SerializeField] private float healthPackRecovery = 30f;
     [SerializeField] private float smokingPipeRecovery = 30f;
 
+    [Header("SFX")]
+    [SerializeField] private SFX useConsumableSFX;
+
     private Dictionary<ConsumableType, int> consumableCounts;
     private Dictionary<ConsumableType, string> consumableNames;
     private Dictionary<ConsumableType, float> consumableRecoveries;
@@ -49,6 +52,10 @@ public class Consumables : MonoBehaviour, IStorage
 
     public void Add(ConsumableType type, int count)
     {
+        if (count < 0)
+        {
+            useConsumableSFX.Play();
+        }
         var initialValue = consumableCounts[type];
 
         if (consumableCounts[type] + count < 0)
