@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Linq;
-using System.Collections.Generic;
 
 public class LevelGeneration : MonoBehaviour
 {
@@ -32,18 +31,22 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private float roomDetectionRadius = 1f;
     [SerializeField] private LayerMask roomMask;
     [SerializeField] private DoorFromSaveZone doorFromSaveZone;
-    [SerializeField] private GameObject artifactRoom;
+    [SerializeField] private RoomInfo artifactRoom;
     [SerializeField] private Direction[] directions;
     [SerializeField] private Transform[] startPositions;
     [SerializeField] private RoomSpawner[] roomSpawners;
     [SerializeField] private SaveZoneSpawner[] saveZoneSpawners;
 
     [Header("Rooms\n\n0 -> LR;\n1 -> LRB;\n2 -> LRT;\n3 -> LRTB")]
-    [SerializeField] private GameObject[] rooms;
-    [SerializeField] private GameObject[] entryRooms;
-    [SerializeField] private GameObject[] exitRooms;
-    [SerializeField] private GameObject[] saveZoneRooms;
+    [SerializeField] private RoomInfo[] LR;
+    [SerializeField] private RoomInfo[] LRB;
+    [SerializeField] private RoomInfo[] LRT;
+    [SerializeField] private RoomInfo[] LRTB;
+    [SerializeField] private RoomInfo[] entryRooms;
+    [SerializeField] private RoomInfo[] exitRooms;
+    [SerializeField] private RoomInfo[] saveZoneRooms;
 
+    private readonly RoomInfo[][] rooms = new RoomInfo[4][];
     private Direction[] directionsWithoutLeft;
     private Direction[] directionsWithoutRight;
     private Direction currentDirection;
@@ -81,6 +84,11 @@ public class LevelGeneration : MonoBehaviour
 
         directionsWithoutLeft = directions.Where(dir => dir != Direction.Left).ToArray();
         directionsWithoutRight = directions.Where(dir => dir != Direction.Right).ToArray();
+
+        rooms[0] = LR;
+        rooms[1] = LRB;
+        rooms[2] = LRT;
+        rooms[3] = LRTB;
     }
 
     private void Start()
@@ -111,7 +119,7 @@ public class LevelGeneration : MonoBehaviour
 
                 var neededIndexes = new[] { RoomDirection.LeftRight, RoomDirection.LeftRightTop }; // LR, LRT
                 var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
-                GenerateRoom(rooms[randomIndex]);
+                GenerateRoom(GetRandomRoomFrom(rooms[randomIndex]));
 
                 currentDirection = GetRandomDirectionFrom(directionsWithoutLeft);
             }
@@ -128,7 +136,7 @@ public class LevelGeneration : MonoBehaviour
 
                 var neededIndexes = new[] { RoomDirection.LeftRight, RoomDirection.LeftRightTop }; // LR, LRT
                 var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
-                GenerateRoom(rooms[randomIndex]);
+                GenerateRoom(GetRandomRoomFrom(rooms[randomIndex]));
 
                 currentDirection = GetRandomDirectionFrom(directionsWithoutRight);
             }
@@ -145,16 +153,16 @@ public class LevelGeneration : MonoBehaviour
                 if (currentRoom.Type != RoomDirection.LeftRightBottom && currentRoom.Type != RoomDirection.LeftRightTopBottom)
                 {
                     currentRoom.Remove();
-                    GameObject neededRoom;
+                    RoomInfo neededRoom;
                     if (bottomCounter >= 2)
                     {
-                        neededRoom = rooms[(int)RoomDirection.LeftRightTopBottom]; // LRTB
+                        neededRoom = GetRandomRoomFrom(rooms[(int)RoomDirection.LeftRightTopBottom]); // LRTB
                     }
                     else
                     {
                         //var neededIndexes = new[] { RoomDirection.LeftRightBottom, RoomDirection.LeftRightTopBottom }; // LRB, LRTB
                         //var randomIndex = (int)neededIndexes[Random.Range(0, neededIndexes.Length)];
-                        neededRoom = rooms[(int)RoomDirection.LeftRightBottom];
+                        neededRoom = GetRandomRoomFrom(rooms[(int)RoomDirection.LeftRightBottom]);
                     }
 
                     if (!onFirstRoom)
@@ -165,7 +173,7 @@ public class LevelGeneration : MonoBehaviour
 
                 onFirstRoom = false;
                 transform.position = new Vector2(transform.position.x, transform.position.y - moveAmount);
-                GenerateRoom(rooms[(int)RoomDirection.LeftRightTop]); // LRT
+                GenerateRoom(GetRandomRoomFrom(rooms[(int)RoomDirection.LeftRightTop])); // LRT
                 currentDirection = GetRandomDirectionFrom(directions);
             }
             else
@@ -187,7 +195,7 @@ public class LevelGeneration : MonoBehaviour
             StartCoroutine(Move());
     }
 
-    private void GenerateEntryRoom(GameObject room)
+    private void GenerateEntryRoom(RoomInfo room)
     {
         GenerateRoom(room);
         spawnPointPlayer = GetCurrentRoomInfo().SpawnPointPlayer.position;
@@ -195,12 +203,12 @@ public class LevelGeneration : MonoBehaviour
 
     private Direction GetRandomDirectionFrom(Direction[] array) => array[Random.Range(0, array.Length)];
 
-    private GameObject GetRandomRoomFrom(GameObject[] array) => array[Random.Range(0, array.Length)];
+    private RoomInfo GetRandomRoomFrom(RoomInfo[] array) => array[Random.Range(0, array.Length)];
 
-    private void GenerateRoom(GameObject room)
+    private void GenerateRoom(RoomInfo room)
     {
         room.transform.localScale = new Vector3(1, 1, 1);
-        Instantiate(room, transform.position, Quaternion.identity);
+        Instantiate(room.gameObject, transform.position, Quaternion.identity);
     }
 
     private RoomInfo GetCurrentRoomInfo() => Physics2D.OverlapCircle(transform.position, roomDetectionRadius, roomMask).GetComponent<RoomInfo>();
@@ -210,7 +218,7 @@ public class LevelGeneration : MonoBehaviour
         foreach (var roomSpawner in roomSpawners)
         {
             yield return new WaitForSeconds(timeBetweenRooms);
-            roomSpawner.Spawn(new[] { rooms[(int)RoomDirection.LeftRight] }, roomMask, roomDetectionRadius);
+            roomSpawner.Spawn(new[] { GetRandomRoomFrom(rooms[(int)RoomDirection.LeftRight]) }, roomMask, roomDetectionRadius);
         }
         StartCoroutine(GenerateSaveZones());
     }
