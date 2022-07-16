@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadParameters: 1
   health: 100
-  movementSpeed: 4
+  movementSpeed: 5
   climbingSpeed: 2
   jumpForce: 8.5
   reloadClimbTime: 0.5
@@ -161,10 +161,10 @@ MonoBehaviour:
   healthPacksCount: 0
   smokingPipesCount: 0
   ropesCount: 1
-  fuelTankRecovery: 100
-  grindstoneRecovery: 100
-  healthPackRecovery: 30
-  smokingPipeRecovery: 30
+  fuelTankRecovery: 50
+  grindstoneRecovery: 50
+  healthPackRecovery: 20
+  smokingPipeRecovery: 20
   useConsumableSFX: {fileID: 11400000, guid: 533b642f24f085b4d9b8701f69ad590f, type: 2}
 --- !u!114 &5101184335126964010
 MonoBehaviour:
