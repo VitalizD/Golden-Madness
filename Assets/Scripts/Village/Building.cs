@@ -30,7 +30,7 @@ public class Building : MonoBehaviour, IStorage
 
     public void Load()
     {
-        //currentLevel = PlayerPrefs.GetInt(buildingType.ToString() + PlayerPrefsKeys.CurrentLevelOfBuildingPostfix, 0);
+        currentLevel = PlayerPrefs.GetInt(buildingType.ToString() + PlayerPrefsKeys.CurrentLevelOfBuildingPostfix, 0);
     }
 
     private void Awake()
@@ -230,13 +230,13 @@ public class Building : MonoBehaviour, IStorage
 
                 case BuildingType.Altar:
                     upgradeWindow.SetTitle("Алтарь");
-                    upgradeWindow.SetToolIcon(null);
+                    upgradeWindow.SetToolIcon(SpritesStorage.Instanse.FirstArtifact);
                     void AltarUpgradeEffect()
                     {
                         GetComponent<Altar>().Build();
                         ExecuteIfLastLevel();
                     }
-                    UpdateUpgradeWindow("Место для установки артефакта", ResourceType.Quartz, 10, AltarUpgradeEffect);
+                    UpdateUpgradeWindow("Место для установки артефакта", ResourceType.GoldOre, 20, AltarUpgradeEffect);
                     if (currentLevel == 1)
                         ExecuteIfLastLevel();
                     break;

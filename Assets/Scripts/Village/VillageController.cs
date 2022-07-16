@@ -88,7 +88,8 @@ public class VillageController : MonoBehaviour, IStorage
                 triggers.SetActive(true);
             }
         }
-        //resourcesCounts[ResourceType.Quartz] = 10;
+        //resourcesCounts[ResourceType.GoldOre] = 20;
+        //PlayerPrefs.DeleteAll();
 
         PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelNumber, 0);
         SetPlayerParameters();

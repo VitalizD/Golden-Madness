@@ -49,7 +49,8 @@ public class ExitDoor : MonoBehaviour
                         var backpack = Player.Instanse.GetComponent<Backpack>();
                         ResourcesSaver.AddInVillage(backpack.GetAll());
                         backpack.Clear();
-                        sceneChanger.ChangeScene($"{nameLevelPrefix} {currentChapter}.{currentLevel}");
+                        //sceneChanger.ChangeScene($"{nameLevelPrefix} {currentChapter}.{currentLevel}");
+                        sceneChanger.ChangeScene($"{nameLevelPrefix} 1.{currentLevel}");
                     }
                     else
                         sceneChanger.ChangeScene(ServiceInfo.VillageScene);

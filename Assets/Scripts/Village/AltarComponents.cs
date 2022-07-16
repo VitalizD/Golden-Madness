@@ -10,9 +10,9 @@ public class AltarComponents : MonoBehaviour
     {
         switch (number)
         {
-            case 1: firstPart.SetActive(true); break;
-            case 2: secondPart.SetActive(true); break;
-            case 3: thirdPart.SetActive(true); break;
+            case 1: if (firstPart != null) firstPart.SetActive(true); break;
+            case 2: if (secondPart != null) secondPart.SetActive(true); break;
+            case 3: if (thirdPart != null) thirdPart.SetActive(true); break;
         }
     }
 

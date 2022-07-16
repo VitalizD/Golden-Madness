@@ -26,11 +26,16 @@ public class SpritesStorage : MonoBehaviour
     [Header("Objects")]
     [SerializeField] private Sprite openedChest;
 
+    [Header("Items")]
+    [SerializeField] private Sprite firstArtifact;
+
     private Dictionary<ConsumableType, Sprite> consumables;
     private Dictionary<ResourceType, Sprite> resources;
     private Dictionary<EquipmentType, Sprite> equipments;
 
     public Sprite OpenedChest { get => openedChest; }
+
+    public Sprite FirstArtifact { get => firstArtifact; }
 
     public Sprite GetConsumable(ConsumableType type) => consumables[type];
 

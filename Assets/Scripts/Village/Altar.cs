@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Altar : MonoBehaviour
+public class Altar : MonoBehaviour, IStorage
 {
     private PressActionKey pressActionKey;
     private Building building;
@@ -8,6 +8,14 @@ public class Altar : MonoBehaviour
     private AltarComponents altarComponents;
 
     private bool builded = false;
+
+    public void Save() { }
+
+    public void Load()
+    {
+        var currentChapter = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentChapter, 1);
+        altarComponents.ActivatePart(currentChapter < 3 ? currentChapter - 1 : currentChapter);
+    }
 
     public void Build()
     {
@@ -40,6 +48,7 @@ public class Altar : MonoBehaviour
         //PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentChapter, 1);
         if (building.Level > 0)
             Build();
+        Load();
     }
 
     private void Update()
@@ -64,7 +73,7 @@ public class Altar : MonoBehaviour
         TextMessagesQueue.Instanse.Add($"Пещера обновлена", null, 1.5f);
         TextMessagesQueue.Instanse.Add("Благодарим Вас за прохождение демо версии GOLDEN MADNESS!", null, 5f);
 
-        //if (currentChapter < 3)
-        //    PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentChapter, ++currentChapter);
+        if (currentChapter < 2)
+            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentChapter, ++currentChapter);
     }
 }
