@@ -58935,7 +58935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LR.Array.size
-      value: 11
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LRB.Array.size
@@ -58992,7 +58992,7 @@ PrefabInstance:
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LR.Array.data[9]
       value: 
-      objectReference: {fileID: 765874010318906039, guid: 3ddce49a380eaf74185bb7723ec0d4c5, type: 3}
+      objectReference: {fileID: 6394571268010754530, guid: 1d71c13ed8cb3c94c8c8dd5c1eb17e9c, type: 3}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: doorFromSaveZone
       value: 
@@ -59004,7 +59004,23 @@ PrefabInstance:
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LR.Array.data[10]
       value: 
+      objectReference: {fileID: 6394571268010754530, guid: 1d71c13ed8cb3c94c8c8dd5c1eb17e9c, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: LR.Array.data[11]
+      value: 
       objectReference: {fileID: 8135212988386964941, guid: 0cab5f51ef20de7449a8c7624c361c35, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: LR.Array.data[12]
+      value: 
+      objectReference: {fileID: 8135212988386964941, guid: 0cab5f51ef20de7449a8c7624c361c35, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: LR.Array.data[13]
+      value: 
+      objectReference: {fileID: 765874010318906039, guid: 3ddce49a380eaf74185bb7723ec0d4c5, type: 3}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: LR.Array.data[14]
+      value: 
+      objectReference: {fileID: 765874010318906039, guid: 3ddce49a380eaf74185bb7723ec0d4c5, type: 3}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LRB.Array.data[0]
       value: 
@@ -59163,7 +59179,7 @@ PrefabInstance:
       objectReference: {fileID: 2047406825}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: saveZoneSpawners.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: enemySpawnChances.Array.size
