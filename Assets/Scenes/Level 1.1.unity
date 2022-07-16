@@ -8179,7 +8179,7 @@ PrefabInstance:
       objectReference: {fileID: 2808136246080220146, guid: d6a72709b02e8e647b0464eb8a2e6c5e, type: 3}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LR.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LRB.Array.size
@@ -8188,6 +8188,10 @@ PrefabInstance:
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LRT.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnOreChance
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: LRTB.Array.size
@@ -8415,7 +8419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: oreSpawnChances.Array.data[1]
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1761541862674574315, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: enemySpawnChances.Array.data[0]
@@ -8641,6 +8645,38 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4862696629542858958, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnPoints.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862696629542858958, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 688966537}
+    - target: {fileID: 4862696629542858958, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 688966536}
+    - target: {fileID: 4862696629542858958, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 688966535}
+    - target: {fileID: 4862696629542858958, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnPoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 688966534}
+    - target: {fileID: 4862696629542858958, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnPoints.Array.data[4]
+      value: 
+      objectReference: {fileID: 688966534}
+    - target: {fileID: 4862696629542858958, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnPoints.Array.data[5]
+      value: 
+      objectReference: {fileID: 688966534}
+    - target: {fileID: 4862696629542858958, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+      propertyPath: spawnPoints.Array.data[6]
+      value: 
+      objectReference: {fileID: 688966534}
     - target: {fileID: 4957431199006463978, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -8878,6 +8914,26 @@ PrefabInstance:
 --- !u!4 &688966533 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1761541862587007192, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+  m_PrefabInstance: {fileID: 688966532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &688966534 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4060921924575987233, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+  m_PrefabInstance: {fileID: 688966532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &688966535 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4060921925410007998, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+  m_PrefabInstance: {fileID: 688966532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &688966536 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4060921926198068722, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
+  m_PrefabInstance: {fileID: 688966532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &688966537 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4060921925822591849, guid: 28ca2c7f19393ed4fa76f5becdc2967f, type: 3}
   m_PrefabInstance: {fileID: 688966532}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &689937072
