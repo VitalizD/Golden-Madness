@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f072acbe916f44893364ba3e0d17ec, type: 3}
   m_Name: rat-squeak
   m_EditorClassIdentifier: 
-  vol: 0.1
-  method: 1
+  vol: 0.407
+  method: 0
   isLooped: 0
-  is3D: 0
+  is3D: 1
   minDistance: 1
   maxDistance: 12
-  position: {x: 16.047365, y: -64.56268, z: 0}
+  position: {x: 15.837273, y: -37.562653, z: 0}
   delay: 0
-  rolloffMode: 1
+  rolloffMode: 0
   audioClips:
   - {fileID: 8300000, guid: 4e15c73adda1129428a387b1b77ee1c9, type: 3}
   - {fileID: 8300000, guid: 4493988e1d6248b498545d3588066931, type: 3}
