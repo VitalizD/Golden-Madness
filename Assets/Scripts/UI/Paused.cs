@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class Paused : MonoBehaviour
 {
+    public static Paused Instanse { get; private set; } = null;
+
     private static bool gameIsPause = false;
     private static bool gameIsControl = false;
     private static bool gameIsExitMenu = false;
@@ -15,8 +17,15 @@ public class Paused : MonoBehaviour
 
     private SpriteRenderer selection;
 
+    public bool IsPaused { get => gameIsPause; }
+
     private void Awake()
     {
+        if (Instanse == null)
+            Instanse = this;
+        else if (Instanse == this)
+            Destroy(gameObject);
+
         selection = GameObject.FindGameObjectWithTag(ServiceInfo.SelectionTag).GetComponent<SpriteRenderer>();
     }
 

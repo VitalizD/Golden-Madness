@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class Consumables : MonoBehaviour, IStorage
 {
     [Header("Counts")]
-    [SerializeField] private int fuelTanksCount = 1;
-    [SerializeField] private int grindstonesCount = 1;
-    [SerializeField] private int healthPacksCount = 1;
-    [SerializeField] private int smokingPipesCount = 1;
-    [SerializeField] private int ropesCount = 1;
+    [SerializeField] private int fuelTanksCount = 3;
+    [SerializeField] private int grindstonesCount = 3;
+    [SerializeField] private int healthPacksCount = 3;
+    [SerializeField] private int smokingPipesCount = 3;
+    [SerializeField] private int ropesCount = 3;
 
     [Header("Recoveries")]
     [SerializeField] private float fuelTankRecovery = 30f;
@@ -70,12 +70,12 @@ public class Consumables : MonoBehaviour, IStorage
     {
         consumableCounts = new Dictionary<ConsumableType, int>
         {
-            [ConsumableType.FuelTank] = 1,
-            [ConsumableType.Grindstone] = 1,
-            [ConsumableType.HealthPack] = 1,
-            [ConsumableType.SmokingPipe] = 1,
-            [ConsumableType.Rope] = 1,
-            [ConsumableType.Antidote] = 1
+            [ConsumableType.FuelTank] = 3,
+            [ConsumableType.Grindstone] = 3,
+            [ConsumableType.HealthPack] = 3,
+            [ConsumableType.SmokingPipe] = 3,
+            [ConsumableType.Rope] = 3,
+            [ConsumableType.Antidote] = 3
         };
         UpdateHotbar();
     }

@@ -77,6 +77,9 @@ public class Lamp : MonoBehaviour, IStorage
 
     private void Update()
     {
+        if (Paused.Instanse != null && Paused.Instanse.IsPaused)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1) && consumables.GetCount(ConsumableType.FuelTank) > 0)
         {
             FuelCount += consumables.GetRecovery(ConsumableType.FuelTank);

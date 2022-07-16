@@ -55,6 +55,9 @@ public class SanityController : MonoBehaviour
 
     private void Update()
     {
+        if (Paused.Instanse != null && Paused.Instanse.IsPaused)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Alpha4) && consumables.GetCount(ConsumableType.SmokingPipe) > 0)
         {
             Sanity += consumables.GetRecovery(ConsumableType.SmokingPipe);

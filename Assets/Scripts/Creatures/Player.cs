@@ -342,6 +342,9 @@ public class Player : MonoBehaviour, IStorage
 
     private void Update()
     {
+        if (Paused.Instanse != null && Paused.Instanse.IsPaused)
+            return;
+
         if (jumpCheckingPoint.CanJump && !isAttacking && !isStunned && !isDigging && !Input.GetButton("Horizontal"))
         {
             if (isClimbing)
@@ -376,6 +379,9 @@ public class Player : MonoBehaviour, IStorage
 
     private void FixedUpdate()
     {
+        if (Paused.Instanse != null && Paused.Instanse.IsPaused)
+            return;
+
         var position = transform.position;
         transform.position = new Vector3(position.x, position.y, fixedZPosition);
 
