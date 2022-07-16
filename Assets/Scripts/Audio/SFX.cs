@@ -21,7 +21,7 @@ public class SFX : ScriptableObject
 
     private float value2D = 0f;
     private float value3D = 1f;
-    private static float masterVol = 0.01f;
+    private static float masterVol = SoundSetting.DefaultVolume;
     private AudioSource audioSource;
     public event System.Action<float> onVolumeChanged;
 
@@ -138,6 +138,7 @@ public class SFX : ScriptableObject
             audioSource.volume = currentVol;
             yield return new WaitForSeconds(time/100);
         }
+        audioSource.enabled = false;
     }
 
     //public AudioSource Play(AudioSource audioSourceParam = null)

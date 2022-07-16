@@ -14,6 +14,7 @@ public class TextMessagesQueue : MonoBehaviour
     //[SerializeField] private bool inVillage = false;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Image icon;
+    [SerializeField] private SFX addItemSFX;
 
     private Animation anim;
 
@@ -30,7 +31,7 @@ public class TextMessagesQueue : MonoBehaviour
     {
         if (isPlaying)
             return;
-
+        addItemSFX.Play();
         gameObject.SetActive(true);
         isPlaying = true;
         Next();
@@ -59,7 +60,7 @@ public class TextMessagesQueue : MonoBehaviour
             gameObject.SetActive(false);
             return;
         }
-
+        addItemSFX.Play();
         var message = consumablesQueue.Dequeue();
         text.text = message.text;
 

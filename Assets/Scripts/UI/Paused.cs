@@ -27,6 +27,8 @@ public class Paused : MonoBehaviour
             Destroy(gameObject);
 
         selection = GameObject.FindGameObjectWithTag(ServiceInfo.SelectionTag).GetComponent<SpriteRenderer>();
+        Pause();
+        Resume();
     }
 
     private void Update()

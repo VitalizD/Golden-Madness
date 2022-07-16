@@ -42,7 +42,7 @@ public class Minecart : MonoBehaviour
             ResourcesSaver.AddInVillage(backpack.GetAll());
             backpack.Clear();
             minecartSFX.Play();
-            StartCoroutine(minecartSFX.SoundFade(1.5f));
+            StartCoroutine(minecartSFX.SoundFade(2.5f));
             // Для обучающего уровня
             ServiceInfo.CheckpointConditionDone = true;
 

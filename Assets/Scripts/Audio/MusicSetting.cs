@@ -7,24 +7,32 @@ public class MusicSetting : MonoBehaviour
 {
     [SerializeField] private Slider musicVolume;
     public static MusicSetting Instanse;
+    [SerializeField] [Range(0, 1)] private float defaultVolume = 0.5f;
+
+    //private MusicSetting()
+    //{
+    //    musicVolume.value = 0.01f;
+    //}
+    public Slider MusicVolume { get => musicVolume; }
     //public delegate void VolumeChange(float x);
     //public event VolumeChange onVolumeChanged;
 
-    public Slider MusicVolume { get => musicVolume; }
+
 
     private void Awake()
     {
         if (Instanse == null)
+        {
             Instanse = this;
+        }
         else if (Instanse == this)
             Destroy(gameObject);
-        musicVolume.value = 0.01f;
+        musicVolume.onValueChanged.AddListener(vol => SaveMusicVolPref(vol));
+        musicVolume.value = PlayerPrefs.GetFloat(SoundSettingsPrefs.MusicVolume, defaultVolume);
     }
 
-    private void Update()
+    private void SaveMusicVolPref(float value)
     {
-        musicVolume.gameObject.transform.position = Player.Instanse.transform.position - new Vector3(0, 1, 0);
-        //gameVolume.onValueChanged.AddListener(x => onVolumeChanged?.Invoke(x));
-
+        PlayerPrefs.SetFloat(SoundSettingsPrefs.MusicVolume, value);
     }
 }
