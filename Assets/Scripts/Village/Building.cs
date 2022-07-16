@@ -54,7 +54,10 @@ public class Building : MonoBehaviour, IStorage
         {
             isTriggered = true;
             if (!maxLevel)
+            {
+                UpdateInfo();
                 upgradeWindow.Show();
+            }
         }
     }
 
